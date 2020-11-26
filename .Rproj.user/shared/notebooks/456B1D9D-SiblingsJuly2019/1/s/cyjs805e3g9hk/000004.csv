@@ -1,0 +1,8 @@
+"0",""
+"0","Lexical.dev <- ggplot(SiblingsData, aes(x=month, y=Total.words, colour = ifelse(subj==""794"",T,F))) +  # subj 794 (outlier) shown in blue"
+"0","  geom_jitter(position=position_jitter(0.2), shape = 1, size = 2) + "
+"0","  ggtitle(""Total words per month"") + "
+"0","  geom_smooth(method='lm', aes(group = 1)) + "
+"0","  theme_bw(base_size=15) +"
+"0","  theme(legend.position=""none"")"
+"0","plot(Lexical.dev) "

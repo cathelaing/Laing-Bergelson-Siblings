@@ -1,0 +1,6 @@
+"0",""
+"0","sibs_density6m <- ggplot(subset(demographics, subj != 794),"
+"0","                         aes(x=Siblings6, fill=sex)) + "
+"0","  theme_bw(base_size = 15) +"
+"0","  geom_density(alpha=.3)"
+"0","plot(sibs_density6m)"

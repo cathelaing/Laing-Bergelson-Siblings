@@ -1,0 +1,136 @@
+"0",""
+"0","source(""DataGathering.R"")"
+"2","Parsed with column specification:
+cols(
+  age_mom = [32mcol_double()[39m,
+  ed_pvt = [32mcol_double()[39m,
+  uncorrected_standard_score = [32mcol_double()[39m,
+  subj = [32mcol_double()[39m
+)
+"
+"2","Parsed with column specification:
+cols(
+  Month = [31mcol_character()[39m,
+  CDI_TotalProd = [32mcol_double()[39m,
+  subj = [32mcol_double()[39m
+)
+"
+"2","Parsed with column specification:
+cols(
+  .default = col_character(),
+  birthweight_in_oz = [32mcol_double()[39m,
+  ethnicity = [32mcol_double()[39m,
+  maternal_employment_hours_6mos = [32mcol_double()[39m,
+  maternal_employment_hours_18mos = [32mcol_double()[39m,
+  paternal_employment_hours_6mos = [32mcol_double()[39m,
+  paternal_employment_hours_18mos = [32mcol_double()[39m,
+  adults_in_household_6mos = [32mcol_double()[39m,
+  adults_in_household_18mos = [32mcol_double()[39m,
+  children_in_household_6mos_staff = [32mcol_double()[39m,
+  children_in_household_18mos_staff = [32mcol_double()[39m,
+  public_assistance_amount_6mos = [32mcol_double()[39m,
+  public_assistance_amount_18mos = [32mcol_double()[39m,
+  subj = [32mcol_double()[39m
+)
+"
+"2","See spec(...) for full column specifications.
+"
+"2","Joining, by = ""subj""
+"
+"2","Joining, by = ""subj""
+"
+"2","Parsed with column specification:
+cols(
+  basic_level = [31mcol_character()[39m,
+  object = [31mcol_character()[39m,
+  CDIform = [31mcol_character()[39m,
+  in_cdi = [33mcol_logical()[39m
+)
+"
+"2","Joining, by = c(""subj"", ""month"", ""Type"")
+"
+"2","Joining, by = ""subj""
+"
+"2","Joining, by = ""subj""
+"
+"2","Joining, by = ""subj""
+"
+"2","Joining, by = ""basic_level""
+"
+"2","Joining, by = ""subj""
+"
+"2","Parsed with column specification:
+cols(
+  SibsYN = [31mcol_character()[39m,
+  Siblings = [32mcol_double()[39m,
+  SibGroup = [31mcol_character()[39m,
+  SiblingNo = [32mcol_double()[39m,
+  age.diff.y = [31mcol_character()[39m,
+  age.diff.d = [32mcol_double()[39m,
+  Group = [31mcol_character()[39m,
+  subj = [32mcol_double()[39m
+)
+"
+"0","library(lme4)"
+"0","library(Hmisc)"
+"2","Loading required package: lattice
+"
+"2","Loading required package: survival
+"
+"2","Loading required package: Formula
+"
+"2","
+Attaching package: ‘Hmisc’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    src, summarize
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    format.pval, units
+
+"
+"0","library(ggplot2)"
+"0",""
+"0","multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {"
+"0","  library(grid)"
+"0",""
+"0","  # Make a list from the ... arguments and plotlist"
+"0","  plots <- c(list(...), plotlist)"
+"0",""
+"0","  numPlots = length(plots)"
+"0",""
+"0","  # If layout is NULL, then use 'cols' to determine layout"
+"0","  if (is.null(layout)) {"
+"0","    # Make the panel"
+"0","    # ncol: Number of columns of plots"
+"0","    # nrow: Number of rows needed, calculated from # of cols"
+"0","    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),"
+"0","                    ncol = cols, nrow = ceiling(numPlots/cols))"
+"0","  }"
+"0",""
+"0"," if (numPlots==1) {"
+"0","    print(plots[[1]])"
+"0",""
+"0","  } else {"
+"0","    # Set up the page"
+"0","    grid.newpage()"
+"0","    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))"
+"0",""
+"0","    # Make each plot, in the correct location"
+"0","    for (i in 1:numPlots) {"
+"0","      # Get the i,j matrix positions of the regions that contain this subplot"
+"0","      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))"
+"0",""
+"0","      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,"
+"0","                                      layout.pos.col = matchidx$col))"
+"0","    }"
+"0","  }"
+"0","}"
+"0",""
+"0","stat_sum_df <- function(fun, geom=""crossbar"", ...) {"
+"0","  stat_summary(fun.data = fun, colour = ""red"", geom = geom, width = 0.2, ...)"
+"0","}"

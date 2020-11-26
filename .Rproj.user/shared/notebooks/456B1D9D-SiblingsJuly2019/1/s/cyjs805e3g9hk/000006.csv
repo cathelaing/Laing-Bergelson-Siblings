@@ -1,0 +1,2 @@
+"0",""
+"0","SiblingsData <- SiblingsData %>% filter(subj != 794) # remove outlier from main data"

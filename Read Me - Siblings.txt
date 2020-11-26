@@ -1,0 +1,97 @@
+
+### Siblings data - Read Me ###
+
+## 1. Demographics (Demographics.R)
+
+# This is the main file containing all demographics data, incorporating some data from the demographics questionnaires at 6 and 18 months,
+# mothers' PVT scores, and CDI data (productive vocabulary) from 6-18 months.
+
+# This is the first script to be generated in the siblings analysis markdown file; .....
+
+
+# 2. Data gathering (Data gathering.R)
+
+# This file extracts the relevant data from the basiclevels feather spreadsheet (basic_levels_Mar1518.feather - joined with SubNums on 9th Jul 2019).
+
+# Three main variables are extracted and joined with the Demographics spreadsheet: object presence, utterance type, and speaker type.
+
+# This script also summarizes in.cdi data. This relates to the 'ease of acquisition' variable in the Siblings analysis. Each word in the basic_level
+# column is compared against a file called 'CDI_wordlist' (Y:/Seedlings/Working_Files/Catherine/CDI_wordlist.csv). This file contains all of the CDI words,
+# with a list of all basic_level words (as produced by all speakers except the infant) that match the CDI words. For example, the basic level 'vroom+vroom'
+# is a match for the CDI word 'vroom'. Similarly, the phrase 'moo+baa+la+la+la' is coded as matching 'baabaa' and 'moo' on the CDI.
+# This way, we can determine whether any word in the basic_level column matches a word on the CDI.
+
+# Note: It was decided that basic levels such as 'moo baa la la la' should be included as matching CDI words since they are composed of words that are
+# acquired early in production. 
+
+# This script creates the main variables for the analysis:
+
+# i) utterance.type (d = declarative, i = ???, n = ???, q = question, r = reading, s = singing, u = unclear): what kind of utterances occur in the infants' 
+#    inputs? This dataframe calculates proportions of each utterance type, and codes them as being examples of joint engagment (JE): T or F.
+# ii) object.presence: how many/what proportion of input words match an object in the infant's environment?
+# iii) speaker.type: how much input does the infant get from mother/father/siblings during the recording, and how much from TV/toys? Coded as n and %.
+# iv) in.cdi: is the object word produced by the caregiver on the CDI (T/F)? Words on the CDI are assumed to be more 'learnable'
+
+
+
+## Data files saved in folder:
+
+# demo_deid_cleaned.csv - demographics data for all SEEDLingS participants, copied from Work study folder on 9th July 2019
+
+# ParentPVT - PVT scores and ages for all SEEDLingS mothers, copied from Work study folder on 9th July 2019
+
+# cdi - CDI data of all participants, copied from Work study folder on 9th July 2019 and then joined with randomly-generated anonymous subject numbers from
+# subnums.csv (via CDI_subnums.R)
+
+# in_cdi_Wordlist.csv - This file contains all of the CDI words, with a list of all basic_level words (as produced by all speakers except the infant) 
+# that match the CDI words. For example, the basic level 'vroom+vroom' is a match for the CDI word 'vroom'. 
+# Similarly, the phrase 'moo+baa+la+la+la' is coded as matching 'baabaa' and 'moo' on the CDI. This way, we can determine whether any word in the 
+# basic_level column matches a word on the CDI.
+
+# First, the following code was run in r (where 'data' is the all_basic_levels spreadsheet):
+
+# in_cdi_queries <- data %>%
+    distinct(basic_level, object) %>% 
+    left_join(wordlist, by=c("basic_level"="Word")) %>% # match words to CDI forms using the CDI_wordlist.csv spreadsheet
+    mutate(in_cdi = ifelse(!is.na(Form),T, F)) %>%
+    arrange(desc(in_cdi))
+
+# write_csv(in_cdi_queriesEB, "Data/in_cdi_queriesEB_template_6.6.17.csv")
+
+# This generates a spreadsheet with all object words in the data, all corresponding basic_levels, and whether the word matches a CDI word (TRUE or FALSE). If
+# there is a match between object word and CDI word, the CDI word is listed in the Form column.
+
+# CL and EB then cross-checked this list to make sure that all forms in the list were correctly coded, and to remove any that were not appropriate for the analysis.
+# Since the SEEDLingS corpus looks at object words only, any non-object words (such as onomatopoeia, adjectives, prepositions, etc) were removed from the
+# list. All book titles, character names and people (e.g. 'daddy', 'grandpa') were also removed. The spreadsheet was then saved as in_CDI_wordlist.csv.
+
+
+
+
+
+
+# This script should be run after running the Demograpics gathering script
+
+
+## Other documents ##
+
+# Sibling ages.xslx is a copy of the Demo_AP.xslx spreadsheet in the Seedlings/Subject_Info_and_Paperwork folder. I extracted all relevant information about
+# the infants in the Siblings analysis to calculate mean age of siblings.
+
+# Sibling_ages.csv is a new version of the .xslx spreadsheet above, with SibGroup information added for analysis. Siblings are coded as being 'Younger'
+# or 'Older': younger siblings are <3 years older than the infant, older siblings are older than the infant by 3 years or more.
+
+# Parent PVT.csv is the spreadsheet with the mothers' PVT scores, in the Seedlings/Subject_Info_and_Paperwork folder.
+
+# CDI.csv is taken from the file Y:/Seedlings/Subject_Info_and_Paperwork/demo_deid_cleaned.csv. This version is edited in the Demographics gathering.R document
+# and saved here for other uses
+
+# CDI_wordlist2 is a database of all words on the CDI, 'matched' against basic levels. Each word on the CDI was compared against the basic levels to determine
+# which variants of the CDI form were produced in the Seedlings data. For example, I did a search for the word 'dog' in the basic_levels spreadsheet to 
+# see which variants of 'dog' were produced in the data. This included e.g. 'doggie', 'dogs', 'doggie+dog'. These words were entered into the CDI spreadsheet.
+# The CDI_wordlist2 dataset is therefore a list of all CDI words and all of their variants in the Seedlings data. This can be used to determine whether or not
+# a word in the data is 'learnable', as determined by its appearance on the CDI form.
+
+
+
+

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565965928608.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "132980421",
+    "id" : "100581D8",
+    "lastKnownWriteTime" : 1565973767,
+    "last_content_update" : 1565973767490,
+    "path" : "C:/Users/Daniel & Catherine/OneDrive - Cardiff University/Research/Siblings/Tables.R",
+    "project_path" : "Tables.R",
+    "properties" : {
+        "cursorPosition" : "69,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,229 @@
+---
+title: "SiblingsStudy_SupplementaryData"
+author: "Catherine Laing & Elika Bergelson"
+date: "13/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(dplyr)
+library(tibble)
+library(lmerTest)
+library(afex)
+library(citr)
+
+source("DataGathering.R")
+```
+
+```{r SibGroup6 summary}
+
+sibgroup.summary <- SiblingsData %>% filter(month==18) %>%
+  group_by(SibGroup6) %>%
+  summarise(mean = mean(Total.words, na.rm=T),
+            sd = sd(Total.words, na.rm=T)) %>%
+  mutate(Variable = "Productive Vocabulary 18m") %>%
+  select(Variable, SibGroup6, mean, sd)
+
+```
+
+```{r Overall vocab: Discrete sibling number}
+
+# Sibling number: Does number of siblings affect language development over time?
+
+sibnumber.model <- lmerTest::lmer(Log.Totalwords ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.model.null <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+anova(sibnumber.model, sibnumber.model.null)
+
+```
+
+```{r post hoc tests sibling groups, include=FALSE}
+
+wilcox.test(
+  x = subset(SiblingsData, month == 18 & Siblings6 == "0")$Total.words
+  , y = subset(SiblingsData, month == 18 & Siblings6 == "1")$Total.words
+  , paired = FALSE
+) # NS
+
+wilcox.test(
+  x = subset(SiblingsData, month == 18 & Siblings6 == "1")$Total.words
+  , y = subset(SiblingsData, month == 18 & Siblings6 == "2")$Total.words
+  , paired = FALSE
+) # p=.06
+
+wilcox.test(
+  x = subset(SiblingsData, month == 18 & Siblings6 == "2")$Total.words
+  , y = subset(SiblingsData, month == 18 & Siblings6 == "3")$Total.words
+  , paired = FALSE
+) # p=.2
+
+wilcox.test(
+  x = subset(SiblingsData, month == 18 & Siblings6 == "3")$Total.words
+  , y = subset(SiblingsData, month == 18 & Siblings6 == "4")$Total.words
+  , paired = FALSE
+) # p=.4
+
+```
+
+## Effect of siblings on infants' input
+
+
+### Parental Input
+
+
+```{r speaker.type model, message=FALSE, warning=FALSE}
+
+#shapiro.test(speaker.type$n) # not normal
+
+speaker.type.model <- lmerTest::lmer(Log.n ~ Siblings6 + (1|subj), data=speaker.type, REML=FALSE)
+speaker.type.model.null <- lmerTest::lmer(Log.n ~ (1|subj), data=speaker.type, REML=FALSE)
+
+anova(speaker.type.model, speaker.type.model.null) # ns
+
+```
+
+```{r Sibling input, message=FALSE, warning=FALSE}
+
+# Difference in amount of input from siblings
+
+speaker.type.SIB_wilcox_none_one <- wilcox.test(
+  x = subset(speaker.type.SIB, SibGroup6 == "None")$MeanN
+  , y = subset(speaker.type.SIB, SibGroup6 == "One")$MeanN
+  , paired = FALSE
+) # p<.001
+
+speaker.type.SIB_wilcox_one_two <- wilcox.test(
+  x = subset(speaker.type.SIB, SibGroup6 == "2+")$MeanN
+  , y = subset(speaker.type.SIB, SibGroup6 == "One")$MeanN
+  , paired = FALSE
+) # NS
+
+# Difference in amount of input from mothers
+
+speaker.type.MOT <- speaker.type %>% group_by(subj) %>% 
+  filter(Speaker == "MOT") %>%
+  mutate(MeanN = mean(n))  %>%
+  filter(month == 17)
+
+speaker.type.MOT_wilcox_none_one <- wilcox.test(
+  x = subset(speaker.type.MOT, SibGroup6 == "None")$MeanN
+  , y = subset(speaker.type.MOT, SibGroup6 == "One")$MeanN
+  , paired = FALSE
+) # NS
+
+wilcox.test(
+  x = subset(speaker.type.MOT, Siblings6 == "2")$MeanN
+  , y = subset(speaker.type.MOT, Siblings6 == "1")$MeanN
+  , paired = FALSE
+) # p<.01
+
+wilcox.test(
+  x = subset(speaker.type.MOT, Siblings6 == "2")$MeanN
+  , y = subset(speaker.type.MOT, Siblings6 == "3")$MeanN
+  , paired = FALSE
+) # NS
+
+wilcox.test(
+  x = subset(speaker.type.MOT, Siblings6 == "3")$MeanN
+  , y = subset(speaker.type.MOT, Siblings6 == "4")$MeanN
+  , paired = FALSE
+) # NS
+
+
+```
+
+### Early-acquired words
+
+```{r in.cdi summary}
+
+in.cdi.summary <- in.cdi %>% group_by(Siblings6, subj) %>% 
+  summarize(meanPC = mean(PC),
+         medPC = median(PC),
+         sdPC = sd(PC)) 
+
+```
+
+```{r in.cdi model PC}
+
+in.cdi.model <- lmerTest::lmer(PC ~ Siblings6 + month + (1|subj), data=in.cdi, REML=FALSE)
+in.cdi.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=in.cdi, REML=FALSE)
+anova(in.cdi.model, in.cdi.model.null) p=.054
+
+# Posthoc tests
+
+wilcox.test(
+  x = subset(in.cdi.summary, Siblings6 == "0")$meanPC
+  , y = subset(in.cdi.summary, Siblings6 == "1")$meanPC
+  , paired = FALSE
+) # NS
+
+wilcox.test(
+  x = subset(in.cdi.summary, Siblings6 == "2")$meanPC
+  , y = subset(in.cdi.summary, Siblings6 == "1")$meanPC
+  , paired = FALSE
+) # p=.002
+
+wilcox.test(
+  x = subset(in.cdi.summary, Siblings6 == "2")$meanPC
+  , y = subset(in.cdi.summary, Siblings6 == "3")$meanPC
+  , paired = FALSE
+) # NS
+
+wilcox.test(
+  x = subset(in.cdi.summary, Siblings6 == "3")$meanPC
+  , y = subset(in.cdi.summary, Siblings6 == "4")$meanPC
+  , paired = FALSE
+) # p=.33
+
+
+```
+
+### Object presence
+
+```{r Object.presence summary}
+
+object.presence.summary <- object.presence %>%
+  group_by(subj, Siblings6) %>%
+  summarise(mean.object = mean(PC),
+            sd.object = sd(PC),
+            med.object = median(PC))
+
+```
+
+```{r object.presence model}
+
+object.presence.model <- lmerTest::lmer(PC ~ Siblings6 + month + (1|subj), data=object.presence, REML=FALSE)
+object.presence.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=object.presence, REML=FALSE)
+anova(object.presence.model, object.presence.model.null) # p<.001
+
+# Posthoc tests
+
+wilcox.test(
+  x = subset(object.presence.summary, Siblings6 == "0")$mean.object
+  , y = subset(object.presence.summary, Siblings6 == "1")$mean.object
+  , paired = FALSE
+) # p<.001
+
+wilcox.test(
+  x = subset(object.presence.summary, Siblings6 == "2")$mean.object
+  , y = subset(object.presence.summary, Siblings6 == "1")$mean.object
+  , paired = FALSE
+) # p=.056
+
+wilcox.test(
+  x = subset(object.presence.summary, Siblings6 == "2")$mean.object
+  , y = subset(object.presence.summary, Siblings6 == "3")$mean.object
+  , paired = FALSE
+) # NS
+
+wilcox.test(
+  x = subset(object.presence.summary, Siblings6 == "3")$mean.object
+  , y = subset(object.presence.summary, Siblings6 == "4")$mean.object
+  , paired = FALSE
+) # NS
+
+```

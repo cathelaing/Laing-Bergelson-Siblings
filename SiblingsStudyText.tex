@@ -1,0 +1,516 @@
+\documentclass[man,floatsintext]{apa6}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Analysing the effect of sibling number on input and output in the first 18 months},
+            pdfauthor={Catherine Laing~\& Elika Bergelson},
+            pdfkeywords={Siblings, Lexical Development, Input Effects, Language Acquisition},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+
+  \title{Analysing the effect of sibling number on input and output in the first 18 months}
+    \author{Catherine Laing\textsuperscript{1}~\& Elika Bergelson\textsuperscript{2}}
+    \date{}
+  
+\shorttitle{Effect of sibling number on language}
+\affiliation{
+\vspace{0.5cm}
+\textsuperscript{1} Cardiff University, Cardiff, UK\\\textsuperscript{2} Duke University, Durham, NC, USA}
+\keywords{Siblings, Lexical Development, Input Effects, Language Acquisition\newline\indent Word count: X}
+\usepackage{csquotes}
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage[flushleft]{threeparttable}
+\usepackage{threeparttablex}
+
+\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
+
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
+\usepackage{lineno}
+
+\linenumbers
+
+\authornote{\# Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+\hypertarget{enter-author-note-here.}{%
+\section{Enter author note here.}\label{enter-author-note-here.}}
+
+Correspondence concerning this article should be addressed to Catherine Laing, Centre for Language and Communication Research, School of English, Communication and Philosohpy, Cardiff University, Colum Drive, Cardiff, UK, CF10 3EU. E-mail: \href{mailto:catherine.laing@cardiff.ac.uk}{\nolinkurl{catherine.laing@cardiff.ac.uk}}}
+
+\abstract{
+The `sibling effect' has been widely reported in studies examining a breadth of topics in the academic literature, showing that firstborn children are advantaged across a range of cognitive, educational and health-based measures compared with their later-born peers. In this study, we expand on findings testing the effect of siblings on language development, using naturalistic home-recorded data to show differences in number of siblings on early language outcomes. Specifically, we find that having two or more - but not one - older siblings negatively effects vocabulary outcomes at 18 months. This can be identified in our analysis of early input between ages 0;10 to 1;5: infants with more than one sibling showed a significant disadvantage across three measures of input quality and quantity.
+
+
+}
+
+\begin{document}
+\maketitle
+
+The \enquote{sibling effect} - that is, the apparent advantage for earlier-born children within a family - was perhaps first noted by Galton (1874), who observed that notable \enquote{English men of science} were often firstborns. Galton (1874, p. 35) posited that these men \enquote{would generally have more attention in {[}their{]} infancy\ldots{}than {[}their{]} younger brothers and sisters}, thereby giving them more of a chance of later success. Current research supports these claims, showing that those who have fewer older siblings are more likely to do better than their laterborn peers in a range of domains, including educational outcomes (Esposito, Kumar, \& Villaseñor, 2020; Monfardini \& See, 2016), overall earnings (Behrman \& Taubman, 1986; Kantarevic \& Mechoulan, 2006), and some aspects of physical and mental health (Black, Devereux, \& Salvanes, 2016). That is to say that there may be marked economic, social and physical advantages for children with fewer older siblings. In this paper, we consider the role of the early language environment in this story: Educational attainment is shaped by a child's early language outcomes (Anderson \& Freebody, 1981; Marchman \& Fernald, 2008); even by age 10-11, children who had higher vocabulary scores at age 2 do better on a range of language and literacy measures (Lee, 2011). Importantly, quality and quantity of the early linguistic input is a key predictor of lexical advance (Cartmill et al., 2013; Ferjan Ramírez, Lytle, \& Kuhl, 2020), and so it may be the case that the presence of more siblings in infancy disrupts an infant's early language environment. With this in mind, we use naturalistic home-recorded data to observe input differences between earlier- and later-born infants, in relation to their lexical development over the first 18 months of life.
+
+Many studies assume an optimum environment for early language development, whereby the input is tailored to the infant's needs, changing over time as language capacity develops (e.g.~Soderstrom, 2007; Stern, Spieker, Barnett, \& MacKain, 1983). However, for many infants and for many reasons, language acquisition does not take place in such a setting; various domestic and social factors affect the learning environment, and there is perhaps no known detrimental factor so common as the presence of an older sibling. According to the United States Census Bureau (United States Census Bureau, 2010), aroud one third of children are born into households with at least one other infant present, and one in every five infants is learning language in a household shared with two or more other children. Similar statistics are reported for UK infants (Office for National Statistics, 2018), where the average household has 1.75 children, and 15\% of households have three children or more. The established view of the typical language learning environment is thus somewhat distorted, even for Western populations: our consideration of how infants learn tends to assume a situation in which the infant has full attention from the caregiver for the majority of communicative interactions. Much like the tendency in psychological research to sample from largely white, middle-class populations from industrialized nations (``the WEIRD problem'', Azar, 2010), it is perhaps the case that many other assumptions about early language input are also biased towards a specific, and not particularly representative, population.
+
+Indeed, consistent with the broader literature in this area, language development research has shown that infants born to households with older children may experience disruption to their linguistic trajectory. Fenson and colleagues (1994) found that by 30 months of age, children with older siblings performed worse than those with no siblings across measures of productive vocabulary, word combinations, and mean length of utterance. This disadvantage may be manifested in input differences between first- and later-born children: infants with older siblings hear less speech aimed specifically at them, and what they do hear is understood to be linguistically less supportive of early language development (Hoff-Ginsberg, 1998; Oshima-Takane \& Robbins, 2003). However, the news is not all bad for later-born infants, as some studies have noted linguisitic advantages for later-borns (Oshima-takane, Goodz, \& Derevensky, 1996). In particular, they may have an advantage in the development of social-communicative skills (Hoff, 2006) and some aspects of syntactic development (Oshima-takane et al., 1996), as well as being more able to join in with conversations (Dunn \& Shatz, 1989).
+
+Numerous studies have attempted to better understand the mechanisms behind this issue, with comparisons of language acquisition across first- and later-borns, and analyses of mothers' input in dyadic (infant + mother) and triadic (infant + mother + older sibling) situations. Findings tend to be mixed, but overall two general conclusions can be drawn. First, analyses consistently show that there is a disadvantage in early language acquisition for infants with older siblings (Berglund, Eriksson, \& Westerlund, 2005; Fenson et al., 1994; Pine, 1995; Zambrana, Ystrom, \& Pons, 2012). However, the difference is often reported as being only marginal, and only typical of the earliest stages of language learning. Fenson and colleagues (1994) highlight a weak but significant negative correlation between birth order and word production over time: infants with more siblings acquired fewer words over the course of their analysis (up until age 2;6). In an analysis of 18 infants, Pine (1995) reports an advantage in lexical acquisition for first-born infants in early development, as infants with siblings were slower to reach the 50-word point. However, by the 100-word point this difference had dissipated, suggesting that later-born infants soon catch up with their first-born peers. This is consistent in studies observing the development of social and interactive understanding: Hoff-Ginsberg (1998) shows first-borns to have better lexical and syntactic skills up until 2;5, but later-born infants had better conversational abilities during the same time-period. Adding to this picture, Oshima-Takane and colleagues (1996) show that second-born infants use significantly more pronouns in their speech at age 1;9, suggesting that there may be at least some advantage for the development of syntax and lexical categories amongst later-born infants.
+
+The second finding to appear consistently in the literature pertains to differences in input quality during dyadic and triadic interactions. Findings unanimously show that infants with no siblings receive not only more input overall, but also higher-quality input. A range of different input quality measures have been adopted in the literature, including speech rate (number of utterances in relation to utterance duration), richness of vocabulary (number of word roots produced in a session), mean length of utterance (MLU), responses to children's utterances, and type-token ratio, among others (Hoff-Ginsberg, 1991, 1998; Oshima-Takane \& Robbins, 2003; Stafford, 1987). These measures are believed to reflect an input that is supportive of early language development, and across studies it is generally observed that infants with siblings are presented with a less ideal input quality than those without siblings: second-born infants receive less supportive maternal input even in dyadic interactions (Hoff-Ginsberg, 1998). And of course, the presence of siblings means that infants will also hear a lot of speech from older children. In a study comparing input quality in mother-infant versus sibling-infant dyads, Hoff-Ginsberg and Krueger (1991) show mothers' input to be significantly more linguistically supportive than input from older siblings. Siblings with a higher chronological age (7-8 years) provided more supportive input than those with a lower chronological age (4-5 years), but this was nevertheless significantly lower quality than that of the mother. When siblings are present in triadic interactions, mothers' input is established as being more focused on regulating behaviour, as opposed to the language-focused speech that is common in dyadic contexts (Oshima-Takane \& Robbins, 2003). These advantages are consistent in input quantity as well, as infants with no siblings not only hear speech that is linguistically more supportive, but they also hear more input overall. Reports show that MLU is longer in the input of first-born infants (Hoff-Ginsberg, 1998; but see also Oshima-Takane \& Robbins, 2003 for a comparison of dyadic and triadic contexts) who also hear more questions directed at them than later-borns. Both Jones and Adamson (1987) and Oshima-Takane and Robbins (2003) report no difference between the number of word types produced by mothers in dyadic and triadic settings, but the proportion of speech directed at infants is drastically reduced when input is shared with siblings.
+
+As Hoff (2006) explains, infants with siblings have less experience of speech directed at them, but they do have an advantage over their first-born peers in that they are subject to more overheard speech. Indeed, the input of first-borns may be explicitly tailored to their needs, but equally this means it might be less varied, and may not support the development of communication and even grammatical skills to the same extent as input shared with older siblings. In her analysis of the sibling effect on children's early language environment, Woollett (1986) highlights that focusing on the purely linguistic aspects of an infant's input does not best represent the real experience of learning language, which is after all a highly social tool, dependent on more than phonetics and syntax for its effective acquisition. She states that \enquote{taking a wider view of language may make the search for one register to facilitate language development seem a very limited goal} (1986, p.243). She goes on to posit that the features of infant-directed speech (IDS) that we understand to facilitate language learning may, in other respects, hinder the process. This is supported by findings from Oshima-Takane, Goodz and Derevensky (1996), who combine analyses of the input with experimental evidence of infants' on-line linguistic skills. The authors show that infants with siblings hear more pronouns in their input, and are consequently better able to use pronouns in their own speech; they answered more questions about pronouns correctly when tested in an experimental task. However, Wellen (1985) points out that infants' passive observation of successful interactions between mother and sibling is much less important for language learning than actually participating in interactions. While there may be a role for overheard speech, it does not override the importance of dedicated one-to-one interactions between infant and mother. Findings from Ramírez-Esparza and colleagues (2014) support this by showing that infants' later language development is shaped by the amount of one-to-one interactions with a caregiver. However, Barton and Tomasello (1991) show that by as early as 19 months, infants with siblings are already able to take part in triadic conversations, supporting an advantage for the presence of other children in the learning environment. Triadic conversations were almost three times longer than dyadic conversations, and the authors suggest that this may have an important effect on the learning dynamic of the situation: infants are under less pressure to participate in a triadic interaction, meaning the conversation can continue even when the infant is unable to respond. As a result, the infants took more conversational turns in triadic interactions than dyadic ones.
+
+Taken together, it seems that there is an early disadvantage in lexical development for laterborn children, which may be redressed when it comes to syntactic and communicative development. However, given that vocabulary size is a known key predictor of later educational success (Lee, 2011; Marchman \& Fernald, 2008), combined with studies showing that laterborns have lower educational attainment by high school (Esposito et al., 2020; Monfardini \& See, 2016), the disadvantage for early lexical development amongst laterborns may have particular importance here. The present study analyzes infants' lexical development in relation to the presence of older siblings in their household. We expand on the extant literature in two key ways: First, as far as we are aware, no study has taken into account how \emph{discrete sibling number} affects an infant's lexical development and the quality of their input. Studies tend to compare birth order as a binomial factor -- that is, first-born infants compared with second-borns (e.g.~Oshima-Takane \& Robbins, 2003), or even first-borns compared with the non-specific \enquote{later-borns} (e.g.~Hoff-Ginsberg, 1998) -- and as a result they overlook the effect of more versus fewer older siblings on language development. This leads us to ask how development might differ as an effect of having one versus two versus three (or more) older siblings. Second, much of the existing literature in this area is drawn from questionnaire data or interactions recorded in the lab (but see Dunn \& Shatz, 1989 for a study of naturalistic home-recorded data), and so does not allow analyses of naturalistic day-to-day interactions that take place in the home, where siblings are present. We address both of these issues by including sibling number in our analysis of naturalistic home interactions and early vocabulary developent. We expect to observe differences in the learning environments of infants growing up in households with multiple siblings; it is likely that this will differ across households with one infant versus those with two, three or four infants. We predict that infants with more older siblings will be exposed to lower-quality input, and this will reveal slower vocabulary development over the first 18 months of life.
+
+\hypertarget{hypotheses}{%
+\section{Hypotheses}\label{hypotheses}}
+
+Research has already shown that early lexical development is more advanced among first-born infants (e.g.~Hoff-Ginsberg, 1998). We expect to see the same effect in our data, but we hypothesize that the closer granularity of this analysis will show a gradient decline in infants' lexical abilities in relation to an increasing number of siblings.
+
+With regard to the infants' linguistic environment, we hypothesize that input quality will deteriorate as a function of increasing sibling number. Specifically we adopt three measures, as established in the literature as being important for early language learning:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \textbf{Amount of input} will decline as sibling number increases. Mothers' attention will be divided across a larger group of children, and as a result the proportion of input from the mother will be lower for infants with more siblings. In addition, these infants will experience more input from other children in the home. Quantity of input is an important predictor of language development in the longer term (Huttenlocher, Haight, Bryk, Seltzer, \& Lyons, 1991), as is amount of one-to-one input from the caregiver (Ramírez-Esparza et al., 2014). We thus expect this to be an important determiner of infants' lexical production skills at 18 months.
+\item
+  \textbf{More \enquote{learnable} words} (words that tend to be acquired earlier; Fenson et al., 1994) will occur in the input of infants with fewer siblings, and this will decrease as sibling number increases. Input from older children will generate a wider variety of lexical items in the input, including words directed to and produced by siblings, some of whom will still be young language learners themselves. As a result, words produced in the input will not be oriented specifically towards the infant.
+\item
+  \textbf{Amount of object presence} (the presence of the object being referred to in the input, e.g.~mother says \enquote{cat} when there is a cat in the room) will decrease as sibling number increases. As caregivers' attention is drawn away from one-to-one interactions with the infant, there will be less opportunity for contingent talk. Moreover, less learnable words are also expected to be less imageable, and thus less likely to be presented alongside caregivers' utterances. The co-occurrence of words alongside their associated objects is thought to contribute to the earlier learning of nouns over verbs (Bergelson \& Swingley, 2013). Furthermore, object presence is more suited to instances of joint visual attention with the caregiver, again supporting the word learning process through the concrete mapping of word to referent (Gleitman, Cassidy, Nappa, Papafragou, \& Trueswell, 2005).
+\end{enumerate}
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+Data was taken from the SEEDLingS corpus (Bergelson, Amatuni, Dailey, Koorathota, \& Tor, 2019), a longitudinal set of data incorporating at-home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data, and annotations of hour-long home video recordings, taken on a monthly basis during data collection.
+
+\hypertarget{participants}{%
+\subsection{Participants}\label{participants}}
+
+Forty-four families in New York State completed the year-long study. Infants (21 females) were from largely middle-class households; 33 mothers had attained a B.A. or higher. All had normal birthweight with no reported speech or hearing problems. Forty-two infants were Caucasian; two were from multi-racial backgrounds.
+
+\hypertarget{materials}{%
+\subsection{Materials}\label{materials}}
+
+\textbf{Parental report data} The present analyses draw on data from vocabulary checklists (Macarthur-Bates Communicative Development Inventory, hereafter CDI; Fenson et al., 1994), administered monthly from 0;6 to 1;6, along with a demographics questionnaire. Because the majority of infants did not produce their first word until around 0;11 (M=10.70, SD=2.22), we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants' lexical development over the course of the analysis period.
+
+\textbf{Home video data} Every month between 0;6 and 1;5, infants were recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this allowed us to record the scene from the infants' perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder was set up in the home. Object words (i.e.~concrete nouns) deemed to be directed to or attended by the child were annotated by trained coders. Here we examine annotations for speaker, i.e.~who produced a word, and object presence, i.e.~whether the word's referent was present and attended to by the infant.
+
+\hypertarget{procedure}{%
+\subsection{Procedure}\label{procedure}}
+
+We analyzed number of siblings based on parental report in the demographics questionnaires completed at 0;6 (R: 0-4). Siblings were on average 4.05 years older than the infants in this study (Mdn days: 1477, SD: 1477, R: 0-17 years).\footnote{For six infants, siblings' exact birthdates were not provided, and so age difference was estimated by subtracting the infant's age (6 months) from the sibling's age in years, as listed on the questionnaire (e.g.~if a sibling was 5 years old, they were classed as being 4.5 years older than the infant).} All siblings lived in the household with the infant, and all were older than or of the same age as the infant in question.\footnote{Two infants in the dataset were dizygotic twins; \textbf{our pattern of results holds with or without these infants}.}
+
+\hypertarget{input-measures}{%
+\subsection{Input measures}\label{input-measures}}
+
+Three input measures were considered in our analysis, pertaining to aspects of the input that are established as being important in early language learning: \textbf{overall parental input} (how much speech does an infant hear?), \textbf{early-acquired words} (how much of that speech features typically early-learned nouns?), and \textbf{object presence} (how much of that speech is referentially transparent?).
+
+\emph{Parental Input} reflects how many object words infants heard in the recordings from their mother and father (where relevant, we also calculated sibling input). Other speakers' input was relatively rare during video recordings, and is excluded from our analysis. This allows us to measure differences in amount of input recevied across infants, according to sibling number. A consideration of object words only - as oppose to overall input heard during the session - allows us to compare the amount of \enquote{content-full} input heard by the child within a given session, and so to a certain extent controls for the quality of input across infants.
+
+\emph{Early-acquired words} shows how many of the object words in the parental input (or their lemmas in the case of plurals and diminutives) appeared on the \enquote{Words \& Gestures} communicative development inventory (CDI, Fenson et al., 1994). This CDI form offers an inventory of words typically acquired by infants from the United States between the ages of 8 and 18 months (Fenson et al., 2007). Acquisition norms were established from a sample of over 1,700 infants from diverse backgrounds (\textasciitilde{}50\% firstborn, 73\% White, 44\% of mothers with a college diploma), and so the CDI is taken as a standardized proxy of words typically acquired by infants in early development. Words found on the CDI are, by definition, more learnable in early acquisition, though the reasons underlying their learnability likely differ. Thus, we assume that CDI words like \emph{foot} and \emph{banana} are lexically simpler (or more readily learned) than concrete nouns like \emph{jet ski} or \emph{wheel}, acknowledging that many factors (e.g.~frequency, concreteness, phonology) contribute to this.
+
+\emph{Object Presence} was coded for each object word in the home recordings based on whether or not the annotator determined the object in question as present and attended to by the child. This is a metric of referential transparency, which has been suggested to aid in learning (Bergelson \& Swingley, 2013).
+
+In the following analyses, we consider infants' productive vocabulary alongside amount of input, number of early-acquired words, and extent of object presence in the input, as a function of sibling number. Since the raw data are highly skewed, log-transformed data\footnote{1 was added to the raw infant production data before log-transformation to account for datapoints with zero words.} and/or proportions are used for statistical analysis. All figures display non-transformed data.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+Vocabulary development was highly variable across the 44 infants. By 18 months, 2 infants produced no words, while mean productive vocabulary was 60.28 words (SD=78.31, Mdn=30.50). One female infant had a substantially larger reported vocabulary (3SDs above the mean montly vocabulary score) between 1;1 and 1;6 and was classed as an outlier. We removed her from our data, leaving 43 infants (20 females) in the present analysis. Infants had one sibling on average (M=0.86, Mdn=1, SD=1.09). See Table \ref{tab:table-sibling-number}.
+
+\begin{table}[H]
+\begin{center}
+\begin{threeparttable}
+\caption{\label{tab:table-sibling-number}Sibling number by female and male infants.}
+\small{
+\begin{tabular}{llll}
+\toprule
+n Siblings & \multicolumn{1}{c}{Female} & \multicolumn{1}{c}{Male} & \multicolumn{1}{c}{Total}\\
+\midrule
+0 & 9 & 12 & 21\\
+1 & 7 & 6 & 13\\
+2 & 2 & 3 & 5\\
+3 & 2 & 0 & 2\\
+4 & 0 & 2 & 2\\
+Total & 20 & 23 & 43\\
+\bottomrule
+\end{tabular}
+}
+\end{threeparttable}
+\end{center}
+\end{table}
+
+\hypertarget{model-structure-for-fixed-and-random-effects}{%
+\subsection{Model structure for fixed and random effects}\label{model-structure-for-fixed-and-random-effects}}
+
+All reported models were generated in R (R Core Team, 2019) using the \emph{lmerTest} packacge to run linear mixed-effects regression models (Kuznetsova, Brockhoff, \& Christensen, 2017). P-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests, given the underlying non-parametric nature of our variables.
+
+Before considering sibling status, we first modelled infants' productive vocabulary as a function of age, sex, and mother's education. There was no effect for sex on productive vocabulary at 18 months (\emph{p}=.632), and no correlation with mothers' education level (across five categories from High School to Doctorate; \emph{r} = -0.01, \emph{p}=.139). As expected, age had a significant effect on productive vocabulary (\emph{p}\textless{} .001), and so we include age as a fixed effect in all subsequent models. Because we expected that maternal age and education might have an effect on both sibling number and infant productive vocabulary, we ran further correlations to test these variables. There was no correlation between mother's education and number of siblings (\emph{r} = -0.01, \emph{p}=.928), and a marginal positive correlation between mother's age and number of siblings (Spearman's \emph{r} = 0.28, \emph{p}=.069; older mothers tended to have more children. However, no correlation was found between mothers' age and productive vocabulary at 18 months (\emph{r} = -0.04, \emph{p}=.822).
+
+\hypertarget{effect-of-siblings-on-infants-productive-vocabulary}{%
+\subsection{Effect of siblings on infants' productive vocabulary}\label{effect-of-siblings-on-infants-productive-vocabulary}}
+
+We next modeled the effect of siblings on productive vocabulary. Starting with a binary variable (0 vs.~\textgreater{}0 siblings), our model revealed no effect for the presence of siblings on productive vocabulary when we included month as a fixed effect (\(\chi^2 (1)\) = 2.27, \emph{p}=.132). We then modelled aggregated grouped variable (None vs.~One vs.~2+) and discrete sibling number (0 vs.~1 vs.~2 vs.~3 vs.~4 siblings). In both cases, models with siblings accounted for more variance in productive vocabulary than models without it (see Table \ref{tab:table-sibling-model-output}).
+
+\begin{table}[H]
+\begin{center}
+\begin{threeparttable}
+\caption{\label{tab:table-sibling-model-output}Output from regression models comparing language development over time in relation to sibling number (binary, grouped and discrete variables). Month was included in each model as a fixed effect; subject was included as a random effect.}
+\small{
+\begin{tabular}{llll}
+\toprule
+Model & \multicolumn{1}{c}{df} & \multicolumn{1}{c}{Chisq} & \multicolumn{1}{c}{p value}\\
+\midrule
+0 vs. >0 siblings & 1.00 & 2.27 & 0.13\\
+Sibling group & 2.00 & 7.96 & 0.02\\
+Sibling number & 1.00 & 6.24 & 0.01\\
+\bottomrule
+\end{tabular}
+}
+\end{threeparttable}
+\end{center}
+\end{table}
+
+In short, having more siblings was associated with a smaller productive vocabulary over the course of early development. This is consistent with previous findings (Hoff-Ginsberg, 1998; Pine, 1995). Moreover, for each additional sibling, infants acquired 31\% fewer words. Looking at differences between sibling groups (0 vs.~1 vs.~2+ siblings), we see that infants with one sibling produce only 5\% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce 94\% fewer words. See See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-SibGroup}. Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (\emph{W}=5, \emph{p} = .004), but no difference between infants with one sibling and those with no siblings (\emph{W}=79.50, \emph{p} = .631; Bonferroni corrections applied).
+
+\begin{figure}
+\centering
+\includegraphics{SiblingsStudyText_files/figure-latex/Figure-SibGroup-1.pdf}
+\caption{\label{fig:Figure-SibGroup}Productive vocabulary acquisition over time. Colors denote sibling group; line with grey confidence band reflects local estimator (loess) fit over individual infants' vocabulary at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (jittered horizontally) show individual infants' vocabulary size at each month. Y-axis utilizes log-transformed vertical spacing for visual clarity.}
+\end{figure}
+
+\hypertarget{effect-of-siblings-on-infants-input}{%
+\subsection{Effect of siblings on infants' input}\label{effect-of-siblings-on-infants-input}}
+
+Next, we turn to our three input measures in turn to compare how input differs for infants across our three sibling groups (0 vs.~1 vs.~2+ siblings). We report analyses considering the three input measures as a function of sibling group; all results reported below \emph{except Parental Input} were consistent when we re-ran our models with discrete sibling number as a fixed effect (see Supplementary Data).
+
+As with our previous analysis, we first modelled infants' input (maternal input only) as a function of age, sex and maternal education. This time, there was no effect for age, nor sex or maternal education (\emph{p}s all\textgreater{}.321). We therefore removed age as a fixed effect in our models. Again, we found no correlation between mothers' age and amount of input provided, and no correlation between number of words produced by the infant and amount of input at 17 months (\emph{p}s \textgreater{}.477). Input quantity was therefore not affected by the infant's language abilities.
+
+\hypertarget{parental-input}{%
+\subsubsection{Parental Input}\label{parental-input}}
+
+\begin{table}[t]
+
+\caption{\label{tab:table-data-summary}Data summary of all three input variables and reported vocabulary size at 18 months.}
+\centering
+\begin{tabular}{ccccccc}
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{2}{c}{No siblings} & \multicolumn{2}{c}{1 sibling} & \multicolumn{2}{c}{2+ siblings} \\
+\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-5} \cmidrule(l{3pt}r{3pt}){6-7}
+Variable & mean & sd & mean & sd & mean & sd\\
+\midrule
+\% early-acquired words in input & 0.84 & 0.12 & 0.84 & 0.08 & 0.78 & 0.13\\
+\% object presence in input & 0.66 & 0.16 & 0.57 & 0.16 & 0.48 & 0.18\\
+N Input utterances, 10-17 months & 60.53 & 106.20 & 59.13 & 85.13 & 30.73 & 45.25\\
+Productive Vocabulary 18m & 58.89 & 60.76 & 92.64 & 111.42 & 13.00 & 9.49\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics{SiblingsStudyText_files/figure-latex/Figure-Speaker-count-1.pdf}
+\caption{\label{fig:Figure-Speaker-count}Mean number of words produced by Mothers, Fathers and Siblings across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means.}
+\end{figure}
+
+Mothers provided the largest proportion of the infants' overall input across the sample (84\%, M=142.79 object words, Mdn=121, SD=118.39). Fathers accounted for an average of 12\% (M=21.16, Mdn=0, SD=47.18), while infants with siblings received around 4\% of their input from their brothers and sisters (M=13.02, Mdn=6, SD=15.81). See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-Speaker-count}. We tested overall quantity of input (aggregated across mothers, fathers, and siblings) in our model, and a significant effect was found (\(\chi^2 (2)\) = 17.91, \emph{p}\textless{} .001). We then ran post-hoc tests to compare mean amount of input across sibling groups. With Bonferroni corrections applied (\(a\)=0.02), these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (\emph{W}=2304, \emph{p}\textless{} .001), while amount of input did not differ between infants with no siblings and those with one sibling (\emph{W}=74016, \emph{p} = .477). On average, infants with no siblings heard 7 more object words in their input than those with one sibling, and 102 more than those with two or more siblings. Infants with one sibling heard 95 more object words than those with two or more siblings.
+
+Next, we tested how much of that input came from siblings (for infants who had siblings), as oppose to adult caregivers. Wilcoxon Rank Sum tests showed no difference between the amount of sibling input received by infants with two or more siblings (\emph{W}=38, \emph{p}=.182, Bonferroni corrections applied). Looking at maternal input only, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (\emph{W}=13, \emph{p}=.001), while there was no difference between those with one vs.~no siblings (\emph{W}=132, \emph{p} = .889).
+
+\hypertarget{early-acquired-words}{%
+\subsubsection{Early-acquired words}\label{early-acquired-words}}
+
+We expected infants with more siblings to hear fewer lexically simple words (i.e.~fewer words that occur on the CDI). We consider this with regard to both amount and proportion of total household input. On average, 82\% of the object words heard in the infants' inputs were lexically simple (Mdn=0.83, SD=0.09). Infants with two or more siblings heard a lower proportion of such words overall (see See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-in-cdi}). Indeed, sibling group accounted for a significant amount of variance on proportion of early-acquired words heard in the input (\(\chi^2 (2)\) = 11.77, \emph{p}=.003). Comparing proportion of early-acquired words in the object words produced by mothers, fathers and siblings in the input, post-hoc Wilcoxon Rank Sum tests showed that infants with two or more siblings heard significantly fewer early-acquired words (\emph{W}=21, \emph{p}=.011), while there was no difference between infants with one vs.~no siblings (\emph{W}=152, \emph{p}=.600, Bonferroni corrections applied). All results were consistent when the same models were run on total number of learnable words heard in the input.
+
+\begin{figure}
+\centering
+\includegraphics{SiblingsStudyText_files/figure-latex/Figure-in-cdi-1.pdf}
+\caption{\label{fig:Figure-in-cdi}Proportion of early-acquired words in the input, across sibling groups. Error bars indicate mean learnable words heard across groups, with bootstrapped 95PC CIs computed over all data. Dots indicate mean number of early-acquired words per infant, collapsed across age and jittered horizontally for visual clarity.}
+\end{figure}
+
+\hypertarget{object-presence}{%
+\subsubsection{Object presence}\label{object-presence}}
+
+\begin{figure}
+\centering
+\includegraphics{SiblingsStudyText_files/figure-latex/Figure-object-presence-1.pdf}
+\caption{\label{fig:Figure-object-presence}Proportion of input words produced with object presence in the input across sibling groups. Error bars and black triangles show 95PC CIs and mean proportion of object presence across sibling groups. Dots indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity.}
+\end{figure}
+
+On average, 62\% of utterances were produced in the presence of the relevant object (Mdn=0.63, SD=0.13). We hypothesized that infants with more siblings would hear fewer words in referentially transparent conditions (i.e.~they would experience lower object presence) than those with fewer siblings. Indeed, modelling the quantity of object present tokens that infants heard, we find a significant effect for sibling group on object presence (\(\chi^2 (2)\) = 32.20, \emph{p}\textless{} .001). See Figure \ref{fig:Figure-object-presence}. Infants with no siblings experienced 20\% more object presence in their input than those with two or more siblings, and 11\% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (\emph{W}=228, \emph{p}=.001, Bonferroni corrections applied). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (\emph{W}=23, \emph{p}=.017). See Table \ref{tab:table-data-summary}.
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+We set out to investigate the nature of infant language development in relation to number of children in the household. Previous research found a delay in lexical acquisition for later-born infants (Fenson et al., 1994; Hoff, 2006), with differences in input across birth order reported as a root cause. Our results add several new dimensions to this, by testing for differences across more vs.~fewer older siblings, and by looking at input in an ecologically valid setting. Infants with more siblings said fewer words by 18 months, heard fewer nouns from their parents, heard fewer lexically simple nouns, and experienced less \enquote{object presence} when hearing them.
+Importantly, and in contrast with some previous research (Hoff-Ginsberg, 1998; Oshima-Takane \& Robbins, 2003), infants with one sibling showed no delay in lexical production, and the differences in input were minimal in comparison to first-born infants. That is, our results suggest that simply having a sibling does not put an infant at an automatic disadvantage in terms of early language development, while having more than one sibling seems to do so. Indeed, infants with zero and one sibling had similar results for productive vocabulary, parental input, and amount of lexically simple input (but not object presence, which we return to below). In contrast, infants with two or more siblings said fewer words and had fewer rates of all of our input measures than their earlier-born peers.
+
+When we considered the effect of sibling status -- that is, whether or not infants had any siblings, disregarding specific sibling number -- our findings showed that having siblings made no difference to infants' lexical production capacities. This contrasts with Hoff-Ginsberg (1998), who found that, by 18 months, laterborns exhibit lower language skills. However, Oshima-Takane and colleagues (1996) found no overall differences between first- and second-born children across a range of language measures taken at 21 months. Our finer-grained results suggest a greater role for \emph{sibling quantity} over first- vs.~later-born status. The more older siblings a child had, the lower their reported productive vocablary at 18 months. This adds to findings from Fenson and colleagues (1994), who found a weak but significant negative correlation between birth order and production of both words and gestures. Controlling for age, our model showed that for each additional older sibling, infants acquired more than 30\% fewer words by 18 months of age.
+
+While infants with more siblings heard less parental input, having one sibling did not significantly reduce an infant's input quantity. This is in direct contrast with numerous reports from the literature; Hoff (2006) states that \enquote{when a sibling is present, each child receives less speech directed solely at\ldots{}her \emph{because mothers produce the same amount of speech whether interacting with one or two children}} (p.67, italics added). While this does not appear to be the case in the present dataset, it might be that second-borns hear less speech directed specifically towards them, but still benefit from the input directed towards their sibling. Indeed, experimental studies have shown that infants can learn novel nouns from overheard speech by 18 months (Floor \& Akhtar, 2006), and that these representations are robust by age two (Akhtar, 2005). In contrast, Ramírez-Esparza and colleagues (2014) show that one-to-one interactions between infant and caregiver promote language development, and that this is more important than absolute quantity of speech. While our results did not account for number of dyadic and multi-speaker interactions, we can imagine that specific one-to-one interactions will be less common in households where caregiver attention is distributed across a number of children. This may account for the larger productive vocabulary of first- or second-born infants in our data when compared with those with two or more siblings: infants with fewer siblings heard a significantly larger amount of household speech, and we can assume that this means more one-to-one interactions with the caregiver, too.
+
+Looking at input to infants with two or more siblings, the picture is strikingly different: these infants heard around 50\% fewer input words in any given session than their first- or second-born peers. The existing language development literature makes a convincing case for the importance of input quantity in regard to lexicon size in early development (Huttenlocher et al., 1991; Ramírez-Esparza et al., 2014), and we see this reflected in our results. From our sample of 44 participants, the infants who heard fewer input words over the 17 months of data collection also had smaller vocabularies by 1;6. These results add a new perspective to the literature on the \enquote{sibling effect}. As far as we are aware, no other studies have considered how amount of parental input differs in relation to more versus fewer siblings - research in this area is limited to analyses of first- versus second-born children. Furthermore, Oshima-Takane and Robbins' (2003) findings contrast with those reported here: in their study of dyadic vs.~triadic interactions between mothers and their children (infant + sibling or infant only), maternal input directed at the infant was lower in the triadic interaction. However, given that their recordings were carried out in a lab setting, their data may not represent the fully naturalistic interactions that we are more likely to expect in home-recorded data: second-born children may have received more linguistic attention in the lab, especially when under experimental conditions.
+
+Infants' exposure to lexically simple words was affected by sibling number; again, infants with more siblings were at a disadvantage overall, but having one sibling did not affect the number of lexically simple words heard in the input compared to zero siblings. This qualitative measure takes into account a number of factors known to be important in early word learning. One such factor is input frequency (Ambridge, Kidd, Rowland, \& Theakston, 2015): the more frequently an infant hears a word, the more likely she is to acquire that form early on. Given that 60\% of over 83,000 noun tokens in the input data matched the 241 object words on the CDI form, we can reliably assume that word repetition was high. Words acquired early in development (and thus included on the CDI form) tend to be learnable in other important ways: they may be phonologically well-suited to infants' early production capacity (e.g.~phonologically simple forms: Laing, 2019, or forms that are pragmatically salient such as sound effects or animal sounds 2014; Vihman, 2016), they may be produced frequently in isolation (e.g.~Mommy, baby; Brent \& Siskind, 2001), or they may be labels for concrete items that are common in the infant's surroundings (e.g.~bottle, mouth; Bergelson \& Swingley, 2012). It is perhaps unsurprising that infants with more siblings tended to hear fewer learnable words in our data: a higher number of older siblings in the household almost tautologically ensures more complex grammatical structures, fewer concrete words, and more pronouns spoken to and by these children (Oshima-takane et al., 1996).
+
+Input disadvantages were most marked in our analysis of object presence. In this case, even having one sibling had a detrimental effect on the amount of word-object pairs presented in the input. Presence of a labelled object with congruent input speech is known to be supportive in early word learning. Gogate and colleagues (2000) highlight the importance of object presence in relation to contingent word production, which supports the learning of novel word-object combinations. They report that \enquote{multimodal motherese} - whereby a target word is produced in syncrony with its referent, often involving movement or touch of the object - supports word learning by demonstrating novel word-object combinations in their infant's input. Lower rates of referential transparency in children's input have also been proposed to explain why common non-nouns like \emph{hi} and \emph{uh-oh} are learned later than concrete nouns (Bergelson \& Swingley, 2013).
+
+Our results indicated a relatively close link between input and early production: children with two or more siblings said the fewest words and heard the lowest quantity and quality input, as determined by our three measures. Equally, infants with 0 or 1 sibling showed similar production levels, parental input, and levels of lexical simplicity in the input. Object presence varied more linearly across sibling quantity, suggesting it may be less important for language learning than our broader measures of input quantity and lexical simplicity. Alternatively, infants' potential for language learning may be sufficiently robust to overcome some input disadvantages.
+
+It remains open whether the overall similarity in the input and output of first- and second-born children stems from the child, or from the caregivers. That is, perhaps parents are able to compensate or provide relatively similar input and learning support for one or two children, but once children outnumber parents, this balancing act of attention, care, and time, becomes unwieldy. This account would predict that (all else equal with regard to socioeconomic variables known to affect the home environment, e.g.~Hoff-Ginsberg, 1998), families with more caregivers (parents, as well as grandparents/aunts and uncles) may foster stronger language development.
+
+Alternatively, second-borns might \enquote{even out} with children with no siblings due to a trade-off between direct attention from the caregiver and the possibility of more sophisticated social-communicative interactions. For these infants there is still ample opportunity to engage with the mother in one-to-one interactions, allowing a higher share of her attention than is available to third- or later-borns. Furthermore, triadic interactions can benefit the development of a number of linguistic and communication skills (Barton \& Tomasello, 1991; Dunn \& Shatz, 1989). Second-borns may also benefit from overheard speech in their input, supporting the acquisition of nouns and even more complex lexical categories (Floor \& Akhtar, 2006; Oshima-takane et al., 1996). For infants with one sibling, the benefits of observing/overhearing interactions between sibling and caregiver, as well as the possibility for partaking in such interactions, may outweigh the minimal disadvantages in input (in our data, only observed in object presence). Having more than one sibling may throw this off-balance, however, to present a learning environment that is less supportive overall.
+
+Importantly, the present results make no claims about eventual outcomes for these children: generally speaking, regardless of sibling number, all typically-developing infants generally reach full and fluent language use. Indeed, some research suggests that sibling effects, while they may be clear in early development, are not always sustained into childhood; e.g.~twins are known to experience a delay in language development into the third year, but are quick to catch up thereafter (Dales, 1969; Tomasello, Mannle, \& Kruger, 1986). This demonstrates the cognitive adaptability of early development, which brings about the acquisition of language across varying and allegedly \enquote{imperfect} learning environments. Infants' capacity to develop linguistic skills from the resources that are available to them -- whether that is infant-directed object labels or overheard abstract concepts -- highlights the dynamic and adaptable nature of early cognitive development, and a system that is sufficiently robust to bring about the same outcome across populations.
+
+Of course, the \enquote{success} of early language development is defined by the goals that we set in this domain. Here we chose word production as our measure of linguistic capability; we did not consider other, equally valid measures such as language comprehension or early social-interaction skills. Similarly, our input measures focused on nouns; other lexical classes may reveal different effects, though they are generally sparser until toddlerhood. Finally, more work across wider and larger populations is necessary to unpack the generalizability of the present results. Our sample is refelective of household sizes in middle-class families across North America and Western Europe (Office for National Statistics, 2018; United States Census Bureau, 2010), but it is not unusual in the Middle East and parts of Sub-Saharan Africa for couples to have between three and six children in their household on average (Institute for Family Studies \& Wheatley Institution, 2019). Adding to this, it is also necessary to consider cross-cultural differences in the way children are addressed by their parents. In a study of the early input experienced by children growing up in a Tseltal Mayan village, Casillas, Brown and Levinson (2019) found that almost all of children's input came from speech directed at other people (21 minutes per hour, compared with just under 4 minutes/hour of specifically child-directed input). However, they did not hear much input from siblings, which contrasts with findings from Shneidman and Goldin-Meadow (2012), who found that 69\% of speech directed at Mayan children came from their siblings (in comparison with 10\% for children in the USA).
+
+In conclusion, our results support the general findings from the literature showing a disadvantage in lexical acquisition for later-born infants in relation to their first-born peers. However, we highlight an important difference from previous findings, namely that in the present sample, second-born infants are at no disadvantage overall, while infants with more than two siblings are. We related this directly to the infants' input over a period of one year: infants' productive vocabulary was reflective of the input quality in their home environment, and both were influenced by sibling number. As reported in longitudinal studies mapping early language outcomes with later educational success (Lee, 2011; Marchman \& Fernald, 2008), the differences we observe in the early input here may have longer-term implications for children born into households with more older children. As has been noted in studies across a range of domains (e.g.~Esposito et al., 2020; Kantarevic \& Mechoulan, 2006), higher sibling number may have a detrimental effect across the lifespan. These finding point to the potential importance of the early language environment, which may be a key factor in the broader research that shows the \enquote{sibling effect} to have negative economic and social implications.
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-akhtar_robustness_2005}{}%
+Akhtar, N. (2005). The robustness of learning through overhearing. \emph{Developmental Science}, \emph{8}(2), 199--209. \url{https://doi.org/10.1111/j.1467-7687.2005.00406.x}
+
+\leavevmode\hypertarget{ref-ambridge_ubiquity_2015}{}%
+Ambridge, B., Kidd, E., Rowland, C. F., \& Theakston, A. L. (2015). The ubiquity of frequency effects in first language acquisition. \emph{Journal of Child Language}, \emph{42}(2), 239--273.
+
+\leavevmode\hypertarget{ref-anderson_vocabulary_1981}{}%
+Anderson, R. C., \& Freebody, P. (1981). Vocabulary knowledge. In \emph{In t. Guthrie (ed.), comprehension and teaching: Research reviews} (pp. 77--117). Newark, DE: International Reading Association.
+
+\leavevmode\hypertarget{ref-azar_are_2010}{}%
+Azar, B. (2010). Are your findings WEIRD? \emph{American Psychological Association}, \emph{41}(5), 11. Retrieved from \url{https://www.apa.org/monitor/2010/05/weird}
+
+\leavevmode\hypertarget{ref-barton_joint_1991}{}%
+Barton, M. E., \& Tomasello, M. (1991). Joint attention and conversation in mother-infant-sibling triads, \emph{62}(3), 517--529.
+
+\leavevmode\hypertarget{ref-behrman_birth_1986}{}%
+Behrman, J. R., \& Taubman, P. (1986). Birth order, schooling, and earnings. \emph{Journal of Labor Economics}, \emph{4}(3), S121--S145. Retrieved from \url{https://www.jstor.org/stable/2534958}
+
+\leavevmode\hypertarget{ref-bergelson_day_2019}{}%
+Bergelson, E., Amatuni, A., Dailey, S., Koorathota, S., \& Tor, S. (2019). Day by day, hour by hour: Naturalistic language input to infants. \emph{Developmental Science}, \emph{22}(1), e12715. \url{https://doi.org/10.1111/desc.12715}
+
+\leavevmode\hypertarget{ref-bergelson_at_2012}{}%
+Bergelson, E., \& Swingley, D. (2012). At 6-9 months, human infants know the meanings of many common nouns. \emph{Proceedings of the National Academy of Sciences}. \url{https://doi.org/10.1073/pnas.1113380109}
+
+\leavevmode\hypertarget{ref-bergelson_acquisition_2013}{}%
+Bergelson, E., \& Swingley, D. (2013). The acquisition of abstract words by young infants. \emph{Cognition}, \emph{127}(3), 391--397. \url{https://doi.org/10.1038/jid.2014.371}
+
+\leavevmode\hypertarget{ref-berglund_communicative_2005}{}%
+Berglund, E., Eriksson, M., \& Westerlund, M. (2005). Communicative skills in relation to gender, birth order, childcare and socioeconomic status in 18-month-old children. \emph{Scandinavian Journal of Psychology}, \emph{46}(6), 485--491. \url{https://doi.org/10.1111/j.1467-9450.2005.00480.x}
+
+\leavevmode\hypertarget{ref-black_healthy_2016}{}%
+Black, S. E., Devereux, P. J., \& Salvanes, K. G. (2016). Healthy(?), Wealthy, and wise: Birth order and adult health. \emph{Economics \& Human Biology}, \emph{23}, 27--45. \url{https://doi.org/10.1016/j.ehb.2016.06.005}
+
+\leavevmode\hypertarget{ref-brent_role_2001}{}%
+Brent, M. R., \& Siskind, J. M. (2001). The role of exposure to isolated words in early vocabulary development. \emph{Cognition}, \emph{81}(2), 33--44. \url{https://doi.org/10.1016/S0010-0277(01)00122-6}
+
+\leavevmode\hypertarget{ref-cartmill_quality_2013}{}%
+Cartmill, E. a, Armstrong, B. F., Gleitman, L. R., Goldin-Meadow, S., Medina, T. N., \& Trueswell, J. C. (2013). Quality of early parent input predicts child vocabulary 3 years later. \emph{Proceedings of the National Academy of Sciences of the United States of America}. \url{https://doi.org/10.1073/pnas.1309518110}
+
+\leavevmode\hypertarget{ref-casillas_early_2019}{}%
+Casillas, M., Brown, P., \& Levinson, S. C. (2019). Early language experience in a tseltal mayan village. \emph{Child Development}, \emph{EarlyView article}. \url{https://doi.org/10.1111/cdev.13349}
+
+\leavevmode\hypertarget{ref-dales_motor_1969}{}%
+Dales, R. J. (1969). Motor and language development of twins during the first three years. \emph{The Journal of Genetic Psychology; Provincetown, Mass., Etc.}, \emph{114}(2), 263--271. Retrieved from \url{https://search.proquest.com/docview/1297124434/citation/D928716F9A7E4AEFPQ/1}
+
+\leavevmode\hypertarget{ref-dunn_becoming_1989}{}%
+Dunn, J., \& Shatz, M. (1989). Becoming a conversationalist despite (or because of) having an older sibling. \emph{Child Development}, \emph{60}(2), 399--410.
+
+\leavevmode\hypertarget{ref-esposito_importance_2020}{}%
+Esposito, L., Kumar, S. M., \& Villaseñor, A. (2020). The importance of being earliest: Birth order and educational outcomes along the socioeconomic ladder in mexico. \emph{Journal of Population Economics}. \url{https://doi.org/10.1007/s00148-019-00764-3}
+
+\leavevmode\hypertarget{ref-fenson_variability_1994}{}%
+Fenson, L., Dale, P. S., Reznick, J. S., Bates, E., Thal, D. J., Pethick, M., Stephen J. Tomasello, \ldots{} Stiles, J. (1994). Variability in early communicative development. \emph{Monographs of the Society for Research in Child Development}, \emph{59}. \url{https://doi.org/10.2307/1166093}
+
+\leavevmode\hypertarget{ref-fenson_macarthur-bates_2007}{}%
+Fenson, L., Marchman, V. A., Thal, D. J., Dale, P. S., Reznick, J. S., \& Bates, E. (2007). \emph{MacArthur-bates communicative development inventories} (2nd ed.). Baltimore, MD: Paul H. Brookes Publishing Co.
+
+\leavevmode\hypertarget{ref-ferjan_ramirez_parent_2020}{}%
+Ferjan Ramírez, N., Lytle, S. R., \& Kuhl, P. K. (2020). Parent coaching increases conversational turns and advances infant language development. \emph{Proceedings of the National Academy of Sciences}, 201921653. \url{https://doi.org/10.1073/pnas.1921653117}
+
+\leavevmode\hypertarget{ref-floor_can_2006}{}%
+Floor, P., \& Akhtar, N. (2006). Can 18-month-old infants learn words by listening in on conversations? \emph{Infancy}, \emph{9}(3), 327--339. \url{https://doi.org/10.1207/s15327078in0903_4}
+
+\leavevmode\hypertarget{ref-galton_english_1874}{}%
+Galton, F. (1874). \emph{English men of science: Their nature and nurture}. London: MacMillan.
+
+\leavevmode\hypertarget{ref-gleitman_hard_2005}{}%
+Gleitman, L. R., Cassidy, K., Nappa, R., Papafragou, A., \& Trueswell, J. C. (2005). Hard words. \emph{Language Learning and Development}, \emph{1}(1), 23--64. \url{https://doi.org/10.1207/s15473341lld0101_4}
+
+\leavevmode\hypertarget{ref-gogate_study_2000}{}%
+Gogate, L. J., Bahrick, L. E., \& Watson, J. D. (2000). A study of multimodal motherese: The role of temporal synchrony between verbal labels and gestures. \emph{Child Development}, \emph{71}(4), 878--894. \url{https://doi.org/10.1111/1467-8624.00197}
+
+\leavevmode\hypertarget{ref-hoff_how_2006}{}%
+Hoff, E. (2006). How social contexts support and shape language development. \emph{Developmental Review}, \emph{26}(1), 55--88. \url{https://doi.org/10.1016/j.dr.2005.11.002}
+
+\leavevmode\hypertarget{ref-hoff-ginsberg_mother-child_1991}{}%
+Hoff-Ginsberg, E. (1991). Mother-child conversation in different social classes and communicative settings. \emph{Child Development}, \emph{62}(4), 782--796. \url{https://doi.org/10.2307/1131177}
+
+\leavevmode\hypertarget{ref-hoff-ginsberg_relation_1998}{}%
+Hoff-Ginsberg, E. (1998). The relation of birth order and socioeconomic status to children's language experience and language development. \emph{Applied Psycholinguistics}, \emph{19}(4), 603--629. \url{https://doi.org/10.1017/S0142716400010389}
+
+\leavevmode\hypertarget{ref-hoff-ginsberg_older_1991}{}%
+Hoff-Ginsberg, E., \& Krueger, W. M. (1991). Older siblings as conversational partners, \emph{37}(3), 465--481.
+
+\leavevmode\hypertarget{ref-huttenlocher_early_1991}{}%
+Huttenlocher, J., Haight, W., Bryk, A., Seltzer, M., \& Lyons, T. (1991). Early vocabcabulary growth: Relation to language input and gender. \emph{Developmental Psychology}, \emph{27}(2), 236--248.
+
+\leavevmode\hypertarget{ref-institute_for_family_studies_world_2019}{}%
+Institute for Family Studies, \& Wheatley Institution. (2019). \emph{World family map 2019: Mapping family change and child well-being outcomes}. Charlottesville, VA: Institute for Family Studies. Retrieved from \url{https://ifstudies.org/reports/world-family-map/2019/executive-summary}
+
+\leavevmode\hypertarget{ref-jones_language_1987}{}%
+Jones, C. P., \& Adamson, L. B. (1987). Language use in mother-child and mother-child-sibling interactions, \emph{58}(2), 356--366.
+
+\leavevmode\hypertarget{ref-kantarevic_birth_2006}{}%
+Kantarevic, J., \& Mechoulan, S. (2006). Birth order, educational attainment, and earnings: An investigation using the PSID. \emph{Journal of Human Resources}, \emph{XLI}(4), 755--777. \url{https://doi.org/10.3368/jhr.XLI.4.755}
+
+\leavevmode\hypertarget{ref-kuznetsova_lmertest_2017}{}%
+Kuznetsova, A., Brockhoff, P. B., \& Christensen, R. H. B. (2017). \{lmerTest\} package: Tests in linear mixed effects models. \emph{Journal of Statistical Software}, \emph{82}(13), 1--26. \url{https://doi.org/10.18637/jss.v082.i13}
+
+\leavevmode\hypertarget{ref-laing_phonological_2014}{}%
+Laing, C. E. (2014). A phonological analysis of onomatopoeia in early word production. \emph{First Language}, \emph{34}, 387--405. \url{https://doi.org/10.1177/0142723714550110}
+
+\leavevmode\hypertarget{ref-laing_phonological_2019}{}%
+Laing, C. E. (2019). Phonological motivation for the acquisition of onomatopoeia: An analysis of early words. \emph{Language Learning and Development}, \emph{15}(2), 177--197. \url{https://doi.org/10.1080/15475441.2019.1577138}
+
+\leavevmode\hypertarget{ref-lee_size_2011}{}%
+Lee, J. (2011). Size matters: Early vocabulary as a predictor of language and literacy competence. \emph{Applied Psycholinguistics}, \emph{32}(1), 69--92. \url{https://doi.org/10.1017/S0142716410000299}
+
+\leavevmode\hypertarget{ref-marchman_speed_2008}{}%
+Marchman, V. A., \& Fernald, A. (2008). Speed of word recognition and vocabulary knowledge in infancy predict cognitive and language outcomes in later childhood. \emph{Developmental Science}, \emph{11}(3), F9--F16. \url{https://doi.org/10.1111/j.1467-7687.2008.00671.x}
+
+\leavevmode\hypertarget{ref-monfardini_birth_2016}{}%
+Monfardini, C., \& See, S. G. (2016). Birth order and child cognitive outcomes: An exploration of the parental time mechanism. \emph{Education Economics}, \emph{24}(5), 481--495. \url{https://doi.org/10.1080/09645292.2015.1117581}
+
+\leavevmode\hypertarget{ref-office_for_national_statistics_families_2018}{}%
+Office for National Statistics. (2018). \emph{Families with dependent children by number of children, UK, 1996 to 2017} (No. 008855). Office for National Statistics. Retrieved from \url{https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/families/adhocs/008855familieswithdependentchildrenbynumberofchildrenuk1996to2017}
+
+\leavevmode\hypertarget{ref-oshima-takane_birth_1996}{}%
+Oshima-takane, Y., Goodz, E., \& Derevensky, J. L. (1996). Birth order effects on early language development : Do secondborn children learn from overheard speech ? Author ( s ): Yuriko oshima-takane , elizabeth goodz and jeffrey l . Derevensky published by : Wiley on behalf of the society for research in child de, \emph{67}(2), 621--634.
+
+\leavevmode\hypertarget{ref-oshima-takane_linguistic_2003}{}%
+Oshima-Takane, Y., \& Robbins, M. (2003). Linguistic environment of secondborn children. \emph{First Language}, \emph{23}(1), 21--40. \url{https://doi.org/http://dx.doi.org/10.1177/0142723703023001002}
+
+\leavevmode\hypertarget{ref-pine_variation_1995}{}%
+Pine, J. M. (1995). Variation in vocabulary development as a function of birth order. \emph{Child Development}, \emph{66}(1), 272--281.
+
+\leavevmode\hypertarget{ref-ramirez-esparza_look_2014}{}%
+Ramírez-Esparza, N., García-Sierra, A., \& Kuhl, P. K. (2014). Look who's talking: Speech style and social context in language input to infants are linked to concurrent and future speech development. \emph{Developmental Science}, \emph{17}(6), 880--891. \url{https://doi.org/10.1016/j.surg.2006.10.010.Use}
+
+\leavevmode\hypertarget{ref-r_core_team_r_2019}{}%
+R Core Team. (2019). \emph{R: A language environment for statistical computing}. R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
+
+\leavevmode\hypertarget{ref-shneidman_language_2012}{}%
+Shneidman, L. A., \& Goldin‐Meadow, S. (2012). Language input and acquisition in a mayan village: How important is directed speech? \emph{Developmental Science}, \emph{15}(5), 659--673. \url{https://doi.org/10.1111/j.1467-7687.2012.01168.x}
+
+\leavevmode\hypertarget{ref-soderstrom_beyond_2007}{}%
+Soderstrom, M. (2007). Beyond babytalk: Re-evaluating the nature and content of speech input to preverbal infants. \emph{Developmental Review}, \emph{27}(4), 501--532. \url{https://doi.org/10.1016/j.dr.2007.06.002}
+
+\leavevmode\hypertarget{ref-stafford_maternal_1987}{}%
+Stafford, L. (1987). Maternal input to twin and singleton children implications for language acquisition. \emph{Human Communication Research}, \emph{13}(4), 429--462. \url{https://doi.org/10.1111/j.1468-2958.1987.tb00114.x}
+
+\leavevmode\hypertarget{ref-stern_prosody_1983}{}%
+Stern, D. N., Spieker, S., Barnett, R. K., \& MacKain, K. (1983). The prosody of maternal speech: Infant age and context related changes. \emph{Journal of Child Language}, \emph{10}(1), 1--15. \url{https://doi.org/10.1017/S0305000900005092}
+
+\leavevmode\hypertarget{ref-tomasello_linguistic_1986}{}%
+Tomasello, M., Mannle, S., \& Kruger, A. C. (1986). Linguistic environment of 1- to 2-year-old twins. \emph{Developmental Psychology}, \emph{22}(2), 169--176. \url{https://doi.org/10.1037/0012-1649.22.2.169}
+
+\leavevmode\hypertarget{ref-united_states_census_bureau_household_2010}{}%
+United States Census Bureau. (2010). \emph{Household type by number of people under 18 years} (No. PCT16). Retrieved from \url{https://data.census.gov/cedsci/table?q=number\%20of\%20children\&hidePreview=false\&tid=DECENNIALSF12010.PCT16\&t=Children\&vintage=2018}
+
+\leavevmode\hypertarget{ref-vihman_prosodic_2016}{}%
+Vihman, M. M. (2016). Prosodic structures and templates in bilingual phonological development. \emph{Bilingualism: Language and Cognition}, \emph{19}(January), 69--88. \url{https://doi.org/10.1017/S1366728914000790}
+
+\leavevmode\hypertarget{ref-wellen_effects_1985}{}%
+Wellen, C. J. (1985). Effects of older siblings on the language young children hear and produce. \emph{Journal of Speech and Hearing Disorders}, \emph{50}(1), 84--99. \url{https://doi.org/10.1044/jshd.5001.84}
+
+\leavevmode\hypertarget{ref-woollett_influence_1986}{}%
+Woollett, A. (1986). The influence of older siblings on the language environment of young children. \emph{British Journal of Developmental Psychology}, \emph{4}, 235--245.
+
+\leavevmode\hypertarget{ref-zambrana_impact_2012}{}%
+Zambrana, I. M., Ystrom, E., \& Pons, F. (2012). Impact of gender, maternal education, and birth order on the development of language comprehension: A longitudinal study from 18 to 36 months of age. \emph{Journal of Developmental \& Behavioral Pediatrics}, \emph{33}(2), 146--155. \url{https://doi.org/10.1097/DBP.0b013e31823d4f83}
+
+\endgroup
+
+
+\end{document}

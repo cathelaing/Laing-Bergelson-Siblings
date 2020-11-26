@@ -1,0 +1,23 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+\begin{center}
+\begin{threeparttable}
+\caption{\label{tab:table-sibling-number}Sibling number by female and male infants.}
+\small{
+\begin{tabular}{llll}
+\toprule
+n Siblings & \multicolumn{1}{c}{Female} & \multicolumn{1}{c}{Male} & \multicolumn{1}{c}{Total}\\
+\midrule
+0 & 9 & 12 & 21\\
+1 & 8 & 6 & 14\\
+2 & 2 & 3 & 5\\
+3 & 2 & 0 & 2\\
+4 & 0 & 2 & 2\\
+Total & 21 & 23 & 44\\
+\bottomrule
+\end{tabular}
+}
+\end{threeparttable}
+\end{center}
+\end{table*}
