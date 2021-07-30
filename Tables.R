@@ -60,10 +60,10 @@ table.data.summary.sd <- rbind(table.data.summary.sibgroup, table.data.summary.s
          "2 sd" = "2+")
 
 table.data.summary <- table.data.summary.mean %>% left_join(table.data.summary.sd) %>%
-  select(Variable, `none m`, `none sd`, `1 m`, `1 sd`, `2 m`, `2 sd`) %>%
-  rename("mean" = "none m",
-         "sd" = "none sd",
-         "mean" = "1 m",
-         "sd" = "1 sd",
-         "mean" = "2 m",
-         "sd" = "2 sd")
+  select(Variable, `none m`, `none sd`, `1 m`, `1 sd`, `2 m`, `2 sd`)# %>%
+  # rename("mean" = "none m",
+  #        "sd" = "none sd",
+  #        "mean" = "1 m",
+  #        "sd" = "1 sd",
+  #        "mean" = "2 m",
+  #        "sd" = "2 sd")
