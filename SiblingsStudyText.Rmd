@@ -130,6 +130,7 @@ firstword <- CDI %>% group_by(subj) %>%
 
 **Parental report data** The present analyses draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`)[^1], we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development over the course of the analysis period.
 <!-- eb2cl: is that first word from CDI or from home recordings? basd on our point walk talk study, this differed by a coupla months depending on how it was calculated, but i'm assuming it's CDI since that's what you report below! -->
+<!-- cl2eb: yes but have clarified and added note about Moore et al paper -->
 
 **Home video data** Every month between 0;6 and 1;5, infants were recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this allowed us to record the scene from the infants’ perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder was set up in the home. Object words (i.e. concrete nouns) deemed to be directed to or attended by the child were annotated by trained coders. Here we examine annotations for speaker, i.e. who produced a word, and object presence, i.e. whether the word’s referent was present and attended to by the infant.
 
@@ -154,22 +155,40 @@ maxsib <- sibage$maxdays/365
 
 We analyzed number of siblings based on parental report in the demographics questionnaires completed at 0;6 (R: `r sibnums$minsibs`-`r sibnums$maxsibs`). Siblings were on average `r age.diff.inyears` years older than the infants in this study (Mdn days: `r sibage$mediandays`, SD: `r round(sibage$sddays,0)`, R: `r minsib`-`r round(maxsib,0)` years).[^1] All siblings lived in the household with the infant, and all were older than or of the same age as the infant in question.[^2] 
 <!-- eb2cl: median and sd being identical is suspicious -->
+<!-- cl2eb: I know, and I've checked this and it looks like it's correct. Maybe due to massive range? -->
+
 <!-- eb2cl: is footnote 2 bolded to remind you to check this perhaps? -->
+<!-- cl2eb: possibly! Could you remind me which subj number the twins were? -->
+
 ## Input measures
 
-Three input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to aspects of the input that are established as important in early language learning: **overall parental input** (how many concrete nouns does each infant hear?), **early-acquired words** (how much of this input is *early-learned* nouns?), and **object presence** (how much of this input is referentially transparent?). Each is described in further detail below.
-e2cl: good to add ref's above or below
+Three input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to aspects of the input that are established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear?), **early-acquired words** (how much of this input is *early-learned* nouns?), and **object presence** (how much of this input is referentially transparent?). Each is described in further detail below.
+<!-- e2cl: good to add ref's above or below -->
 
-*Parental Input* reflects how many object words infants heard in the recordings from their mother and father (where relevant, we also calculated sibling input). Other speakers’ input was relatively rare during video recordings, and is excluded from our analysis. This allows us to measure differences in amount of input received across infants, according to sibling number. A consideration of object words only - as oppose to overall input heard during the session - allows us to compare the amount of 'content-full' input heard by the child within a given session, and so to a certain extent controls for the **quality** of input across infants.
+```{r other speaker input, include=FALSE}
+
+other.speaker.data <- 
+  speaker.type.n %>% 
+  mutate(other.speakers = All.speakers - Family.input,
+         prop.other = other.speakers/All.speakers) %>%
+  summarise(PC.other.m = mean(prop.other),
+            PC.other.sd = sd(prop.other))
+
+```
+
+*Household Input* reflects how many nouns infants heard in the recordings from their mother, father and (where relevant) siblings.  Other speakers’ input was relatively rare during video recordings, accounting for `r other.speaker.data$PC.other.m`% of input overall (SD=`r other.speaker.data$PC.other.sd`, and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size [@anderson_linking_2021]. This analysis considers only nouns produced by speakers in the child's environment, as concrete nouns are acquired earlier in development in English and cross-linguistically [@braginsky_consistency_2019]. Note that Bulgarelli and Bergelson [-@bulgarelli_look_2020] found that, for the same corpus of data, noun production correlated strongly with automated adult word count estimates; we can thus assume that higher noun count in this data indicates higher input across the board.
 <!-- eb2cl: hm it's weird to call this 'overall parental input' and then say it also includes sibling input; same applies to the other categories -->
 <!-- we should probably indicate what percent of data came from other speakers and is thus excluded -->
 <!-- eb2cl: i don't follow the last sentence here. there's some stuff in bulgarelli&bergelson BRM showing how amount of nouns correlates with amount of language/speech input overall you can cite -->
+<!-- cl2eb: ok, sorted! -->
 
-*Early-acquired words* reflects the proportion of object word lemmas in the parental input that appeared on the “Words & Gestures” communicative development inventory [CDI, @fenson_variability_1994]. This CDI form offers an inventory of words typically acquired by infants from the United States between the ages of 8 and 18 months [@fenson_macarthur-bates_2007]. The CDI items were established based on a sample of over 1,700 infants (~50% firstborn, 73% White, 44% of mothers with a college diploma), and so the CDI is taken as a standardized proxy of words typically acquired by infants in early development. Words found on the CDI are, by definition, early-learned, though somewhat variable in their age of acquisition and in the reasons underlying their learnability. Thus, CDI words like *foot* and *banana* are acquired earlier than non-CDI words like *jet ski* or *wheel*, though many factors (e.g. frequency, concreteness, phonological complexity) contribute to this. 
+*Early-acquired words* reflects the proportion of object word lemmas in the parental input that appeared on the “Words & Gestures” communicative development inventory [CDI, @fenson_variability_1994]. This CDI form offers an inventory of words typically acquired by infants from the United States between the ages of 8 and 18 months [@fenson_macarthur-bates_2007]. The CDI items were established based on a sample of over 1,700 infants (~50% firstborn, 73% White, 44% of mothers with a college diploma), and so the CDI is taken as a standardized proxy of words typically acquired by infants in early development. Words found on the CDI are, by definition, early-learned, though somewhat variable in their age of acquisition and in the reasons underlying their learnability. Thus, CDI words like *foot* and *banana* are acquired earlier than non-CDI words like *jet ski* or *wheel*. Frank and colleagues [-@frank_variability_2021] show that the earliest-learned words are very similar across languages, suggesting a conceptual bias towards some words over others in early acquisition (though many factors, e.g. frequency, concreteness, phonological complexity, are relevant as well). Note also that our measure of early-acquired words in the input is the same as our measure of infant vocabulary development (i.e., the CDI wordlist), and so captures broad parallels between the words parents say and the words their infants are reported to have acquired.
 <!-- eb2cl: add cite to Frank et al wordbank book? they might also say more about item selection -->
+<!-- cl2eb: added a short bit but it's maybe not directly relevant. Though it occured to me that it probably IS relevant that we are determining language ability via the CDI. Lmk if what I've added in the final sentence works/doesn't work -->
 
-*Object Presence* was coded for each object word in the home recordings based on whether or not the annotator determined the object in question as present and attended to by the child. This is a metric of referential transparency, which has been suggested to aid in learning [@bergelson_acquisition_2013].
+*Object Presence* was coded for each object word in the home recordings based on whether or not the annotator determined the object in question as present and attended to by the child. This is a metric of referential transparency, which has been suggested to aid in learning [@bergelson_acquisition_2013]. Bergelson and Aslin [@bergelson_nature_2017] found that word-object co-presence in the home correlated with infants' ability to recognise the same words in an eye-tracking experiment, suggesting an advantage for object labeling in word learning. This is consistent with findings from Cartmill and colleagues [-@cartmill_quality_2013], who found that more referentially-transparent interactions with the caregiver (as judged by adult speakers observing videos where target words were blanked out) predicted larger vocabulary size at 54 months. Indeed, presence of the labelled object decreases the ambiguity of the learning environment [@yurovsky_statistical_2013], and may be a crucial component of supportive contingent talk [@mcgillion_randomised_2017].
 <!-- eb2cl: also cite bergelson&aslin 2017 pnas, cartmill et al, yurovsky et al, matthews et al's 'contingency' is similar too-->
+<!-- cl2eb: fab, thank you! These are all v helpful! -->
 
 In the following analyses, we consider infants’ productive vocabulary alongside quantity of nouns in their input, number of early-acquired nouns, and extent of object presence in the input, as a function of sibling number. Since the raw data are highly skewed, log-transformed data[^3]  and/or proportions are used for statistical analysis. All figures display non-transformed data for interpretive ease. 
 <!-- eb2cl: i feel like we implied we'd look at quality and quantity but never quite make the link between what exactly we're calling our stuff. honestly i would say these measures are a combo of quality and quantity proxies but we should be clear on that -->
@@ -877,7 +896,7 @@ In conclusion, our results support the general findings from the literature show
 
 [^2]: For six infants, siblings' exact birthdates were not provided, and so age difference was estimated by subtracting the infant's age (6 months) from the sibling's age in years, as listed on the questionnaire (e.g. if a sibling was 5 years old, they were classed as being 4.5 years older than the infant).
 
-[^3]: Two infants in the dataset were dizygotic twins; **our pattern of results holds with or without these infants**.
+[^3]: Two infants in the dataset were dizygotic twins; our pattern of results holds with or without these infants.
 
 [^4]: 1 was added to the raw infant production data of all infants before log-transformation to retain infants with vocabularies of 0.
 
