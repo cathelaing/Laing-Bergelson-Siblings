@@ -17,7 +17,7 @@ library(forcats)
 
 # work from basic levels spreadsheet
 
-sibsdata <- read_feather("Data/basic_levels_Mar1518.feather") %>%
+sibsdata <- read_csv("Data/all_basiclevel_NA_randsubj.csv") %>%
   filter(audio_video =='video',   # Only use video data
          speaker != 'CHI') %>%    # remove infant productions
   dplyr::select(
@@ -30,10 +30,8 @@ sibsdata <- read_feather("Data/basic_levels_Mar1518.feather") %>%
   mutate(basic_level = str_to_lower(basic_level),
          speaker = factor(speaker),
          speaker = fct_collapse(speaker,
-                                "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2"),  # rename speakers
-                                "TV" = c("TVN", "TVB", "TVM", "TVS")),
-         subj = factor(subj)) %>% 
-  filter(speaker %in% c("TV", "TOY", "MOT", "FAT", "SIBLING"))                               # Remove other speakers from data
+                                "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2")),  # rename speakers
+         subj = factor(subj))
 
 wordlist <- read_csv("Data/in_cdi_Wordlist.csv") # Read in CDI wordlist that matches sibsdata$basic_level with words on the CDI
 
@@ -41,9 +39,10 @@ wordlist <- read_csv("Data/in_cdi_Wordlist.csv") # Read in CDI wordlist that mat
 ## Utterance type: What kinds of utterances occur in the infants' inputs?
 
 utterance.type.n <- sibsdata %>%
+  filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
   filter(utterance_type %in%
-           c("d", "i", "n", "q", "r", "s", "u")) %>%
-  group_by(subj, month, utterance_type) %>%
+           c("d", "i", "n", "q", "r", "s", "u"))  %>% 
+    group_by(subj, month, utterance_type) %>%
   tally() %>%
   spread(utterance_type, n) %>%
   ungroup() %>%
@@ -93,6 +92,7 @@ utterance.type <- utterance.type.n %>%
 ## Object presence: How much caregiver input relates to objects that are present in the infant's environment?
 
 object.presence <- sibsdata %>%
+  filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
   filter(object_present %in%
            c("y", "n")) %>%
   group_by(subj, month, object_present) %>%
@@ -116,33 +116,18 @@ speaker.type.n <- sibsdata %>%
   group_by(subj, month, speaker) %>%
   tally() %>%
   spread(speaker, n) %>%
-  ungroup() %>%
+  dplyr::select(-contains("TV"), -TOY) %>%
   replace(is.na(.), 0) %>%
-  mutate(Total.input = (MOT + FAT + SIBLING))#,
-         # PCMOT = MOT/Total.input,
-         # PCFAT = FAT/Total.input,
-         # PCSIB = SIBLING/Total.input,
-         # PCTV = TV/Total.input,
-         # PCTOY = TOY/Total.input)
-
-# speaker.type.PC <- speaker.type.n %>% ### not actually sure I need this PC measure after all
-#   dplyr::select(subj, month, PCMOT, PCFAT, PCSIB, PCTOY, PCTV) %>%
-#   gather(`PCMOT`,`PCFAT`, `PCSIB`, `PCTV`, `PCTOY`, 
-#          key = "Speaker", 
-#          value = "PC") %>%
-#   mutate(Speaker = fct_recode(Speaker,
-#          "MOT" = "PCMOT",
-#          "FAT" = "PCFAT",
-#          "SIBLING" = "PCSIB",
-#          "TV" = "PCTV",
-#          "TOY" = "PCTOY"))
-
+  rowwise() %>%
+  mutate(All.speakers = sum(c_across(AF3:UNC))) %>%
+  ungroup() %>%
+  mutate(Family.input = (MOT + FAT + SIBLING)) %>%
+  dplyr::select(subj, month, MOT, FAT, SIBLING, Family.input, All.speakers)
+  
 speaker.type <- speaker.type.n %>%
-  dplyr::select(subj, month, MOT, FAT, SIBLING, Total.input) %>%
   gather(`MOT`,`FAT`, `SIBLING`, 
          key = "Speaker", 
          value = "n") %>% 
-  #left_join(speaker.type.PC) %>%
   left_join(demographics) %>%
   mutate(Log.n = log(n+1))
 

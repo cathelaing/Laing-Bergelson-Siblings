@@ -22,7 +22,7 @@ CDI <- read_csv("Data/CDI.csv") %>%
   mutate(Log.Totalwords = log(Total.words+1)) %>%
   select(subj, month, Total.words, Log.Totalwords)
 
-chidata <- read_feather("Data/basic_levels_Mar1518.feather") %>%   # Read in basic levels data and then join with CDI data to create a dataset of infant production
+chidata <- read_csv("Data/all_basiclevel_NA_randsubj.csv") %>%   # Read in basic levels data and then join with CDI data to create a dataset of infant production
   filter(speaker == 'CHI') %>%
   dplyr::select(
     basic_level, 

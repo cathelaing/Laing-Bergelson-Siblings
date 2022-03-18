@@ -7,13 +7,13 @@ author:
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
     address       : "Centre for Language and Communication Research, School of English, Communication and Philosohpy, Cardiff University, Colum Drive, Cardiff, UK, CF10 3EU"
-    email         : "catherine.laing@cardiff.ac.uk"
+    email         : "catherine.laing@york.ac.uk"
   - name          : "Elika Bergelson"
     affiliation   : "2"
 
 affiliation:
   - id            : "1"
-    institution   : "Cardiff University, Cardiff, UK"
+    institution   : "University of York, York, UK"
   - id            : "2"
     institution   : "Duke University, Durham, NC, USA"
 
@@ -94,11 +94,12 @@ In analyzing infants' lexical development in relation to the presence of older s
 
 Research has already shown that early lexical development is more advanced among first-born infants [e.g. @hoff-ginsberg_relation_1998]. We expect to see the same effect in our data, but we hypothesize that the closer granularity of this analysis will show a gradient decline in infants’ lexical abilities in relation to an increasing number of siblings. 
 <!-- eb2cl: not clear everyone would agree that these are all input quality measures vs. quant or a mix; not sure we need to stake a claim on that either way -->
-With regard to the infants’ linguistic environment, we hypothesize that input quality will decrease as a function of increasing sibling number. To test this, we adopt three measures, as established in the literature as being important for early language learning:
+<!-- cl2eb: agreed - have moved away from the qual/quant distinction -->
+With regard to the infants’ linguistic environment, we hypothesize that increased sibling number will have a negative effect on factors of the early input that are known to support language development. To test this, we adopt three input measures, as established in the literature as being important for early language learning:
 
-1)	**Amount of input** will decline as sibling number increases. Mothers’ attention will be divided across a larger group of children, and as a result the proportion of input from the mother will be lower for infants with more siblings. In addition, these infants will experience more input from other children in the home. Quantity of input is an important predictor of language development in the longer term [@huttenlocher_early_1991], as is amount of one-to-one input from the caregiver [@ramirez-esparza_look_2014]. We thus expect this to be an important determiner of infants’ lexical production skills at 18 months.
+1)	**Amount of input** will decline as sibling number increases. Mothers’ attention will be divided across a larger group of children, and as a result the proportion of input from the mother will be lower for infants with more siblings. In addition, these infants will experience more input from other children in the home. Amount of overall input is an important predictor of language development in the longer term [@huttenlocher_early_1991], as is amount of one-to-one input from the caregiver [@ramirez-esparza_look_2014]. We thus expect this to be an important determiner of infants’ lexical production skills at 18 months.
 
-2)	**More 'learnable' words** [words that tend to be acquired earlier; @fenson_variability_1994] will occur in the input of infants with fewer siblings, and this will decrease as sibling number increases. Input from older children will generate a wider variety of lexical items in the input, including words directed to and produced by siblings, some of whom will still be young language learners themselves. As a result, in homes with older siblings, we predict fewer input words will be oriented specifically towards the infant. 
+2)	**More 'learnable' words** [words that tend to be acquired earlier, @fenson_variability_1994] will occur in the input of infants with fewer siblings, and this will decrease as sibling number increases. Input from older children will generate a wider variety of lexical items in the input, including words directed to and produced by siblings, some of whom will still be young language learners themselves. As a result, in homes with older siblings, we predict fewer input words will be oriented specifically towards the infant. 
 
 3)	**Amount of object presence** (the presence of the object being referred to in the input, e.g. mother says 'cat' when there is a cat in the room) will decrease as sibling number increases. As caregivers’ attention is drawn away from one-to-one interactions with the infant, there will be less opportunity for contingent talk. Moreover, less learnable words are also expected to be less imageable, and thus less likely to be presented alongside caregivers’ utterances. The co-occurrence of words alongside their associated objects is thought to contribute to the earlier learning of nouns over verbs [@bergelson_acquisition_2013]. Furthermore, object presence is more suited to instances of joint visual attention with the caregiver, again supporting the word learning process through the concrete mapping of word to referent [@gleitman_hard_2005].
 
@@ -107,6 +108,7 @@ With regard to the infants’ linguistic environment, we hypothesize that input 
 
 We analyze data from the SEEDLingS corpus [@bergelson_day_2019], a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data, and annotations of hour-long home video recordings, taken on a monthly basis during data collection.
 <!-- eb2cl: just confirming, it's only video data in your analyses, right? in principle we could use data from audios too, would just need to subsample so it's the same amount per day. or sticking to vid but maybe add a little motivation for that? -->
+<!-- cl2eb: that's right, just video for now; I've put a comment about the option of audio data in my email. I've got the audio data in the all_basiclevel data but not sure if that is pre-sub-sampled -->
 
 ## Participants
 
@@ -126,7 +128,7 @@ firstword <- CDI %>% group_by(subj) %>%
 
 ```
 
-**Parental report data** The present analyses draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire. Because the majority of infants did not produce their first word until around 0;11 (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`), we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development over the course of the analysis period.
+**Parental report data** The present analyses draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`)[^1], we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development over the course of the analysis period.
 <!-- eb2cl: is that first word from CDI or from home recordings? basd on our point walk talk study, this differed by a coupla months depending on how it was calculated, but i'm assuming it's CDI since that's what you report below! -->
 
 **Home video data** Every month between 0;6 and 1;5, infants were recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this allowed us to record the scene from the infants’ perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder was set up in the home. Object words (i.e. concrete nouns) deemed to be directed to or attended by the child were annotated by trained coders. Here we examine annotations for speaker, i.e. who produced a word, and object presence, i.e. whether the word’s referent was present and attended to by the infant.
@@ -608,7 +610,7 @@ speaker.type_wilcox_one_two <- wilcox.test(
 input.diff <- 
   speaker.type %>% 
   group_by(SibGroup6) %>%
- summarise(meaninput = mean(Total.input))
+ summarise(meaninput = mean(Family.input))
 
 noneonediff <- input.diff$meaninput[1] - input.diff$meaninput[2]
 nonetwodiff <- input.diff$meaninput[1] - input.diff$meaninput[3]
@@ -871,11 +873,13 @@ Of course, the ‘success’ of early language development is defined by the goa
 In conclusion, our results support the general findings from the literature showing a disadvantage in lexical acquisition for later-born infants in relation to their first-born peers. However, we highlight an important difference from previous findings, namely that in the present sample, second-born infants are at no disadvantage overall, while infants with more than two siblings are. We related this directly to the infants’ input over a period of one year: infants’ productive vocabulary was reflective of the input quality in their home environment, and both were influenced by sibling number. As reported in longitudinal studies mapping early language outcomes with later educational success [@lee_size_2011; @marchman_speed_2008], the differences we observe in the early input here may have longer-term implications for children born into households with more older children. As has been noted in studies across a range of domains [e.g. @esposito_importance_2020; @kantarevic_birth_2006], higher sibling number may have a detrimental effect across the lifespan. These finding point to the potential importance of the early language environment, which may be a key factor in the broader research that shows the 'sibling effect' to have negative economic and social implications.
 <!-- eb2cl: let's try to avoid the word 'disadvantage'. all we know is that it's lower vocab and input, not that this is 'bad' and disadvntage has a 'bad' connotation: can you do a read/edit for this throughout? i changed in some places but not all-->
 
-[^1]: For six infants, siblings' exact birthdates were not provided, and so age difference was estimated by subtracting the infant's age (6 months) from the sibling's age in years, as listed on the questionnaire (e.g. if a sibling was 5 years old, they were classed as being 4.5 years older than the infant).
+[^1]: Note that reported word production began earlier than observed word production (i.e. in the video recordings) but this difference was not statistically significant [see @moore_point_2019].
 
-[^2]: Two infants in the dataset were dizygotic twins; **our pattern of results holds with or without these infants**.
+[^2]: For six infants, siblings' exact birthdates were not provided, and so age difference was estimated by subtracting the infant's age (6 months) from the sibling's age in years, as listed on the questionnaire (e.g. if a sibling was 5 years old, they were classed as being 4.5 years older than the infant).
 
-[^3]: 1 was added to the raw infant production data of all infants before log-transformation to retain infants with vocabularies of 0.
+[^3]: Two infants in the dataset were dizygotic twins; **our pattern of results holds with or without these infants**.
+
+[^4]: 1 was added to the raw infant production data of all infants before log-transformation to retain infants with vocabularies of 0.
 
 
 \newpage

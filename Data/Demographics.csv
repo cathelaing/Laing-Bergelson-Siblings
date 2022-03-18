@@ -1,0 +1,45 @@
+subj,sex,MOTedu,MOTwork,MOTworkhours,FATwork,FATworkhours,Siblings18,Siblings6,SibsYN,SibGroup6,SibGroup18,MOTedulevel,age_mom,PVTscore
+794,F,Masters Degree,Part-time,30,Full-time,50,1,1,Y,One,One,5,33,119.5
+294,M,Masters Degree,Other,0,Full-time,40,1,1,Y,One,One,5,33,116.4
+126,M,Bachelors Degree,Home,0,Full-time,40,1,1,Y,One,One,4,32,108.5
+255,M,Some college,Home,0,Full-time,40,4,4,Y,2+,2+,2,35,117.2
+465,F,Masters Degree,Full-time,40,Full-time,40,1,0,N,None,One,5,33,120.4
+357,M,Masters Degree,Full-time,40,Full-time,40,0,0,N,None,None,5,30,114.4
+521,F,Masters Degree,Full-time,40,Other,NA,0,0,N,None,None,5,32,118.6
+274,M,Bachelors Degree,Full-time,40,Full-time,40,0,0,N,None,None,4,34,110.9
+828,F,Doctorate,Part-time,24,Full-time,60,1,1,Y,One,One,6,32,112.8
+309,M,Masters Degree,Full-time,30,Full-time,40,0,0,N,None,None,5,31,116.1
+749,M,Assoc Degree,Part-time,20,Full-time,40,0,0,N,None,None,3,35,106.6
+623,M,Doctorate,Part-time,30,Full-time,50,2,2,Y,2+,2+,6,36,123.6
+279,F,Bachelors Degree,Home,0,Full-time,45,1,1,Y,One,One,4,37,111.4
+626,M,Bachelors Degree,Home,0,Full-time,50,2,2,Y,2+,2+,4,42,116.1
+664,M,Masters Degree,Full-time,40,Full-time,60,0,0,N,None,None,5,34,112.8
+129,F,Masters Degree,Home,0,Full-time,40,1,1,Y,One,One,5,35,119.2
+860,M,Assoc Degree,Full-time,40,Full-time,40,1,1,Y,One,One,3,37,117.1
+378,F,Bachelors Degree,Part-time,6,Full-time,40,0,0,N,None,None,4,28,120.1
+109,F,Assoc Degree,Part-time,25,Other,0,0,0,N,None,None,3,29,105.5
+342,M,Masters Degree,Full-time,30,Full-time,50,0,0,N,None,None,5,33,111.4
+268,F,Bachelors Degree,Part-time,21,Full-time,40,0,0,N,None,None,4,35,110.8
+172,M,Assoc Degree,Full-time,45,Full-time,40,4,4,Y,2+,2+,3,34,111.5
+189,M,Bachelors Degree,Part-time,20,Full-time,40,0,0,N,None,None,4,27,106
+986,F,Assoc Degree,Part-time,16,Full-time,40,1,1,Y,One,One,3,31,106.5
+861,M,Doctorate,Full-time,35,Home,0,0,0,N,None,None,6,42,121.2
+625,F,Masters Degree,Full-time,40,Full-time,40,0,0,N,None,None,5,32,108.6
+926,F,Bachelors Degree,Full-time,40,Full-time,40,0,0,N,None,None,4,35,111.6
+944,M,Masters Degree,Full-time,40,Other,0,0,0,N,None,None,5,38,126.5
+515,F,Masters Degree,Full-time,40,Home,0,1,1,Y,One,One,5,35,121.4
+375,F,Masters Degree,Full-time,40,Full-time,40,2,2,Y,2+,2+,5,32,121.4
+738,M,Masters Degree,Home,0,Full-time,50,0,0,N,None,None,5,35,111.8
+575,M,Assoc Degree,Full-time,40,Full-time,40,0,0,N,None,None,3,33,107.3
+639,F,Some college,Home,0,Full-time,40,0,0,N,None,None,2,34,126.7
+168,F,Masters Degree,Full-time,40,Full-time,50,3,3,Y,2+,2+,5,37,122.7
+737,M,Bachelors Degree,Home,0,Full-time,40,1,1,Y,One,One,4,31,113.9
+518,F,Doctorate,Full-time,40,Full-time,40,1,1,Y,One,One,6,35,109.9
+151,F,Some college,Home,0,Full-time,45,2,2,Y,2+,2+,2,28,111
+893,M,Masters Degree,Home,0,Full-time,50,2,2,Y,2+,2+,5,34,117.8
+424,M,Masters Degree,Home,0,Full-time,40,1,1,Y,One,One,5,41,102.2
+351,F,Masters Degree,Home,0,Full-time,40,1,1,Y,One,One,5,41,102.2
+950,F,High School,Home,0,Full-time,40,0,0,N,None,None,1,23,113.2
+563,F,Assoc Degree,Home,0,Full-time,40,3,3,Y,2+,2+,3,37,98
+288,M,Bachelors Degree,Other,0,Full-time,40,1,1,Y,One,One,4,27,110.9
+220,M,Bachelors Degree,Part-time,16,Other,NA,0,0,N,None,None,4,31,118.1
