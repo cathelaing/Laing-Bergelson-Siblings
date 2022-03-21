@@ -1,8 +1,0 @@
-"0",""
-"0","sibgroup.summary <- SiblingsData %>% filter(month==18) %>%"
-"0","  group_by(SibGroup6) %>%"
-"0","  summarise(mean = mean(Total.words, na.rm=T),"
-"0","            sd = sd(Total.words, na.rm=T)) %>%"
-"0","  mutate(Variable = ""Productive Vocabulary 18m"") %>%"
-"0","  select(Variable, SibGroup6, mean, sd)"
-"0",""
