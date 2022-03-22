@@ -50,7 +50,7 @@ library(dplyr)
 library(tibble)
 library(lmerTest)
 library(afex)
-library(citr)
+#library(citr)
 library(feather)
 
 source("DataGathering.R")
@@ -649,6 +649,19 @@ Mothers provided the largest proportion of the infants’ overall input across t
 <!-- eb2cl: i love these very interpretable sentences in easy-to-understand units! but i'm a little confused with the denominator, so, e.g. 7 more object words over what unit time? across all video data i.e. ~12 hours? per recording? -->
 <!-- cl2eb:clarified -->
 
+```{r Sibling presence}
+
+sib.present <- speaker.type %>%
+  filter(Speaker == "SIBLING" & SibsYN == "Y") %>%
+  mutate(present = ifelse(n > 0, 1, 0)) %>%
+  group_by(present) %>%
+  tally() %>%
+  mutate(total = sum(n),
+         prop.present = n/total) %>%
+  filter(present == 1)
+
+```
+
 ```{r Sibling input, message=FALSE, warning=FALSE}
 
 # Difference in amount of input from siblings
@@ -712,7 +725,7 @@ speaker.type.FAT_wilcox_one_two <- wilcox.test(
 
 ```
 
-Next, we tested how much of that input came from siblings (for infants who had them). Wilcoxon Rank Sum tests showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (*W*=`r round(speaker.type.SIB_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.SIB_wilcox_one_two$p.value)`, Bonferroni corrections applied). Looking at caregivers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (*W*=`r round(speaker.type.MOT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.MOT_wilcox_one_two$p.value)`), while there was no difference between those with one vs. no siblings (*W*=`r round(speaker.type.MOT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.MOT_wilcox_none_one$p.value)`). Finally, amount of paternal input did not differ between groups (one vs. none: *W*=`r round(speaker.type.FAT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.FAT_wilcox_none_one$p.value)`; one vs. 2+: *W*=`r round(speaker.type.FAT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_one_two$p.value)`).
+Next, we tested how much of that input came from siblings (for infants who had them). Overall, for infants who had siblings, at least one other child was present in `r sib.present$prop.present`% of recordings (n = `r sib.present$total`. Wilcoxon Rank Sum tests showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (*W*=`r round(speaker.type.SIB_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.SIB_wilcox_one_two$p.value)`, Bonferroni corrections applied). Looking at caregivers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (*W*=`r round(speaker.type.MOT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.MOT_wilcox_one_two$p.value)`), while there was no difference between those with one vs. no siblings (*W*=`r round(speaker.type.MOT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.MOT_wilcox_none_one$p.value)`). Finally, amount of paternal input did not differ between groups (one vs. none: *W*=`r round(speaker.type.FAT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.FAT_wilcox_none_one$p.value)`; one vs. 2+: *W*=`r round(speaker.type.FAT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_one_two$p.value)`).
 <!-- eb2cl: not sure i follow this para: i guess this is a 1 vs. 2+ comparison? so no diffe between those 2 groups? it seems like you want this paragraph to be follow-up tests of 0 vs. 1 and 1 vs. 2+ for mat input (but then why not also do fat input?) and 1 vs. 2+ for sib input?  -->
 <!-- cl2eb: hopefully clearer now -->
 
@@ -745,7 +758,7 @@ in.cdi.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=in.cdi, REML=FAL
 in.cdi.anova <- anova(in.cdi.model, in.cdi.model.null) %>% # p<.01
   rename("pval" = `Pr(>Chisq)`)
 
-in.cdi_df <- in.cdi.anova$`Chi Df`[2]
+in.cdi_df <- in.cdi.anova$Df[2]
 in.cdi_chisq <- in.cdi.anova$Chisq[2]
 in.cdi_p.value <- in.cdi.anova$pval[2] 
 
@@ -901,8 +914,14 @@ While infants with more siblings heard less parental input, having one sibling d
 <!-- Furthermore, while second-borns may hear less speech directed specifically towards them, they may still benefit from the input directed towards their sibling. Indeed, experimental studies have shown that infants can learn novel nouns from overheard speech by 18 months [@floor_can_2006], and that these representations are robust by age two [@akhtar_robustness_2005]. In contrast, Ramírez-Esparza and colleagues [-@ramirez-esparza_look_2014] show that one-to-one interactions between infant and caregiver promote language development, and that this is more important than absolute quantity of speech. While our results did not account for number of dyadic and multi-speaker interactions, we can imagine that specific one-to-one interactions will be less common in households where caregiver attention is distributed across a number of children. This may account for the larger productive vocabulary of first- or second-born infants in our data when compared with those with two or more siblings: infants with fewer siblings heard a significantly larger amount of household speech, and we can assume that this means more one-to-one interactions with the caregiver, too.  -->
 <!-- eb2cl: i'd suggest doing some major cuts to the preceding paragraph (e.g. dropping the stuff i commented out). i also think we need to raise the possibility that the results diverge bc hoff measures all input and we jsut measure nouns but say we think that's unlikely the answer bc nouns are so prevalent (you can see some text to this effect in bulgarelli&bergelson 2019 brm) -->
 
-Looking at input to infants with two or more siblings, the picture is strikingly different: these infants heard around 50% fewer input words in any given session than their first- or second-born peers. The existing language development literature makes a convincing case for the importance of input quantity in regard to lexicon size in early development [@huttenlocher_early_1991; @ramirez-esparza_look_2014], and we see this reflected in our results. From our sample of 44 participants, the infants who heard fewer input words over the 17 months of data collection also had smaller vocabularies by 1;6. These results add a new perspective to the literature on the 'sibling effect'. As far as we are aware, no other studies have considered how amount of parental input differs in relation to more versus fewer siblings - research in this area is limited to analyses of first- versus second-born children. Furthermore, Oshima-Takane and Robbins' [-@oshima-takane_linguistic_2003] findings contrast with those reported here: in their study of dyadic vs. triadic interactions between mothers and their children (infant + sibling or infant only), maternal input directed at the infant was lower in the triadic interaction. However, given that their recordings were carried out in a lab setting, their data may not represent the fully naturalistic interactions that we are more likely to expect in home-recorded data: second-born children may have received more linguistic attention in the lab, especially when under experimental conditions.
+<!-- Looking at input to infants with two or more siblings, the picture is strikingly different: these infants heard around 50% fewer input words in any given session than their first- or second-born peers. The existing language development literature makes a convincing case for the importance of input quantity in regard to lexicon size in early development [@huttenlocher_early_1991; @ramirez-esparza_look_2014], and we see this reflected in our results. From our sample of 44 participants, the infants who heard fewer input words over the 17 months of data collection also had smaller vocabularies by 1;6. These results add a new perspective to the literature on the 'sibling effect'. As far as we are aware, no other studies have considered how amount of parental input differs in relation to more versus fewer siblings - research in this area is limited to analyses of first- versus second-born children. Furthermore, Oshima-Takane and Robbins' [-@oshima-takane_linguistic_2003] findings contrast with those reported here: in their study of dyadic vs. triadic interactions between mothers and their children (infant + sibling or infant only), maternal input directed at the infant was lower in the triadic interaction. However, given that their recordings were carried out in a lab setting, their data may not represent the fully naturalistic interactions that we are more likely to expect in home-recorded data: second-born children may have received more linguistic attention in the lab, especially when under experimental conditions. -->
 <!-- eb2cl: hm i think we can cut al ot of this paragraph too, and isn't what you're saying about input and vocab in contrast to the results in the first paragraph on input (that i flagged as a bit confusing) -->
+
+```{r Counting early-acquired tokens}
+
+
+
+```
 
 Infants’ exposure to early-acquired (CDI) words was affected by sibling number; again, infants with more siblings were at a disadvantage overall, but having one sibling did not affect the number of early-acquired words heard in the input compared to zero siblings. This qualitative measure takes into account a number of factors known to be important in early word learning. One such factor is input frequency [@ambridge_ubiquity_2015]: the more frequently an infant hears a word, the more likely she is to acquire that form early on. Given that 60% of over 83,000 noun tokens in the input data matched the 241 object words on the CDI form, we can reliably assume that word repetition was high. Words acquired early in development (and thus included on the CDI form) tend to be learnable in other important ways: they may be phonologically well-suited to infants’ early production capacity [e.g. phonologically simple forms: @laing_role_2019, @vihman_prosodic_2016; or forms that are pragmatically salient such as sound effects or animal sounds @laing_phonological_2014], they may be produced frequently in isolation [e.g. **mommy**, **baby**; @brent_role_2001], or they may be labels for concrete items that are common in the infant’s surroundings [e.g. **bottle**, **mouth**; @bergelson_at_2012]. It is perhaps unsurprising that infants with more siblings tended to hear fewer early-acquired words in our data: a higher number of older siblings in the household almost tautologically ensures more complex grammatical structures, fewer concrete words, and more pronouns spoken to and by these children [@oshima-takane_birth_1996].
 <!-- eb2cl: the numbers above need to be calculated in situ (and have likely changed somewhat with the cleaner data). i'm also wondering if we don't want to temper this or even putting all the 'early learned' stuff into supplementals: yes there's a 0 vs 1 vs 2+ effect here but it's practically speaking quite small, right? -->

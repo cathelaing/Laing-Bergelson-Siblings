@@ -1,5 +1,0 @@
-"0",""
-"0","SiblingsData %>% "
-"0","  filter(month==18 & subj != 794) %>%"
-"0","  summarise(mean.Total.words = mean(Total.words, na.rm=T),  # 51.2"
-"0","            sd.Total.words = sd(Total.words, na.rm=T))      # 57.09"

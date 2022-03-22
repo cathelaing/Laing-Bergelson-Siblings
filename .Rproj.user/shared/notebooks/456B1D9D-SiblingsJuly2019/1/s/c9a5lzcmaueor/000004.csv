@@ -1,5 +1,0 @@
-"0",""
-"0","demographics %>% "
-"0","  filter(subj != 794) %>%"
-"0","  group_by(Siblings6, sex) %>%"
-"0","  tally()"

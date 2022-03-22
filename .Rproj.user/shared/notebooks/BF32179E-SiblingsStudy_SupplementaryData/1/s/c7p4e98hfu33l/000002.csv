@@ -1,7 +1,0 @@
-"0",""
-"0","object.presence.summary <- object.presence %>%"
-"0","  group_by(subj, Siblings6) %>%"
-"0","  summarise(mean.object = mean(PC),"
-"0","            sd.object = sd(PC),"
-"0","            med.object = median(PC))"
-"0",""
