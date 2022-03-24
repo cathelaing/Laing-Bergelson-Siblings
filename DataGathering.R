@@ -141,9 +141,9 @@ speaker.type <- speaker.type.n %>%
 #   write_csv("cdi_queries_Mar22.csv")
 
 in.cdi <- sibsdata %>%            # create dataset that classifies each basic_level as matching or not matching CDI list in wordlist
+  filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
   left_join(wordlist) %>%
   select(-CDIform, -object) %>%
-  filter(!is.na(in_cdi)) %>%               # filter these for now while wating for final basic_levels, but remove filter once queries have been sorted
   group_by(subj, month, in_cdi) %>%
   tally() %>%
   spread(in_cdi, n) %>%
@@ -154,7 +154,7 @@ in.cdi <- sibsdata %>%            # create dataset that classifies each basic_le
   mutate(Total = False + n,
          PC = n/Total,
          Log.n = log(n+1)) %>%
-  dplyr::select(subj, month, n, PC) %>%
+  dplyr::select(subj, month, n, PC, Total) %>%
   left_join(demographics)                        # Combine with demographics data
 
 

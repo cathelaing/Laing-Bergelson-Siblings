@@ -248,7 +248,7 @@ source("Figures.R")
 Vocabulary development was highly variable across the 44 infants. By 18 months, `r nowords` infants produced no words, while mean productive vocabulary was `r Nwords$meanwords` words (SD=`r Nwords$sdwords`, Mdn=`r Nwords$mdnwords`). One female infant had a substantially larger reported vocabulary (3SDs above the mean monthly vocabulary score) between 1;1 and 1;6 and was classed as an outlier. We removed her from our data, leaving 43 infants (`r females` females) in the present analysis. Infants had one sibling on average (M=`r Nsibs$meansibs`, Mdn=`r Nsibs$mdnsibs`, SD=`r Nsibs$sdsibs`). See Table \@ref(tab:table-sibling-number).
 
 
-``` {r table-sibling-number, comment=F, message=F, warning = F, echo = F, results = "asis"}
+```{r table-sibling-number}
 cap = "Sibling number by female and male infants."
 apa_table(table.sibling.number, caption = cap, col_spanners = NULL, digits = 0, placement = "H", font_size = "small")
 ```
@@ -397,7 +397,7 @@ table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anov
 
 We next modeled the effect of siblings on productive vocabulary. Starting with a binary variable (0 vs. >0 siblings), our model revealed no effect for the presence of siblings on productive vocabulary when we included month as a fixed effect ($\chi^2 (`r sibsYN_df`)$ = `r sibsYN_chisq`, *p*=`r printp(sibsYN_p.value)`). We then modelled aggregated groups (None vs. One vs. 2+) and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings). In both cases, models with siblings accounted for more variance in productive vocabulary than models without it (see Table \@ref(tab:table-sibling-model-output)).
 
-``` {r table-sibling-model-output, comment=F, message=F, warning = F, echo = F, results = "asis"}
+```{r table-sibling-model-output, echo=FALSE}
 cap = "Output from regression models comparing language development over time in relation to sibling number (binary, grouped and discrete variables). Month was included in each model as a fixed effect; subject was included as a random effect."
 apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
 ```
@@ -416,7 +416,7 @@ siblings.model.summary.table <- siblings.model.summary$coefficients %>%
     , "$p$" = "Pr(>|t|)"
   ) %>%
   mutate(
-    Effect = papaja:::prettify_terms(rownames(.))
+    Effect = papaja:::beautify_terms(rownames(.))
   ) %>%
   printnum(
     digits = c(2, 2, 2, 2, 3, 0)
@@ -442,7 +442,7 @@ table.sibgroup.model.summary <- sibgroup.model.summary$coefficients %>%
     , "$p$" = "Pr(>|t|)"
   ) %>%
   mutate(
-    Effect = papaja:::prettify_terms(rownames(.))
+    Effect = papaja:::beautify_terms(rownames(.))
   ) %>%
   printnum(
     digits = c(2, 2, 2, 2, 3, 0)
@@ -554,12 +554,13 @@ As with our previous analysis, we first modeled infants' input (maternal input o
 
 ```{r Input - summary}
 
-speaker.summary <- 
-  speaker.type %>% 
-  mutate(total.n = sum(n)) %>%
-  group_by(Speaker, total.n) %>%
-  summarise(total.speaker = sum(n)) %>%
-  mutate(PC.input = (total.speaker/total.n)*100)
+# speaker.summary <- 
+#   speaker.type %>% 
+#   group_by(subj, month) %>%
+#   mutate(total.n = sum(n)) %>%
+#   group_by(Speaker, total.n) %>%
+#   summarise(total.speaker = sum(n)) %>%
+#   mutate(PC.input = (total.speaker/total.n)*100)
 
 mean.input.MOT <- speaker.type %>% filter(Speaker == "MOT") %>% summarise(mean.input = mean(n),  # 136.69
                                                                           med.input = median(n),
@@ -601,11 +602,13 @@ cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings a
 
 #shapiro.test(speaker.type$n) # not normal
 
-speaker.type.model <- lmerTest::lmer(Log.n ~ SibGroup6 + (1|subj), data=speaker.type, REML=FALSE)
-speaker.type.model.null <- lmerTest::lmer(Log.n ~ (1|subj), data=speaker.type, REML=FALSE)
+speaker.type.model <- lmerTest::lmer(Log.n ~ SibGroup6 + Speaker + (1|subj), data=speaker.type, REML=FALSE)
+speaker.type.model.null <- lmerTest::lmer(Log.n ~ Speaker + (1|subj), data=speaker.type, REML=FALSE)
 
 speaker.type_anova <- anova(speaker.type.model, speaker.type.model.null) %>%
   rename("pval" = `Pr(>Chisq)`)
+
+summary(speaker.type.model)
 
 speaker.type_df <- speaker.type_anova$`Df`[2]
 speaker.type_chisq <- speaker.type_anova$Chisq[2]
@@ -613,8 +616,10 @@ speaker.type_p.value <- speaker.type_anova$pval[2]
 
 # post hoc comparisons
 
-speaker.type.mean <- speaker.type %>% group_by(subj) %>% 
-  mutate(MeanN = mean(n))
+speaker.type.mean <- speaker.type %>% 
+  group_by(subj) %>% 
+  mutate(MeanN = mean(Family.input)) %>% 
+  filter(Speaker == "MOT" & month == 17) 
 
 #shapiro.test(speaker.type.mean$MeanN) # not normal
 
@@ -645,7 +650,8 @@ onetwodiff <- input.diff$meaninput[2] - input.diff$meaninput[3]
 
 ```
 
-Mothers provided the largest proportion of the infants’ overall input across the sample (`r round(speaker.summary$PC.input[2],0)`%, M=`r mean.input.MOT$mean.input` object words, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`). Fathers accounted for an average of `r round(speaker.summary$PC.input[1],0)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(speaker.summary$PC.input[3],0)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-Speaker-count). We tested overall quantity of input (aggregated across mothers, fathers, and siblings) in our model, and a significant effect was found ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*`r printp(speaker.type_p.value)`). We then ran post-hoc tests to compare mean amount of input across sibling groups. With Bonferroni corrections applied ($a$=`r round(0.05/2,3)`), these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`), while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). On average, in any given hour-long recording, infants with no siblings heard `r round(noneonediff,0)` more object words in their input than those with one sibling, and `r round(nonetwodiff,0)` more than those with two or more siblings. Infants with one sibling heard `r round(onetwodiff,0)` more object words than those with two or more siblings.
+Mothers provided the largest proportion of the infants’ overall input across the sample (`r round(speaker.summary$PC.input[2],0)`%, M=`r mean.input.MOT$mean.input` object words, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`). Fathers accounted for an average of `r round(speaker.summary$PC.input[1],0)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(speaker.summary$PC.input[3],0)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-Speaker-count). We tested overall quantity of input (aggregated across mothers, fathers, and siblings) in our model, and a significant effect was found ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*`r printp(speaker.type_p.value)`). We then ran post-hoc tests to compare mean amount of input across sibling groups. With Bonferroni corrections applied ($a$=`r round(0.05/2,4)`), these showed a significant difference in average input received between infants with one sibling versus those with two
+or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). On average, in any given hour-long recording, infants with no siblings heard `r round(noneonediff,0)` more object words in their input than those with one sibling, and `r round(nonetwodiff,0)` more than those with two or more siblings. Infants with one sibling heard `r round(onetwodiff,0)` more object words than those with two or more siblings.
 <!-- eb2cl: i love these very interpretable sentences in easy-to-understand units! but i'm a little confused with the denominator, so, e.g. 7 more object words over what unit time? across all video data i.e. ~12 hours? per recording? -->
 <!-- cl2eb:clarified -->
 
@@ -725,7 +731,7 @@ speaker.type.FAT_wilcox_one_two <- wilcox.test(
 
 ```
 
-Next, we tested how much of that input came from siblings (for infants who had them). Overall, for infants who had siblings, at least one other child was present in `r sib.present$prop.present`% of recordings (n = `r sib.present$total`. Wilcoxon Rank Sum tests showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (*W*=`r round(speaker.type.SIB_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.SIB_wilcox_one_two$p.value)`, Bonferroni corrections applied). Looking at caregivers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (*W*=`r round(speaker.type.MOT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.MOT_wilcox_one_two$p.value)`), while there was no difference between those with one vs. no siblings (*W*=`r round(speaker.type.MOT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.MOT_wilcox_none_one$p.value)`). Finally, amount of paternal input did not differ between groups (one vs. none: *W*=`r round(speaker.type.FAT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.FAT_wilcox_none_one$p.value)`; one vs. 2+: *W*=`r round(speaker.type.FAT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_one_two$p.value)`).
+Next, we tested how much of that input came from siblings (for infants who had them). Overall, for infants who had siblings, at least one other child was present in `r sib.present$prop.present`% of recordings (n = `r sib.present$total`). Wilcoxon Rank Sum tests showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (*W*=`r round(speaker.type.SIB_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.SIB_wilcox_one_two$p.value)`, Bonferroni corrections applied), contrasting with predictions set out in our first hypothesis. Looking at caregivers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (*W*=`r round(speaker.type.MOT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.MOT_wilcox_one_two$p.value)`), while there was no difference between those with one vs. no siblings (*W*=`r round(speaker.type.MOT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.MOT_wilcox_none_one$p.value)`). Finally, amount of paternal input did not differ between groups (one vs. none: *W*=`r round(speaker.type.FAT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.FAT_wilcox_none_one$p.value)`; one vs. 2+: *W*=`r round(speaker.type.FAT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_one_two$p.value)`).
 <!-- eb2cl: not sure i follow this para: i guess this is a 1 vs. 2+ comparison? so no diffe between those 2 groups? it seems like you want this paragraph to be follow-up tests of 0 vs. 1 and 1 vs. 2+ for mat input (but then why not also do fat input?) and 1 vs. 2+ for sib input?  -->
 <!-- cl2eb: hopefully clearer now -->
 
@@ -736,14 +742,14 @@ Next, we tested how much of that input came from siblings (for infants who had t
 ```{r in.cdi summary}
 
 in.cdi.summary <- in.cdi %>% group_by(SibGroup6, subj) %>% 
-  summarize(meanPC = mean(PC),
+  summarise(meanPC = mean(PC),
          medPC = median(PC),
          sdPC = sd(PC)) 
 
 #shapiro.test(in.cdi.summary$meanPC) # normal
 
 in.cdi.summary.n <- in.cdi %>% group_by(SibGroup6, subj) %>% 
-  summarize(meann = mean(n),
+  summarise(meann = mean(n),
          medn = median(n),
          sdn = sd(n)) 
 
@@ -783,8 +789,8 @@ in.cdi_wilcox_one_two <- wilcox.test(
 
 shapiro.test(in.cdi$n)
 
-in.cdi.model.n <- lmerTest::lmer(log(n) ~ SibGroup6 + month + (1|subj), data=in.cdi, REML=FALSE)
-in.cdi.model.n.null <- lmerTest::lmer(log(n) ~ month + (1|subj), data=in.cdi, REML=FALSE)
+in.cdi.model.n <- lmerTest::lmer(log(n+1) ~ SibGroup6 + month + (1|subj), data=in.cdi, REML=FALSE)
+in.cdi.model.n.null <- lmerTest::lmer(log(n+1) ~ month + (1|subj), data=in.cdi, REML=FALSE)
 in.cdi.n.anova <- anova(in.cdi.model.n, in.cdi.model.n.null) %>% # p<.01
   rename("pval" = `Pr(>Chisq)`)
 
@@ -857,7 +863,7 @@ table.object.presence.model.summary <- object.presence.model.summary$coefficient
     , "$p$" = "Pr(>|t|)"
   ) %>%
   mutate(
-    Effect = papaja:::prettify_terms(rownames(.))
+    Effect = papaja:::beautify_terms(rownames(.))
   ) %>%
   printnum(
     digits = c(2, 2, 2, 2, 3, 0)
@@ -919,7 +925,9 @@ While infants with more siblings heard less parental input, having one sibling d
 
 ```{r Counting early-acquired tokens}
 
-
+cdi_words <- in.cdi %>% summarise(total = sum(Total),
+                                  sum_n = sum(n),
+                                  PC_cdi = sum_n/total)
 
 ```
 

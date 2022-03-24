@@ -26,8 +26,8 @@ table.data.summary.sibgroup <-
 
 table.data.summary.speaker <- 
   speaker.type %>% group_by(SibGroup6) %>%
-  summarise(mean = mean(n),
-            sd = sd(n)) %>%
+  summarise(mean = mean(Family.input),
+            sd = sd(Family.input)) %>%
   mutate(Variable = "N Input utterances, 10-17 months") %>%
   select(Variable, SibGroup6, mean, sd)
 
