@@ -735,7 +735,58 @@ Next, we tested how much of that input came from siblings (for infants who had t
 <!-- eb2cl: not sure i follow this para: i guess this is a 1 vs. 2+ comparison? so no diffe between those 2 groups? it seems like you want this paragraph to be follow-up tests of 0 vs. 1 and 1 vs. 2+ for mat input (but then why not also do fat input?) and 1 vs. 2+ for sib input?  -->
 <!-- cl2eb: hopefully clearer now -->
 
-<!-- refer to Hypothesis about sib input here -->
+### Shared book-reading
+
+```{r reading summary}
+
+reading.summary <- utterance.type.PC %>% group_by(SibGroup6, subj) %>% 
+  filter(subj != 794 & !month %in% c("06", "07", "08", "09")) %>%
+  filter(Type == "r") %>%
+  summarise(meanPC = mean(PC),
+         medPC = median(PC),
+         sdPC = sd(PC))
+
+```
+
+```{r reading model}
+
+reading.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=subset(utterance.type.PC, Type == "r"), REML=FALSE)
+reading.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(utterance.type.PC, Type == "r"), REML=FALSE)
+reading.anova <- anova(reading.model, reading.model.null) %>% # p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+reading_df <- reading.anova$Df[2]
+reading_chisq <- reading.anova$Chisq[2]
+reading_p.value <- reading.anova$pval[2] 
+
+# Posthoc tests
+
+#shapiro.test(reading.summary$meanPC) # not normal
+
+reading_wilcox_none_one <- wilcox.test(
+  x = subset(reading.summary, SibGroup6 == "None")$meanPC
+  , y = subset(reading.summary, SibGroup6 == "One")$meanPC
+  , paired = FALSE
+) # NS
+
+reading_wilcox_one_two <- wilcox.test(
+  x = subset(reading.summary, SibGroup6 == "2+")$meanPC
+  , y = subset(reading.summary, SibGroup6 == "One")$meanPC
+  , paired = FALSE
+) # p=.01
+
+```
+
+We expected that infants with fewer siblings would have more opportunity to engage in shared book-reading with their caregivers. To test this, we analyse the proportion of all object words in the input that were heard during shared book-reading interactions in our data; proportions were used in order to control for differences in amount of input across sibling groups.  On average, `r round(mean(reading.summary$meanPC)*100)`% of the object words heard in the infants’ inputs were produced during book-reading (Mdn=`r printnum(mean(reading.summary$medPC))`, SD=`r printnum(mean(reading.summary$sdPC))`), and sibling group had a signficant effect on this measure ($\chi^2 (`r reading_df`)$ = `r reading_chisq`, *p*=`r printp(reading_p.value)`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-reading)). 
+
+```{r Figure-reading, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
+
+par(cex = 1.2)
+Figure.reading
+cap <- sprintf("Proportion of words produced by the caregiver during book-reading, across sibling groups. Error bars indicate mean words heard while reading across groups, with bootstrapped 95%% CIs computed over all data. Dots indicate mean number of object words heard during book-reading per infant, collapsed across age and jittered horizontally for visual clarity.")
+
+```
+
 
 ### Early-acquired words
 
@@ -787,35 +838,35 @@ in.cdi_wilcox_one_two <- wilcox.test(
 
 ```{r in.cdi model n, include=FALSE}
 
-shapiro.test(in.cdi$n)
-
-in.cdi.model.n <- lmerTest::lmer(log(n+1) ~ SibGroup6 + month + (1|subj), data=in.cdi, REML=FALSE)
-in.cdi.model.n.null <- lmerTest::lmer(log(n+1) ~ month + (1|subj), data=in.cdi, REML=FALSE)
-in.cdi.n.anova <- anova(in.cdi.model.n, in.cdi.model.n.null) %>% # p<.01
-  rename("pval" = `Pr(>Chisq)`)
-
-in.cdi.n_df <- in.cdi.n.anova$Df[2]
-in.cdi.n_chisq <- in.cdi.n.anova$Chisq[2]
-in.cdi.n_p.value <- in.cdi.n.anova$pval[2] 
-
-# Posthoc tests
-
-in.cdi.n_wilcox_none_one <- wilcox.test(
-  x = subset(in.cdi.summary, SibGroup6 == "None")$meanPC
-  , y = subset(in.cdi.summary, SibGroup6 == "One")$meanPC
-  , paired = FALSE
-) # NS
-
-in.cdi.n_wilcox_one_two <- wilcox.test(
-  x = subset(in.cdi.summary, SibGroup6 == "2+")$meanPC
-  , y = subset(in.cdi.summary, SibGroup6 == "One")$meanPC
-  , paired = FALSE
-) # p=.01
+# shapiro.test(in.cdi$n)
+# 
+# in.cdi.model.n <- lmerTest::lmer(log(n+1) ~ SibGroup6 + month + (1|subj), data=in.cdi, REML=FALSE)
+# in.cdi.model.n.null <- lmerTest::lmer(log(n+1) ~ month + (1|subj), data=in.cdi, REML=FALSE)
+# in.cdi.n.anova <- anova(in.cdi.model.n, in.cdi.model.n.null) %>% # p<.01
+#   rename("pval" = `Pr(>Chisq)`)
+# 
+# in.cdi.n_df <- in.cdi.n.anova$Df[2]
+# in.cdi.n_chisq <- in.cdi.n.anova$Chisq[2]
+# in.cdi.n_p.value <- in.cdi.n.anova$pval[2] 
+# 
+# # Posthoc tests
+# 
+# in.cdi.n_wilcox_none_one <- wilcox.test(
+#   x = subset(in.cdi.summary.n, SibGroup6 == "None")$meann
+#   , y = subset(in.cdi.summary.n, SibGroup6 == "One")$meann
+#   , paired = FALSE
+# ) # NS
+# 
+# in.cdi.n_wilcox_one_two <- wilcox.test(
+#   x = subset(in.cdi.summary.n, SibGroup6 == "2+")$meann
+#   , y = subset(in.cdi.summary.n, SibGroup6 == "One")$meann
+#   , paired = FALSE
+# ) # p=.01
 
 
 ```
 
-We expected infants with more siblings to hear fewer early-acquired words (i.e. fewer words that occur on the CDI). We consider this with regard to both amount and proportion of total household input. On average, `r round(mean(in.cdi.summary$meanPC)*100)`% of the object words heard in the infants’ inputs were included on the CDI (Mdn=`r printnum(mean(in.cdi.summary$medPC))`, SD=`r printnum(mean(in.cdi.summary$sdPC))`). Infants with two or more siblings heard a lower proportion of these words overall (see See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-in-cdi)). Indeed, sibling group accounted for a significant amount of variance on the proportion of early-acquired words heard in the input ($\chi^2 (`r in.cdi_df`)$ = `r in.cdi_chisq`, *p*=`r printp(in.cdi_p.value)`). Comparing proportion of early-acquired words in the object words produced by mothers, fathers and siblings in the input, post-hoc Wilcoxon Rank Sum tests showed that infants with two or more siblings heard significantly fewer early-acquired words (*W*=`r round(in.cdi_wilcox_one_two$statistic)`, *p*=`r printp(in.cdi_wilcox_one_two$p.value)`), while there was no difference between infants with one vs. no siblings (*W*=`r round(in.cdi_wilcox_none_one$statistic)`, *p*=`r printp(in.cdi_wilcox_none_one$p.value)`, Bonferroni corrections applied). All results were consistent when the same models were run on total number of early-acquired words heard in the input.
+We expected infants with more siblings to hear fewer early-acquired words (i.e. fewer words that occur on the CDI). We consider proportion of early-acquired words from all of the input words included in the analysis above in order to account for differences in amount of input by sibling group. On average, `r round(mean(in.cdi.summary$meanPC)*100)`% of the object words heard in the infants’ inputs were included on the CDI (Mdn=`r printnum(mean(in.cdi.summary$medPC))`, SD=`r printnum(mean(in.cdi.summary$sdPC))`). However, this did not vary by sibling group ($\chi^2 (`r in.cdi_df`)$ = `r in.cdi_chisq`, *p*=`r printp(in.cdi_p.value)`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-in-cdi)). 
 
 ```{r Figure-in-cdi, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 
@@ -910,9 +961,9 @@ On average, `r round(mean(object.presence.summary$mean.object)*100)`% of utteran
 
 # Discussion
 
-We investigated the nature of infant language development in relation to number of children in the household. Previous research found a delay in lexical acquisition for later-born infants [@fenson_variability_1994; @hoff_how_2006], with differences in input across birth order reported as a root cause. Our results add several new dimensions to this, by testing for differences across more vs. fewer older siblings, and by looking at input child-centered home recordings. Infants with more siblings were reported to say fewer words by 18 months, heard fewer nouns from their parents, heard fewer early-acquired nouns, and experienced less ‘object presence’ when hearing them.
+We investigated the nature of infant language development in relation to number of children in the household. Previous research found a delay in lexical acquisition for later-born infants [@fenson_variability_1994; @hoff_how_2006], with differences in input across birth order reported as a root cause. Our results add several new dimensions to this, by testing for differences across more vs. fewer older siblings, and by looking at input child-centered home recordings. Infants with more siblings were reported to say fewer words by 18 months, heard fewer nouns from their parents and siblings, and experienced less ‘object presence’ when hearing them. However, controlling for amount of input, all groups heard around the same proportion of typically early-acquired words in their input.
 
-Importantly, and in contrast with some previous research [@hoff-ginsberg_relation_1998; @oshima-takane_linguistic_2003], infants with one sibling showed no delay in lexical production and minimal reduction in input in comparison to first-born infants. That is, our results suggest that simply having a sibling does not contribute to input or vocabulary differences across children (as measured here), while having more than one siblings seems to do so. Indeed, infants with zero and one sibling had similar results for productive vocabulary, parental noun input overall, and early-acquired nouns in the input (but not object presence, which we return to below). In contrast, infants with two or more siblings said fewer words and had lower rates of all of our input measures compared with their peers.
+Importantly, and in contrast with some previous research [@hoff-ginsberg_relation_1998; @oshima-takane_linguistic_2003], infants with one sibling showed no delay in lexical production and minimal reduction in input in comparison to first-born infants. That is, our results suggest that simply having a sibling does not contribute to input or vocabulary differences across children (as measured here), while having more than one siblings seems to do so. Indeed, infants with zero and one sibling had similar results for productive vocabulary, parental noun input overall, and early-acquired nouns in the input (but not object presence, which we return to below). In contrast, infants with two or more siblings said fewer words and had lower rates of input words and object presence compared with their peers.
 
 When we considered the effect of sibling status – that is, whether or not infants had any siblings, disregarding specific sibling number – our findings showed that having siblings made no difference to infants' lexical production capacities. This contrasts with Hoff-Ginsberg [-@hoff-ginsberg_relation_1998], who found that, by 18 months, laterborns exhibit lower language skills. However, Oshima-Takane and colleagues [-@oshima-takane_birth_1996] found no overall differences between first- and second-born children across a range of language measures taken at 21 months. Our finer-grained results suggest a greater role for *sibling quantity* over first- vs. later-born status. The more older siblings a child had, the lower their reported productive vocablary at 18 months. This adds to findings from Fenson and colleagues [-@fenson_variability_1994], who found a weak but significant negative correlation between birth order and production of both words and gestures. Controlling for age, our model showed that for each additional older sibling, infants produced more than 30% fewer words by 18 months. 
 

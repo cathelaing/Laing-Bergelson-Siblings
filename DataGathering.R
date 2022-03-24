@@ -73,7 +73,8 @@ utterance.type.PC <- utterance.type.n %>%
                              "r" = "PCr",
                              "s" = "PCs",
                              "u" = "PCu")) %>%
-  rename(Type = TypePC)
+  rename(Type = TypePC) %>%
+  left_join(demographics)
 
 utterance.type <- utterance.type.n %>% 
   gather(`d`,`i`, `n`, `q`, `r`, `s`, `u`, 
