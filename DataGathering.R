@@ -133,12 +133,12 @@ speaker.type <- speaker.type.n %>%
 
 # CDI data: is the word the caregiver produces deemed to be 'learnable' in early acquisition (i.e. is it on the CDI)?
 
-queries <- sibsdata %>%            # with updated basic_levels.feather I need to first go through and classify words that are not in the original wordlist doc
-  left_join(wordlist) %>%
-  select(-CDIform, -object) %>%
-  filter(is.na(in_cdi) & speaker %in% c("MOT", "FAT", "SIBLING")) %>%
-  distinct(basic_level, .keep_all = TRUE) %>%
-  write_csv("cdi_queries_Mar22.csv")
+# queries <- sibsdata %>%            # with updated basic_levels.feather I need to first go through and classify words that are not in the original wordlist doc
+#   left_join(wordlist) %>%
+#   select(-CDIform, -object) %>%
+#   filter(is.na(in_cdi) & speaker %in% c("MOT", "FAT", "SIBLING")) %>%
+#   distinct(basic_level, .keep_all = TRUE) %>%
+#   write_csv("cdi_queries_Mar22.csv")
 
 in.cdi <- sibsdata %>%            # create dataset that classifies each basic_level as matching or not matching CDI list in wordlist
   left_join(wordlist) %>%
