@@ -416,7 +416,7 @@ siblings.model.summary.table <- siblings.model.summary$coefficients %>%
     , "$p$" = "Pr(>|t|)"
   ) %>%
   mutate(
-    Effect = papaja:::beautify_terms(rownames(.))
+    Effect = papaja:::prettify_terms(rownames(.))
   ) %>%
   printnum(
     digits = c(2, 2, 2, 2, 3, 0)
@@ -442,7 +442,7 @@ table.sibgroup.model.summary <- sibgroup.model.summary$coefficients %>%
     , "$p$" = "Pr(>|t|)"
   ) %>%
   mutate(
-    Effect = papaja:::beautify_terms(rownames(.))
+    Effect = papaja:::prettify_terms(rownames(.))
   ) %>%
   printnum(
     digits = c(2, 2, 2, 2, 3, 0)
@@ -554,13 +554,13 @@ As with our previous analysis, we first modeled infants' input (maternal input o
 
 ```{r Input - summary}
 
-# speaker.summary <- 
-#   speaker.type %>% 
-#   group_by(subj, month) %>%
-#   mutate(total.n = sum(n)) %>%
-#   group_by(Speaker, total.n) %>%
-#   summarise(total.speaker = sum(n)) %>%
-#   mutate(PC.input = (total.speaker/total.n)*100)
+speaker.summary <-
+  speaker.type %>%
+  group_by(subj, month) %>%
+  mutate(total.n = sum(n)) %>%
+  group_by(Speaker, total.n) %>%
+  summarise(total.speaker = sum(n)) %>%
+  mutate(PC.input = (total.speaker/total.n)*100)
 
 mean.input.MOT <- speaker.type %>% filter(Speaker == "MOT") %>% summarise(mean.input = mean(n),  # 136.69
                                                                           med.input = median(n),
@@ -914,7 +914,7 @@ table.object.presence.model.summary <- object.presence.model.summary$coefficient
     , "$p$" = "Pr(>|t|)"
   ) %>%
   mutate(
-    Effect = papaja:::beautify_terms(rownames(.))
+    Effect = papaja:::prettify_terms(rownames(.))
   ) %>%
   printnum(
     digits = c(2, 2, 2, 2, 3, 0)
