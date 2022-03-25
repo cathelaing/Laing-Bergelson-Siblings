@@ -495,7 +495,7 @@ cap <- sprintf("Productive vocabulary acquisition over time. Colors denote sibli
 
 ## Effect of siblings on infants' input
 
-Having established that infants' productive vocabulary varied as a function of how many siblings they had, we turn to our three input measures to test whether input varied by a child's sibling status. To keep relatively similar Ns across groups we used the 0 vs. 1 vs. 2+ siblings division. That said, with the exception of household input (see Supplementary Data) all reported results hold if we model discrete sibling number as a fixed effect instead.
+Having established that infants' productive vocabulary varied as a function of how many siblings they had, we turn to our three input measures to test whether input varied by a child's sibling status. To keep relatively similar Ns across groups we used the 0 vs. 1 vs. 2+ siblings division. That said, with the exception of household input (see Supplementary Data) all reported model outcomes hold if we model discrete sibling number as a fixed effect instead.
 
 ```{r effects of age sex and mot edu on input, message=FALSE, warning=FALSE, include=FALSE}
 
