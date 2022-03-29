@@ -1,4 +1,4 @@
-### Laing-Bergelson-Siblings - Read Me ###
+# Laing-Bergelson-Siblings - Read Me ###
 
 ## 1. Demographics (Demographics.R)
 
