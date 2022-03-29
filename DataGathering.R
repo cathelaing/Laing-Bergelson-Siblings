@@ -1,4 +1,4 @@
-## Data gathering: Updated 14th February 2020 ##
+## Data gathering: Updated March 2022 ##
 
 # This file extracts the relevant data from the basiclevels feather spreadsheet in the Seedlings folder
 

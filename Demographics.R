@@ -1,4 +1,4 @@
-## Demographics: Updated 14th February 2020 ##
+## Demographics: Updated March 2022 ##
 
 # This is the main file containing all demographics data, incorporating some data from the demographics questionnaires at 6 and 18 months,
 # mothers' PVT scores, and CDI data (productive vocabulary) from 6-18 months. THis also includes infant productions from audio and video recordings in the Seedlings corpus.
@@ -22,7 +22,7 @@ CDI <- read_csv("Data/CDI.csv") %>%
   mutate(Log.Totalwords = log(Total.words+1)) %>%
   select(subj, month, Total.words, Log.Totalwords)
 
-chidata <- read_csv("Data/all_basiclevel_NA_randsubj.csv") %>%   # Read in basic levels data and then join with CDI data to create a dataset of infant production
+chidata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%   # Read in basic levels data and then join with CDI data to create a dataset of infant production
   filter(speaker == 'CHI') %>%
   dplyr::select(
     basic_level, 
@@ -72,18 +72,19 @@ demographics <- read_csv("Data/demo_deid_cleaned.csv") %>%
     subj,
     sex,
     maternal_education_18mos,
-    maternal_employment_18mos,
-    maternal_employment_hours_18mos,
-    paternal_employment_18mos,
-    paternal_employment_hours_18mos,
+    #maternal_employment_18mos,
+    #maternal_employment_hours_18mos,
+    #paternal_employment_18mos,
+    #paternal_employment_hours_18mos,
     children_in_household_18mos_staff,
     children_in_household_6mos_staff
   ) %>%
-  dplyr::rename(MOTedu = maternal_education_18mos,  ## rename columns
-         MOTwork = maternal_employment_18mos,
-         MOTworkhours = maternal_employment_hours_18mos,
-         FATwork = paternal_employment_18mos,
-         FATworkhours = paternal_employment_hours_18mos) %>%
+  dplyr::rename(MOTedu = maternal_education_18mos  ## rename columns
+         #MOTwork = maternal_employment_18mos,
+         #MOTworkhours = maternal_employment_hours_18mos,
+         #FATwork = paternal_employment_18mos,
+         #FATworkhours = paternal_employment_hours_18mos
+         ) %>%
   mutate(MOTedu = factor(MOTedu),  # rename variables according to key in shared folder
          MOTedu = fct_recode(MOTedu,
                              "High School" = "E",
@@ -92,19 +93,19 @@ demographics <- read_csv("Data/demo_deid_cleaned.csv") %>%
                              "Bachelors Degree" = "J",
                              "Masters Degree" = "K",
                              "Doctorate" = "L"),
-         MOTwork = ifelse(MOTwork %in% c("H","I"),"Other", MOTwork),       # Three mothers not classed as working FT, PT or Home; class as 'Other' or PT, as relevant
-         MOTwork = ifelse(MOTwork == "B_E", "B", MOTwork), 
-         MOTwork = factor(MOTwork),                          
-         MOTwork = fct_recode(MOTwork,
-                              "Full-time" = "A",
-                              "Part-time" = "B",
-                              "Home" = "C"),
-         FATwork = ifelse(FATwork !="A" & FATwork !="B" & FATwork != "C", "Other",  # Recode fathers' work status so that fathers who don't work FT, PT,
-                     FATwork),                                                      # or stay home (e.g. full-time students) are listed as 'other'
-         FATwork = factor(FATwork),
-         FATwork = fct_recode(FATwork,
-                              "Full-time" = "A",
-                              "Home" = "C"),
+        # MOTwork = ifelse(MOTwork %in% c("H","I"),"Other", MOTwork),       # Three mothers not classed as working FT, PT or Home; class as 'Other' or PT, as relevant
+        # MOTwork = ifelse(MOTwork == "B_E", "B", MOTwork), 
+        # MOTwork = factor(MOTwork),                          
+        # MOTwork = fct_recode(MOTwork,
+        #                      "Full-time" = "A",
+        #                      "Part-time" = "B",
+        #                      "Home" = "C"),
+        # FATwork = ifelse(FATwork !="A" & FATwork !="B" & FATwork != "C", "Other",  # Recode fathers' work status so that fathers who don't work FT, PT,
+        #             FATwork),                                                      # or stay home (e.g. full-time students) are listed as 'other'
+        # FATwork = factor(FATwork),
+        # FATwork = fct_recode(FATwork,
+        #                      "Full-time" = "A",
+        #                      "Home" = "C"),
          Siblings18 = children_in_household_18mos_staff - 1,   # new variable for sibling number at 18 months 
          Siblings6 = children_in_household_6mos_staff - 1,      # new variable for sibling number at 6 months
          SibsYN = ifelse(Siblings6 == 0, "N", "Y"),             # binomial variable for slibling status (Y = siblings, N = No siblings)
@@ -148,14 +149,14 @@ SiblingsData <- demographics %>%
     subj,
     month,
     sex,
-    MOTedu,
+    #MOTedu,
     MOTedulevel,
     age_mom,
     PVTscore,
-    MOTwork,
-    MOTworkhours,
-    FATwork,
-    FATworkhours,
+    #MOTwork,
+    #MOTworkhours,
+    #FATwork,
+    #FATworkhours,
     SibsYN,
     Siblings6,
     Siblings18,

@@ -6,7 +6,31 @@
 # This is the main file containing all demographics data, incorporating some data from the demographics questionnaires at 6 and 18 months,
 # mothers' PVT scores, and CDI data (productive vocabulary) from 6-18 months.
 
-# This is the first script to be generated in the siblings analysis markdown file; .....
+# This is the first script to be generated in the siblings analysis markdown file; it generates the *SiblingsData* dataframe used in the main analysis. 
+
+# *SiblingsData* includes the following variables:
+
+1. subj          
+2. month            
+3. sex              
+4. MOTedulevel           
+5. age_mom      
+6. PVTscore
+7. SibsYN
+8. Siblings6 
+9. Siblings18 
+10. SibGroup6 
+11. SibGroup18 
+12. Total.words 
+13. Log.Totalwords 
+14. tokens_video 
+15. types_video 
+16. tokens_audio 
+17. types_audio 
+18. Log.tokens_video 
+19. Log.types_video 
+20. Log.tokens_audio 
+21. Log.types_audio
 
 
 # 2. Data gathering (Data gathering.R)
