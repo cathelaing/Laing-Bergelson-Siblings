@@ -55,13 +55,15 @@ with a list of all basic_level words (as produced by all speakers except the inf
 
 *in_cdi_Wordlist.csv* - This file contains all of the CDI words, with a list of all basic_level words (as produced by all speakers except the infant) that match the CDI words. This was generated using the following code (where 'data' is the all_basic_levels spreadsheet):
 
-# in_cdi_queries <- data %>%
-#     distinct(basic_level, object) %>% 
-#     left_join(wordlist, by=c("basic_level"="Word")) %>% # match words to CDI forms using the CDI_wordlist.csv spreadsheet
-#     mutate(in_cdi = ifelse(!is.na(Form),T, F)) %>%
-#     arrange(desc(in_cdi))
+```{r}
+in_cdi_queries <- data %>%
+    distinct(basic_level, object) %>%
+    left_join(wordlist, by=c("basic_level"="Word")) %>% # match words to CDI forms using the CDI_wordlist.csv spreadsheet
+    mutate(in_cdi = ifelse(!is.na(Form),T, F)) %>%
+    arrange(desc(in_cdi))
 
-# write_csv(in_cdi_queries, "Data/in_cdi_queries.csv")
+write_csv(in_cdi_queries, "Data/in_cdi_queries.csv")
+```
 
 This generates a spreadsheet with all object words in the data, all corresponding basic_levels, and whether the word matches a CDI word (TRUE or FALSE). If there is a match between object word and CDI word, the CDI word is listed in the Form column.
 
