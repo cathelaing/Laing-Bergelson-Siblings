@@ -180,7 +180,7 @@ With regard to the infants' linguistic environment, we hypothesize that increase
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-We analyze data from the SEEDLingS corpus (Bergelson, Amatuni, Dailey, Koorathota, \& Tor, 2019), a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data, and annotations of hour-long home video recordings, taken on a monthly basis during data collection.
+We analyze data from the SEEDLingS corpus (Bergelson, Amatuni, Dailey, Koorathota, \& Tor, 2019), a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data, and annotations of hour-long home video recordings, taken on a monthly basis during data collection. We also analysed day-long audio recordings (see Supplementary Materials); all results were consistent with those reported below.
 
 \hypertarget{participants}{%
 \subsection{Participants}\label{participants}}
@@ -204,7 +204,7 @@ We analyzed number of siblings based on parental report in the demographics ques
 
 Three input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to aspects of the input that are established as important in early language learning: \textbf{overall household input} (how many concrete nouns does each infant hear?), \textbf{early-acquired words} (how much of this input is \emph{early-learned} nouns?), and \textbf{object presence} (how much of this input is referentially transparent?). Each is described in further detail below.
 
-\emph{Household Input} reflects how many nouns infants heard in the recordings from their mother, father and (where relevant) siblings. Other speakers' input was relatively rare during video recordings, accounting for 0.09\% of input overall (SD=0.24, and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size (Anderson, Graham, Prime, Jenkins, \& Madigan, 2021). This analysis considers only nouns produced by speakers in the child's environment, as concrete nouns are acquired earlier in development in English and cross-linguistically (Braginsky, Yurovsky, Marchman, \& Frank, 2019). Note that Bulgarelli and Bergelson (2020) found that, for the same corpus of data, noun production correlated strongly with automated adult word count estimates; we can thus assume that higher noun count in this data indicates higher input across the board.
+\emph{Household Input} reflects how many nouns infants heard in the recordings from their mother, father and (where relevant) siblings. Other speakers' input was relatively rare during video recordings, accounting for 0.11\% of input overall (SD=0.23, and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size (Anderson, Graham, Prime, Jenkins, \& Madigan, 2021). This analysis considers only nouns produced by speakers in the child's environment, as concrete nouns are acquired earlier in development in English and cross-linguistically (Braginsky, Yurovsky, Marchman, \& Frank, 2019). Note that Bulgarelli and Bergelson (2020) found that, for the same corpus of data, noun production correlated strongly with automated adult word count estimates; we can thus assume that higher noun count in this data indicates higher input across the board.
 
 \emph{Early-acquired words} reflects the proportion of object word lemmas in the parental input that appeared on the \enquote{Words \& Gestures} communicative development inventory (CDI, Fenson et al., 1994). This CDI form offers an inventory of words typically acquired by infants from the United States between the ages of 8 and 18 months (Fenson et al., 2007). The CDI items were established based on a sample of over 1,700 infants (\textasciitilde50\% firstborn, 73\% White, 44\% of mothers with a college diploma), and so the CDI is taken as a standardized proxy of words typically acquired by infants in early development. Words found on the CDI are, by definition, early-learned, though somewhat variable in their age of acquisition and in the reasons underlying their learnability. Thus, CDI words like \emph{foot} and \emph{banana} are acquired earlier than non-CDI words like \emph{jet ski} or \emph{wheel}. Frank and colleagues (2021) show that the earliest-learned words are very similar across languages, suggesting a conceptual bias towards some words over others in early acquisition (though many factors, e.g.~frequency, concreteness, phonological complexity, are relevant as well). Note also that our measure of early-acquired words in the input is the same as our measure of infant vocabulary development (i.e., the CDI wordlist), and so captures broad parallels between the words parents say and the words their infants are reported to have acquired.
 
@@ -256,7 +256,7 @@ Before considering sibling status, we first modelled infants' productive vocabul
 \hypertarget{effect-of-siblings-on-infants-productive-vocabulary}{%
 \subsection{Effect of siblings on infants' productive vocabulary}\label{effect-of-siblings-on-infants-productive-vocabulary}}
 
-We next modeled the effect of siblings on productive vocabulary. Starting with a binary variable (0 vs.~\textgreater0 siblings), our model revealed no effect for the presence of siblings on productive vocabulary when we included month as a fixed effect (\(\chi^2 (1)\) = 2.27, \emph{p}=.132). We then modelled aggregated groups (None vs.~One vs.~2+) and discrete sibling number (0 vs.~1 vs.~2 vs.~3 vs.~4 siblings). In both cases, models with siblings accounted for more variance in productive vocabulary than models without it (see Table \ref{tab:table-sibling-model-output}).
+We next modeled the effect of siblings on productive vocabulary. We tested productive vocabulary across three data types (CDI questionnaires, video data and day-long audio recordings), as well as three variables representing the sibling effect: a binary variable (0 vs.~\textgreater0 siblings), aggregated groups (None vs.~One vs.~2+), and discrete sibling number (0 vs.~1 vs.~2 vs.~3 vs.~4 siblings). Outcomes from model comparisons are shown in Table \ref{tab:table-sibling-model-output}. Across the data, the simple fact of having siblings (i.e.~as a binary variable) did not affect productive vocabulary. Discrete sibling number predicted reported CDI vocabulary and number of word types (but not tokens) produced in the Video data; this was marginally significant in the Audio data. Sibling group predicted vocabulary size in the CDI measures but not in the Audio or Video data (again this was marginally significant in the Video data).
 
 \begin{table}[H]
 
@@ -267,13 +267,25 @@ We next modeled the effect of siblings on productive vocabulary. Starting with a
 
 \small{
 
-\begin{tabular}{llll}
+\begin{tabular}{llllll}
 \toprule
-Model & \multicolumn{1}{c}{Df} & \multicolumn{1}{c}{Chisq} & \multicolumn{1}{c}{p value}\\
+Count & \multicolumn{1}{c}{Model} & \multicolumn{1}{c}{Data} & \multicolumn{1}{c}{Df} & \multicolumn{1}{c}{Chisq} & \multicolumn{1}{c}{p value}\\
 \midrule
-0 vs. >0 siblings & 1.00 & 2.27 & 0.13\\
-Sibling group & 2.00 & 7.96 & 0.02\\
-Sibling number & 1.00 & 6.24 & 0.01\\
+CDI & 0 vs. >0 siblings & CDI & 1.00 & 2.27 & 0.13\\
+NA & Sibling group & CDI & 2.00 & 7.96 & 0.02\\
+NA & Sibling number & CDI & 1.00 & 6.24 & 0.01\\
+Tokens & 0 vs. >0 siblings & Video & 1.00 & 1.50 & 0.22\\
+NA & 0 vs. >0 siblings & Audio & 1.00 & 0.57 & 0.45\\
+NA & Sibling group & Video & 2.00 & 2.72 & 0.26\\
+NA & Sibling group & Audio & 2.00 & 0.73 & 0.69\\
+NA & Sibling number & Video & 1.00 & 3.06 & 0.08\\
+NA & Sibling number & Audio & 1.00 & 1.24 & 0.27\\
+Types & 0 vs. >0 siblings & Video & 1.00 & 3.74 & 0.05\\
+NA & 0 vs. >0 siblings & Audio & 1.00 & 2.10 & 0.15\\
+NA & Sibling group & Video & 2.00 & 5.71 & 0.06\\
+NA & Sibling group & Audio & 2.00 & 3.42 & 0.18\\
+NA & Sibling number & Video & 1.00 & 5.87 & 0.02\\
+NA & Sibling number & Audio & 1.00 & 3.65 & 0.06\\
 \bottomrule
 \end{tabular}
 
@@ -284,7 +296,7 @@ Sibling number & 1.00 & 6.24 & 0.01\\
 
 \end{table}
 
-In short, having more siblings was associated with a smaller productive vocabulary over the course of early development. This is consistent with previous findings (Hoff-Ginsberg, 1998; Pine, 1995). Moreover, for each additional sibling, infants acquired 31\% fewer words. Looking at differences between sibling groups (0 vs.~1 vs.~2+ siblings), we see that infants with one sibling produce only 5\% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce 94\% fewer words. See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-SibGroup}. Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (\emph{W}=5, \emph{p} = .004), but no difference between infants with one sibling and those with no siblings (\emph{W}=79.50, \emph{p} = .631; Bonferroni corrections applied).
+Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings (Hoff-Ginsberg, 1998; Pine, 1995). Moreover, for each additional sibling, infants acquired 31\% fewer words, and produced 14.00\% fewer words in the hour-long video recordings. Looking at differences between sibling groups (0 vs.~1 vs.~2+ siblings), we see that infants with one sibling acquire (according to CDI reports) only 5\% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce 94\% fewer words. See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-SibGroup}. Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (\emph{W}=5, \emph{p} = .004), but no difference between infants with one sibling and those with no siblings (\emph{W}=79.50, \emph{p} = .631; Bonferroni corrections applied).
 
 \begin{figure}
 \centering
@@ -295,7 +307,7 @@ In short, having more siblings was associated with a smaller productive vocabula
 \hypertarget{effect-of-siblings-on-infants-input}{%
 \subsection{Effect of siblings on infants' input}\label{effect-of-siblings-on-infants-input}}
 
-Having established that infants' productive vocabulary varied as a function of how many siblings they had, we turn to our three input measures to test whether input varied by a child's sibling status. To keep relatively similar Ns across groups we used the 0 vs.~1 vs.~2+ siblings division. That said, with the exception of household input (see Supplementary Data) all reported results hold if we model discrete sibling number as a fixed effect instead.
+Having established that infants' productive vocabulary varied as a function of how many siblings they had, we turn to our three input measures to test whether input varied by a child's sibling status. To keep relatively similar Ns across groups we used the 0 vs.~1 vs.~2+ siblings division. That said, with the exception of household input (see Supplementary Data) all reported model outcomes hold if we model discrete sibling number as a fixed effect instead.
 
 As with our previous analysis, we first modeled infants' input (maternal input only) as a function of age, sex and maternal education. This time, there was no effect for age, nor sex or maternal education (\emph{p}s all\textgreater.260) on the amount of input produced by mothers. We therefore excluded all three variables from our models.
 
@@ -315,7 +327,7 @@ Variable & none m & none sd & 1 m & 1 sd & 2 m & 2 sd\\
 \% early-acquired words in input & 0.64 & 0.13 & 0.61 & 0.13 & 0.62 & 0.14\\
 \% object presence in input & 0.67 & 0.15 & 0.56 & 0.15 & 0.46 & 0.18\\
 N Input utterances, 10-17 months & 180.63 & 124.68 & 184.43 & 84.59 & 100.19 & 52.64\\
-Productive Vocabulary 18m & 58.89 & 60.76 & 92.64 & 111.42 & 13.00 & 9.49\\
+Productive Vocabulary 18m (CDI) & 58.89 & 60.76 & 92.64 & 111.42 & 13.00 & 9.49\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -330,7 +342,7 @@ Productive Vocabulary 18m & 58.89 & 60.76 & 92.64 & 111.42 & 13.00 & 9.49\\
 ## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
 ##   method [lmerModLmerTest]
 ## Formula: Log.n ~ SibGroup6 + Speaker + (1 | subj)
-##    Data: speaker.type
+##    Data: subset(speaker.type, audio_video == "video")
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
 ##   4021.2   4055.8  -2003.6   4007.2     1025 
@@ -371,7 +383,7 @@ Next, we tested how much of that input came from siblings (for infants who had t
 \hypertarget{shared-book-reading}{%
 \subsubsection{Shared book-reading}\label{shared-book-reading}}
 
-We expected that infants with fewer siblings would have more opportunity to engage in shared book-reading with their caregivers. To test this, we analyse the proportion of all object words in the input that were heard during shared book-reading interactions in our data; proportions were used in order to control for differences in amount of input across sibling groups. On average, 9\% of the object words heard in the infants' inputs were produced during book-reading (Mdn=0.06, SD=0.10), and sibling group had a signficant effect on this measure (\(\chi^2 (2)\) = 9.09, \emph{p}=.011). See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-reading}).
+We expected that infants with fewer siblings would have more opportunity to engage in shared book-reading with their caregivers. To test this, we analyse the proportion of all object words in the input that were heard during shared book-reading interactions in our data; proportions were used in order to control for differences in amount of input across sibling groups. On average, 9\% of the object words heard in the infants' inputs were produced during book-reading (Mdn=0.06, SD=0.10), and sibling group had a significant effect on this measure (\(\chi^2 (2)\) = 6.86, \emph{p}=.032). See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-reading}).\footnote{In the audio data, the model comparison revealed a significant effect of sibling group on shared book reading (\emph{p}=.04), but post-hoc comparisons showed no significant difference between sibling groups (\emph{ps}\textgreater.01).}
 
 \begin{figure}
 \centering
@@ -416,23 +428,23 @@ Moreover, infants with siblings did not hear much speech from their older brothe
 The \enquote{sibling effect} was most marked in our analysis of object presence. In this case, even having one sibling led to fewer word-object pairs presented in the input. Presence of a labeled object with congruent input speech is known to be supportive in early word learning: Bergelson and Aslin (2017) combined analysis of this home-recorded data with an experimental study to show that word-object co-presence in naturalistic caregiver input supported comprehension of nouns when tested using eye-tracking. Gogate and colleagues (2000) state that contingent word production supports the learning of novel word-object combinations, as \enquote{multimodal motherese} - whereby a target word is produced in synchrony with its referent, often involving movement or touch of the object - supports word learning by demonstrating novel word-object combinations. Indeed, lower rates of referential transparency in children's input have also been proposed to explain why common non-nouns like \emph{hi} and \emph{uh-oh} are learned later than concrete nouns (Bergelson \& Swingley, 2013).
 
 \begin{verbatim}
-## # A tibble: 203 x 2
+## # A tibble: 223 x 2
 ##    CDIform     n
 ##    <chr>   <int>
-##  1 baby       13
-##  2 cheese     11
-##  3 snow       11
-##  4 chicken    10
-##  5 cookie      9
-##  6 fish        8
-##  7 pig         8
-##  8 cake        7
-##  9 pajamas     7
-## 10 car         6
-## # ... with 193 more rows
+##  1 baby       40
+##  2 chicken    21
+##  3 book       18
+##  4 cheese     15
+##  5 pig        14
+##  6 egg        13
+##  7 fish       13
+##  8 apple      12
+##  9 snow       12
+## 10 bear       11
+## # ... with 213 more rows
 \end{verbatim}
 
-The one measure that did not generate any kind of sibling effect was infants' exposure to early-acquired (CDI) words; infants heard roughly the same proportion of CDI nouns in the input regardless of how many siblings they had. This may be due to limitations of our analysis, which take into account only nouns, accounting for 204 word types in total. This may not be enough to account for input differences between groups. Alternatively, proportion of CDI nouns may not have differed because when speech was directed at the infant, the nouns produced by the caregiver were those we would expect in speech directed at a baby. As reported above, input from siblings was low overall, and so unlikely to affect the lexical characteristics of the input.
+The one measure that did not generate any kind of sibling effect was infants' exposure to early-acquired (CDI) words; infants heard roughly the same proportion of CDI nouns in the input regardless of how many siblings they had. This may be due to limitations of our analysis, which take into account only nouns, accounting for 224 word types in total. This may not be enough to account for input differences between groups. Alternatively, proportion of CDI nouns may not have differed because when speech was directed at the infant, the nouns produced by the caregiver were those we would expect in speech directed at a baby. As reported above, input from siblings was low overall, and so unlikely to affect the lexical characteristics of the input.
 
 Object presence varied more linearly across sibling quantity, suggesting it may be a less critical driver of early word production. Given that infants with one sibling heard approximately the same number of object words in the input than those with no siblings, this may be the most crucial factor in predicting a child's vocabulary size by 18 months. Alternatively, the reduced object presence for children with one sibling may have been compensated for in other ways we did not measure here, which in turn resulted in the indistinguishable vocabulary difference in the 0 and 1 sibling children at 17 months.
 

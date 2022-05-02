@@ -21,25 +21,31 @@ table.data.summary.sibgroup <-
   group_by(SibGroup6) %>%
   summarise(mean = mean(Total.words, na.rm=T),
             sd = sd(Total.words, na.rm=T))  %>%
-  mutate(Variable = "Productive Vocabulary 18m") %>%
+  mutate(Variable = "Productive Vocabulary 18m (CDI)") %>%
   select(Variable, SibGroup6, mean, sd)
 
 table.data.summary.speaker <- 
-  speaker.type %>% group_by(SibGroup6) %>%
+  speaker.type %>% 
+  filter(audio_video == "video") %>%
+  group_by(SibGroup6) %>%
   summarise(mean = mean(Family.input),
             sd = sd(Family.input)) %>%
   mutate(Variable = "N Input utterances, 10-17 months") %>%
   select(Variable, SibGroup6, mean, sd)
 
 table.data.summary.cdi <- 
-  in.cdi %>% group_by(SibGroup6) %>%
+  in.cdi %>% 
+  filter(audio_video == "video") %>%
+  group_by(SibGroup6) %>%
   summarise(mean = mean(PC),
             sd = sd(PC)) %>%
   mutate(Variable = "% early-acquired words in input") %>%
   select(Variable, SibGroup6, mean, sd)
 
 table.data.summary.object <- 
-  object.presence %>% group_by(SibGroup6) %>%
+  object.presence %>% 
+  filter(audio_video == "video") %>%
+  group_by(SibGroup6) %>%
   summarise(mean = mean(PC),
             sd = sd(PC)) %>%
   mutate(Variable = "% object presence in input") %>%

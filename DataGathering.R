@@ -18,9 +18,10 @@ library(forcats)
 # work from basic levels spreadsheet
 
 sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
-  filter(audio_video =='video',   # Only use video data
+  filter(#audio_video =='video',   # Only use video data
          speaker != 'CHI') %>%    # remove infant productions
   dplyr::select(
+    audio_video,
     utterance_type, 
     speaker, 
     object_present, 
@@ -42,9 +43,10 @@ utterance.type.n <- sibsdata %>%
   filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
   filter(utterance_type %in%
            c("d", "i", "n", "q", "r", "s", "u"))  %>% 
-    group_by(subj, month, utterance_type) %>%
+    group_by(subj, month, utterance_type, audio_video) %>%
   tally() %>%
   spread(utterance_type, n) %>%
+  #spread(audio_video, n) %>%
   ungroup() %>%
   replace(is.na(.), 0) 
 
@@ -59,11 +61,11 @@ utterance.type.PC <- utterance.type.n %>%
          PCr = r/Total.input,
          PCs = s/Total.input,
          PCu = u/Total.input) %>% 
-  dplyr::select(subj, month, PCd,PCi, PCn, PCq, PCr, PCs, PCu) %>%
+  dplyr::select(subj, month, audio_video, PCd,PCi, PCn, PCq, PCr, PCs, PCu) %>%
   gather(`PCd`,`PCi`, `PCn`, `PCq`, `PCr`, `PCs`, `PCu`, 
          key = "TypePC", 
          value = "PC") %>% 
-  dplyr::select(subj, month, TypePC, PC) %>%  # Remove unnecessary columns 
+  dplyr::select(subj, month, audio_video, TypePC, PC) %>%  # Remove unnecessary columns 
   mutate(TypePC = factor(TypePC),
          TypePC = fct_recode(TypePC,
                              "d" = "PCd",
@@ -81,7 +83,7 @@ utterance.type <- utterance.type.n %>%
          key = "Type", 
          value = "n") %>%
   mutate(Type = factor(Type)) %>%
-  dplyr::select(subj, month, Type, n) %>%  
+  dplyr::select(subj, month, audio_video, Type, n) %>%  
   left_join(utterance.type.PC) %>%
   left_join(demographics) %>%      # Combine with demographics spreadsheet
   mutate(Log.n = log(n+1),
@@ -96,14 +98,14 @@ object.presence <- sibsdata %>%
   filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
   filter(object_present %in%
            c("y", "n")) %>%
-  group_by(subj, month, object_present) %>%
+  group_by(subj, month, audio_video, object_present) %>%
   tally() %>%
   spread(object_present, n) %>%
   replace(is.na(.), 0) %>%
   ungroup() %>%
   mutate(Total = n + y,
          PC = y/Total) %>%
-  dplyr::select(subj, month, y, PC) %>%
+  dplyr::select(subj, month, audio_video, y, PC) %>%
   rename(n = y) %>%  
   left_join(demographics) %>%
   mutate(Log.n = log(n+1)) 
@@ -114,16 +116,16 @@ object.presence <- sibsdata %>%
 # Spread information across columns
 
 speaker.type.n <- sibsdata %>%
-  group_by(subj, month, speaker) %>%
+  group_by(subj, month, audio_video, speaker) %>%
   tally() %>%
   spread(speaker, n) %>%
   dplyr::select(-contains("TV"), -TOY) %>%
   replace(is.na(.), 0) %>%
   rowwise() %>%
-  mutate(All.speakers = sum(c_across(AF3:UNC))) %>%
+  mutate(All.speakers = sum(c_across(ADM:UNC))) %>%  # not including unknown speakers from audio data
   ungroup() %>%
   mutate(Family.input = (MOT + FAT + SIBLING)) %>%
-  dplyr::select(subj, month, MOT, FAT, SIBLING, Family.input, All.speakers)
+  dplyr::select(subj, month, audio_video, MOT, FAT, SIBLING, Family.input, All.speakers)
   
 speaker.type <- speaker.type.n %>%
   gather(`MOT`,`FAT`, `SIBLING`, 
@@ -139,13 +141,13 @@ speaker.type <- speaker.type.n %>%
 #   select(-CDIform, -object) %>%
 #   filter(is.na(in_cdi) & speaker %in% c("MOT", "FAT", "SIBLING")) %>%
 #   distinct(basic_level, .keep_all = TRUE) %>%
-#   write_csv("cdi_queries_Mar22.csv")
+#   write_csv("cdi_queries_Apr22.csv")
 
 in.cdi <- sibsdata %>%            # create dataset that classifies each basic_level as matching or not matching CDI list in wordlist
   filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
   left_join(wordlist) %>%
   select(-CDIform, -object) %>%
-  group_by(subj, month, in_cdi) %>%
+  group_by(subj, month, audio_video, in_cdi) %>%
   tally() %>%
   spread(in_cdi, n) %>%
   replace(is.na(.), 0) %>%
@@ -155,7 +157,7 @@ in.cdi <- sibsdata %>%            # create dataset that classifies each basic_le
   mutate(Total = False + n,
          PC = n/Total,
          Log.n = log(n+1)) %>%
-  dplyr::select(subj, month, n, PC, Total) %>%
+  dplyr::select(subj, month, audio_video, n, PC, Total) %>%
   left_join(demographics)                        # Combine with demographics data
 
 

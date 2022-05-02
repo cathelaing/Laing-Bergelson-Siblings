@@ -15,7 +15,8 @@ Figure.SibGroup <- ggplot(data = SiblingsData, mapping = aes(x=as.numeric(month)
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
                 aes(fill = SibGroup18), color = "black", shape = 24)
 
-Figure.speaker.count <- ggplot(subset(speaker.type, Speaker %in% c("MOT", "FAT", "SIBLING")), aes(x=Speaker, y=n, color = Speaker)) +
+Figure.speaker.count <- ggplot(subset(speaker.type, Speaker %in% c("MOT", "FAT", "SIBLING") & audio_video == "video"), 
+                               aes(x=Speaker, y=n, color = Speaker)) +
   stat_summary(fun.y = mean, geom = "point", aes(group = subj), shape = 1, size = 3, position = position_jitter(.1)) +
   stat_summary(fun.data = "mean_cl_boot", colour = "red", shape = 17, size = 1) +
   facet_wrap(~SibGroup6, ncol=3) +
@@ -23,7 +24,8 @@ Figure.speaker.count <- ggplot(subset(speaker.type, Speaker %in% c("MOT", "FAT",
   theme_bw(base_size = 15) +
   theme(legend.position = "none")
 
-Figure.reading <- ggplot(subset(utterance.type.PC, Type == "r"), aes(x=SibGroup6, y=PC, colour = SibGroup6, fill = SibGroup6)) +
+Figure.reading <- ggplot(subset(utterance.type.PC, Type == "r" & audio_video == "video"), 
+                         aes(x=SibGroup6, y=PC, colour = SibGroup6, fill = SibGroup6)) +
   geom_violin(alpha = .3) + 
   stat_summary(fun=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
@@ -32,7 +34,8 @@ Figure.reading <- ggplot(subset(utterance.type.PC, Type == "r"), aes(x=SibGroup6
   theme_bw(base_size = 15) +
   theme(legend.position = "none")
 
-Figure.in.cdi <- ggplot(data=in.cdi, aes(x=SibGroup6, y=PC, colour=SibGroup6, fill = SibGroup6)) + 
+Figure.in.cdi <- ggplot(data=subset(in.cdi, audio_video == "video"), 
+                        aes(x=SibGroup6, y=PC, colour=SibGroup6, fill = SibGroup6)) + 
   geom_violin(alpha = .3) + 
   stat_summary(fun=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
@@ -44,7 +47,8 @@ Figure.in.cdi <- ggplot(data=in.cdi, aes(x=SibGroup6, y=PC, colour=SibGroup6, fi
   theme(legend.position='none')
 
 
-Figure.object.presence <- ggplot(data=object.presence, aes(x=SibGroup6, y=PC, color = SibGroup6, fill = SibGroup6)) +
+Figure.object.presence <- ggplot(data=subset(object.presence, audio_video == "video"), 
+                                 aes(x=SibGroup6, y=PC, color = SibGroup6, fill = SibGroup6)) +
   geom_violin(alpha = .3) +
   stat_summary(fun.y=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 

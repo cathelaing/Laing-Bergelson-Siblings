@@ -6,7 +6,7 @@ author:
   - name          : "Catherine Laing"
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
-    address       : "Centre for Language and Communication Research, School of English, Communication and Philosohpy, Cardiff University, Colum Drive, Cardiff, UK, CF10 3EU"
+    address       : "Department of Language and Linguistic Science, University of York, Heslington, York, UK, YO10 5DD"
     email         : "catherine.laing@york.ac.uk"
   - name          : "Elika Bergelson"
     affiliation   : "2"
@@ -104,7 +104,7 @@ With regard to the infants’ linguistic environment, we hypothesize that increa
 
 # Methods
 
-We analyze data from the SEEDLingS corpus [@bergelson_day_2019], a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data, and annotations of hour-long home video recordings, taken on a monthly basis during data collection.
+We analyze data from the SEEDLingS corpus [@bergelson_day_2019], a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data, and annotations of hour-long home video recordings, taken on a monthly basis during data collection. We also analysed day-long audio recordings (see Supplementary Materials); all results were consistent with those reported below.
 <!-- eb2cl: just confirming, it's only video data in your analyses, right? in principle we could use data from audios too, would just need to subsample so it's the same amount per day. or sticking to vid but maybe add a little motivation for that? -->
 <!-- cl2eb: that's right, just video for now; I've put a comment about the option of audio data in my email. I've got the audio data in the all_basiclevel data but not sure if that is pre-sub-sampled -->
 
@@ -237,6 +237,7 @@ CDI <- CDI %>% filter(subj != 794)
 speaker.type <- speaker.type %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
 object.presence <- object.presence %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
 in.cdi <- in.cdi %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
+utterance.type.PC <- utterance.type.PC %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
 
 females <- SiblingsData %>% filter(month == 18 & sex == "F") %>% tally()
 
@@ -287,10 +288,10 @@ sex.test_df <- sex.test_anova$`Chi Df`[2]
 sex.test_chisq <- sex.test_anova$Chisq[2]
 sex.test_p.value <- sex.test_anova$pval[2]
 
-sex.test.cdi <- lmer(Log.Totalwords ~ sex + month + (1|subj), data = SiblingsData, REML=FALSE)
-sex.test.cdi.null <- lmer(Log.Totalwords ~ month + (1|subj), data = SiblingsData, REML=FALSE)
+sex.test.video.tokens <- lmer(Log.tokens_video ~ sex + month + (1|subj), data = SiblingsData, REML=FALSE)
+sex.test.video.tokens.null <- lmer(Log.tokens_video ~ month + (1|subj), data = SiblingsData, REML=FALSE)
 
-sex.test_anova <- anova(sex.test.cdi, sex.test.cdi.null) %>%  # No overall effect for sex
+sex.test_anova <- anova(sex.test.video.tokens, sex.test.video.tokens.null) %>%  # No overall effect for sex
   rename("pval" = `Pr(>Chisq)`)
 
 ```
@@ -337,7 +338,7 @@ Before considering sibling status, we first modelled infants’ productive vocab
 
 ## Effect of siblings on infants' productive vocabulary
 
-```{r SibGroup6 summary}
+```{r SibGroup6 summary, include=FALSE}
 
 sibgroup.summary <- SiblingsData %>% filter(month==18) %>%
   group_by(SibGroup6) %>%
@@ -348,61 +349,147 @@ sibgroup.summary <- SiblingsData %>% filter(month==18) %>%
 
 ```
 
-```{r Overall vocab: SibYN}
+```{r Overall vocab: SibYN, include=FALSE}
 
 # SibYN: Does having any number of siblings affect language development over time?
 
 sibsYN.model <- lmerTest::lmer(Log.Totalwords ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
 sibsYN.model.null <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN_anova <- anova(sibsYN.model, sibsYN.model.null) %>%
-  rename("pval" = `Pr(>Chisq)`)
+sibsYN_anova <- anova(sibsYN.model, sibsYN.model.null)
 
 sibsYN_df <- sibsYN_anova$Df[2]
 sibsYN_chisq <- sibsYN_anova$Chisq[2]
-sibsYN_p.value <- sibsYN_anova$pval[2]
+sibsYN_p.value <- sibsYN_anova$`Pr(>Chisq)`[2]
 
 # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
 
 sibgroup.model <- lmerTest::lmer(Log.Totalwords ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
 sibgroup.model.null <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup_anova <- anova(sibgroup.model, sibgroup.model.null) %>%
-  rename("pval" = `Pr(>Chisq)`)
+sibgroup_anova <- anova(sibgroup.model, sibgroup.model.null)
 
-# sibgroup_df <- sibgroup_anova$`Chi Df`[2]
-# sibgroup_chisq <- sibgroup_anova$Chisq[2]
-# sibgroup_p.value <- sibgroup_anova$pval[2]
 
 # Sibling number: Does number of siblings affect language development over time?
 
 sibnumber.model <- lmerTest::lmer(Log.Totalwords ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
 sibnumber.model.null <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber_anova <- anova(sibnumber.model, sibnumber.model.null) %>%
-  rename("pval" = `Pr(>Chisq)`)
+sibnumber_anova <- anova(sibnumber.model, sibnumber.model.null)
 
-# sibnumber_df <- sibgroup_anova$`Chi Df`[2]
-# sibnumber_chisq <- sibgroup_anova$Chisq[2]
-# sibnumber_p.value <- sibgroup_anova$pval[2]
 
-table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anova) %>%
-  rownames_to_column(var="Model") %>%
+# Checking consistency with words produced in recordings
+
+# Tokens - video
+
+# SibYN: Does having any number of siblings affect language development over time?
+
+sibsYN.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.tokens_anova_video <- anova(sibsYN.model.tokens_video, sibsYN.model.tokens_video.null) # NS
+
+# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
+
+sibgroup.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.tokens_anova_video <- anova(sibgroup.model.tokens_video, sibgroup.model.tokens_video.null) # NS
+
+# Sibling number: Does number of siblings affect language development over time?
+
+sibnumber.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.tokens_anova_video <- anova(sibnumber.model.tokens_video, sibnumber.model.tokens_video.null) # NS
+
+# Types - video
+
+# SibYN: Does having any number of siblings affect language development over time?
+
+sibsYN.model.types_video <- lmerTest::lmer(Log.types_video ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.types_anova_video <- anova(sibsYN.model.types_video, sibsYN.model.types_video.null) # p<.05
+
+# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
+
+sibgroup.model.types_video <- lmerTest::lmer(Log.types_video ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.types_anova_video <- anova(sibgroup.model.types_video, sibgroup.model.types_video.null) # p<.001
+
+# Sibling number: Does number of siblings affect language development over time?
+
+sibnumber.model.types_video <- lmerTest::lmer(Log.types_video ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.types_anova_video <- anova(sibnumber.model.types_video, sibnumber.model.types_video.null) # NS
+
+# Tokens - audio
+
+# SibYN: Does having any number of siblings affect language development over time?
+
+sibsYN.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.tokens_anova_audio <- anova(sibsYN.model.tokens_audio, sibsYN.model.tokens_audio.null) # p<.05
+
+# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
+
+sibgroup.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.tokens_anova_audio <- anova(sibgroup.model.tokens_audio, sibgroup.model.tokens_audio.null) # NS
+
+# Sibling number: Does number of siblings affect language development over time?
+
+sibnumber.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.tokens_anova_audio <- anova(sibnumber.model.tokens_audio, sibnumber.model.tokens_audio.null) # p=.05
+
+# Types - audio
+
+# SibYN: Does having any number of siblings affect language development over time?
+
+sibsYN.model.types_audio <- lmerTest::lmer(Log.types_audio ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.types_anova_audio <- anova(sibsYN.model.types_audio, sibsYN.model.types_audio.null) # p<.05
+
+# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
+
+sibgroup.model.types_audio <- lmerTest::lmer(Log.types_audio ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.types_anova_audio <- anova(sibgroup.model.types_audio, sibgroup.model.types_audio.null) # p<.001
+
+# Sibling number: Does number of siblings affect language development over time?
+
+sibnumber.model.types_audio <- lmerTest::lmer(Log.types_audio ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.types_anova_audio <- anova(sibnumber.model.types_audio, sibnumber.model.types_audio.null) # p=.05
+
+
+
+table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anova,
+                                               sibsYN.tokens_anova_video, sibsYN.tokens_anova_audio,
+                                    sibgroup.tokens_anova_video, sibgroup.tokens_anova_audio,
+                                    sibnumber.tokens_anova_video, sibnumber.tokens_anova_audio,
+                                    sibsYN.types_anova_video, sibsYN.types_anova_audio,
+                                    sibgroup.types_anova_video, sibgroup.types_anova_audio,
+                                    sibnumber.types_anova_video, sibnumber.types_anova_audio) %>%
+  rownames_to_column(var="model") %>%
   filter(Chisq > 0) %>%
-  rename("p value" = "pval") %>%
-  mutate(Model = fct_recode(Model,
-                            "0 vs. >0 siblings" = "sibsYN.model",
-                            "Sibling group" = "sibgroup.model",
-                            "Sibling number" = "sibnumber.model")) %>%
-  select(Model, Df, Chisq, `p value`)
+  rename("p value" = "Pr(>Chisq)") %>%
+  mutate(Count = ifelse(model == "sibsYN.model", "CDI", NA),
+                  Count = ifelse(model == "sibsYN.model.tokens_video", "Tokens", Count),
+         Count = ifelse(model == "sibsYN.model.types_video", "Types", Count),
+         Data = ifelse(grepl("video", model), "Video", NA),
+         Data = ifelse(grepl("audio", model), "Audio", Data),
+         Data = ifelse(is.na(Data), "CDI", Data)) %>%
+  mutate(Model = ifelse(grepl("sibsYN", model), "0 vs. >0 siblings", NA),
+         Model = ifelse(grepl("sibgroup", model), "Sibling group", Model),
+         Model = ifelse(grepl("sibnumber", model), "Sibling number", Model)) %>%
+  select(Count, Model, Data, Df, Chisq, `p value`)
 
 ```
 
-We next modeled the effect of siblings on productive vocabulary. Starting with a binary variable (0 vs. >0 siblings), our model revealed no effect for the presence of siblings on productive vocabulary when we included month as a fixed effect ($\chi^2 (`r sibsYN_df`)$ = `r sibsYN_chisq`, *p*=`r printp(sibsYN_p.value)`). We then modelled aggregated groups (None vs. One vs. 2+) and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings). In both cases, models with siblings accounted for more variance in productive vocabulary than models without it (see Table \@ref(tab:table-sibling-model-output)).
+We next modeled the effect of siblings on productive vocabulary. We tested productive vocabulary across three data types (CDI questionnaires, video data and day-long audio recordings), as well as three variables representing the sibling effect: a binary variable (0 vs. >0 siblings), aggregated groups (None vs. One vs. 2+), and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings). Outcomes from model comparisons are shown in Table \@ref(tab:table-sibling-model-output). Across the data, the simple fact of having siblings (i.e. as a binary variable) did not affect productive vocabulary. Discrete sibling number predicted reported CDI vocabulary and number of word types (but not tokens) produced in the Video data; this was marginally significant in the Audio data. Sibling group predicted vocabulary size in the CDI measures but not in the Audio or Video data (again this was marginally significant in the Video data).
 
 ```{r table-sibling-model-output, echo=FALSE}
 cap = "Output from regression models comparing language development over time in relation to sibling number (binary, grouped and discrete variables). Month was included in each model as a fixed effect; subject was included as a random effect."
 apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
 ```
 
-```{r descriptive statistics for sibling model outputs}
+```{r descriptive statistics for sibling model outputs, include=FALSE}
 
 siblings.model.summary <- summary(sibnumber.model)
 
@@ -460,6 +547,32 @@ sibgroup2.beta <- as.numeric(table.sibgroup.model.summary$betaval[3])
 
 sibgroup2.beta <- abs(sibgroup2.beta*100)
 
+siblings.model.summary.video <- summary(sibnumber.model.types_video)
+
+siblings.model.summary.video.table <- siblings.model.summary.video$coefficients %>%
+  as.data.frame %>%
+  rename(
+    "$b$" = "Estimate"
+    , "SE" = "Std. Error"
+    , "$df$" = "df"
+    , "$t$" = "t value"
+    , "$p$" = "Pr(>|t|)"
+  ) %>%
+  mutate(
+    Effect = papaja:::prettify_terms(rownames(.))
+  ) %>%
+  printnum(
+    digits = c(2, 2, 2, 2, 3, 0)
+    , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+    , zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+  ) %>%
+  select(Effect, `$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
+  rename("betaval" = `$b$`)
+
+siblingnum.vid.beta <- as.numeric(siblings.model.summary.video.table$betaval[2])
+
+siblingnum.vid.beta <- abs(siblingnum.vid.beta*100)
+
 ```
 
 ```{r post hoc tests sibling groups, include=FALSE}
@@ -480,7 +593,7 @@ sibgroup_wilcox_one_two <- wilcox.test(
 
 ```
 
-In short, having more siblings was associated with a smaller productive vocabulary over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. Moreover, for each additional sibling, infants acquired `r siblingnum.beta`% fewer words. Looking at differences between sibling groups (0 vs. 1 vs. 2+ siblings), we see that infants with one sibling produce only `r sibgroup1.beta`% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce `r sibgroup2.beta`% fewer words. See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-SibGroup). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`; Bonferroni corrections applied).
+Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. Moreover, for each additional sibling, infants acquired `r siblingnum.beta`% fewer words, and produced `r siblingnum.vid.beta`% fewer words in the hour-long video recordings. Looking at differences between sibling groups (0 vs. 1 vs. 2+ siblings), we see that infants with one sibling acquire (according to CDI reports) only `r sibgroup1.beta`% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce `r sibgroup2.beta`% fewer words. See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-SibGroup). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`; Bonferroni corrections applied).
 <!-- eb2cl: not seeing where the bonferroni correction was applied can you clarify?(i think this applies below as well). maybe you mean that even if we consider a bonferroni adjusted threshold (which you should then specify) it's still significant? -->
 <!-- cl2eb: see comment above -->
 
@@ -501,8 +614,8 @@ Having established that infants' productive vocabulary varied as a function of h
 
 # age
 
-age.test.input <- lmer(Log.n ~ month + (1|subj), data = subset(speaker.type, Speaker == "MOT"), REML=FALSE)
-age.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "MOT"), REML=FALSE)
+age.test.input <- lmer(Log.n ~ month + (1|subj), data = subset(speaker.type, Speaker == "MOT" & audio_video == "video"), REML=FALSE)
+age.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "MOT" & audio_video == "video"), REML=FALSE)
 
 age.test.input_anova <- anova(age.test.input, age.test.input.null) %>% # Strong effect for age - include in all further models
     rename("pval" = `Pr(>Chisq)`)  # no effect for age
@@ -513,8 +626,8 @@ age.test.input_p.value <- age.test.input_anova$pval[2]
 
 # sex
 
-sex.test.input <- lmer(Log.n ~ sex + (1|subj), data = subset(speaker.type, Speaker == "MOT"), REML=FALSE)
-sex.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "MOT"), REML=FALSE)
+sex.test.input <- lmer(Log.n ~ sex + (1|subj), data = subset(speaker.type, Speaker == "MOT" & audio_video == "video"), REML=FALSE)
+sex.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "MOT" & audio_video == "video"), REML=FALSE)
 
 sex.test.input_anova <- anova(sex.test.input, sex.test.input.null) %>% # Strong effect for sex - include in all further models
     rename("pval" = `Pr(>Chisq)`)  # no effect for sex
@@ -524,23 +637,23 @@ sex.test.input_chisq <- sex.test.input_anova$Chisq[2]
 sex.test.input_p.value <- sex.test.input_anova$pval[2]
 ```
 
-```{r input correlations, message=TRUE, warning=FALSE}
+```{r input correlations, message=TRUE, warning=FALSE, include=FALSE}
 
 cor.edu.input <- cor.test(
-  x = subset(speaker.type, month == 17 & Speaker == "MOT")$n
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT")$MOTedulevel
+  x = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
+  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$MOTedulevel
   , method = "spearman"
 )
 
 cor.vocab.input <- cor.test(
   x = subset(SiblingsData, month == 17)$Total.words
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT")$n
+  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
   , method = "spearman"
 )
 
 cor.age.input<- cor.test(
-  x = subset(speaker.type, month == 17 & Speaker == "MOT")$n
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT")$age_mom
+  x = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
+  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$age_mom
   , method = "spearman"
 )
 
@@ -552,30 +665,32 @@ As with our previous analysis, we first modeled infants' input (maternal input o
 
 ### Parental Input
 
-```{r Input - summary}
+```{r Input - summary, include=FALSE}
 
 speaker.summary <-
   speaker.type %>%
+  filter(audio_video == "video") %>%
   group_by(subj, month) %>%
   mutate(total.n = sum(n)) %>%
   group_by(Speaker, total.n) %>%
   summarise(total.speaker = sum(n)) %>%
   mutate(PC.input = (total.speaker/total.n)*100)
 
-mean.input.MOT <- speaker.type %>% filter(Speaker == "MOT") %>% summarise(mean.input = mean(n),  # 136.69
+mean.input.MOT <- speaker.type %>% filter(Speaker == "MOT" & audio_video == "video") %>% summarise(mean.input = mean(n),  # 136.69
                                                                           med.input = median(n),
                                                                           sd.input = sd(n))      # 111.01
 
-mean.input.FAT <- speaker.type %>% filter(Speaker == "FAT") %>% summarise(mean.input = mean(n),  # 18.14
+mean.input.FAT <- speaker.type %>% filter(Speaker == "FAT" & audio_video == "video") %>% summarise(mean.input = mean(n),  # 18.14
                                                                           med.input = median(n),
                                                                           sd.input = sd(n))      # 42.01
 
-mean.input.SIB <- speaker.type %>% filter(Speaker == "SIBLING" & SibGroup6 != "None") %>% 
+mean.input.SIB <- speaker.type %>% filter(Speaker == "SIBLING" & SibGroup6 != "None" & audio_video == "video") %>% 
   summarise(mean.input = mean(n),  # 13
             med.input = median(n), # 6
             sd.input = sd(n))      # 15.8
 
 mean.input.all <- speaker.type %>%
+    filter(audio_video == "video") %>%
   group_by(SibGroup6) %>%
   summarise(mean.input = mean(n),  # 53.9
             med.input = median(n),
@@ -602,8 +717,8 @@ cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings a
 
 #shapiro.test(speaker.type$n) # not normal
 
-speaker.type.model <- lmerTest::lmer(Log.n ~ SibGroup6 + Speaker + (1|subj), data=speaker.type, REML=FALSE)
-speaker.type.model.null <- lmerTest::lmer(Log.n ~ Speaker + (1|subj), data=speaker.type, REML=FALSE)
+speaker.type.model <- lmerTest::lmer(Log.n ~ SibGroup6 + Speaker + (1|subj), data=subset(speaker.type, audio_video == "video"), REML=FALSE)
+speaker.type.model.null <- lmerTest::lmer(Log.n ~ Speaker + (1|subj), data=subset(speaker.type, audio_video == "video"), REML=FALSE)
 
 speaker.type_anova <- anova(speaker.type.model, speaker.type.model.null) %>%
   rename("pval" = `Pr(>Chisq)`)
@@ -617,6 +732,7 @@ speaker.type_p.value <- speaker.type_anova$pval[2]
 # post hoc comparisons
 
 speaker.type.mean <- speaker.type %>% 
+  filter(audio_video == "video") %>%
   group_by(subj) %>% 
   mutate(MeanN = mean(Family.input)) %>% 
   filter(Speaker == "MOT" & month == 17) 
@@ -625,20 +741,21 @@ speaker.type.mean <- speaker.type %>%
 
 
 speaker.type_wilcox_none_one <- wilcox.test(
-  x = subset(speaker.type.mean, SibGroup6 == "None")$MeanN
-  , y = subset(speaker.type.mean, SibGroup6 == "One")$MeanN
+  x = subset(speaker.type.mean, SibGroup6 == "None" & audio_video == "video")$MeanN
+  , y = subset(speaker.type.mean, SibGroup6 == "One"  & audio_video == "video")$MeanN
   , paired = FALSE
 )
 
 speaker.type_wilcox_one_two <- wilcox.test(
-  x = subset(speaker.type.mean, SibGroup6 == "2+")$MeanN
-  , y = subset(speaker.type.mean, SibGroup6 == "One")$MeanN
+  x = subset(speaker.type.mean, SibGroup6 == "2+" & audio_video == "video")$MeanN
+  , y = subset(speaker.type.mean, SibGroup6 == "One" & audio_video == "video")$MeanN
   , paired = FALSE
 )
 
 
 input.diff <- 
   speaker.type %>% 
+    filter(audio_video == "video") %>%
   group_by(SibGroup6) %>%
  summarise(meaninput = mean(Family.input))
 
@@ -658,7 +775,7 @@ or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r pr
 ```{r Sibling presence}
 
 sib.present <- speaker.type %>%
-  filter(Speaker == "SIBLING" & SibsYN == "Y") %>%
+  filter(Speaker == "SIBLING" & SibsYN == "Y" & audio_video == "video") %>%
   mutate(present = ifelse(n > 0, 1, 0)) %>%
   group_by(present) %>%
   tally() %>%
@@ -673,58 +790,58 @@ sib.present <- speaker.type %>%
 # Difference in amount of input from siblings
 
 speaker.type.SIB <- speaker.type %>% group_by(subj) %>% 
-  filter(Speaker == "SIBLING") %>%
+  filter(Speaker == "SIBLING" & audio_video == "video") %>%
   mutate(MeanN = mean(n),
          TotalN = sum(n)) %>%
   filter(month == 17)
 
 speaker.type.SIB_wilcox_none_one <- wilcox.test(
-  x = subset(speaker.type.SIB, SibGroup6 == "None")$MeanN
-  , y = subset(speaker.type.SIB, SibGroup6 == "One")$MeanN
+  x = subset(speaker.type.SIB, SibGroup6 == "None" & audio_video == "video")$MeanN
+  , y = subset(speaker.type.SIB, SibGroup6 == "One" & audio_video == "video")$MeanN
   , paired = FALSE
 ) # p<.001
 
 speaker.type.SIB_wilcox_one_two <- wilcox.test(
-  x = subset(speaker.type.SIB, SibGroup6 == "2+")$MeanN
-  , y = subset(speaker.type.SIB, SibGroup6 == "One")$MeanN
+  x = subset(speaker.type.SIB, SibGroup6 == "2+" & audio_video == "video")$MeanN
+  , y = subset(speaker.type.SIB, SibGroup6 == "One" & audio_video == "video")$MeanN
   , paired = FALSE
 ) # NS
 
 # Difference in amount of input from mothers
 
 speaker.type.MOT <- speaker.type %>% group_by(subj) %>% 
-  filter(Speaker == "MOT") %>%
+  filter(Speaker == "MOT" & audio_video == "video") %>%
   mutate(MeanN = mean(n))  %>%
   filter(month == 17)
 
 speaker.type.MOT_wilcox_none_one <- wilcox.test(
-  x = subset(speaker.type.MOT, SibGroup6 == "None")$MeanN
-  , y = subset(speaker.type.MOT, SibGroup6 == "One")$MeanN
+  x = subset(speaker.type.MOT, SibGroup6 == "None" & audio_video == "video")$MeanN
+  , y = subset(speaker.type.MOT, SibGroup6 == "One" & audio_video == "video")$MeanN
   , paired = FALSE
 ) # NS
 
 speaker.type.MOT_wilcox_one_two <- wilcox.test(
-  x = subset(speaker.type.MOT, SibGroup6 == "2+")$MeanN
-  , y = subset(speaker.type.MOT, SibGroup6 == "One")$MeanN
+  x = subset(speaker.type.MOT, SibGroup6 == "2+" & audio_video == "video")$MeanN
+  , y = subset(speaker.type.MOT, SibGroup6 == "One" & audio_video == "video")$MeanN
   , paired = FALSE
 ) # p<.001
 
 # Difference in amount of input from fathers
 
 speaker.type.FAT <- speaker.type %>% group_by(subj) %>% 
-  filter(Speaker == "FAT") %>%
+  filter(Speaker == "FAT" & audio_video == "video") %>%
   mutate(MeanN = mean(n))  %>%
   filter(month == 17)
 
 speaker.type.FAT_wilcox_none_one <- wilcox.test(
-  x = subset(speaker.type.FAT, SibGroup6 == "None")$MeanN
-  , y = subset(speaker.type.FAT, SibGroup6 == "One")$MeanN
+  x = subset(speaker.type.FAT, SibGroup6 == "None" & audio_video == "video")$MeanN
+  , y = subset(speaker.type.FAT, SibGroup6 == "One" & audio_video == "video")$MeanN
   , paired = FALSE
 ) # NS
 
 speaker.type.FAT_wilcox_one_two <- wilcox.test(
-  x = subset(speaker.type.FAT, SibGroup6 == "2+")$MeanN
-  , y = subset(speaker.type.FAT, SibGroup6 == "One")$MeanN
+  x = subset(speaker.type.FAT, SibGroup6 == "2+" & audio_video == "video")$MeanN
+  , y = subset(speaker.type.FAT, SibGroup6 == "One" & audio_video == "video")$MeanN
   , paired = FALSE
 ) # NS
 
@@ -740,7 +857,7 @@ Next, we tested how much of that input came from siblings (for infants who had t
 ```{r reading summary}
 
 reading.summary <- utterance.type.PC %>% group_by(SibGroup6, subj) %>% 
-  filter(subj != 794 & !month %in% c("06", "07", "08", "09")) %>%
+  filter(audio_video == "video") %>%
   filter(Type == "r") %>%
   summarise(meanPC = mean(PC),
          medPC = median(PC),
@@ -750,8 +867,8 @@ reading.summary <- utterance.type.PC %>% group_by(SibGroup6, subj) %>%
 
 ```{r reading model}
 
-reading.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=subset(utterance.type.PC, Type == "r"), REML=FALSE)
-reading.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(utterance.type.PC, Type == "r"), REML=FALSE)
+reading.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=subset(utterance.type.PC, Type == "r" & audio_video == "video"), REML=FALSE)
+reading.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(utterance.type.PC, Type == "r" & audio_video == "video"), REML=FALSE)
 reading.anova <- anova(reading.model, reading.model.null) %>% # p<.01
   rename("pval" = `Pr(>Chisq)`)
 
@@ -777,7 +894,7 @@ reading_wilcox_one_two <- wilcox.test(
 
 ```
 
-We expected that infants with fewer siblings would have more opportunity to engage in shared book-reading with their caregivers. To test this, we analyse the proportion of all object words in the input that were heard during shared book-reading interactions in our data; proportions were used in order to control for differences in amount of input across sibling groups.  On average, `r round(mean(reading.summary$meanPC)*100)`% of the object words heard in the infants’ inputs were produced during book-reading (Mdn=`r printnum(mean(reading.summary$medPC))`, SD=`r printnum(mean(reading.summary$sdPC))`), and sibling group had a signficant effect on this measure ($\chi^2 (`r reading_df`)$ = `r reading_chisq`, *p*=`r printp(reading_p.value)`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-reading)). 
+We expected that infants with fewer siblings would have more opportunity to engage in shared book-reading with their caregivers. To test this, we analyse the proportion of all object words in the input that were heard during shared book-reading interactions in our data; proportions were used in order to control for differences in amount of input across sibling groups.  On average, `r round(mean(reading.summary$meanPC)*100)`% of the object words heard in the infants’ inputs were produced during book-reading (Mdn=`r printnum(mean(reading.summary$medPC))`, SD=`r printnum(mean(reading.summary$sdPC))`), and sibling group had a significant effect on this measure ($\chi^2 (`r reading_df`)$ = `r reading_chisq`, *p*=`r printp(reading_p.value)`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-reading)).[^5] 
 
 ```{r Figure-reading, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 
@@ -793,13 +910,15 @@ cap <- sprintf("Proportion of words produced by the caregiver during book-readin
 ```{r in.cdi summary}
 
 in.cdi.summary <- in.cdi %>% group_by(SibGroup6, subj) %>% 
+  filter(audio_video == "video") %>%
   summarise(meanPC = mean(PC),
          medPC = median(PC),
          sdPC = sd(PC)) 
 
 #shapiro.test(in.cdi.summary$meanPC) # normal
 
-in.cdi.summary.n <- in.cdi %>% group_by(SibGroup6, subj) %>% 
+in.cdi.summary.n <- in.cdi %>% group_by(SibGroup6, subj) %>%
+    filter(audio_video == "video") %>%
   summarise(meann = mean(n),
          medn = median(n),
          sdn = sd(n)) 
@@ -810,8 +929,8 @@ in.cdi.summary.n <- in.cdi %>% group_by(SibGroup6, subj) %>%
 
 ```{r in.cdi model PC}
 
-in.cdi.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=in.cdi, REML=FALSE)
-in.cdi.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=in.cdi, REML=FALSE)
+in.cdi.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=subset(in.cdi, audio_video == "video"), REML=FALSE)
+in.cdi.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(in.cdi, audio_video == "video"), REML=FALSE)
 in.cdi.anova <- anova(in.cdi.model, in.cdi.model.null) %>% # p<.01
   rename("pval" = `Pr(>Chisq)`)
 
@@ -881,6 +1000,7 @@ cap <- sprintf("Proportion of early-acquired words in the input, across sibling 
 ```{r Object.presence summary}
 
 object.presence.summary <- object.presence %>%
+  filter(audio_video == "video") %>%
   group_by(subj, SibGroup6) %>%
   summarise(mean.object = mean(PC),
             sd.object = sd(PC),
@@ -892,8 +1012,8 @@ object.presence.summary <- object.presence %>%
 
 ```{r object.presence model}
 
-object.presence.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=object.presence, REML=FALSE)
-object.presence.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=object.presence, REML=FALSE)
+object.presence.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+object.presence.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
 object.presence.anova <- anova(object.presence.model, object.presence.model.null) %>% # p<.01
   rename("pval" = `Pr(>Chisq)`)
 
@@ -1019,6 +1139,8 @@ In conclusion, our results support the general findings from the literature show
 [^3]: Two infants in the dataset were dizygotic twins; our pattern of results holds with or without these infants.
 
 [^4]: 1 was added to the raw infant production data of all infants before log-transformation to retain infants with vocabularies of 0.
+
+[^5]: In the audio data, the model comparison revealed a significant effect of sibling group on shared book reading (*p*=.04), but post-hoc comparisons showed no significant difference between sibling groups (*ps*>.01).
 
 
 \newpage

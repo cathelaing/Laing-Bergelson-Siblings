@@ -1,5 +1,5 @@
 
-cdi_queries <- read_csv("cdi_queries_Mar22_resolvedCL.csv") %>%
+cdi_queries <- read_csv("cdi_queries_Apr22_resolvedCL.csv") %>%
   mutate(object = basic_level,
          in_cdi = ifelse(is.na(CDIform), F, T))
 
