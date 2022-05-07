@@ -597,45 +597,7 @@ speaker.type.FAT_wilcox_one_two <- wilcox.test(
 
 ```
 
-### Shared book-reading
 
-```{r reading summary}
-
-reading.summary <- utterance.type.PC %>% group_by(SibGroup6, subj, audio_video) %>% 
-  filter(subj != 794 & !month %in% c("06", "07", "08", "09") & audio_video == "audio") %>%
-  filter(Type == "r") %>%
-  summarise(meanPC = mean(PC),
-         medPC = median(PC),
-         sdPC = sd(PC))
-
-```
-
-```{r reading model}
-
-reading.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=subset(utterance.type.PC, Type == "r" & audio_video == "audio"), REML=FALSE)
-reading.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(utterance.type.PC, Type == "r" & audio_video == "audio"), REML=FALSE)
-reading.anova <- anova(reading.model, reading.model.null) %>% # NS
-  rename("pval" = `Pr(>Chisq)`)
-
-reading_df <- reading.anova$Df[2]
-reading_chisq <- reading.anova$Chisq[2]
-reading_p.value <- reading.anova$pval[2] 
-
-reading_wilcox_none_one <- wilcox.test(
-  x = subset(reading.summary, SibGroup6 == "None" & audio_video == "audio")$meanPC
-  , y = subset(reading.summary, SibGroup6 == "One" & audio_video == "audio")$meanPC
-  , paired = FALSE
-) # NS
-
-reading_wilcox_one_two <- wilcox.test(
-  x = subset(reading.summary, SibGroup6 == "2+" & audio_video == "audio")$meanPC
-  , y = subset(reading.summary, SibGroup6 == "One" & audio_video == "audio")$meanPC
-  , paired = FALSE
-) # NS
-
-summary(reading.model)
-
-```
 ### Early-acquired words
 
 ```{r in.cdi summary}
@@ -980,31 +942,6 @@ speaker.type.FAT_wilcox_one_two <- wilcox.test(
 
 ```
 
-### Shared book-reading
-
-```{r reading summary}
-
-reading.summary <- utterance.type.PC %>% group_by(SibGroup6, subj) %>% 
-  filter(subj != 794 & !month %in% c("06", "07", "08", "09") & audio_video == "video") %>%
-  filter(Type == "r") %>%
-  summarise(meanPC = mean(PC),
-         medPC = median(PC),
-         sdPC = sd(PC))
-
-```
-
-```{r reading model}
-
-reading.model <- lmerTest::lmer(PC ~ SibGroup6 + month + (1|subj), data=subset(utterance.type.PC, Type == "r" & audio_video == "video"), REML=FALSE)
-reading.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(utterance.type.PC, Type == "r" & audio_video == "video"), REML=FALSE)
-reading.anova <- anova(reading.model, reading.model.null) %>% # p<.001
-  rename("pval" = `Pr(>Chisq)`)
-
-reading_df <- reading.anova$Df[2]
-reading_chisq <- reading.anova$Chisq[2]
-reading_p.value <- reading.anova$pval[2] 
-
-```
 ### Early-acquired words
 
 ```{r in.cdi summary}
