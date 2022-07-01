@@ -1,0 +1,21 @@
+#high level feedback
+
+* note: i did some slight rewording in intro and left some notes to myself for places i wanted to come back to "revisit" but then i realized that it might be more useful here
+* i think we should do a simplification pass. rightnow i think we went a little too far in the direction of okay here's 5 ways to compute this and that and the other and mostly it doesn't matter except these 17 small but not that important exceptions (i'm exaggerating but you get the idea). So i think the simplest version of our narrative is: 
+## lets look at sibling number and how it may relate to differences in productive vocab & noun input. 
+## Why? because the lit says it could matter but results are mixed, and often looks at kid OR input and first vs. later born. 
+## How? 
+sibs: we'll present 0 vs. 1 vs. 2+ for reasons of n (SI: discrete & first/latter? not sure on this.)
+vocab: total (not just noun) CDI scores 10-18mo. (SI: maybe put tokens or types from recordings there but there are some issues with that: it's just nouns and the audio you have is a different # of hours each month so the with-age model part is weird, so maybe we don't include the home recorded words chi says at all)
+noun types/tokens as input: i *think* i'd include "all" and then the deep dive by mom/dad/sib but all could go/stay in SI. (and if you add it then fig 2 coudl have an "all"column left of mom?)
+
+*research questions: i think we should get rid of the early-learned CDI one altogether ,from intro to methods to results to discussion. i think it'll make reviewers grouchy (and i'm not sure it's wrong to be grouchy), we don't find interesting differences across sib groups, and the nouns in the input part is pretty constraining there as is the notion of learnability defined by what's on the cdi..  
+* i'm not sure table 2 is doing much for us, especially if we streamline as i suggest above.
+* could we have a table of the model output for the model that includes age to go with figure 1? (and let's put model equation in paper)
+* i like the with age figure! could you dodge the error bars & do the fill on the bands with different colors so they're distinguishable?
+* i like the obj presence & input figs!
+* in a few places i took out causal language: having sibs doesn't necessary CAUSE vocab or input diffs, but diff sib numbers can be associated with vocab or input diffs (and of cours eit's fine to speculate about causal mechanisms in intro/discussion carefully)
+* i think we should probably quite early on address the limitations of our sample. on the one hand we have 12 dayslong audio& 12 vids & 12 cdis PER KID for a year, on the other hand we don'thave an n that reasonably lets us look at gender & sib # at the same time. etc. 
+* we may want to revisit stats stuff for streamlining too, e.g. i don't think we need to say bonferroni-adjusted everywhere but should make clear what our p-value means; most places we have a p-val we also want a beta or mean or sd or something to go with it, or a table that has that stuff.
+* one way to punt on the gender question is to actually just point to shannons (under review) seedlings gender paper; we're actually finalizing the revision right now (R&R at child dev) but shannon can share the updated one with you next week and we can cite/state some stuff from that (e.g. things that don't matter about which way a dv is computed or things that didn't differ by gender overall etc)
+* we'll want to do some massaging of the question of whether input overall or input just to the kid matters, i have some cites to add but will do that in a next pass
