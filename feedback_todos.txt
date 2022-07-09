@@ -19,3 +19,14 @@ noun types/tokens as input: i *think* i'd include "all" and then the deep dive b
 * we may want to revisit stats stuff for streamlining too, e.g. i don't think we need to say bonferroni-adjusted everywhere but should make clear what our p-value means; most places we have a p-val we also want a beta or mean or sd or something to go with it, or a table that has that stuff.
 * one way to punt on the gender question is to actually just point to shannons (under review) seedlings gender paper; we're actually finalizing the revision right now (R&R at child dev) but shannon can share the updated one with you next week and we can cite/state some stuff from that (e.g. things that don't matter about which way a dv is computed or things that didn't differ by gender overall etc)
 * we'll want to do some massaging of the question of whether input overall or input just to the kid matters, i have some cites to add but will do that in a next pass
+
+
+CL notes to self:
+* check pdf for errors
+* take one of the twins out and consider the other twin in the 1sib group
+* ask Shannon about whether all older sibs lived with infants all the time, or if some were not in the household all the time
+* ask Shannon about gender paper
+* update table 2
+* check all stats for streamlining 
+* add model eqution to paper
+* table of model outputs to go with Fig1

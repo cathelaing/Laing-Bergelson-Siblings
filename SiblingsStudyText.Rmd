@@ -95,13 +95,12 @@ In analyzing infants' lexical development in relation to the presence of older s
 Research has already shown that early lexical development is more advanced among first-born infants [e.g. @hoff-ginsberg_relation_1998]. We expect to see the same effect in our data, but we hypothesize that the closer granularity of this analysis will show a gradient decline in infants’ lexical abilities in relation to an increasing number of siblings. 
 <!-- eb2cl: not clear everyone would agree that these are all input quality measures vs. quant or a mix; not sure we need to stake a claim on that either way -->
 <!-- cl2eb: agreed - have moved away from the qual/quant distinction -->
-With regard to the infants’ linguistic environment, we hypothesize that increased sibling number will have a negative effect on factors of the early input that are known to support language development. To test this, we adopt three input measures, established in the literature as being important for early language learning. The measures and our specific predictions are as follows:
+With regard to the infants’ linguistic environment, we hypothesize that increased sibling number will have a negative effect on factors of the early input that are known to support language development. To test this, we adopt two input measures, established in the literature as being important for early language learning. The measures and our specific predictions are as follows:
 
-1)	**Amount of input** will be lower for children with more siblings. Caregivers’ attention will be divided across a larger group of children, and as a result the proportion of input from the mother will be lower for infants with more siblings. In addition, these infants will experience more input from other children in the home. Amount of overall input is an important predictor of language development in the longer term [@huttenlocher_early_1991], as is amount of one-to-one input from the caregiver [@ramirez-esparza_look_2014], while overall speech in the environment (i.e. including speech not necessarily directed at the infant) does not appear to support lexical development (*ibid*). We thus expect amount of input directed towards the child to be an important determiner of infants’ lexical production skills at 18 months.
+1)	**Amount of input** will be lower for children with more siblings. Following previous studies that show infants with siblings to receive less speech directed at them [@jones_language_1987; @oshima-takane_linguistic_2003], we expect to see the same effect in our sample. Given the link between amount of one-to-one input from the caregiver and vocabulary size [@ramirez-esparza_look_2014], we expect that infants who hear less input overall (i.e. by our predictions, those with more siblings) will have smaller productive vocabularies.
 <!-- eb2cl: revisit wording -->
-2)	**More 'learnable' words** [words that tend to be acquired earlier, @fenson_variability_1994] will occur in the input of infants with fewer siblings than the input of those with more siblings. This prediction stems from the idea that input from older children will generate a wider variety of lexical items in the input, including words directed to and produced by siblings, some of whom will still be young language learners themselves. As a result, in homes with older siblings, we predict that the lexical items in the input will be less typical of words acquired earlier on in development.
-<!-- eb2cl: i'm not sure about the "learnable" term, guava isn't any less learnable than apple but only the latter is on the cdi. revisit. -->
-3)	**Amount of object presence** (word + object co-occurrence, e.g. mother says 'cat' when there is a cat in the room) will decrease as sibling number increases. This predictions stems from the idea that as caregivers’ attention is drawn away from one-to-one interactions with the infant, there will be less opportunity for contingent talk. Moreover, less "learnable" words are also expected to be less imageable, and thus less likely to be presented alongside caregivers’ utterances. The co-occurrence of words alongside their referents is thought to contribute to the earlier learning of nouns over verbs [@bergelson_acquisition_2013], as it supports the word learning process through the concrete mapping of word to referent [@gleitman_hard_2005]. Furthermore, object presence is more suited to instances of joint visual attention with the caregiver, which is less likely to occur in households where caregiver attention is shared between multiple children.
+<!-- cl2eb: any better? -->
+2)	**Amount of object presence** (word + object co-occurrence, e.g. mother says 'cat' when there is a cat in the room) will decrease as sibling number increases. As caregivers’ attention is drawn away from one-to-one interactions with the infant, we expect there to be less opportunity for contingent talk and joint attention. The co-occurrence of words alongside their referents is thought to contribute to the earlier learning of nouns over verbs [@bergelson_acquisition_2013], as it supports the word learning process through the concrete mapping of word to referent [@gleitman_hard_2005]. We thus expect that increased sibling number will be associated with less object presence in caregiver speech, and subsequently a smaller productive vocabulary.
 <!-- eb2cl: revisit wording -->
 
 # Methods
@@ -128,7 +127,7 @@ firstword <- CDI %>% group_by(subj) %>%
 
 ```
 
-**Parental report data** We draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`)[^1], we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development over the course of the analysis period. Supplementing this parental report, we also consider words produced in the hour-long video- and day-long audio-recordings.
+**Parental report data** To index each child's language abilities, we draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`)[^1], we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development over the course of the analysis period.
 <!-- eb2cl: is that first word from CDI or from home recordings? basd on our point walk talk study, this differed by a coupla months depending on how it was calculated, but i'm assuming it's CDI since that's what you report below! -->
 <!-- cl2eb: yes but have clarified and added note about Moore et al paper -->
 <!-- eb2cl: revisit kid-produced words in recordings -->
@@ -163,8 +162,9 @@ We analyzed number of siblings based on parental report in the demographics ques
 <!-- eb2cl: there may be an older sib that only lived with infant some of the time? double check with shannon? -->
 ## Input measures
 
-Three input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to aspects of the input that are established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear?), **early-acquired words** (how much of this input is *early-learned* nouns?), and **object presence** (how much of this input is referentially transparent?). Each is described in further detail below.
+Two input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to aspects of the input that are established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear?) and **object presence** (how much of this input is referentially transparent?). Each is described in further detail below.
 <!-- e2cl: good to add ref's above or below -->
+<!-- cl2eb: added  -->
 
 ```{r other speaker input, include=FALSE}
 
@@ -183,7 +183,7 @@ other.speaker.data <-
 <!-- eb2cl: i don't follow the last sentence here. there's some stuff in bulgarelli&bergelson BRM showing how amount of nouns correlates with amount of language/speech input overall you can cite -->
 <!-- cl2eb: ok, sorted! -->
 
-*Early-acquired words* reflects the proportion of object word lemmas in the parental input that appeared on the “Words & Gestures” communicative development inventory [CDI, @fenson_variability_1994]. The CDI items were established based on a sample of over 1,700 infants (~50% firstborn, 73% White, 44% of mothers with a college diploma), and so the CDI is taken as a standardized proxy of words typically acquired by infants in early development. Frank and colleagues [-@frank_variability_2021] show that the earliest-learned words are very similar across languages, suggesting a conceptual bias towards some words over others in early acquisition (though many factors, e.g. frequency, concreteness, phonological complexity, are relevant as well). 
+<!-- *Early-acquired words* reflects the proportion of object word lemmas in the parental input that appeared on the “Words & Gestures” communicative development inventory [CDI, @fenson_variability_1994]. The CDI items were established based on a sample of over 1,700 infants (~50% firstborn, 73% White, 44% of mothers with a college diploma), and so the CDI is taken as a standardized proxy of words typically acquired by infants in early development. Frank and colleagues [-@frank_variability_2021] show that the earliest-learned words are very similar across languages, suggesting a conceptual bias towards some words over others in early acquisition (though many factors, e.g. frequency, concreteness, phonological complexity, are relevant as well).  -->
 <!-- eb2cl: add cite to Frank et al wordbank book? they might also say more about item selection -->
 <!-- cl2eb: added a short bit but it's maybe not directly relevant. Though it occured to me that it probably IS relevant that we are determining language ability via the CDI. Lmk if what I've added in the final sentence works/doesn't work -->
 
@@ -191,7 +191,7 @@ other.speaker.data <-
 <!-- eb2cl: also cite bergelson&aslin 2017 pnas, cartmill et al, yurovsky et al, matthews et al's 'contingency' is similar too-->
 <!-- cl2eb: fab, thank you! These are all v helpful! -->
 
-In the following analyses, we consider infants’ productive vocabulary alongside our three input measures: amount of household input, number of early-acquired nouns in the input, and extent of object presence in the input, as a function of sibling number. These measures index both input quality and quantity (though we make no distinction between quality/quantity of input here), and will be analysed in relation to infants' productive vocabulary (all word types included) as our dependent measure. Since the raw data are highly skewed, log-transformed data[^4]  and/or proportions are used for statistical analysis. All figures display non-transformed data for interpretive ease. 
+In the following analyses, we consider infants’ productive vocabulary alongside our two input measures -- amount of household input and extent of object presence in the input -- as a function of sibling number. These measures index both input quality and quantity (though we make no distinction between quality/quantity of input here), and will be analysed in relation to infants' productive vocabulary (all word types included) as our dependent measure. Since the raw data are highly skewed, log-transformed data[^4]  and/or proportions are used for statistical analysis. All figures display non-transformed data for interpretive ease. 
 <!-- eb2cl: i feel like we implied we'd look at quality and quantity but never quite make the link between what exactly we're calling our stuff. honestly i would say these measures are a combo of quality and quantity proxies but we should be clear on that -->
 <!-- eb2cl: should remind reader that the DV here is the infant's productive vocab based on the CDI and including all word types (not just nouns and not just from home recordings, though we could consider the latter i suppose) -->
 <!-- cl2eb: yes good point; added this to my email queries! -->
@@ -378,123 +378,123 @@ sibnumber.model.null <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data=S
 sibnumber_anova <- anova(sibnumber.model, sibnumber.model.null)
 
 
-# Checking consistency with words produced in recordings
+# # Checking consistency with words produced in recordings
+# 
+# # Tokens - video
+# 
+# # SibYN: Does having any number of siblings affect language development over time?
+# 
+# sibsYN.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibsYN.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibsYN.tokens_anova_video <- anova(sibsYN.model.tokens_video, sibsYN.model.tokens_video.null) # NS
+# 
+# # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
+# 
+# sibgroup.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibgroup.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibgroup.tokens_anova_video <- anova(sibgroup.model.tokens_video, sibgroup.model.tokens_video.null) # NS
+# 
+# # Sibling number: Does number of siblings affect language development over time?
+# 
+# sibnumber.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibnumber.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibnumber.tokens_anova_video <- anova(sibnumber.model.tokens_video, sibnumber.model.tokens_video.null) # NS
+# 
+# # Types - video
+# 
+# # SibYN: Does having any number of siblings affect language development over time?
+# 
+# sibsYN.model.types_video <- lmerTest::lmer(Log.types_video ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibsYN.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibsYN.types_anova_video <- anova(sibsYN.model.types_video, sibsYN.model.types_video.null) # p<.05
+# 
+# # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
+# 
+# sibgroup.model.types_video <- lmerTest::lmer(Log.types_video ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibgroup.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibgroup.types_anova_video <- anova(sibgroup.model.types_video, sibgroup.model.types_video.null) # p<.001
+# 
+# # Sibling number: Does number of siblings affect language development over time?
+# 
+# sibnumber.model.types_video <- lmerTest::lmer(Log.types_video ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibnumber.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibnumber.types_anova_video <- anova(sibnumber.model.types_video, sibnumber.model.types_video.null) # NS
+# 
+# # Tokens - audio
+# 
+# # SibYN: Does having any number of siblings affect language development over time?
+# 
+# sibsYN.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibsYN.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibsYN.tokens_anova_audio <- anova(sibsYN.model.tokens_audio, sibsYN.model.tokens_audio.null) # p<.05
+# 
+# # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
+# 
+# sibgroup.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibgroup.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibgroup.tokens_anova_audio <- anova(sibgroup.model.tokens_audio, sibgroup.model.tokens_audio.null) # NS
+# 
+# # Sibling number: Does number of siblings affect language development over time?
+# 
+# sibnumber.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibnumber.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibnumber.tokens_anova_audio <- anova(sibnumber.model.tokens_audio, sibnumber.model.tokens_audio.null) # p=.05
+# 
+# # Types - audio
+# 
+# # SibYN: Does having any number of siblings affect language development over time?
+# 
+# sibsYN.model.types_audio <- lmerTest::lmer(Log.types_audio ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibsYN.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibsYN.types_anova_audio <- anova(sibsYN.model.types_audio, sibsYN.model.types_audio.null) # p<.05
+# 
+# # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
+# 
+# sibgroup.model.types_audio <- lmerTest::lmer(Log.types_audio ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibgroup.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibgroup.types_anova_audio <- anova(sibgroup.model.types_audio, sibgroup.model.types_audio.null) # p<.001
+# 
+# # Sibling number: Does number of siblings affect language development over time?
+# 
+# sibnumber.model.types_audio <- lmerTest::lmer(Log.types_audio ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibnumber.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+# sibnumber.types_anova_audio <- anova(sibnumber.model.types_audio, sibnumber.model.types_audio.null) # p=.05
 
-# Tokens - video
-
-# SibYN: Does having any number of siblings affect language development over time?
-
-sibsYN.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN.tokens_anova_video <- anova(sibsYN.model.tokens_video, sibsYN.model.tokens_video.null) # NS
-
-# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-
-sibgroup.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup.tokens_anova_video <- anova(sibgroup.model.tokens_video, sibgroup.model.tokens_video.null) # NS
-
-# Sibling number: Does number of siblings affect language development over time?
-
-sibnumber.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber.tokens_anova_video <- anova(sibnumber.model.tokens_video, sibnumber.model.tokens_video.null) # NS
-
-# Types - video
-
-# SibYN: Does having any number of siblings affect language development over time?
-
-sibsYN.model.types_video <- lmerTest::lmer(Log.types_video ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN.types_anova_video <- anova(sibsYN.model.types_video, sibsYN.model.types_video.null) # p<.05
-
-# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-
-sibgroup.model.types_video <- lmerTest::lmer(Log.types_video ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup.types_anova_video <- anova(sibgroup.model.types_video, sibgroup.model.types_video.null) # p<.001
-
-# Sibling number: Does number of siblings affect language development over time?
-
-sibnumber.model.types_video <- lmerTest::lmer(Log.types_video ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber.types_anova_video <- anova(sibnumber.model.types_video, sibnumber.model.types_video.null) # NS
-
-# Tokens - audio
-
-# SibYN: Does having any number of siblings affect language development over time?
-
-sibsYN.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN.tokens_anova_audio <- anova(sibsYN.model.tokens_audio, sibsYN.model.tokens_audio.null) # p<.05
-
-# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-
-sibgroup.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup.tokens_anova_audio <- anova(sibgroup.model.tokens_audio, sibgroup.model.tokens_audio.null) # NS
-
-# Sibling number: Does number of siblings affect language development over time?
-
-sibnumber.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber.tokens_anova_audio <- anova(sibnumber.model.tokens_audio, sibnumber.model.tokens_audio.null) # p=.05
-
-# Types - audio
-
-# SibYN: Does having any number of siblings affect language development over time?
-
-sibsYN.model.types_audio <- lmerTest::lmer(Log.types_audio ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibsYN.types_anova_audio <- anova(sibsYN.model.types_audio, sibsYN.model.types_audio.null) # p<.05
-
-# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-
-sibgroup.model.types_audio <- lmerTest::lmer(Log.types_audio ~ SibGroup6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibgroup.types_anova_audio <- anova(sibgroup.model.types_audio, sibgroup.model.types_audio.null) # p<.001
-
-# Sibling number: Does number of siblings affect language development over time?
-
-sibnumber.model.types_audio <- lmerTest::lmer(Log.types_audio ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-sibnumber.types_anova_audio <- anova(sibnumber.model.types_audio, sibnumber.model.types_audio.null) # p=.05
 
 
-
-table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anova,
-                                               sibsYN.tokens_anova_video, sibsYN.tokens_anova_audio,
-                                    sibgroup.tokens_anova_video, sibgroup.tokens_anova_audio,
-                                    sibnumber.tokens_anova_video, sibnumber.tokens_anova_audio,
-                                    sibsYN.types_anova_video, sibsYN.types_anova_audio,
-                                    sibgroup.types_anova_video, sibgroup.types_anova_audio,
-                                    sibnumber.types_anova_video, sibnumber.types_anova_audio) %>%
+table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anova
+                                               #sibsYN.tokens_anova_video, sibsYN.tokens_anova_audio,
+                                  #  sibgroup.tokens_anova_video, sibgroup.tokens_anova_audio,
+                                  #  sibnumber.tokens_anova_video, sibnumber.tokens_anova_audio,
+                                 #   sibsYN.types_anova_video, sibsYN.types_anova_audio,
+                                 #   sibgroup.types_anova_video, sibgroup.types_anova_audio,
+                                #    sibnumber.types_anova_video, sibnumber.types_anova_audio
+                                ) %>%
   rownames_to_column(var="model") %>%
   filter(Chisq > 0) %>%
   rename("p value" = "Pr(>Chisq)") %>%
-  mutate(Count = ifelse(model == "sibsYN.model", "CDI", ""),
-                  Count = ifelse(model == "sibsYN.model.tokens_video", "Tokens", Count),
-         Count = ifelse(model == "sibsYN.model.types_video", "Types", Count),
-         Data = ifelse(grepl("video", model), "Video", NA),
-         Data = ifelse(grepl("audio", model), "Audio", Data),
-         Data = ifelse(is.na(Data), "CDI", Data)) %>%
+  # mutate(Count = ifelse(model == "sibsYN.model", "CDI", ""),
+  #                 Count = ifelse(model == "sibsYN.model.tokens_video", "Tokens", Count),
+  #        Count = ifelse(model == "sibsYN.model.types_video", "Types", Count),
+  #        Data = ifelse(grepl("video", model), "Video", NA),
+  #        Data = ifelse(grepl("audio", model), "Audio", Data),
+  #        Data = ifelse(is.na(Data), "CDI", Data)) %>%
   mutate(Model = ifelse(grepl("sibsYN", model), "0 vs. >0 siblings", NA),
          Model = ifelse(grepl("sibgroup", model), "Sibling group", Model),
          Model = ifelse(grepl("sibnumber", model), "Sibling number", Model)) %>%
-  select(Count, Model, Data, Df, Chisq, `p value`)
+  select(Model, Df, Chisq, `p value`)
 
 ```
 
-We next modeled the effect of siblings on productive vocabulary. We tested three vocabulary measures (CDI questionnaires, video data and day-long audio recordings), as well as three variables representing the sibling effect: a binary variable (0 vs. >0 siblings), aggregated groups (None vs. One vs. 2+), and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings). Outcomes from model comparisons are shown in Table \@ref(tab:table-sibling-model-output). Across the data, the simple fact of having siblings (i.e. as a binary variable) did not affect productive vocabulary. Discrete sibling number predicted reported CDI vocabulary and number of word types (but not tokens) produced in the video data; this was marginally significant in the audio data. Sibling group predicted vocabulary size in the CDI measures but not in the audio or video data (again this was marginally significant in the video data).
+We next modeled the effect of siblings on reported productive vocabulary. We tested three variables representing the sibling effect: a binary variable (0 vs. >0 siblings), aggregated groups (None vs. One vs. 2+), and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings) using the model structure *vocabulary size (log-transformed) ~ siblings [binary, group or discrete] + age (months) + (1|subj)*. 
+<!-- Outcomes from model comparisons are shown in Table \@ref(tab:table-sibling-model-output).  -->
+In our sample, the simple fact of having siblings (i.e. as a binary variable) did not affect productive vocabulary, while both discrete sibling number and sibling group predicted reported CDI vocabulary size. 
 
 ```{r table-sibling-model-output, echo=FALSE}
-cap = "Output from regression models comparing language development over time in relation to sibling number (binary, grouped and discrete variables). Month was included in each model as a fixed effect; subject was included as a random effect."
-#apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
-kable(table.sibling.model.output, "latex", booktabs=T, longtable=T, 
-      caption=cap, digits=2, align="c")  %>%
-  kable_styling()%>%
-  row_spec(3, hline_after=T) %>%
-  row_spec(9, hline_after=T)
+# cap = "Output from regression models comparing language development over time in relation to sibling number (binary, grouped and discrete variables). Month was included in each model as a fixed effect; subject was included as a random effect."
+# #apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
+# kable(table.sibling.model.output, "latex", booktabs=T, longtable=T, 
+#       caption=cap, digits=2, align="c") 
 ```
 
 ```{r descriptive statistics for sibling model outputs, include=FALSE}
@@ -510,18 +510,18 @@ siblings.model.summary.table <- siblings.model.summary$coefficients %>%
     , "$t$" = "t value"
     , "$p$" = "Pr(>|t|)"
   ) %>%
-  mutate(
-    Effect = papaja:::beautify_terms(rownames(.))
-  ) %>%
+  # mutate(
+  #   Effect = papaja:::beautify_terms(rownames(.))
+  # ) %>%
   printnum(
-    digits = c(2, 2, 2, 2, 3, 0)
-    , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+    #digits = c(2, 2, 2, 2, 3, 0)
+   # , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
     , zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
   ) %>%
-  select(Effect, `$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
-  rename("betaval" = `$b$`)
+  select(`$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
+  rename("beta" = `$b$`)
 
-siblingnum.beta <- as.numeric(siblings.model.summary.table$betaval[2])
+siblingnum.beta <- as.numeric(siblings.model.summary.table$beta[2])
 
 siblingnum.beta <- abs(siblingnum.beta*100)
 
@@ -547,39 +547,39 @@ table.sibgroup.model.summary <- sibgroup.model.summary$coefficients %>%
   select(Effect, `$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
   rename("betaval" = `$b$`)
 
-sibgroup1.beta <- as.numeric(table.sibgroup.model.summary$betaval[2])
+sibgroup1.beta <- as.numeric(table.sibgroup.model.summary$beta[2])
 
 sibgroup1.beta <- abs(sibgroup1.beta*100)
 
-sibgroup2.beta <- as.numeric(table.sibgroup.model.summary$betaval[3])
+sibgroup2.beta <- as.numeric(table.sibgroup.model.summary$beta[3])
 
 sibgroup2.beta <- abs(sibgroup2.beta*100)
 
-siblings.model.summary.video <- summary(sibnumber.model.types_video)
-
-siblings.model.summary.video.table <- siblings.model.summary.video$coefficients %>%
-  as.data.frame %>%
-  rename(
-    "$b$" = "Estimate"
-    , "SE" = "Std. Error"
-    , "$df$" = "df"
-    , "$t$" = "t value"
-    , "$p$" = "Pr(>|t|)"
-  ) %>%
-  mutate(
-    Effect = papaja:::beautify_terms(rownames(.))
-  ) %>%
-  printnum(
-    digits = c(2, 2, 2, 2, 3, 0)
-    , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
-    , zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
-  ) %>%
-  select(Effect, `$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
-  rename("betaval" = `$b$`)
-
-siblingnum.vid.beta <- as.numeric(siblings.model.summary.video.table$betaval[2])
-
-siblingnum.vid.beta <- abs(siblingnum.vid.beta*100)
+# siblings.model.summary.video <- summary(sibnumber.model.types_video)
+# 
+# siblings.model.summary.video.table <- siblings.model.summary.video$coefficients %>%
+#   as.data.frame %>%
+#   rename(
+#     "$b$" = "Estimate"
+#     , "SE" = "Std. Error"
+#     , "$df$" = "df"
+#     , "$t$" = "t value"
+#     , "$p$" = "Pr(>|t|)"
+#   ) %>%
+#   mutate(
+#     Effect = papaja:::beautify_terms(rownames(.))
+#   ) %>%
+#   printnum(
+#     digits = c(2, 2, 2, 2, 3, 0)
+#     , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+#     , zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+#   ) %>%
+#   select(Effect, `$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
+#   rename("betaval" = `$b$`)
+# 
+# siblingnum.vid.beta <- as.numeric(siblings.model.summary.video.table$betaval[2])
+# 
+# siblingnum.vid.beta <- abs(siblingnum.vid.beta*100)
 
 ```
 
@@ -601,9 +601,16 @@ sibgroup_wilcox_one_two <- wilcox.test(
 
 ```
 
-Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. Moreover, for each additional sibling, infants were reported to have acquired `r siblingnum.beta`% fewer words, and produced `r round(siblingnum.vid.beta)`% fewer words in the hour-long video recordings. The 'sibling effect' is thus present in our data, though this is manifested differently across our different data types: CDI and video data reveal an effect for siblings on productive vocabulary, but not audio data. We opted to draw on the reported CDI vocabulary scores as our key measure of productive vocabulary, which we take as more representative of the infants' vocabulary size as a whole [cf. @moore_point_2019]. The grouped sibling variable (0 vs. 1 vs. 2+) was selected as our measure of siblings as it allows analysis across more equal group sizes. However, note that all results reported below were consistent when discrete sibling number was analysed, unless reported otherwise.
+```{r table-sibling-model-summary, echo=FALSE}
+cap = "Full model output from linear mixed effects regression model comparing language development over time in relation to sibling group. Age in months was included in each model as a fixed effect; subject was included as a random effect."
+#apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
+kable(siblings.model.summary.table, "latex", booktabs=T, longtable=T, 
+      caption=cap, digits=2, align="c") 
+```
 
-According to CDI reports, infants with one sibling acquire only `r sibgroup1.beta`% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce `r sibgroup2.beta`% fewer words. See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-SibGroup). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`; Bonferroni corrections applied).
+Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. Moreover, for each additional sibling, infants were reported to have acquired `r siblingnum.beta`% fewer words. The 'sibling effect' is thus present in our data. The grouped sibling variable (0 vs. 1 vs. 2+) was selected as our measure of siblings as it allows analysis across more equal group sizes. However, note that all results reported below were consistent when discrete sibling number was analysed, unless reported otherwise.
+
+According to CDI reports, infants with one sibling acquire only `r sibgroup1.beta`% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce `r sibgroup2.beta`% fewer words. See Tables \@ref(tab:table-sibling-model-summary) and \@ref(tab:table-data-summary), and Figure \@ref(fig:Figure-SibGroup). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`).
 <!-- eb2cl: not seeing where the bonferroni correction was applied can you clarify?(i think this applies below as well). maybe you mean that even if we consider a bonferroni adjusted threshold (which you should then specify) it's still significant? -->
 <!-- cl2eb: see comment above -->
 
