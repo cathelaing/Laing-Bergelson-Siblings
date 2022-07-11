@@ -2,7 +2,7 @@ library(Hmisc)
 
 Figure.SibGroup <- ggplot(data = SiblingsData, mapping = aes(x=as.numeric(month), y=Log.Totalwords)) +
   geom_point(aes(colour = SibGroup18), shape = 1, size = 3, position = position_jitter(.15)) + 
-  geom_smooth(aes(colour = SibGroup18),size=2) + 
+  geom_smooth(aes(colour = SibGroup18, fill = SibGroup18),size=2) + 
   ylab('Productive vocabulary (n words)') +
   xlab('Age in Months') +
   scale_x_continuous(breaks = c(6:18)) +
@@ -13,14 +13,15 @@ Figure.SibGroup <- ggplot(data = SiblingsData, mapping = aes(x=as.numeric(month)
         legend.position = c(.15, .85),
         legend.title = element_blank()) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
-                aes(fill = SibGroup18), color = "black", shape = 24)
+                aes(fill = SibGroup18), color = "black", shape = 24,
+               position = position_dodge(.2))
 
-Figure.speaker.count <- ggplot(subset(speaker.type, Speaker %in% c("MOT", "FAT", "SIBLING") & audio_video == "video"), 
+Figure.speaker.count <- ggplot(subset(speaker.type, Speaker %in% c("MOT", "FAT", "SIBLING", "Family.input") & audio_video == "video"), 
                                aes(x=Speaker, y=n, color = Speaker)) +
   stat_summary(fun.y = mean, geom = "point", aes(group = subj), shape = 1, size = 3, position = position_jitter(.1)) +
   stat_summary(fun.data = "mean_cl_boot", colour = "red", shape = 17, size = 1) +
   facet_wrap(~SibGroup6, ncol=3) +
-  scale_x_discrete(limits = c("MOT", "FAT", "SIBLING"), labels = c("Mother", "Father", "Sibling")) +
+  scale_x_discrete(limits = c("MOT", "FAT", "SIBLING", "Family.input"), labels = c("Mother", "Father", "Sibling", "All")) +
   theme_bw(base_size = 15) +
   theme(legend.position = "none")
 

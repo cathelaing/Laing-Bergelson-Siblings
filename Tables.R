@@ -26,21 +26,22 @@ table.data.summary.sibgroup <-
 
 table.data.summary.speaker <- 
   speaker.type %>% 
-  filter(audio_video == "video") %>%
+  filter(audio_video == "video"  & 
+           Speaker == "Family.input") %>%
   group_by(SibGroup6) %>%
-  summarise(mean = mean(Family.input),
-            sd = sd(Family.input)) %>%
+  summarise(mean = mean(n),
+            sd = sd(n)) %>%
   mutate(Variable = "N Input utterances, 10-17 months") %>%
   select(Variable, SibGroup6, mean, sd)
 
-table.data.summary.cdi <- 
-  in.cdi %>% 
-  filter(audio_video == "video") %>%
-  group_by(SibGroup6) %>%
-  summarise(mean = mean(PC),
-            sd = sd(PC)) %>%
-  mutate(Variable = "% early-acquired words in input") %>%
-  select(Variable, SibGroup6, mean, sd)
+# table.data.summary.cdi <- 
+#   in.cdi %>% 
+#   filter(audio_video == "video") %>%
+#   group_by(SibGroup6) %>%
+#   summarise(mean = mean(PC),
+#             sd = sd(PC)) %>%
+#   mutate(Variable = "% early-acquired words in input") %>%
+#   select(Variable, SibGroup6, mean, sd)
 
 table.data.summary.object <- 
   object.presence %>% 
@@ -51,14 +52,14 @@ table.data.summary.object <-
   mutate(Variable = "% object presence in input") %>%
   select(Variable, SibGroup6, mean, sd)
 
-table.data.summary.mean <- rbind(table.data.summary.sibgroup, table.data.summary.speaker, table.data.summary.cdi, table.data.summary.object) %>% 
+table.data.summary.mean <- rbind(table.data.summary.sibgroup, table.data.summary.speaker, table.data.summary.object) %>% 
   select(Variable, SibGroup6, mean) %>%
   spread(SibGroup6, mean) %>%
   rename("none m" = "None",
          "1 m" = "One",
          "2 m" = "2+")
 
-table.data.summary.sd <- rbind(table.data.summary.sibgroup, table.data.summary.speaker, table.data.summary.cdi, table.data.summary.object) %>% 
+table.data.summary.sd <- rbind(table.data.summary.sibgroup, table.data.summary.speaker, table.data.summary.object) %>% 
   select(Variable, SibGroup6, sd) %>%
   spread(SibGroup6, sd) %>%
   rename("none sd" = "None",

@@ -128,7 +128,7 @@ speaker.type.n <- sibsdata %>%
   dplyr::select(subj, month, audio_video, MOT, FAT, SIBLING, Family.input, All.speakers)
   
 speaker.type <- speaker.type.n %>%
-  gather(`MOT`,`FAT`, `SIBLING`, 
+  gather(`MOT`,`FAT`, `SIBLING`, Family.input,
          key = "Speaker", 
          value = "n") %>% 
   left_join(demographics) %>%
