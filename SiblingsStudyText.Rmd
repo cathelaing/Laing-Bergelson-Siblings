@@ -50,7 +50,7 @@ library(dplyr)
 library(tibble)
 library(lmerTest)
 library(afex)
-library(citr)
+#library(citr)
 library(feather)
 
 source("DataGathering.R")
@@ -75,17 +75,16 @@ Many studies assume a theoretical "optimum" environment for early language devel
 
 Prior research suggests that infants born to households with older children may be slower to learn language. Fenson and colleagues [-@fenson_variability_1994] found that by 30 months of age, children with older siblings performed worse than those with no siblings across measures of productive vocabulary, use of word combinations, and mean length of utterance (MLU). This 'sibling effect' may be manifested in input differences between first- and later-born children: some research finds that infants with older siblings hear less speech aimed specifically at them, and what they do hear is understood to be linguistically less supportive of early language development [@hoff-ginsberg_relation_1998; @oshima-takane_linguistic_2003]. Contrastingly, some studies have noted linguistic *advantages* for later-borns, who may have stronger social-communicative skills [@hoff_how_2006], better understanding of pronouns [@oshima-takane_birth_1996], and better conversational abilities [@dunn_becoming_1989]. Overall, while the particulars differ across studies, prior work suggests that the presence of siblings in the home leads to differences in infants' early linguistic experience.
 
-Numerous studies have attempted to better understand how siblings affect the language development trajectory, with comparisons of language acquisition across first- and later-borns, and analyses of mothers’ input in dyadic (infant + mother) and triadic (infant + mother + older sibling) situations. Findings are mixed, but overall two general conclusions can be drawn. First, analyses consistently show that infants with older siblings generally have slower *vocabulary development* [@berglund_communicative_2005; @fenson_variability_1994; @pine_variation_1995; @zambrana_impact_2012], but this is often marginal, and typical of the earliest stages of language learning. Hoff-Ginsberg [-@hoff-ginsberg_relation_1998] shows first-borns to have better lexical and syntactic skills up until 2;5, but later-born infants had better conversational abilities during the same time-period. Some of these differences may relate to power to detect relatively small effects or simultaneous contributing factors. For instance, using a large longitudinal dataset of french-learning 2-5 year olds, Havron and colleagues [-@havron_effect_2019] find no effect of age gap between siblings but lower standardized language scores in children with older brothers (but not sisters) relative to those without siblings, based on parental report and direct battery assessments.
+Numerous studies have attempted to better understand how siblings affect the language development trajectory, with comparisons of language acquisition across first- and later-borns, and analyses of mothers’ input in dyadic (infant + mother) and triadic (infant + mother + older sibling) situations. Findings are mixed, but overall two general conclusions can be drawn. First, analyses consistently show that infants with older siblings generally have slower *vocabulary development* [@berglund_communicative_2005; @fenson_variability_1994; @pine_variation_1995; @zambrana_impact_2012], but this is often marginal, and typical of the earliest stages of language learning. Hoff-Ginsberg [-@hoff-ginsberg_relation_1998] shows first-borns to have better lexical and syntactic skills up until 2;5, but later-born infants had better conversational abilities during the same time-period. Some of these differences may relate to insufficient power to detect relatively small effects or simultaneous contributing factors. For instance, using a large longitudinal dataset of french-learning 2-5 year olds, Havron and colleagues [-@havron_effect_2019] find no effect of age gap between siblings but lower standardized language scores in children with older brothers (but not sisters) relative to those without siblings, based on parental report and direct battery assessments.
 
 The second general finding pertains to sibling-related differences in the early linguistic *environment*: infants with no siblings receive more input overall, and this more closely reflects what is typically considered to be 'high quality' input in the extant literature. Indeed, the very presence of a sibling in the linguistic environment changes the way language is used. When siblings are present (i.e. triadic interactions), mothers’ input is more focused on regulating behaviour, as opposed to the language-focused speech that is common in dyadic contexts [@oshima-takane_linguistic_2003]. Reports show that MLU is longer in the input of first-born infants [@hoff-ginsberg_relation_1998; but see also  @oshima-takane_linguistic_2003 for a comparison of dyadic and triadic contexts], who also hear more questions directed at them than later-borns. Both Jones and Adamson [-@jones_language_1987] and Oshima-Takane and Robbins [-@oshima-takane_linguistic_2003] report no difference between the overall number of word types produced by mothers in dyadic and triadic settings, but the proportion of speech directed at the target infant is drastically reduced when input is shared with siblings.
 
 As Hoff [-@hoff_how_2006] explains, infants with siblings have less experience of speech directed at them, but they do have an advantage over their first-born peers in that they are subject to more overheard speech. Indeed, the input of first-borns may be explicitly tailored to their needs, but equally this means it might be less varied. Barton and Tomasello [-@barton_joint_1991] show that by as early as 19 months, infants with siblings are already able to take part in triadic conversations, which were almost three times longer than dyadic conversations. The authors suggest that the presence of siblings may shift the learning context, and facilitate infants' participation in communicative interactions: infants are under less pressure to participate in a triadic interaction, meaning the conversation can continue even when the infant is unable to respond. As a result, the infants in Barton and Tomasello's study took more conversational turns in triadic interactions than dyadic ones. 
 
-There thus may be a trade-off in development between highly supportive one-to-one input from a caregiver [cf. @ramirez-esparza_look_2014] and the potential benefits drawn from communicating with a sibling.  
-<!-- Havron and colleagues [-@havron_effect_2019] find that the age-gap between older sibling and target child did not affect the child's language development, while sex of the sibling did: children with older brothers had significantly lower vocabulary scores compared with children with no siblings, while no such difference was found for those with older sisters.  It seems that different sibling characteristics may affect the early input in different ways.--> In the present study, we test the extent to which having more versus fewer siblings in the home environment may lead to differences in vocabulary development and the early linguistic environment over the course of the first 18 months of life. 
+There thus may be a trade-off in development between highly supportive one-to-one input from a caregiver [cf. @ramirez-esparza_look_2014] and the potential benefits drawn from communicating with a sibling.  <!-- Havron and colleagues [-@havron_effect_2019] find that the age-gap between older sibling and target child did not affect the child's language development, while sex of the sibling did: children with older brothers had significantly lower vocabulary scores compared with children with no siblings, while no such difference was found for those with older sisters.  It seems that different sibling characteristics may affect the early input in different ways.--> In the present study, we test the extent to which having more versus fewer siblings in the home environment may lead to differences in vocabulary development and the early linguistic environment over the course of the first 18 months of life. 
 <!-- eb2cl: i think giving the havron study too much space makes it seem like we're going to look at gender and at sibling but we're not so i minimized it a bit and put it higher up -->
 
-In analyzing infants' lexical development in relation to the presence of older siblings in their household, the present work expands on the extant literature in two key ways. First,  prior work generally considered birth order as a binomial factor (i.e. comparing first-born infants  with second-borns [e.g. @oshima-takane_linguistic_2003], or ‘later-borns’ [e.g. @hoff-ginsberg_relation_1998], potentially missing graded effects. Instead of this approach, we consider the number of siblings, i.e. how having *more versus fewer siblings* is linked to an infant's lexical development and their early linguistic environment. Second, much of the existing literature in this area is drawn from questionnaire data or brief interactions recorded in the lab [but see @dunn_becoming_1989 for a study of naturalistic home-recorded data], rather than naturalistic day-to-day interactions in the home. In contrast, we analyze an existing corpus of daylong audio- and hour-long video-recordings in concert with vocabulary checklists. Based on work summarized above, we expect that both the language environment and infants' early vocabulary will vary as a function of how many older siblings they have.
+In analyzing infants' lexical development in relation to the presence of older siblings in their household, the present work expands on the extant literature in two key ways. First,  prior work generally considered birth order as a binomial factor [i.e. comparing first-born infants  with second-borns, e.g. @oshima-takane_linguistic_2003], or ‘later-borns’ [e.g. @hoff-ginsberg_relation_1998], potentially missing graded effects. Instead of this approach, we consider the number of siblings, i.e. how having *more versus fewer siblings* is linked to an infant's lexical development and their early linguistic environment. Second, much of the existing literature in this area is drawn from questionnaire data or brief interactions recorded in the lab [but see @dunn_becoming_1989 for a study of naturalistic home-recorded data], rather than naturalistic day-to-day interactions in the home. In contrast, we analyze an existing corpus of daylong audio- and hour-long video-recordings in concert with vocabulary checklists. Based on work summarized above, we expect that both the language environment and infants' early vocabulary will vary as a function of how many older siblings they have.
 
 <!-- eb2cl: i didn't do much editing in intro but think it would be great if you could do a pass to streamline it more in line with a short report, sticking to just the germane stuff -->
 <!-- cl2eb: ok, hope this is better//eb2cl: yes! i did some small edits; if we aim for a brief report we could shorten more but its def more streamlined! -->
@@ -105,7 +104,7 @@ With regard to the infants’ linguistic environment, we hypothesize that increa
 
 # Methods
 <!-- eb2cl: the following ref is rendering weird; some others are too, have a careful comb through the pdf to fix please! -->
-We analyze data from the SEEDLingS corpus [@bergelson_day_2019], a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data, and annotations of hour-long home video recordings, taken on a monthly basis during data collection. We also ran our analysis using day-long audio recordings taken on a different day from the video data reported below; unless reported otherwise, all results were consistent with those outlined below (see Supplementary Materials).
+We analyze data from the SEEDLingS corpus [@bergelson_day_2019], a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data to index child vocabulary size, and annotations of hour-long home video recordings, taken on a monthly basis during data collection, to index input. We also ran our input analysis using day-long audio recordings taken on a different day from the video data reported below; unless reported otherwise, all results were consistent with those outlined below (see Supplementary Materials).
 <!-- eb2cl: just confirming, it's only video data in your analyses, right? in principle we could use data from audios too, would just need to subsample so it's the same amount per day. or sticking to vid but maybe add a little motivation for that? -->
 <!-- cl2eb: that's right, just video for now; I've put a comment about the option of audio data in my email. I've got the audio data in the all_basiclevel data but not sure if that is pre-sub-sampled -->
 
@@ -160,9 +159,10 @@ We analyzed number of siblings based on parental report in the demographics ques
 <!-- eb2cl: is footnote 2 bolded to remind you to check this perhaps? -->
 <!-- cl2eb: possibly! Could you remind me which subj number the twins were?//eb2cl: 41&42 but probably the better check is to just take one out (considering the other as a sibling), right? -->
 <!-- eb2cl: there may be an older sib that only lived with infant some of the time? double check with shannon? -->
+
 ## Input measures
 
-Two input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to aspects of the input that are established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear?) and **object presence** (how much of this input is referentially transparent?). Each is described in further detail below.
+Two input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to an aspect of the input that is established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear?) and **object presence** (how much of this input is referentially transparent?). Each is described in further detail below.
 <!-- e2cl: good to add ref's above or below -->
 <!-- cl2eb: added  -->
 
@@ -177,7 +177,7 @@ other.speaker.data <-
 
 ```
 
-*Household Input* reflects how many nouns infants heard in the recordings from their mother, father and (where relevant) siblings.  Other speakers’ input was relatively rare during video recordings, accounting for `r other.speaker.data$PC.other.m`% of input overall (SD=`r other.speaker.data$PC.other.sd`%), and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size [@anderson_linking_2021]. This analysis considers only nouns produced by speakers in the child's environment; concrete nouns are acquired earlier in development in English and cross-linguistically [@braginsky_consistency_2019], and for this corpus of data, noun prod correlates strongly with automated adult word count estimates [@bulgarelli_look_2020]. Higher noun count in this data thus indicates higher input across the board.
+*Household Input* reflects how many nouns infants heard in the recordings from their mother, father and (where relevant) siblings.  Other speakers’ input was relatively rare during video recordings, accounting for `r other.speaker.data$PC.other.m`% of input overall (SD=`r other.speaker.data$PC.other.sd`%), and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size [@anderson_linking_2021]. This analysis considers only nouns produced by speakers in the child's environment; concrete nouns are acquired earlier in development in English and cross-linguistically [@braginsky_consistency_2019], and for this corpus of data, noun production correlates strongly with automated adult word count estimates [@bulgarelli_look_2020]. Higher noun count in this data thus indicates higher input across the board.
 <!-- eb2cl: hm it's weird to call this 'overall parental input' and then say it also includes sibling input; same applies to the other categories -->
 <!-- we should probably indicate what percent of data came from other speakers and is thus excluded -->
 <!-- eb2cl: i don't follow the last sentence here. there's some stuff in bulgarelli&bergelson BRM showing how amount of nouns correlates with amount of language/speech input overall you can cite -->
@@ -486,15 +486,19 @@ table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anov
 
 ```
 
-We next modeled the effect of siblings on reported productive vocabulary. We tested three variables representing the sibling effect: a binary variable (0 vs. >0 siblings), aggregated groups (None vs. One vs. 2+), and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings) using the model structure *vocabulary size (log-transformed) ~ siblings [binary, group or discrete] + age (months) + (1|subj)*. 
+We next modeled the effect of siblings on reported productive vocabulary. We tested three variables representing the sibling effect: a binary variable (0 vs. >0 siblings), aggregated groups (None vs. One vs. 2+), and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings) using the following model structure:
+
+*vocabulary size (log-transformed) ~ siblings [binary, group or discrete] + age (months) + (1|subj)*.
+
 <!-- Outcomes from model comparisons are shown in Table \@ref(tab:table-sibling-model-output).  -->
-In our sample, the simple fact of having siblings (i.e. as a binary variable) did not affect productive vocabulary, while both discrete sibling number and sibling group predicted reported CDI vocabulary size. 
+In our sample, the simple fact of having siblings (i.e. as a binary variable) did not affect reported CDI vocabulary size, while both discrete sibling number and sibling group did. See Table \@ref(tab:table-sibling-model-output).
 
 ```{r table-sibling-model-output, echo=FALSE}
-# cap = "Output from regression models comparing language development over time in relation to sibling number (binary, grouped and discrete variables). Month was included in each model as a fixed effect; subject was included as a random effect."
-# #apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
-# kable(table.sibling.model.output, "latex", booktabs=T, longtable=T, 
-#       caption=cap, digits=2, align="c") 
+cap = "Output from regression models comparing language development over time in relation to sibling number (binary, grouped and discrete variables). Month was included in each model as a fixed effect; subject was included as a random effect."
+apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, #placement = "H", 
+          font_size = "small")
+# kable(table.sibling.model.output, "latex", booktabs=T, longtable=T,
+#       caption=cap, digits=2, align="c")
 ```
 
 ```{r descriptive statistics for sibling model outputs, include=FALSE}
@@ -504,12 +508,14 @@ siblings.model.summary <- summary(sibnumber.model)
 siblings.model.summary.table <- siblings.model.summary$coefficients %>%
   as.data.frame %>%
   rename(
-    "$b$" = "Estimate"
-    , "SE" = "Std. Error"
-    , "$df$" = "df"
-    , "$t$" = "t value"
-    , "$p$" = "Pr(>|t|)"
+    "b" = "Estimate"
+    # , "SE" = "Std. Error"
+    # , "$df$" = "df"
+    # , "$t$" = "t value"
+    , "p" = "Pr(>|t|)"
   ) %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
   # mutate(
   #   Effect = papaja:::beautify_terms(rownames(.))
   # ) %>%
@@ -518,8 +524,7 @@ siblings.model.summary.table <- siblings.model.summary$coefficients %>%
    # , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
     , zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
   ) %>%
-  select(`$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
-  rename("beta" = `$b$`)
+  select(Effect, `b`, `Std. Error`, `t value`, `df`, `p`)
 
 siblingnum.beta <- as.numeric(siblings.model.summary.table$beta[2])
 
@@ -602,10 +607,12 @@ sibgroup_wilcox_one_two <- wilcox.test(
 ```
 
 ```{r table-sibling-model-summary, echo=FALSE}
-cap = "Full model output from linear mixed effects regression model comparing language development over time in relation to sibling group. Age in months was included in each model as a fixed effect; subject was included as a random effect."
-#apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
-kable(siblings.model.summary.table, "latex", booktabs=T, longtable=T, 
-      caption=cap, digits=2, align="c") 
+cap = "Full model output from linear mixed effects regression model comparing language development over time in relation to sibling group. Age in months was included as a fixed effect; subject was included as a random effect."
+#apa_table(siblings.model.summary.table, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
+ kable(siblings.model.summary.table, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       col.names = c("Effect", "\\textit{b}", "Std. Error", "\\textit{t value}", "df", "\\textit{pvalue}"),
+       caption=cap, digits=2, align="c") 
 ```
 
 Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. Moreover, for each additional sibling, infants were reported to have acquired `r siblingnum.beta`% fewer words. The 'sibling effect' is thus present in our data. The grouped sibling variable (0 vs. 1 vs. 2+) was selected as our measure of siblings as it allows analysis across more equal group sizes. However, note that all results reported below were consistent when discrete sibling number was analysed, unless reported otherwise.
