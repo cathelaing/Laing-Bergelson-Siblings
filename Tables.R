@@ -18,50 +18,50 @@ table.sibling.number <-
 
 table.data.summary.sibgroup <- 
   SiblingsData %>% filter(month==18) %>%
-  group_by(SibGroup6) %>%
+  group_by(SibGroup) %>%
   summarise(mean = mean(Total.words, na.rm=T),
             sd = sd(Total.words, na.rm=T))  %>%
   mutate(Variable = "Productive Vocabulary 18m (CDI)") %>%
-  select(Variable, SibGroup6, mean, sd)
+  select(Variable, SibGroup, mean, sd)
 
 table.data.summary.speaker <- 
   speaker.type %>% 
   filter(audio_video == "video"  & 
            Speaker == "Family.input") %>%
-  group_by(SibGroup6) %>%
+  group_by(SibGroup) %>%
   summarise(mean = mean(n),
             sd = sd(n)) %>%
   mutate(Variable = "N Input utterances, 10-17 months") %>%
-  select(Variable, SibGroup6, mean, sd)
+  select(Variable, SibGroup, mean, sd)
 
 # table.data.summary.cdi <- 
 #   in.cdi %>% 
 #   filter(audio_video == "video") %>%
-#   group_by(SibGroup6) %>%
+#   group_by(SibGroup) %>%
 #   summarise(mean = mean(PC),
 #             sd = sd(PC)) %>%
 #   mutate(Variable = "% early-acquired words in input") %>%
-#   select(Variable, SibGroup6, mean, sd)
+#   select(Variable, SibGroup, mean, sd)
 
 table.data.summary.object <- 
   object.presence %>% 
   filter(audio_video == "video") %>%
-  group_by(SibGroup6) %>%
+  group_by(SibGroup) %>%
   summarise(mean = mean(PC),
             sd = sd(PC)) %>%
   mutate(Variable = "% object presence in input") %>%
-  select(Variable, SibGroup6, mean, sd)
+  select(Variable, SibGroup, mean, sd)
 
 table.data.summary.mean <- rbind(table.data.summary.sibgroup, table.data.summary.speaker, table.data.summary.object) %>% 
-  select(Variable, SibGroup6, mean) %>%
-  spread(SibGroup6, mean) %>%
+  select(Variable, SibGroup, mean) %>%
+  spread(SibGroup, mean) %>%
   rename("none m" = "None",
          "1 m" = "One",
          "2 m" = "2+")
 
 table.data.summary.sd <- rbind(table.data.summary.sibgroup, table.data.summary.speaker, table.data.summary.object) %>% 
-  select(Variable, SibGroup6, sd) %>%
-  spread(SibGroup6, sd) %>%
+  select(Variable, SibGroup, sd) %>%
+  spread(SibGroup, sd) %>%
   rename("none sd" = "None",
          "1 sd" = "One",
          "2 sd" = "2+")

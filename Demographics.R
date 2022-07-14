@@ -109,8 +109,8 @@ demographics <- read_csv("Data/demo_deid_cleaned.csv") %>%
          Siblings18 = children_in_household_18mos_staff - 1,   # new variable for sibling number at 18 months 
          Siblings6 = children_in_household_6mos_staff - 1,      # new variable for sibling number at 6 months
          SibsYN = ifelse(Siblings6 == 0, "N", "Y"),             # binomial variable for slibling status (Y = siblings, N = No siblings)
-         SibGroup6 = factor(Siblings6),                          # new variable for sibling group, 0, 1, 2+ siblings
-         SibGroup6 = fct_recode(SibGroup6,
+         SibGroup = factor(Siblings6),                          # new variable for sibling group, 0, 1, 2+ siblings
+         SibGroup = fct_recode(SibGroup,
                                "None" = "0",
                                "One" = "1",
                                "2+" = "2",
@@ -160,7 +160,7 @@ SiblingsData <- demographics %>%
     SibsYN,
     Siblings6,
     Siblings18,
-    SibGroup6,
+    SibGroup,
     SibGroup18,
     #SibsDiscrete,
     Total.words,

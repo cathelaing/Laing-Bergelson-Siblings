@@ -1,8 +1,8 @@
 library(Hmisc)
 
 Figure.SibGroup <- ggplot(data = SiblingsData, mapping = aes(x=as.numeric(month), y=Log.Totalwords)) +
-  geom_point(aes(colour = SibGroup18), shape = 1, size = 3, position = position_jitter(.15)) + 
-  geom_smooth(aes(colour = SibGroup18, fill = SibGroup18),size=2) + 
+  geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_jitter(.15)) + 
+  geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
   ylab('Productive vocabulary (n words)') +
   xlab('Age in Months') +
   scale_x_continuous(breaks = c(6:18)) +
@@ -13,20 +13,21 @@ Figure.SibGroup <- ggplot(data = SiblingsData, mapping = aes(x=as.numeric(month)
         legend.position = c(.15, .85),
         legend.title = element_blank()) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
-                aes(fill = SibGroup18), color = "black", shape = 24,
+                aes(fill = SibGroup), color = "black", shape = 24,
                position = position_dodge(.2))
 
 Figure.speaker.count <- ggplot(subset(speaker.type, Speaker %in% c("MOT", "FAT", "SIBLING", "Family.input") & audio_video == "video"), 
                                aes(x=Speaker, y=n, color = Speaker)) +
   stat_summary(fun.y = mean, geom = "point", aes(group = subj), shape = 1, size = 3, position = position_jitter(.1)) +
   stat_summary(fun.data = "mean_cl_boot", colour = "red", shape = 17, size = 1) +
-  facet_wrap(~SibGroup6, ncol=3) +
+  facet_wrap(~SibGroup, ncol=3) +
   scale_x_discrete(limits = c("MOT", "FAT", "SIBLING", "Family.input"), labels = c("Mother", "Father", "Sibling", "All")) +
   theme_bw(base_size = 15) +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, vjust = 0.5))
 
 Figure.reading <- ggplot(subset(utterance.type.PC, Type == "r" & audio_video == "video"), 
-                         aes(x=SibGroup6, y=PC, colour = SibGroup6, fill = SibGroup6)) +
+                         aes(x=SibGroup, y=PC, colour = SibGroup, fill = SibGroup)) +
   geom_violin(alpha = .3) + 
   stat_summary(fun=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
@@ -36,7 +37,7 @@ Figure.reading <- ggplot(subset(utterance.type.PC, Type == "r" & audio_video == 
   theme(legend.position = "none")
 
 Figure.in.cdi <- ggplot(data=subset(in.cdi, audio_video == "video"), 
-                        aes(x=SibGroup6, y=PC, colour=SibGroup6, fill = SibGroup6)) + 
+                        aes(x=SibGroup, y=PC, colour=SibGroup, fill = SibGroup)) + 
   geom_violin(alpha = .3) + 
   stat_summary(fun=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
@@ -49,7 +50,7 @@ Figure.in.cdi <- ggplot(data=subset(in.cdi, audio_video == "video"),
 
 
 Figure.object.presence <- ggplot(data=subset(object.presence, audio_video == "video"), 
-                                 aes(x=SibGroup6, y=PC, color = SibGroup6, fill = SibGroup6)) +
+                                 aes(x=SibGroup, y=PC, color = SibGroup, fill = SibGroup)) +
   geom_violin(alpha = .3) +
   stat_summary(fun.y=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
