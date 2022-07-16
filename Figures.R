@@ -21,7 +21,7 @@ Figure.speaker.count <- ggplot(subset(speaker.type, Speaker %in% c("MOT", "FAT",
   stat_summary(fun.y = mean, geom = "point", aes(group = subj), shape = 1, size = 3, position = position_jitter(.1)) +
   stat_summary(fun.data = "mean_cl_boot", colour = "red", shape = 17, size = 1) +
   facet_wrap(~SibGroup, ncol=3) +
-  scale_x_discrete(limits = c("MOT", "FAT", "SIBLING", "Family.input"), labels = c("Mother", "Father", "Sibling", "All")) +
+  scale_x_discrete(limits = c("MOT", "FAT", "SIBLING", "Family.input"), labels = c("Mother", "Father", "Sibling", "Total input")) +
   theme_bw(base_size = 15) +
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 45, vjust = 0.5))

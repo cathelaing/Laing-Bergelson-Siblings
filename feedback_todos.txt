@@ -15,7 +15,9 @@ noun types/tokens as input: i *think* i'd include "all" and then the deep dive b
 * i like the with age figure! could you dodge the error bars & do the fill on the bands with different colors so they're distinguishable?
 * i like the obj presence & input figs!
 * in a few places i took out causal language: having sibs doesn't necessary CAUSE vocab or input diffs, but diff sib numbers can be associated with vocab or input diffs (and of cours eit's fine to speculate about causal mechanisms in intro/discussion carefully)
+
 * i think we should probably quite early on address the limitations of our sample. on the one hand we have 12 dayslong audio& 12 vids & 12 cdis PER KID for a year, on the other hand we don'thave an n that reasonably lets us look at gender & sib # at the same time. etc. 
+
 * we may want to revisit stats stuff for streamlining too, e.g. i don't think we need to say bonferroni-adjusted everywhere but should make clear what our p-value means; most places we have a p-val we also want a beta or mean or sd or something to go with it, or a table that has that stuff.
 * one way to punt on the gender question is to actually just point to shannons (under review) seedlings gender paper; we're actually finalizing the revision right now (R&R at child dev) but shannon can share the updated one with you next week and we can cite/state some stuff from that (e.g. things that don't matter about which way a dv is computed or things that didn't differ by gender overall etc)
 * we'll want to do some massaging of the question of whether input overall or input just to the kid matters, i have some cites to add but will do that in a next pass
@@ -30,3 +32,14 @@ CL notes to self:
 * check all stats for streamlining 
 * add model eqution to paper
 * table of model outputs to go with Fig1
+
+
+CL comments:
+
+* Looking at word tokens/types produced by infants in the videos, there is no effect for sibling across the board with tokens. With types, only discrete sib number shows and effect. We need to consider whether to include this in SI; it's a bit messy but seems untransparent not to report it, perhaps? I have cited Moore et al paper that shows correlations between CDI and home-recordings.
+* how to report half-sibs and foster child
+* headings in discussion
+
+Comments for EB:
+
+* Means for models are all reported in Table 4. Is this enough, or should I add betas as well?

@@ -104,7 +104,7 @@ With regard to the infants’ linguistic environment, we hypothesize that increa
 
 # Methods
 <!-- eb2cl: the following ref is rendering weird; some others are too, have a careful comb through the pdf to fix please! -->
-We analyze data from the SEEDLingS corpus [@bergelson_day_2019], a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data to index child vocabulary size, and annotations of hour-long home video recordings, taken on a monthly basis during data collection, to index input. We also ran our input analysis using day-long audio recordings taken on a different day from the video data reported below; unless reported otherwise, all results were consistent with those outlined below (see Supplementary Materials).
+We analyze data from the SEEDLingS corpus [@bergelson_day_2019], a longitudinal set of data incorporating home recordings, parental reports and experimental studies from the ages of 0;6 to 1;6. The present study draws on the parental report data to index child vocabulary size, and annotations of hour-long home video recordings, taken on a monthly basis during data collection, to index input. We also ran our input analysis using day-long audio recordings taken on a different day from the video data reported below; all results were consistent with those outlined below (see Supplementary Materials).
 <!-- eb2cl: just confirming, it's only video data in your analyses, right? in principle we could use data from audios too, would just need to subsample so it's the same amount per day. or sticking to vid but maybe add a little motivation for that? -->
 <!-- cl2eb: that's right, just video for now; I've put a comment about the option of audio data in my email. I've got the audio data in the all_basiclevel data but not sure if that is pre-sub-sampled -->
 
@@ -126,7 +126,7 @@ firstword <- CDI %>% group_by(subj) %>%
 
 ```
 
-**Parental report data** To index each child's language abilities, we draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`)[^1], we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development over the course of the analysis period.
+**Parental report data** To index each child's language abilities, we draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`)[^1], we use CDI data from 0;10 on-wards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development over the course of the analysis period. Note that noun production in the home-recorded data correlates significantly with reported noun production in the CDI checklists from the age of 12 months, as reported in a previous study by Moore and colleagues [-@moore_point_2019].
 <!-- eb2cl: is that first word from CDI or from home recordings? basd on our point walk talk study, this differed by a coupla months depending on how it was calculated, but i'm assuming it's CDI since that's what you report below! -->
 <!-- cl2eb: yes but have clarified and added note about Moore et al paper -->
 <!-- eb2cl: revisit kid-produced words in recordings -->
@@ -152,7 +152,7 @@ maxsib <- sibage$maxdays/365
 
 ```
 
-We analyzed number of siblings based on parental report in the demographics questionnaires completed at 0;6 (R: `r sibnums$minsibs`-`r sibnums$maxsibs`). Siblings were on average `r age.diff.inyears` years older than the infants in this study (Mdn days: `r sibage$mediandays`, SD: `r round(sibage$sddays,0)`, R: `r minsib`-`r round(maxsib,0)` years).[^2] All siblings lived in the household with the infant, and all were older than or of the same age as the infant in question.[^3] 
+We analyzed number of siblings based on parental report in the demographics questionnaires completed at 0;6 (R: `r sibnums$minsibs`-`r sibnums$maxsibs`). Siblings were on average `r age.diff.inyears` years older than the infants in this study (Mdn days: `r sibage$mediandays`, SD: `r round(sibage$sddays,0)`, R: `r minsib`-`r round(maxsib,0)` years).[^2] *All siblings lived in the household with the infant; one infant had XX older siblings who lived in the household XX% of the time. One family had a foster child live in the home for XX months of data collection.* All siblings were older than or of the same age as the infant in question.[^3] 
 <!-- eb2cl: median and sd being identical is suspicious -->
 <!-- cl2eb: I know, and I've checked this and it looks like it's correct. Maybe due to massive range?//eb2cl: certainly odd! -->
 <!-- eb2cl: revisit:  touch base about info in data spreadsheets regarding dob & subject ids, etc. -->
@@ -247,14 +247,13 @@ females <- SiblingsData %>% filter(month == 18 & sex == "F") %>% tally()
 source("Figures.R")
 ```
 
-
-
-Vocabulary development was highly variable across the 44 infants. By 18 months, `r nowords` infants produced no words, while mean productive vocabulary was `r Nwords$meanwords` words (SD=`r Nwords$sdwords`, Mdn=`r Nwords$mdnwords`). One female infant had a substantially larger reported vocabulary (3SDs above the mean monthly vocabulary score) between 1;1 and 1;6 and was classed as an outlier. We removed her from our data, leaving 43 infants (`r females` females) in the present analysis. Infants had one sibling on average (M=`r Nsibs$meansibs`, Mdn=`r Nsibs$mdnsibs`, SD=`r Nsibs$sdsibs`). See Table \@ref(tab:table-sibling-number).
-
+Vocabulary development was highly variable across the 44 infants. By 18 months, `r nowords` infants produced no words, while mean productive vocabulary size was `r Nwords$meanwords` words (SD=`r Nwords$sdwords`, Mdn=`r Nwords$mdnwords`). One female infant had a substantially larger reported vocabulary (3SDs above the mean monthly vocabulary score) between 1;1 and 1;6 and was classed as an outlier. We removed her from our data, leaving 43 infants (`r females` females) in the present analysis. Infants had one sibling on average (M=`r Nsibs$meansibs`, Mdn=`r Nsibs$mdnsibs`, SD=`r Nsibs$sdsibs`). See Table \@ref(tab:table-sibling-number).
 
 ```{r table-sibling-number}
 cap = "Sibling number by female and male infants."
-apa_table(table.sibling.number, caption = cap, col_spanners = NULL, digits = 0, placement = "H", font_size = "small")
+apa_table(table.sibling.number, caption = cap, col_spanners = NULL, digits = 0, 
+          #placement = "H", 
+          font_size = "small")
 ```
 
 ## Model structure for fixed and random effects 
@@ -333,11 +332,11 @@ cor.age.vocab <- cor.test(
 
 ```
 
-All reported models were generated in R [@r_core_team_r_2019] using the *lmerTest* package to run linear mixed-effects regression models [@kuznetsova_lmertest_2017]. P-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all but one of our variables differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied with an adjusted threshold of $a$=`r round(0.05/2,3)`, accounting for two between-group comparisons (no siblings vs. one sibling, one sibling vs. multiple siblings; see below).
+All reported models were generated in R [@r_core_team_r_2019] using the *lmerTest* package to run linear mixed-effects regression models [@kuznetsova_lmertest_2017]. P-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied with an adjusted threshold of $a$=`r round(0.05/2,3)`, accounting for two between-group comparisons (no siblings vs. one sibling, one sibling vs. multiple siblings; see below). Our dataset included 12 hours of home-recorded video data and 12 vocabulary questionnaires per child (as well as 12 days of audio recordings). While this data provides a substantial representation of each child's early language environment and development, we acknowledge that it is nevertheless limited in terms of group size, and means we cannot effectively combine analyses of sibling number alongside other measures such as sex.
 <!-- eb2cl: are the data significantly differently from normal by shapiro test? if not we could still do t-tests, right? or maybe if some are and some aren't sticking to wilcoxon but then saying so somewhere -->
 <!-- cl2eb: hope this is ok; also clarified the Bonferroni correction here as this is the same throughout, but it's possibly too early to introduce sib groups - what do you think? -->
 
-Before considering sibling status, we first modeled infants’ productive vocabulary at 18 months (taken from CDI questionnaires) as a function of age, sex, and mother’s education. There was no effect of sex (*p*=`r printp(sex.test_p.value)`)[^5], and no correlation with mothers' education level (across five categories from High School to Doctorate; *r* = `r round(cor.edu$estimate,3)`, *p*=`r printp(cor.edu.vocab$p.value)`). As expected, age had a significant effect on productive vocabulary (*p*`r printp(age.test_p.value)`), and so we include age as a fixed effect in all subsequent models. Because we expected that maternal age and education might have an effect on both sibling number and infant productive vocabulary, we ran further correlations to test these variables. There was no correlation between mother’s education and number of siblings (*r* = `r round(cor.edu$estimate,3)`, *p*=`r printp(cor.edu$p.value)`), and a marginal positive correlation between mother’s age and number of siblings (Spearman's *r* = `r round(cor.age$estimate,3)`, *p*=`r printp(cor.age$p.value)`); older mothers tended to have more children. However, no correlation was found between mothers' age and productive vocabulary at 18 months (*r* = `r round(cor.age.vocab$estimate,3)`, *p*=`r printp(cor.age.vocab$p.value)`).
+Before considering sibling status, we first modeled infants’ productive vocabulary at 18 months (taken from CDI questionnaires) as a function of age, sex, and mother’s education. There was no effect of sex (*p*=`r printp(sex.test_p.value)`)[^5], and no correlation with mothers' education level (across five categories from High School to Doctorate; *r* = `r round(cor.edu$estimate,3)`, *p*=`r printp(cor.edu.vocab$p.value)`). As expected, age had a significant effect on productive vocabulary (*p*`r printp(age.test_p.value)`), and so we include age as a fixed effect in our models. Because we expected that maternal age and education might have an effect on both sibling number and infant productive vocabulary, we ran further correlations to test these variables. There was no correlation between mother’s education and number of siblings (*r* = `r round(cor.edu$estimate,3)`, *p*=`r printp(cor.edu$p.value)`), and a marginal positive correlation between mother’s age and number of siblings (Spearman's *r* = `r round(cor.age$estimate,3)`, *p*=`r printp(cor.age$p.value)`); older mothers tended to have more children. However, no correlation was found between mothers' age and productive vocabulary at 18 months (*r* = `r round(cor.age.vocab$estimate,3)`, *p*=`r printp(cor.age.vocab$p.value)`).
 
 ## Effect of siblings on infants' productive vocabulary
 
@@ -496,7 +495,7 @@ In our sample, the simple fact of having siblings (i.e. as a binary variable) di
 
 ```{r table-sibling-model-output, echo=FALSE}
 cap = "Output from likelihood ratio tests comparing regression models that predict the effects of sibling number (binary, grouped and discrete variables) on vocabulary size. Month was included in each model as a fixed effect; subject was included as a random effect."
-apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, #placement = "H", 
+apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", 
           font_size = "small")
 # kable(table.sibling.model.output, "latex", booktabs=T, longtable=T,
 #       caption=cap, digits=2, align="c")
@@ -504,18 +503,18 @@ apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits
 
 ```{r descriptive statistics for sibling model outputs, include=FALSE}
 
-siblings.model.summary <- summary(sibgroup.model)
+siblings.model.summary <- summary(sibnumber.model)
 
 siblings.model.summary.table <- siblings.model.summary$coefficients %>%
   as.data.frame %>%
-  rename("p" = "Pr(>|t|)") %>%
+  rename("p value" = "Pr(>|t|)") %>%
   rownames_to_column(var="Effect") %>%
   mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
   # printnum(
   #   digits = c(2, 2, 2, 2, 3, 3)) %>%
-  mutate(p = scales::pvalue(p))
+  mutate(`p value` = scales::pvalue(`p value`))
 
-siblingnum.beta <- as.numeric(siblings.model.summary.table$beta[2])
+siblingnum.beta <- as.numeric(siblings.model.summary.table$Estimate[2])
 
 siblingnum.beta <- abs(siblingnum.beta*100)
 
@@ -530,39 +529,13 @@ sibgroup.model.summary.table <- sibgroup.model.summary$coefficients %>%
   #   digits = c(2, 2, 2, 2, 3, 3)) %>%
   mutate(p = scales::pvalue(p))
 
-sibgroup1.beta <- as.numeric(sibgroup.model.summary.table$beta[2])
+sibgroup1.beta <- as.numeric(sibgroup.model.summary.table$Estimate[2])
 
 sibgroup1.beta <- abs(sibgroup1.beta*100)
 
-sibgroup2.beta <- as.numeric(sibgroup.model.summary.table$beta[3])
+sibgroup2.beta <- as.numeric(sibgroup.model.summary.table$Estimate[3])
 
 sibgroup2.beta <- abs(sibgroup2.beta*100)
-
-# siblings.model.summary.video <- summary(sibnumber.model.types_video)
-# 
-# siblings.model.summary.video.table <- siblings.model.summary.video$coefficients %>%
-#   as.data.frame %>%
-#   rename(
-#     "$b$" = "Estimate"
-#     , "SE" = "Std. Error"
-#     , "$df$" = "df"
-#     , "$t$" = "t value"
-#     , "$p$" = "Pr(>|t|)"
-#   ) %>%
-#   mutate(
-#     Effect = papaja:::beautify_terms(rownames(.))
-#   ) %>%
-#   printnum(
-#     digits = c(2, 2, 2, 2, 3, 0)
-#     , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
-#     , zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
-#   ) %>%
-#   select(Effect, `$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
-#   rename("betaval" = `$b$`)
-# 
-# siblingnum.vid.beta <- as.numeric(siblings.model.summary.video.table$betaval[2])
-# 
-# siblingnum.vid.beta <- abs(siblingnum.vid.beta*100)
 
 ```
 
@@ -593,7 +566,7 @@ cap = "Full model output from linear mixed effects regression model comparing la
        caption=cap, digits=2, align="c") 
 ```
 
-Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. Moreover, for each additional sibling, infants were reported to have acquired `r siblingnum.beta`% fewer words. The 'sibling effect' is thus present in our data. The grouped sibling variable (0 vs. 1 vs. 2+) was selected as our measure of siblings as it allows analysis across more equal group sizes. However, note that all results reported below were consistent when discrete sibling number was analysed, unless reported otherwise.
+Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. Moreover, for each additional sibling, infants were reported to have acquired `r siblingnum.beta`% fewer words. The 'sibling effect' is thus present in our data. The grouped sibling variable (0 vs. 1 vs. 2+) was selected as our measure of siblings as it allows analysis across more equal group sizes. However, note that all regression reported below were consistent when discrete sibling number was analysed (see Supplementary Data).
 
 According to CDI reports, infants with one sibling acquire only `r sibgroup1.beta`% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce `r sibgroup2.beta`% fewer words. See Tables \@ref(tab:table-sibgroup-model-summary) and \@ref(tab:table-data-summary), and Figure \@ref(fig:Figure-SibGroup). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`).
 <!-- eb2cl: not seeing where the bonferroni correction was applied can you clarify?(i think this applies below as well). maybe you mean that even if we consider a bonferroni adjusted threshold (which you should then specify) it's still significant? -->
@@ -603,7 +576,7 @@ According to CDI reports, infants with one sibling acquire only `r sibgroup1.bet
 
 par(cex = 1.2)
 Figure.SibGroup
-cap <- sprintf("Reported productive vocabulary acquisition (CDI) over time. Colors denote sibling group; line with grey confidence band reflects local estimator (loess) fit over individual infants’ vocabulary at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (jittered horizontally) show individual infants' vocabulary size at each month. Y-axis utilizes log-transformed vertical spacing for visual clarity.")
+cap <- sprintf("Reported productive vocabulary acquisition (CDI) over time. Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over individual infants’ vocabulary at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (jittered horizontally) show individual infants' vocabulary size at each month. Y-axis utilizes log-transformed vertical spacing for visual clarity.")
 
 ```
 
@@ -732,7 +705,7 @@ kable(table.data.summary, "latex", booktabs = T, caption = cap, digits = 2, alig
 
 par(cex = 1.2)
 Figure.speaker.count
-cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means.")
+cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings, as well as total family input (mother + father + sibling(s)), across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means.")
 
 ```
 
@@ -784,7 +757,7 @@ input.diff <-
   group_by(SibGroup) %>%
  summarise(meaninput = mean(n))
 
-noneonediff <- input.diff$meaninput[1] - input.diff$meaninput[2]
+noneonediff <- input.diff$meaninput[2] - input.diff$meaninput[1]
 nonetwodiff <- input.diff$meaninput[1] - input.diff$meaninput[3]
 onetwodiff <- input.diff$meaninput[2] - input.diff$meaninput[3]
 
@@ -793,7 +766,7 @@ onetwodiff <- input.diff$meaninput[2] - input.diff$meaninput[3]
 ```
 
 Mothers provided the largest proportion of the infants’ overall input across the sample (`r round(PC.MOT$PCMOT)`%, M=`r mean.input.MOT$mean.input` object words, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`). Fathers accounted for an average of `r round(PC.FAT$PCFAT)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(PC.SIB$PCSIB)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-Speaker-count). We tested overall quantity of input (aggregated across mothers, fathers, and siblings) in our model, and a significant effect was found ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*`r printp(speaker.type_p.value)`). We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two
-or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`, ($a$=`r round(0.05/2,4)`)) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). On average, in any given hour-long recording, infants with no siblings heard `r round(noneonediff,0)` more object words in their input than those with one sibling, and `r round(nonetwodiff,0)` more than those with two or more siblings. Infants with one sibling heard `r round(onetwodiff,0)` more object words than those with two or more siblings.
+or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`, $a$=`r round(0.05/2,4)`) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). On average, in any given hour-long recording, infants with one siblings heard `r round(noneonediff,0)` **more** object words in their input than those with no sibling, and `r round(nonetwodiff,0)` more than those with two or more siblings. Infants with one sibling heard `r round(onetwodiff,0)` more object words than those with two or more siblings.
 <!-- eb2cl: i love these very interpretable sentences in easy-to-understand units! but i'm a little confused with the denominator, so, e.g. 7 more object words over what unit time? across all video data i.e. ~12 hours? per recording? -->
 <!-- cl2eb:clarified -->
 
@@ -1044,17 +1017,17 @@ object.presence_wilcox_one_two <- wilcox.test(
 
 par(cex = 1.2)
 Figure.object.presence
-cap <- sprintf("Proportion of input words produced with object presence in the input across sibling groups. Error bars and black triangles show 95%% CIs and mean proportion of object presence across sibling groups. Dots indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity.")
+cap <- sprintf("Proportion of input words produced with object presence across sibling groups. Error bars and black triangles show 95%% CIs and mean proportion of object presence across sibling groups. Dots indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity.")
 
 ```
 
-On average, `r round(mean(object.presence.summary$mean.object)*100)`% of utterances were produced in the presence of the relevant object (Mdn=`r mean(object.presence.summary$med.object)`, SD=`r mean(object.presence.summary$sd.object)`). We hypothesized that infants with more siblings would hear fewer words in referentially transparent conditions (i.e. they would experience lower object presence) than those with fewer siblings. Indeed, modelling the quantity of object present tokens that infants heard, we find a significant effect for sibling group on object presence ($\chi^2 (`r object.presence_df`)$ = `r object.presence_chisq`, *p*`r printp(object.presence_p.value)`). See Figure \@ref(fig:Figure-object-presence). Infants with no siblings experienced `r object.presence2.beta`% more object presence in their input than those with two or more siblings, and `r object.presence1.beta`% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (*W*=`r round(object.presence_wilcox_none_one$statistic)`, *p*`r printp(object.presence_wilcox_none_one$p.value)`, ($a$=`r round(0.05/2,4)`)). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (*W*=`r round(object.presence_wilcox_one_two$statistic)`, *p*=`r printp(object.presence_wilcox_one_two$p.value)`). See Table \@ref(tab:table-data-summary).
+On average, `r round(mean(object.presence.summary$mean.object)*100)`% of utterances were produced in the presence of the relevant object (Mdn=`r mean(object.presence.summary$med.object)`, SD=`r mean(object.presence.summary$sd.object)`). We hypothesized that infants with more siblings would hear fewer words in referentially transparent conditions (i.e. they would experience lower object presence) than those with fewer siblings. Indeed, modelling the quantity of object present tokens that infants heard, we find a significant effect for sibling group on object presence ($\chi^2 (`r object.presence_df`)$ = `r object.presence_chisq`, *p*`r printp(object.presence_p.value)`). See Figure \@ref(fig:Figure-object-presence). Infants with no siblings experienced `r object.presence2.beta`% more object presence in their input than those with two or more siblings, and `r object.presence1.beta`% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (*W*=`r round(object.presence_wilcox_none_one$statistic)`, *p*`r printp(object.presence_wilcox_none_one$p.value)`, $a$=`r round(0.05/2,4)`). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (*W*=`r round(object.presence_wilcox_one_two$statistic)`, *p*=`r printp(object.presence_wilcox_one_two$p.value)`). See Table \@ref(tab:table-data-summary).
 
 # Discussion
 
-We investigated the nature of infant language development in relation to number of children in the household. Previous research found a delay in lexical acquisition for later-born infants [@fenson_variability_1994; @hoff_how_2006], with differences in input across birth order reported as a root cause. Our results add several new dimensions to this, by testing for differences across more vs. fewer older siblings, and by looking at input during child-centered home recordings. Infants with more siblings were reported to say fewer words by 18 months, heard fewer nouns from their parents and siblings, and experienced less ‘object co-presence’ when hearing them. However, controlling for amount of input, all groups heard around the same proportion of typically early-acquired words.
+We investigated the nature of infant language development in relation to number of children in the household. Previous research found a delay in lexical acquisition for later-born infants [@fenson_variability_1994; @hoff_how_2006], with differences in input across birth order reported as a root cause. Our results add several new dimensions to this, by testing for differences across more vs. fewer older siblings, and by looking at input during child-centered home recordings. Infants with more siblings were reported to say fewer words by 18 months, heard fewer nouns from their parents and siblings, and experienced less ‘object co-presence’ when hearing them. 
 
-Importantly, and in contrast with some previous research [@hoff-ginsberg_relation_1998; @oshima-takane_linguistic_2003], infants with one sibling showed no delay in lexical production and minimal reduction in input in comparison to first-born infants. That is, our results suggest that simply having a sibling does not contribute to input or vocabulary differences across children (as measured here), while having more than one siblings seems to do so. Indeed, infants with zero and one sibling had similar results for productive vocabulary, parental noun input overall, and early-acquired nouns in the input (but not object presence, which we return to below). In contrast, infants with two or more siblings said fewer words, and also heard fewer input words with proportionally less object co-presence, compared with their peers.
+Importantly, and in contrast with some previous research [@hoff-ginsberg_relation_1998; @oshima-takane_linguistic_2003], infants with one sibling showed no delay in lexical production and minimal reduction in input in comparison to first-born infants. That is, our results suggest that simply having a sibling does not contribute to input or vocabulary differences across children (as measured here), while having more than one siblings seems to do so. Indeed, infants with zero and one sibling had similar results for productive vocabulary, and parental noun input overall, but not object presence, which we return to below. In contrast, infants with two or more siblings said fewer words, and also heard fewer input words with proportionally less object co-presence, compared with their peers.
 
 When we considered the effect of sibling status – that is, whether or not infants had any siblings, disregarding specific sibling number – our findings showed that having siblings made no difference to infants' lexical production capacities. This contrasts with Hoff-Ginsberg [-@hoff-ginsberg_relation_1998], who found that, by 18 months, laterborns exhibit lower language skills. However, Oshima-Takane and colleagues [-@oshima-takane_birth_1996] found no overall differences between first- and second-born children across a range of language measures taken at 21 months. Our finer-grained results suggest a greater role for *sibling quantity* over first- vs. later-born status. The more older siblings a child had, the lower their reported productive vocabulary at 18 months. This adds to findings from Fenson and colleagues [-@fenson_variability_1994], who found a weak but significant negative correlation between birth order and production of both words and gestures. Controlling for age, our model showed that for each additional older sibling, infants produced more than 30% fewer words by 18 months. 
 While infants with more siblings heard less input speech overall, having one sibling did not significantly reduce the number of nouns in an infant's input. This is in direct contrast with reports from the literature; Hoff [-@hoff_how_2006] states that “when a sibling is present, each child receives less speech directed solely at…her *because mothers produce the same amount of speech whether interacting with one or two children*” (p.67, italics added). While this does not appear to be the case in the present dataset, it may be due to the circumstances of the home-recorded data: while siblings were present in many of the recordings (`r sib.present$prop.present`% of recordings in which the target child had a sibling), given the focus of the data collection, parents may have had a tendency to direct their attention - and consequently their linguistic input - more towards the target child. Alternatively, our results may diverge from those of Hoff [-@hoff_how_2006] due to the nature of our input measure, which only took nouns into account. However, Bulgarelli and Bergelson [-@bulgarelli_look_2020] show that nouns are a reliable proxy for overall input in this dataset, thus suggesting that this measure provides an appropriate representation of overall input directed at the target child.
@@ -1081,9 +1054,7 @@ wordlist %>% filter(in_cdi == T) %>% group_by(CDIform) %>% tally() %>% arrange(d
 
 ```
 
-The one measure that did not generate any kind of sibling effect was infants’ exposure to early-acquired (CDI) words; infants heard roughly the same proportion of CDI nouns in the input regardless of how many siblings they had. This may be due to limitations of our analysis, which take into account only nouns, accounting for `r nCDI` word types in total. This may not be enough to account for input differences between groups. Alternatively, proportion of CDI nouns may not have differed because when speech was directed at the infant, the nouns produced by the caregiver were those we would expect in speech directed at a baby. As reported above, input from siblings was low overall, and so perhaps unlikely to affect the lexical characteristics of the input.
-
-Object presence varied more linearly across sibling quantity, suggesting it may be a less critical driver of early word production. Given that infants with one sibling heard approximately the same number of object words in the input than those with no siblings, this may be the most crucial factor in predicting a child's vocabulary size by 18 months. Alternatively, the reduced object presence for children with one sibling may have been compensated for in other ways we did not measure here,  which in turn resulted in the indistinguishable vocabulary difference in the 0 and 1 sibling children at 18 months. 
+Object presence varied more linearly across sibling quantity, suggesting it may be a less critical driver of early word production. Given that infants with one sibling heard approximately the same number of object words in the input than those with no siblings, input, rather than object presence, may be a more crucial factor in predicting a child's vocabulary size by 18 months. Alternatively, the reduced object presence for children with one sibling may have been compensated for in other ways we did not measure here,  which in turn resulted in the indistinguishable vocabulary difference in the 0 and 1 sibling children at 18 months. 
 
 <!-- eb2cl: shoudl we add some subheaders in the discussion?-->
 <!-- cl2eb: will come back to this -->
@@ -1107,7 +1078,7 @@ In conclusion, our results support the general findings from the literature show
 
 [^2]: For six infants, siblings' exact birthdates were not provided, and so age difference was estimated by subtracting the infant's age (6 months) from the sibling's age in years, as listed on the questionnaire (e.g. if a sibling was 5 years old, they were classed as being 4.5 years older than the infant).
 
-[^3]: Two infants in the dataset were dizygotic twins; our pattern of results holds with or without these infants.
+[^3]: Two infants in the dataset were dizygotic twins; our pattern of results holds when one of these infants is removed from the dataset.
 
 [^4]: 1 was added to the raw infant production data of all infants before log-transformation to retain infants with vocabularies of 0.
 
