@@ -293,8 +293,8 @@ anova(sibnumber.model, sibnumber.model.null) # significant
 
 ```{r speaker.type model, message=FALSE, warning=FALSE}
 
-speaker.type.model_siblings <- lmerTest::lmer(Log.n ~ SibGroup + Speaker + (1|subj), 
-                                              data=subset(speaker.type, audio_video == "video"), REML=FALSE)
+speaker.type.model_siblings <- lmerTest::lmer(Log.n ~ Siblings6 + Speaker + (1|subj), 
+                                              data=subset(speaker.type, audio_video == "video" & Speaker), REML=FALSE)
 
 speaker.type.model.null_siblings <- lmerTest::lmer(Log.n ~ Speaker + (1|subj), 
                                                    data=subset(speaker.type, audio_video == "video"), REML=FALSE)

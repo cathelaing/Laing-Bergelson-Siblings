@@ -23,17 +23,6 @@ noun types/tokens as input: i *think* i'd include "all" and then the deep dive b
 * we'll want to do some massaging of the question of whether input overall or input just to the kid matters, i have some cites to add but will do that in a next pass
 
 
-CL notes to self:
-* check pdf for errors
-* take one of the twins out and consider the other twin in the 1sib group
-* ask Shannon about whether all older sibs lived with infants all the time, or if some were not in the household all the time
-* ask Shannon about gender paper
-* update table 2
-* check all stats for streamlining 
-* add model eqution to paper
-* table of model outputs to go with Fig1
-
-
 CL comments:
 
 * Looking at word tokens/types produced by infants in the videos, there is no effect for sibling across the board with tokens. With types, only discrete sib number shows and effect. We need to consider whether to include this in SI; it's a bit messy but seems untransparent not to report it, perhaps? I have cited Moore et al paper that shows correlations between CDI and home-recordings.
