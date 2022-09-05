@@ -19,7 +19,8 @@ CDI <- read_csv("Data/CDI.csv") %>%
   mutate(subj = factor(subj)) %>%
   rename(Total.words = CDI_TotalProd,
         month = Month) %>%
-  mutate(Log.Totalwords = log(Total.words+1)) %>%
+  mutate(Log.Totalwords = log(Total.words+1),
+         month = as.numeric(month)) %>%
   select(subj, month, Total.words, Log.Totalwords)
 
 chidata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%   # Read in basic levels data and then join with CDI data to create a dataset of infant production
@@ -30,7 +31,8 @@ chidata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%   # Read in basic le
     subj, 
     month) %>%
   mutate(basic_level = str_to_lower(basic_level),
-         subj = factor(subj))
+         subj = factor(subj),
+         month = as.numeric(month))
 
 CHIdata_tokens_video <- chidata %>% 
   filter(audio_video == "video") %>%

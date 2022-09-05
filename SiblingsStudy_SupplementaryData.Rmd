@@ -5,17 +5,12 @@ date: "13/02/2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ```{r setup, include = FALSE}
 library(tidyverse)
 library(dplyr)
 library(tibble)
 library(lmerTest)
 library(afex)
-library(citr)
 
 source("DataGathering.R")
 ```
@@ -24,7 +19,7 @@ source("DataGathering.R")
 
 ### Parental Input
 
-```{r speaker.type model, message=FALSE, warning=FALSE}
+```{r speaker.type model audio, message=FALSE, warning=FALSE}
 
 #shapiro.test(speaker.type$n) # not normal
 
@@ -55,7 +50,7 @@ speaker.type_wilcox_one_two_audio <- wilcox.test(
 
 ```
 
-```{r Sibling input, message=FALSE, warning=FALSE}
+```{r Sibling input audio, message=FALSE, warning=FALSE}
 
 # Difference in amount of input from siblings
 
@@ -106,7 +101,7 @@ object.presence.summary_audio <- object.presence %>%
 
 ```
 
-```{r object.presence model}
+```{r object.presence model audio}
 
 object.presence.model_audio <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence, audio_video == "audio"), REML=FALSE)
 object.presence.model.null_audio <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence, audio_video == "audio"), REML=FALSE)
@@ -150,9 +145,10 @@ anova(sibgroup.model_twin, sibgroup.model.null_twin) %>%  # p<.05
   rename("pval" = `Pr(>Chisq)`)
 
 ```
+
 ### Parental Input
 
-```{r speaker.type model, message=FALSE, warning=FALSE}
+```{r speaker.type model twin, message=FALSE, warning=FALSE}
 
 #shapiro.test(speaker.type$n) # not normal
 
@@ -184,7 +180,7 @@ wilcox.test(
 
 ```
 
-```{r Sibling input, message=FALSE, warning=FALSE}
+```{r Sibling input twin, message=FALSE, warning=FALSE}
 
 # Difference in amount of input from siblings
 
@@ -243,7 +239,7 @@ wilcox.test(
 
 ### Object presence
 
-```{r object.presence model}
+```{r object.presence model twin}
 
 object.presence.model_twin <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence_twin,  audio_video == "video"), REML=FALSE)
 object.presence.model.null_twin <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence_twin,  audio_video == "video"), REML=FALSE)
@@ -291,10 +287,10 @@ anova(sibnumber.model, sibnumber.model.null) # significant
 
 ### Parental Input
 
-```{r speaker.type model, message=FALSE, warning=FALSE}
+```{r speaker.type model discrete sibs, message=FALSE, warning=FALSE}
 
 speaker.type.model_siblings <- lmerTest::lmer(Log.n ~ Siblings6 + Speaker + (1|subj), 
-                                              data=subset(speaker.type, audio_video == "video" & Speaker), REML=FALSE)
+                                              data=subset(speaker.type, audio_video == "video"), REML=FALSE)
 
 speaker.type.model.null_siblings <- lmerTest::lmer(Log.n ~ Speaker + (1|subj), 
                                                    data=subset(speaker.type, audio_video == "video"), REML=FALSE)
@@ -303,7 +299,7 @@ anova(speaker.type.model_siblings, speaker.type.model.null_siblings) # ns
 
 ```
 
-```{r Sibling input, message=FALSE, warning=FALSE}
+```{r Sibling input discrete sibs, message=FALSE, warning=FALSE}
 
 # Difference in amount of input from siblings
 
@@ -373,7 +369,7 @@ wilcox.test(
 
 ### Object presence
 
-```{r Object.presence summary}
+```{r Object.presence summary discrete sibs}
 
 object.presence.summary_siblings <- object.presence %>%
   filter(audio_video == "video") %>%
@@ -384,7 +380,7 @@ object.presence.summary_siblings <- object.presence %>%
 
 ```
 
-```{r object.presence model}
+```{r object.presence model discrete sibs}
 
 object.presence.model_siblings <- lmerTest::lmer(PC ~ Siblings6 + month + (1|subj), 
                                                  data=subset(object.presence, audio_video == "video"), REML=FALSE)
