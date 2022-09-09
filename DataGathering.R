@@ -32,7 +32,8 @@ sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
          speaker = factor(speaker),
          speaker = fct_collapse(speaker,
                                 "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2")),  # rename speakers
-         subj = factor(subj))
+         subj = factor(subj),
+         month = as.numeric(month))
 
 wordlist <- read_csv("Data/in_cdi_Wordlist.csv") # Read in CDI wordlist that matches sibsdata$basic_level with words on the CDI
 
