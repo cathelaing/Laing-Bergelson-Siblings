@@ -15,6 +15,73 @@ library(afex)
 source("DataGathering.R")
 ```
 
+## Correlations with maternal factors
+
+```{r age_mom-Sibling correlation, message=TRUE, warning=FALSE}
+
+# Maternal age and number of siblings
+
+cor.age <- cor.test(
+  x = subset(SiblingsData, month == 18)$Siblings18
+  , y = subset(SiblingsData, month == 18)$age_mom
+  , method = "spearman"
+)
+
+# Maternal education and number of siblings
+
+cor.edu <- cor.test(
+  x = subset(SiblingsData, month == 18)$Siblings18
+  , y = subset(SiblingsData, month == 18)$MOTedulevel
+  , method = "spearman"
+)
+
+# Maternal education and infant vocabulary at 18 months
+
+cor.edu.vocab <- cor.test(
+  x = subset(SiblingsData, month == 18)$Total.words
+  , y = subset(SiblingsData, month == 18)$MOTedulevel
+  , method = "spearman"
+)
+
+# Maternal age and infant vocabulary at 18 months
+
+cor.age.vocab <- cor.test(
+  x = subset(SiblingsData, month == 18)$Total.words
+  , y = subset(SiblingsData, month == 18)$age_mom
+  , method = "spearman"
+)
+
+```
+
+
+```{r input correlations, message=TRUE, warning=FALSE, include=FALSE}
+
+# Maternal input and maternal education
+
+cor.edu.input <- cor.test(
+  x = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
+  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$MOTedulevel
+  , method = "spearman"
+)
+
+# Maternal input and child vocabulary
+
+cor.vocab.input <- cor.test(
+  x = subset(SiblingsData, month == 17)$Total.words
+  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
+  , method = "spearman"
+)
+
+# Maternal age and child vocabulary
+
+cor.age.input<- cor.test(
+  x = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
+  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$age_mom
+  , method = "spearman"
+)
+
+```
+
 ## Effect of siblings on infants' input - audio recordings
 
 ### Parental Input

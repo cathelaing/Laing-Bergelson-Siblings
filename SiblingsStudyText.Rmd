@@ -165,8 +165,9 @@ low_missing <- missing_CDI %>% filter(n == min(n)) %>% tally()
 ```
 
 ### Parental report data 
-To index each child's language abilities, we draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire; each month's CDI survey came pre-populated with the previous month's answers to save on reduplicated effort. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`), we use CDI data from 0;10 on-wards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development. CDI data for production has been well validated by prior work, including work in this sample [@moore_point_2019; @frank_variability_2021]. Of the 13 CDIs collected for each infant (559 CDIs in total), `r total_missing` were missing altogether, across `r n_missing` infants. `r high_missing` infants had 4 CDI datapoints missing in total, while the majority (n = `r low_missing`) had only one missing datapoint.
+To index each child's language abilities, we draw on data from vocabulary checklists [Macarthur-Bates Communicative Development Inventory, hereafter CDI; @fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire; each month's CDI survey came pre-populated with the previous month's answers to save on reduplicated effort. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`), we use CDI data from 0;10 on-wards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development. CDI data for production has been well validated by prior work, including work in this sample [@moore_point_2019; @frank_variability_2021]. Of the 13 CDIs collected for each infant (559 CDIs in total), `r total_missing` were missing altogether, across `r n_missing` infants. `r high_missing` infants had 4 CDI datapoints missing in total, while the majority (n = `r low_missing`) had only one missing data-point.
 <!-- eb2cl: we should say something about missing data, i.e. how many CDIs were missing each month. -->
+<!-- cl2eb:done -->
 
 ### Home-recorded video data 
 Every month between 0;6 and 1;5, infants were video-recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this captured the scene from the infants’ perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder on a tripod was set up in the room where infants and caretakers were interacting to capture a broader view; families were asked to move this camcorder if they changed rooms. 
@@ -175,8 +176,7 @@ Object words (i.e. concrete nouns) deemed to be said to, by, or loudly and clear
 
 #### Derived Input measures
 
-Two input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to an aspect of the input that is established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear?) and **object presence** (how much of this input is referentially transparent?), detailed below. We note that neither of these measures are, on our view, interpretable as "pure" quality or quantity input measures; we hold that quality and quantity are inextricably linked in general, and specifically we include (by design) only object words that the recordings suggest were possible learning instances for the infants who heard them, wherein quantity and quality are conflated.
-
+Two input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to an aspect of the input that is established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear?) and **object presence** (how much of this input is referentially transparent?), detailed below. We note that neither of these measures are, in our view, interpretable as "pure" quality or quantity input measures; we hold that quality and quantity are inextricably linked in general, and specifically we include (by design) only object words that the recordings suggest were possible learning instances for the infants who heard them, wherein quantity and quality are conflated.
 
 ```{r other speaker input, include=FALSE}
 
@@ -191,19 +191,22 @@ other.speaker.data <-
 
 *Household Input* reflects how many nouns infants heard in the recordings from their mother, father and (where relevant) siblings.  Other speakers’ input was relatively rare during video recordings, accounting for `r other.speaker.data$PC.other.m`% of input overall (SD=`r other.speaker.data$PC.other.sd`%), and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size [@anderson_linking_2021]. This analysis considers only nouns produced by speakers in the child's environment (which is what was annotated in the broader SEEDLingS project); concrete nouns are acquired earlier in development in English and cross-linguistically [@braginsky_consistency_2019]. In this corpus (as in any sample of naturalistic interaction) the number of nouns correlates highly with the number of words overall (e.g. based on automated  analyses of adult word counts vs. manual noun-only annotations; @bulgarelli_look_2020]. Thus, noun count in the monthly hour of video data serves as our household input proxy.
 
-*Object Presence* was coded as "yes", "no", or "unsure" for each object word annotated in the home recordings based on trained annotators' assessment of whether the referent of the word (i.e. the object) was present and attended to by the child.
+*Object Presence* was coded as "yes", "no", or "unsure" for each object word annotated in the home recordings based on trained annotators' assessment of whether the referent of the word (i.e. the object) was present and attended to by the child. In the video data, `r object.presence.unsure$totalu` instances (`r round(object.presence.unsure$totalu,2)`%) of object presence were marked as unsure; these were not included in this analysis.
 <!-- eb2cl: maybe say how often unsure was invoked? i think super rarely for video -->
+<!-- cl2eb: done -->
 
 In the following analyses, we consider infants’ total productive vocabulary[^4] alongside these two input measures -- nouns in household input and extent of object presence in the input -- as a function of sibling number. Since the raw data are highly skewed, log-transformed data  and/or proportions are used for statistical analysis (1 was added to the raw infant production data of all infants before log-transformation to retain infants with vocabularies of 0.) All figures display non-transformed data for interpretive ease. 
 
 [^4]: While in principle we could have just used noun productive vocabulary, in practice noun and total vocabulary is correlated >.95 in this age range; we opted to retain the overall total vocabulary, as lexical class is not a straightforward notion in the early lexicon.
 <!-- eb2cl: see what you think of this footnote, i think shannon shoul dhave #s on the exact correlations if we need them -->
+<!-- cl2eb: looks good! I don't think there's a strong need to use the exact correlations, unless you do -->
 
 # Results
 
 ```{r Production overview}
 
 nowords <- SiblingsData %>% filter(month == 18 & Total.words == 0) %>% tally()
+nCDI18 <- SiblingsData %>% filter(month == 18 & !is.na(Total.words)) %>% tally()
 Nwords <- SiblingsData %>% filter(month == 18) %>% summarise(meanwords = mean(Total.words, na.rm=T),
                                                              sdwords = sd(Total.words, na.rm=T),
                                                              mdnwords = median(Total.words, na.rm=T))
@@ -218,7 +221,7 @@ Nsibs <- SiblingsData %>% filter(month == 18) %>% summarise(meansibs = mean(Sibl
 
 # In overall vocabulary development
 
-CDI %>% #filter(month == 18) %>%
+CDI %>% filter(!is.na(Total.words)) %>%
   group_by(month) %>% 
   mutate(outlier_cutoff3sd = 3*sd(Total.words, na.rm=T),
          mean_month = mean(Total.words, na.rm=T),
@@ -229,8 +232,8 @@ CDI %>% #filter(month == 18) %>%
                       (mean(Total.words, na.rm=T) - 
                          3*(sd(Total.words, na.rm=T))))) %>% 
   filter(outlier == TRUE) %>% 
-  #filter(month>9)# this doesn't work bc month is a character but should be a number
-  filter(!month %in% c("06","07","08","09"))
+  filter(month>9)
+
 # month 10: 521, 749, 342
 # month 11: 521, 342
 # month 13: 794
@@ -244,10 +247,10 @@ CDI %>% #filter(month == 18) %>%
 
 SiblingsData <- SiblingsData %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
 CDI <- CDI %>% filter(subj != 794)
-speaker.type <- speaker.type %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
-object.presence <- object.presence %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
-in.cdi <- in.cdi %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
-utterance.type.PC <- utterance.type.PC %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
+speaker.type <- speaker.type %>% filter(!month %in% c("06", "07", "08", "09"))
+object.presence <- object.presence %>% filter(!month %in% c("06", "07", "08", "09"))
+in.cdi <- in.cdi %>% filter(!month %in% c("06", "07", "08", "09"))
+utterance.type.PC <- utterance.type.PC %>% filter(!month %in% c("06", "07", "08", "09"))
 
 females <- SiblingsData %>% filter(month == 18 & sex == "F") %>% tally()
 
@@ -256,12 +259,12 @@ source("Figures.R")
 ```
 
 <!-- eb2cl: i feel a bit worried about the chunk of code above and it has definitely led to some errors below. as i noted higher up we don't actually have all 44 CDIs from each child at each month, sometimes parents didn't fill it out (which is why there are NAs in your Total.words column), so saying it's 43 infants 20 female isn't really right, at least for the cdi analysis  -->
-<!-- .  -->
+<!-- cl2eb: Ok, noted! I've made it clearer about the missing CDIs, though I'm not clear on what your thoughts are re. how to report the actual numbers  -->
 <!-- I'm also not clear what criteria you're using for outlier analysis, it looks like some kids are outliers in some months but not others (I adjusted some of the code above to make this clearer): if you want to say something like in order to leave in the most data you're only removing children who were outliers for multiple consecutive months or something like that you can, but either way right now it seems a little arbitrary.  -->
 
 <!-- Similarly taking a given subject out of each derived dataframe might not be the best approach: one question is whether you want to remove them oNLY from the cdi analysis or ALSO from the home data; since we dont' actually do analyses linking the two, the former is probably fine but you'd need to say so. -->
 
-Vocabulary development was highly variable across the 44 infants. By 18 months, `r nowords` infants produced no words, while mean productive vocabulary size was `r Nwords$meanwords` words (SD=`r Nwords$sdwords`, Mdn=`r Nwords$mdnwords`). One female infant had a substantially larger reported vocabulary (3SDs above the mean monthly vocabulary score) between 1;1 and 1;6 and was thus removed as an outlier, leaving 43 infants (`r females` females) in the present analysis. Infants had one sibling on average (M=`r Nsibs$meansibs`, Mdn=`r Nsibs$mdnsibs`, SD=`r Nsibs$sdsibs`). See Table \@ref(tab:table-sibling-number).
+Vocabulary development was highly variable across the 43 infants, according to the CDI data we had available. By 18 months, `r nowords` infants produced no words (taken from `r nCDI18` available CDIs at this time-point), while mean productive vocabulary size was `r Nwords$meanwords` words (SD=`r Nwords$sdwords`, Mdn=`r Nwords$mdnwords`). Three infants had substantially larger-than-average (3SDs above the mean monthly vocabulary score) vocabularies at different time-points in the data; we opted to count one of these infants as an outlier and remove her data from the CDI analysis, owing to vocabulary being higher for multiple consecutive months (1;1-1;6). This left 42 infants (`r females` females) in the analysis of vocabulary size. Infants had one sibling on average (M=`r Nsibs$meansibs`, Mdn=`r Nsibs$mdnsibs`, SD=`r Nsibs$sdsibs`). See Table \@ref(tab:table-sibling-number).
 
 ```{r table-sibling-number}
 cap = "Sibling number by female and male infants."
@@ -272,90 +275,15 @@ apa_table(table.sibling.number, caption = cap, col_spanners = NULL, digits = 0,
 
 ## Model structure for fixed and random effects 
 
-```{r effects of age sex and mot edu on infant production, message=FALSE, warning=FALSE, include=FALSE}
-
-# age
-
-age.test.cdi <- lmer(Log.Totalwords ~ month + (1|subj), data = SiblingsData, REML=FALSE)
-age.test.cdi.null <- lmer(Log.Totalwords ~ (1|subj), data = SiblingsData, REML=FALSE)
-
-age.test.cdi_anova <- anova(age.test.cdi, age.test.cdi.null) %>% # Strong effect for age - include in all further models
-    rename("pval" = `Pr(>Chisq)`)
-
-age.test_df <- age.test.cdi_anova$`Chi Df`[2]
-age.test_chisq <- age.test.cdi_anova$Chisq[2]
-age.test_p.value <- age.test.cdi_anova$pval[2]
-
-age.test.video.tokens <- lmer(Log.tokens_video ~ month + (1|subj), data = SiblingsData, REML=FALSE)
-age.test.video.tokens.null <- lmer(Log.tokens_video ~ (1|subj), data = SiblingsData, REML=FALSE)
-
-age.test_anova <- anova(age.test.video.tokens, age.test.video.tokens.null) %>% # Strong effect for age - include in all further models
-    rename("pval" = `Pr(>Chisq)`)
-
-# sex
-
-sex.test.cdi <- lmer(Log.Totalwords ~ sex + month + (1|subj), data = SiblingsData, REML=FALSE)
-sex.test.cdi.null <- lmer(Log.Totalwords ~ month + (1|subj), data = SiblingsData, REML=FALSE)
-
-sex.test_anova <- anova(sex.test.cdi, sex.test.cdi.null) %>%  # No overall effect for sex
-  rename("pval" = `Pr(>Chisq)`)
-
-sex.test_df <- sex.test_anova$`Chi Df`[2]
-sex.test_chisq <- sex.test_anova$Chisq[2]
-sex.test_p.value <- sex.test_anova$pval[2]
-
-sex.test.video.tokens <- lmer(Log.tokens_video ~ sex + month + (1|subj), data = SiblingsData, REML=FALSE)
-sex.test.video.tokens.null <- lmer(Log.tokens_video ~ month + (1|subj), data = SiblingsData, REML=FALSE)
-
-sex.test_anova <- anova(sex.test.video.tokens, sex.test.video.tokens.null) %>%  # No overall effect for sex
-  rename("pval" = `Pr(>Chisq)`)
-
-```
-
-```{r age_mom-Sibling correlation, message=TRUE, warning=FALSE}
-
-cor.age <- cor.test(
-  x = subset(SiblingsData, month == 18)$Siblings18
-  , y = subset(SiblingsData, month == 18)$age_mom
-  , method = "spearman"
-)
-
-cor.edu <- cor.test(
-  x = subset(SiblingsData, month == 18)$Siblings18
-  , y = subset(SiblingsData, month == 18)$MOTedulevel
-  , method = "spearman"
-)
-
-cor.edu.vocab <- cor.test(
-  x = subset(SiblingsData, month == 18)$Total.words
-  , y = subset(SiblingsData, month == 18)$MOTedulevel
-  , method = "spearman"
-)
-
-cor.vocab <- cor.test(
-  x = subset(SiblingsData, month == 18)$Siblings18
-  , y = subset(SiblingsData, month == 18)$Total.words
-  , method = "spearman"
-)
-
-cor.age.vocab <- cor.test(
-  x = subset(SiblingsData, month == 18)$Total.words
-  , y = subset(SiblingsData, month == 18)$age_mom
-  , method = "spearman"
-)
-
-```
-
-All reported models were generated in R [@r_core_team_r_2019] using the *lmerTest* package to run linear mixed-effects regression models [@kuznetsova_lmertest_2017]. P-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied (e.g. with a adjusted p value threshold of .025 when 2 between-group comparisons are done). While we have a substantial amount of data for each participant, our limited n means we are underpowered to consider multiple demographic variables simultaneously given the data distribution (e.g. sibling number and sex, see Table XX).
+All reported models were generated in R [@r_core_team_r_2019] using the *lmerTest* package to run linear mixed-effects regression models [@kuznetsova_lmertest_2017]. P-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables of interest (CDI score, household input and object presence) differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied (e.g. with an adjusted p value threshold of .025 when 2 between-group comparisons are done). While we have a substantial amount of data for each participant, our limited n means we are under-powered to consider multiple demographic variables simultaneously given the data distribution (e.g. sibling number and sex, see Table \@ref(tab:table-sibling-number); see Supplementary Data for correlations between sibling number and maternal age/education).
 <!-- eb2cl: can you clarify above which variables you mean differ from normal (i think you mean cdi, input, and obj pres?).i reworded the bonferroni part a bit to avoid introducing sib groups -->
+<!-- cl2eb: excellent -->
 
 <!-- eb2cl: i feel a little funny saying there's no sex effect given that in shannon's paper we take pains to say we think there is one but we're just underpowered to see it. so i think we should probably compare our sib model with and without sex to see if it improves fit, but only for the 0, 1, 2+ version, given the weirdness in data dis for 3 and 4 and gender.
 
 I also don't think we need to have initial justification for the inclusion of age, it'd be crazy if we dIDN'T find that. i think i'd put the mother's education, age and # of sibs as an exploratory analysis later after our main stuff, or even in SI. how's that sound?-->
 
-That said, we did conduct initial analyses on a few demographic variables to better characterize the dataset. Before considering sibling status, we first modeled infants’ productive vocabulary at 18 months (taken from CDI questionnaires) as a function of age, sex, and mother’s education. There was no effect of sex (*p*=`r printp(sex.test_p.value)`)[^5], and no correlation with mothers' education level (across five categories from High School to Doctorate; *r* = `r round(cor.edu$estimate,3)`, *p*=`r printp(cor.edu.vocab$p.value)`). As expected, age had a significant effect on productive vocabulary (*p*`r printp(age.test_p.value)`), and so we include age as a fixed effect in our models. Because we expected that maternal age and education might have an effect on both sibling number and infant productive vocabulary, we ran further correlations to test these variables. There was no correlation between mother’s education and number of siblings (*r* = `r round(cor.edu$estimate,3)`, *p*=`r printp(cor.edu$p.value)`), and a marginal positive correlation between mother’s age and number of siblings (Spearman's *r* = `r round(cor.age$estimate,3)`, *p*=`r printp(cor.age$p.value)`); older mothers tended to have more children. However, no correlation was found between mothers' age and productive vocabulary at 18 months (*r* = `r round(cor.age.vocab$estimate,3)`, *p*=`r printp(cor.age.vocab$p.value)`).
-
-[^5]: Though note that Dailey and Bergelson [-@dailey_talking_nodate] find a sex difference in the number of word types produced in the home-recorded data between 6 and 17 months.
+<!-- cl2eb: ok, having a reorganize of this section - hopefully this reads a little nicer now! and I agree about the sex effect - I'll add it to the main model as you suggest, and have moved the correlations with maternal factors to the SI -->
 
 ## Effect of siblings on infants' productive vocabulary
 
@@ -375,6 +303,7 @@ sibgroup.summary <- SiblingsData %>% filter(month==18) %>%
 # SibYN: Does having any number of siblings affect language development over time?
 
 sibsYN.model <- lmerTest::lmer(Log.Totalwords ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibsYN.model.sex <- lmerTest::lmer(Log.Totalwords ~ SibsYN + month + sex +(1|subj), data=SiblingsData, REML=FALSE)
 sibsYN.model.null <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data=SiblingsData, REML=FALSE)
 sibsYN_anova <- anova(sibsYN.model, sibsYN.model.null)
 
@@ -382,143 +311,52 @@ sibsYN_df <- sibsYN_anova$Df[2]
 sibsYN_chisq <- sibsYN_anova$Chisq[2]
 sibsYN_p.value <- sibsYN_anova$`Pr(>Chisq)`[2]
 
+sibsYN_anova.sex <- anova(sibsYN.model, sibsYN.model.sex) # ns.
+
 # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
 
 sibgroup.model <- lmerTest::lmer(Log.Totalwords ~ SibGroup + month + (1|subj), data=SiblingsData, REML=FALSE)
 sibgroup.model.null <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data=SiblingsData, REML=FALSE)
+sibgroup.model.sex <- lmerTest::lmer(Log.Totalwords ~ SibGroup + month + sex + (1|subj), data=SiblingsData, REML=FALSE)
 sibgroup_anova <- anova(sibgroup.model, sibgroup.model.null)
 
+sibgroup_anova.sex <- anova(sibgroup.model, sibgroup.model.sex) # ns
 
 # Sibling number: Does number of siblings affect language development over time?
 
 sibnumber.model <- lmerTest::lmer(Log.Totalwords ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
+sibnumber.model.sex <- lmerTest::lmer(Log.Totalwords ~ Siblings6 + month + sex + (1|subj), data=SiblingsData, REML=FALSE)
 sibnumber.model.null <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data=SiblingsData, REML=FALSE)
 sibnumber_anova <- anova(sibnumber.model, sibnumber.model.null)
+sibnumber_anova.sex <- anova(sibnumber.model, sibnumber.model.sex) # ns
 
+sibs.anova.sex.table <- rbind(sibnumber_anova.sex, sibgroup_anova.sex, sibsYN_anova.sex)
 
-# # Checking consistency with words produced in recordings
-# 
-# # Tokens - video
-# 
-# # SibYN: Does having any number of siblings affect language development over time?
-# 
-# sibsYN.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibsYN.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibsYN.tokens_anova_video <- anova(sibsYN.model.tokens_video, sibsYN.model.tokens_video.null) # NS
-# 
-# # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-# 
-# sibgroup.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ SibGroup + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibgroup.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibgroup.tokens_anova_video <- anova(sibgroup.model.tokens_video, sibgroup.model.tokens_video.null) # NS
-# 
-# # Sibling number: Does number of siblings affect language development over time?
-# 
-# sibnumber.model.tokens_video <- lmerTest::lmer(Log.tokens_video ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibnumber.model.tokens_video.null <- lmerTest::lmer(Log.tokens_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibnumber.tokens_anova_video <- anova(sibnumber.model.tokens_video, sibnumber.model.tokens_video.null) # NS
-# 
-# # Types - video
-# 
-# # SibYN: Does having any number of siblings affect language development over time?
-# 
-# sibsYN.model.types_video <- lmerTest::lmer(Log.types_video ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibsYN.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibsYN.types_anova_video <- anova(sibsYN.model.types_video, sibsYN.model.types_video.null) # p<.05
-# 
-# # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-# 
-# sibgroup.model.types_video <- lmerTest::lmer(Log.types_video ~ SibGroup + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibgroup.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibgroup.types_anova_video <- anova(sibgroup.model.types_video, sibgroup.model.types_video.null) # p<.001
-# 
-# # Sibling number: Does number of siblings affect language development over time?
-# 
-# sibnumber.model.types_video <- lmerTest::lmer(Log.types_video ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibnumber.model.types_video.null <- lmerTest::lmer(Log.types_video ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibnumber.types_anova_video <- anova(sibnumber.model.types_video, sibnumber.model.types_video.null) # NS
-# 
-# # Tokens - audio
-# 
-# # SibYN: Does having any number of siblings affect language development over time?
-# 
-# sibsYN.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibsYN.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibsYN.tokens_anova_audio <- anova(sibsYN.model.tokens_audio, sibsYN.model.tokens_audio.null) # p<.05
-# 
-# # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-# 
-# sibgroup.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ SibGroup + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibgroup.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibgroup.tokens_anova_audio <- anova(sibgroup.model.tokens_audio, sibgroup.model.tokens_audio.null) # NS
-# 
-# # Sibling number: Does number of siblings affect language development over time?
-# 
-# sibnumber.model.tokens_audio <- lmerTest::lmer(Log.tokens_audio ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibnumber.model.tokens_audio.null <- lmerTest::lmer(Log.tokens_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibnumber.tokens_anova_audio <- anova(sibnumber.model.tokens_audio, sibnumber.model.tokens_audio.null) # p=.05
-# 
-# # Types - audio
-# 
-# # SibYN: Does having any number of siblings affect language development over time?
-# 
-# sibsYN.model.types_audio <- lmerTest::lmer(Log.types_audio ~ SibsYN + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibsYN.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibsYN.types_anova_audio <- anova(sibsYN.model.types_audio, sibsYN.model.types_audio.null) # p<.05
-# 
-# # SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-# 
-# sibgroup.model.types_audio <- lmerTest::lmer(Log.types_audio ~ SibGroup + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibgroup.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibgroup.types_anova_audio <- anova(sibgroup.model.types_audio, sibgroup.model.types_audio.null) # p<.001
-# 
-# # Sibling number: Does number of siblings affect language development over time?
-# 
-# sibnumber.model.types_audio <- lmerTest::lmer(Log.types_audio ~ Siblings6 + month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibnumber.model.types_audio.null <- lmerTest::lmer(Log.types_audio ~ month + (1|subj), data=SiblingsData, REML=FALSE)
-# sibnumber.types_anova_audio <- anova(sibnumber.model.types_audio, sibnumber.model.types_audio.null) # p=.05
-
-
+min.pval.sex <- min(sibs.anova.sex.table$`Pr(>Chisq)`, na.rm=T)
 
 table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anova
-                                               #sibsYN.tokens_anova_video, sibsYN.tokens_anova_audio,
-                                  #  sibgroup.tokens_anova_video, sibgroup.tokens_anova_audio,
-                                  #  sibnumber.tokens_anova_video, sibnumber.tokens_anova_audio,
-                                 #   sibsYN.types_anova_video, sibsYN.types_anova_audio,
-                                 #   sibgroup.types_anova_video, sibgroup.types_anova_audio,
-                                #    sibnumber.types_anova_video, sibnumber.types_anova_audio
                                 ) %>%
   rownames_to_column(var="model") %>%
   filter(Chisq > 0) %>%
   rename("p value" = "Pr(>Chisq)") %>%
-  # mutate(Count = ifelse(model == "sibsYN.model", "CDI", ""),
-  #                 Count = ifelse(model == "sibsYN.model.tokens_video", "Tokens", Count),
-  #        Count = ifelse(model == "sibsYN.model.types_video", "Types", Count),
-  #        Data = ifelse(grepl("video", model), "Video", NA),
-  #        Data = ifelse(grepl("audio", model), "Audio", Data),
-  #        Data = ifelse(is.na(Data), "CDI", Data)) %>%
   mutate(Model = ifelse(grepl("sibsYN", model), "0 vs. >0 siblings", NA),
          Model = ifelse(grepl("sibgroup", model), "Sibling group", Model),
          Model = ifelse(grepl("sibnumber", model), "Sibling number", Model)) %>%
   select(Model, Df, Chisq, `p value`)
 
-# eb2cl: please do a pass to take out any no longer needed code, commented out or otherwise!
 ```
-
-We next modeled the effect of siblings on reported productive vocabulary. We explored three possible variations on how to represent the sibling effect: a binary variable (0 vs. >0 siblings), aggregated groups (None vs. One vs. 2+ siblings), and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings), comparing the following nested model structures, where (1) is the baseline model, and (2) includes siblings as the variable of interest:
+We first modeled the effect of siblings on reported productive vocabulary. We explored three possible variations on how to represent the sibling effect: a binary variable (0 vs. >0 siblings), aggregated groups (None vs. One vs. 2+ siblings), and discrete sibling number (0 vs. 1 vs. 2 vs. 3 vs. 4 siblings), comparing the following nested model structures, where (1) is the baseline model, (2) includes siblings as the variable of interest, and (3) considers the extent to which the infant's sex improves model fit:
 
 1. vocabulary size (log-transformed) ~ age (months) + (1|subject)
 2. vocabulary size (log-transformed) ~ siblings [binary, group or discrete] + age (months) + (1|subject)
+3. vocabulary size (log-transformed) ~ siblings [binary, group or discrete] + age (months) + sex + (1|subject)
 
-<!-- Outcomes from model comparisons are shown in Table \@ref(tab:table-sibling-model-output).  -->
-In our sample, simply having siblings (i.e. as a binary variable) did not predict CDI productive vocabulary size, while both discrete sibling number and sibling group did. See Table \@ref(tab:table-sibling-model-output).
+In our sample, simply having siblings (i.e. as a binary variable) did not predict CDI productive vocabulary size, while both discrete sibling number and sibling group did. See Table \@ref(tab:table-sibling-model-output). Sex did not improve model fit over and above the effect of siblings in any of the three comparisons (*p*s all >`r round(min.pval.sex,2)`).
 
 ```{r table-sibling-model-output, echo=FALSE}
 cap = "Output from likelihood ratio tests comparing regression models that predict the effects of sibling number (binary, grouped and discrete variables) on vocabulary size. Month was included in each model as a fixed effect; subject was included as a random effect."
 apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", 
           font_size = "small")
-# kable(table.sibling.model.output, "latex", booktabs=T, longtable=T,
-#       caption=cap, digits=2, align="c")
 ```
 
 ```{r descriptive statistics for sibling model outputs, include=FALSE}
@@ -579,21 +417,19 @@ sibgroup_wilcox_one_two <- wilcox.test(
 
 ```{r table-sibgroup-model-summary, echo=FALSE}
 cap = "Full model output from linear mixed effects regression model comparing language development over time in relation to sibling group. Age in months was included as a fixed effect; subject was included as a random effect."
-#apa_table(siblings.model.summary.table, caption = cap, col_spanners = NULL, digits = 2, placement = "H", font_size = "small")
  kable(sibgroup.model.summary.table, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
-       #col.names = c("Effect", "\\textit{b}", "Std. Error", "\\textit{t value}", "df", "\\textit{pvalue}"),
        caption=cap, digits=2, align="c") 
 ```
 
-Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. We find that for each additional sibling, infants were reported to have produced `r siblingnum.beta`% fewer words. The 'sibling effect' is thus present in our data. 
+Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. We find that for each additional sibling, infants were reported to have produced `r siblingnum.beta`% fewer words. The 'sibling effect' is thus present in our data.
 
 In terms of our grouped sibling variable (i.e. 0 vs. 1 vs. 2+ siblings) infants with one sibling acquire only `r sibgroup1.beta`% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce `r sibgroup2.beta`% fewer words. See Tables \@ref(tab:table-sibgroup-model-summary) and \@ref(tab:table-data-summary), and Figure \@ref(fig:Figure-SibGroup). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months (where there's the widest vocabulary range) revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`).
 
-One reason that we considered the binary (0 vs. >0) and grouped (0 vs. 1 vs. 2+) sibling variables was that it led to more equal group sizes for our subsequent comparisons. It also lets us consider the role of sex, which was not possible for sibling number given the (random) gender and sibling distribution (see Table XX).
+One reason that we considered the binary (0 vs. >0) and grouped (0 vs. 1 vs. 2+) sibling variables was that it led to more equal group sizes for our subsequent comparisons. It also lets us consider the role of sex, which was not possible for sibling number given the (random) gender and sibling distribution (see Table \@ref(tab:table-sibling-number)).
 
 <!-- eb2cl: i added texta bove, i'd put versions of the model comparison for these here (i.e. binary: just age, age + sex (since we saw age + sib wasn't a better fit); grouped: just age, age + sib, age+sex+sib ) -->
-
+<!-- cl2eb: I'm a bit confused about mention of the binary variable here since this wasn't significant in the model and isn't considered further down; I've added the sex comparison above but can move it down if you prefer -->
 
 ```{r Figure-SibGroup, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 
@@ -603,63 +439,69 @@ cap <- sprintf("Reported productive vocabulary acquisition (CDI) over time. Colo
 
 ```
 
-
 ## Effect of siblings on infants' input
 
-Having established that infants' productive vocabulary varied as a function of how many siblings they had, we turn to our input measures to test whether input varied by a child's sibling status. To keep relatively similar Ns across groups we used the 0 vs. 1 vs. 2+ siblings division. We ran the same analyses with discrete sibling number as a fixed effect; reported model outcomes hold for object presence, but not for overall household input. See Supplementary Data. 
+Having established that infants' productive vocabulary varied as a function of how many siblings they had across two of our three sibling measures, we turn to our input measures to test whether input varied by a child's sibling status. To keep relatively similar Ns across groups we used the 0 vs. 1 vs. 2+ siblings division, with the one outlier from above included back into the analysis given that input and vocabulary are not tested in the same model. We ran the same analyses with discrete sibling number as a fixed effect; reported model outcomes hold for object presence, but not for overall household input. See Supplementary Data. 
 <!-- eb2cl: one more sentence above saying which part didn't hold for sib num might help -->
+<!-- cl2eb: not a sentence but hopefully this is clearer -->
 
-```{r effects of age sex and mot edu on input, message=FALSE, warning=FALSE, include=FALSE}
+```{r effects of age and sex on input, message=FALSE, warning=FALSE, include=FALSE}
+
+# Parental input
 
 # age
 
-age.test.input <- lmer(Log.n ~ month + (1|subj), data = subset(speaker.type, Speaker == "MOT" & audio_video == "video"), REML=FALSE)
-age.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "MOT" & audio_video == "video"), REML=FALSE)
+age.test.input <- lmer(Log.n ~ month + (1|subj), data = subset(speaker.type, Speaker == "Family.input" & audio_video == "video"), REML=FALSE)
+age.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "Family.input" & audio_video == "video"), REML=FALSE)
 
-age.test.input_anova <- anova(age.test.input, age.test.input.null) %>% # Strong effect for age - include in all further models
-    rename("pval" = `Pr(>Chisq)`)  # no effect for age
+age.test.input_anova <- anova(age.test.input, age.test.input.null) %>% # p<.001 
+  rename("pval" = `Pr(>Chisq)`)
 
-age.test.input_df <- age.test.input_anova$Df[2]
+age.test.input_df <- age.test.input_anova$`Df`[2]
 age.test.input_chisq <- age.test.input_anova$Chisq[2]
 age.test.input_p.value <- age.test.input_anova$pval[2]
 
 # sex
 
-sex.test.input <- lmer(Log.n ~ sex + (1|subj), data = subset(speaker.type, Speaker == "MOT" & audio_video == "video"), REML=FALSE)
-sex.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "MOT" & audio_video == "video"), REML=FALSE)
+sex.test.input <- lmer(Log.n ~ sex + (1|subj), data = subset(speaker.type, Speaker == "Family.input" & audio_video == "video"), REML=FALSE)
+sex.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "Family.input" & audio_video == "video"), REML=FALSE)
 
-sex.test.input_anova <- anova(sex.test.input, sex.test.input.null) %>% # Strong effect for sex - include in all further models
-    rename("pval" = `Pr(>Chisq)`)  # no effect for sex
+sex.test.input_anova <- anova(sex.test.input, sex.test.input.null) %>% # p<.05
+  rename("pval" = `Pr(>Chisq)`)
 
-sex.test.input_df <- sex.test.input_anova$`Chi Df`[2]
+sex.test.input_df <- sex.test.input_anova$`Df`[2]
 sex.test.input_chisq <- sex.test.input_anova$Chisq[2]
 sex.test.input_p.value <- sex.test.input_anova$pval[2]
+
+# Object presence
+
+# age
+
+age.test.OP <- lmer(PC ~ month + (1|subj), data = subset(object.presence, audio_video == "video"), REML=FALSE)
+age.test.OP.null <- lmer(PC ~ (1|subj), data = subset(object.presence, audio_video == "video"), REML=FALSE)
+
+age.test.OP_anova <- anova(age.test.OP, age.test.OP.null) %>% # p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+age.test.OP_df <- age.test.OP_anova$`Df`[2]
+age.test.OP_chisq <- age.test.OP_anova$Chisq[2]
+age.test.OP_p.value <- age.test.OP_anova$pval[2]
+
+# sex
+
+sex.test.OP <- lmer(Log.n ~ sex + (1|subj), data = subset(object.presence, audio_video == "video"), REML=FALSE)
+sex.test.OP.null <- lmer(Log.n ~ (1|subj), data = subset(object.presence, audio_video == "video"), REML=FALSE)
+
+sex.test.OP_anova <- anova(sex.test.OP, sex.test.OP.null) %>% #NS
+  rename("pval" = `Pr(>Chisq)`)
+
+input.sex.age.pvals <- rbind(age.test.input_anova, sex.test.input_anova, age.test.OP_anova, sex.test.OP_anova) %>% rownames_to_column()
+
 ```
 
-```{r input correlations, message=TRUE, warning=FALSE, include=FALSE}
-
-cor.edu.input <- cor.test(
-  x = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$MOTedulevel
-  , method = "spearman"
-)
-
-cor.vocab.input <- cor.test(
-  x = subset(SiblingsData, month == 17)$Total.words
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
-  , method = "spearman"
-)
-
-cor.age.input<- cor.test(
-  x = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$age_mom
-  , method = "spearman"
-)
-
-```
-
-As with our previous analysis, we considered infants' input (maternal input only) as a function of age, sex and maternal education. Models of nouns in the input and object presence in the input were not better fit by including any of these variables alongside a random effect of infant, relative to a model with only this random effect (*p*s all>`r printp(cor.edu.input$p.value)`) on the amount of input produced by mothers. We therefore excluded all three variables from our models. 
+Models of nouns in the input were a better fit by including age and sex alongside a random effect of infant, relative to a model with only this random effect (*p*s < `r printp(subset(input.sex.age.pvals, rowname == "sex.test.input")$pval)`), while age (*p* = `r printp(subset(input.sex.age.pvals, rowname == "age.test.OP")$pval)`) but not sex (*p* = `r printp(subset(input.sex.age.pvals, rowname == "sex.test.OP")$pval)`) improved model fit for object presence. Significant variables will be added to the relevant models below. See Supplementary Data for correlations between input and maternal education/age.
 <!-- eb2cl: i find this paragraph a bit confusing, as we don't do only maternal input below. but in line with my suggestion about that we move mat ed lower down maybe you could do the same here, showing only the kind of model comparison results for age and sex that i tried to descirbe in the new second sentence?  -->
+<!-- cl2eb: again, not sure if this is what you had in mind. It's inconsistent with how we report the additional effects above, though given the 2 additional effets this seems neater -->
 
 ### Parental Input
 
@@ -736,19 +578,17 @@ cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings, 
 
 #shapiro.test(speaker.type$n) # not normal
 
-speaker.type.model <- lmerTest::lmer(Log.n ~ SibGroup + Speaker + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+speaker.type.model.null <- lmerTest::lmer(Log.n ~ month + sex + (1|subj), data=subset(speaker.type, audio_video == "video" & 
                                                                                            Speaker != "Family.input"), REML=FALSE)
-speaker.type.model.null <- lmerTest::lmer(Log.n ~ Speaker + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+speaker.type.model <- lmerTest::lmer(Log.n ~ SibGroup + month + sex + (1|subj), data=subset(speaker.type, audio_video == "video" & 
                                                                                            Speaker != "Family.input"), REML=FALSE)
 
-speaker.type_anova <- anova(speaker.type.model, speaker.type.model.null) %>%
+speaker.type_anova <- anova(speaker.type.model, speaker.type.model.null) %>% #p<.001
   rename("pval" = `Pr(>Chisq)`)
 
-summary(speaker.type.model)
-
-speaker.type_df <- speaker.type_anova$`Df`[2]
-speaker.type_chisq <- speaker.type_anova$Chisq[2]
-speaker.type_p.value <- speaker.type_anova$pval[2]
+speaker.type_df <- speaker.type_anova.speaker$`Df`[2]
+speaker.type_chisq <- speaker.type_anova.speaker$Chisq[2]
+speaker.type_p.value <- speaker.type_anova.speaker$pval[2]
 
 # post hoc comparisons
 
@@ -788,9 +628,11 @@ onetwodiff <- input.diff$meaninput[2] - input.diff$meaninput[3]
 
 ```
 
-Mothers provided the largest proportion of the infants’ overall input across the sample (`r round(PC.MOT$PCMOT)`%, M=`r mean.input.MOT$mean.input` object words, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`). Fathers accounted for an average of `r round(PC.FAT$PCFAT)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(PC.SIB$PCSIB)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-Speaker-count). We tested overall quantity of input (aggregated across mothers, fathers, and siblings) in our model, and a significant effect was found ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*`r printp(speaker.type_p.value)`). We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two
-or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`; Bonferroni-corrected p-threshhold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). On average, in any given hour-long recording, infants with no siblings heard `r round(noneonediff,0)` *fewer* object words in their input than those with one sibling, and `r round(nonetwodiff,0)` more than those with two or more siblings. Infants with one sibling heard `r round(onetwodiff,0)` more object words than those with two or more siblings.
+Mothers provided the largest proportion of the infants’ overall input across the sample (`r round(PC.MOT$PCMOT)`%, M=`r mean.input.MOT$mean.input` object words, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`). Fathers accounted for an average of `r round(PC.FAT$PCFAT)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(PC.SIB$PCSIB)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-Speaker-count). We tested overall quantity of input (aggregated across mothers, fathers, and siblings) in our model alongside age, sex and subject, as reported above, and a significant effect was found for the effect of sibling group ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*`r printp(speaker.type_p.value)`). 
+
+We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`; Bonferroni-corrected p-threshhold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). On average, in any given hour-long recording, infants with no siblings heard `r round(noneonediff,0)` *fewer* object words in their input than those with one sibling, and `r round(nonetwodiff,0)` more than those with two or more siblings. Infants with one sibling heard `r round(onetwodiff,0)` more object words than those with two or more siblings. See Table \@ref(tab:table-data-summary) for overall group differences (M and SD) in amount of input.
 <!-- eb2cl:please refer readers to each table where relevant, especially here since M(SD) is more common/interpretable than W for most readers) -->
+<!-- cl2eb: done -->
 
 ```{r Sibling presence}
 
@@ -872,95 +714,6 @@ Next, we tested how much of that input came from siblings (for infants who had t
 <!-- eb2cl: not sure i follow this para: i guess this is a 1 vs. 2+ comparison? so no diffe between those 2 groups? it seems like you want this paragraph to be follow-up tests of 0 vs. 1 and 1 vs. 2+ for mat input (but then why not also do fat input?) and 1 vs. 2+ for sib input?  -->
 <!-- cl2eb: hopefully clearer now -->
 
-<!-- ### Early-acquired words -->
-
-```{r in.cdi summary, eval=FALSE, include=FALSE}
-
-in.cdi.summary <- in.cdi %>% group_by(SibGroup, subj) %>%
-  filter(audio_video == "video") %>%
-  summarise(meanPC = mean(PC),
-         medPC = median(PC),
-         sdPC = sd(PC))
-
-#shapiro.test(in.cdi.summary$meanPC) # normal
-
-in.cdi.summary.n <- in.cdi %>% group_by(SibGroup, subj) %>%
-    filter(audio_video == "video") %>%
-  summarise(meann = mean(n),
-         medn = median(n),
-         sdn = sd(n))
-
-#shapiro.test(in.cdi.summary.n$meann) # not normal
-
-```
-
-```{r in.cdi model PC, eval=FALSE, include=FALSE}
-
-in.cdi.model <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(in.cdi, audio_video == "video"), REML=FALSE)
-in.cdi.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(in.cdi, audio_video == "video"), REML=FALSE)
-in.cdi.anova <- anova(in.cdi.model, in.cdi.model.null) %>% # p<.01
-  rename("pval" = `Pr(>Chisq)`)
-
-in.cdi_df <- in.cdi.anova$Df[2]
-in.cdi_chisq <- in.cdi.anova$Chisq[2]
-in.cdi_p.value <- in.cdi.anova$pval[2]
-
-# Posthoc tests
-
-in.cdi_wilcox_none_one <- wilcox.test(
-  x = subset(in.cdi.summary, SibGroup == "None")$meanPC
-  , y = subset(in.cdi.summary, SibGroup == "One")$meanPC
-  , paired = FALSE
-) # NS
-
-in.cdi_wilcox_one_two <- wilcox.test(
-  x = subset(in.cdi.summary, SibGroup == "2+")$meanPC
-  , y = subset(in.cdi.summary, SibGroup == "One")$meanPC
-  , paired = FALSE
-) # p=.01
-
-
-```
-
-```{r in.cdi model n, eval=FALSE, include=FALSE}
-
-# shapiro.test(in.cdi$n)
-#
-# in.cdi.model.n <- lmerTest::lmer(log(n+1) ~ SibGroup + month + (1|subj), data=in.cdi, REML=FALSE)
-# in.cdi.model.n.null <- lmerTest::lmer(log(n+1) ~ month + (1|subj), data=in.cdi, REML=FALSE)
-# in.cdi.n.anova <- anova(in.cdi.model.n, in.cdi.model.n.null) %>% # p<.01
-#   rename("pval" = `Pr(>Chisq)`)
-#
-# in.cdi.n_df <- in.cdi.n.anova$Df[2]
-# in.cdi.n_chisq <- in.cdi.n.anova$Chisq[2]
-# in.cdi.n_p.value <- in.cdi.n.anova$pval[2]
-#
-# # Posthoc tests
-#
-# in.cdi.n_wilcox_none_one <- wilcox.test(
-#   x = subset(in.cdi.summary.n, SibGroup == "None")$meann
-#   , y = subset(in.cdi.summary.n, SibGroup == "One")$meann
-#   , paired = FALSE
-# ) # NS
-#
-# in.cdi.n_wilcox_one_two <- wilcox.test(
-#   x = subset(in.cdi.summary.n, SibGroup == "2+")$meann
-#   , y = subset(in.cdi.summary.n, SibGroup == "One")$meann
-#   , paired = FALSE
-# ) # p=.01
-
-
-```
-
-
-```{r Figure-in-cdi, eval=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE, include=FALSE}
-
-par(cex = 1.2)
-Figure.in.cdi
-cap <- sprintf("Proportion of early-acquired words in the input, across sibling groups. Error bars indicate mean learnable words heard across groups, with bootstrapped 95%% CIs computed over all data. Dots indicate mean number of early-acquired words per infant, collapsed across age and jittered horizontally for visual clarity.")
-
-```
-
 ### Object presence
 
 ```{r Object.presence summary, include=FALSE}
@@ -980,6 +733,7 @@ object.presence.summary <- object.presence %>%
 
 object.presence.model <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
 object.presence.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+
 object.presence.anova <- anova(object.presence.model, object.presence.model.null) %>% # p<.01
   rename("pval" = `Pr(>Chisq)`)
 
@@ -999,12 +753,7 @@ table.object.presence.model.summary <- object.presence.model.summary$coefficient
     , "$t$" = "t value"
     , "$p$" = "Pr(>|t|)"
   ) %>%
-  # mutate(
-  #   Effect = papaja:::beautify_terms(rownames(.))
-  # ) %>%
   printnum(
-  #  digits = c(2, 2, 2, 2, 3, 0)
- #   , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
      zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
   ) %>%
   select(`$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%

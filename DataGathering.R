@@ -111,6 +111,22 @@ object.presence <- sibsdata %>%
   left_join(demographics) %>%
   mutate(Log.n = log(n+1)) 
 
+# how many instances of object presence were unclear?
+
+object.presence.unsure <- sibsdata %>%
+  filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
+  filter(object_present %in%
+           c("y", "n", "u")) %>%
+  group_by(subj, month, audio_video, object_present) %>%
+  tally() %>%
+  spread(object_present, n) %>%
+  replace(is.na(.), 0) %>%
+  ungroup() %>%
+  mutate(Total = n + y + u,
+         PCu = u/Total) %>%
+  filter(audio_video == "video") %>%
+  summarise(totalu = sum(u),
+            meanu = (mean(PCu))*100)
 
 ## Speaker type
 
