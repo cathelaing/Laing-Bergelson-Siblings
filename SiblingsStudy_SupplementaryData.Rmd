@@ -2,7 +2,9 @@
 title: "SiblingsStudy_SupplementaryData"
 author: "Catherine Laing & Elika Bergelson"
 date: "13/02/2020"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include = FALSE}
@@ -27,6 +29,8 @@ cor.age <- cor.test(
   , method = "spearman"
 )
 
+cor.age
+
 # Maternal education and number of siblings
 
 cor.edu <- cor.test(
@@ -34,6 +38,8 @@ cor.edu <- cor.test(
   , y = subset(SiblingsData, month == 18)$MOTedulevel
   , method = "spearman"
 )
+
+cor.edu
 
 # Maternal education and infant vocabulary at 18 months
 
@@ -43,6 +49,8 @@ cor.edu.vocab <- cor.test(
   , method = "spearman"
 )
 
+cor.edu.vocab
+
 # Maternal age and infant vocabulary at 18 months
 
 cor.age.vocab <- cor.test(
@@ -50,6 +58,8 @@ cor.age.vocab <- cor.test(
   , y = subset(SiblingsData, month == 18)$age_mom
   , method = "spearman"
 )
+
+cor.age.vocab
 
 ```
 
@@ -64,6 +74,8 @@ cor.edu.input <- cor.test(
   , method = "spearman"
 )
 
+cor.edu.input
+
 # Maternal input and child vocabulary
 
 cor.vocab.input <- cor.test(
@@ -72,6 +84,8 @@ cor.vocab.input <- cor.test(
   , method = "spearman"
 )
 
+cor.vocab.input
+
 # Maternal age and child vocabulary
 
 cor.age.input<- cor.test(
@@ -79,6 +93,8 @@ cor.age.input<- cor.test(
   , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$age_mom
   , method = "spearman"
 )
+
+cor.age.input
 
 ```
 
@@ -103,17 +119,18 @@ speaker.type.mean_audio <- speaker.type %>%
   mutate(MeanN = mean(n)) %>% 
   filter(month == 17) 
 
-speaker.type_wilcox_none_one_audio <- wilcox.test(
+wilcox.test(
   x = subset(speaker.type.mean_audio, SibGroup == "None" & audio_video == "audio")$MeanN
   , y = subset(speaker.type.mean_audio, SibGroup == "One"  & audio_video == "audio")$MeanN
   , paired = FALSE
-) # NS
+)
 
-speaker.type_wilcox_one_two_audio <- wilcox.test(
+wilcox.test(
   x = subset(speaker.type.mean_audio, SibGroup == "2+" & audio_video == "audio")$MeanN
   , y = subset(speaker.type.mean_audio, SibGroup == "One" & audio_video == "audio")$MeanN
   , paired = FALSE
-) # p=.02
+)
+
 
 ```
 
@@ -190,153 +207,6 @@ wilcox.test(
 
 ```
 
-# Running all analyses with one twin removed
-
-``` {r filter data}
-
-SiblingsData_twin <- SiblingsData %>% filter(!subj %in% c(351, 794) & !month %in% c("06", "07", "08", "09"))
-CDI_twin <- CDI %>% filter(!subj %in% c(424, 351, 794) )
-speaker.type_twin <- speaker.type %>% filter(!subj %in% c(351, 794) & !month %in% c("06", "07", "08", "09"))
-object.presence_twin <- object.presence %>% filter(!subj %in% c(351, 794) & !month %in% c("06", "07", "08", "09"))
-
-```
-
-
-```{r Overall vocab}
-
-# SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-
-sibgroup.model_twin <- lmerTest::lmer(Log.Totalwords ~ SibGroup + month + (1|subj), data = SiblingsData_twin, REML=FALSE)
-sibgroup.model.null_twin <- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data = SiblingsData_twin, REML=FALSE)
-anova(sibgroup.model_twin, sibgroup.model.null_twin) %>%  # p<.05
-  rename("pval" = `Pr(>Chisq)`)
-
-```
-
-### Parental Input
-
-```{r speaker.type model twin, message=FALSE, warning=FALSE}
-
-#shapiro.test(speaker.type$n) # not normal
-
-speaker.type.model_twin <- lmerTest::lmer(Log.n ~ SibGroup + Speaker + (1|subj), data=subset(speaker.type_twin, audio_video == "video"), REML=FALSE)
-speaker.type.model.null_twin <- lmerTest::lmer(Log.n ~ Speaker + (1|subj), data=subset(speaker.type_twin, audio_video == "video"), REML=FALSE)
-
-anova(speaker.type.model_twin, speaker.type.model.null_twin) %>%
-  rename("pval" = `Pr(>Chisq)`) # p<.01
-
-# post hoc comparisons
-
-speaker.type.mean_twin <- speaker.type_twin %>% 
-  filter(audio_video == "video" & Speaker == "Family.input") %>%
-  group_by(subj) %>% 
-  mutate(MeanN = mean(n)) %>%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.mean_twin, SibGroup == "None" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.mean_twin, SibGroup == "One"  & audio_video == "video")$MeanN
-  , paired = FALSE
-)  # NS
-
-wilcox.test(
-  x = subset(speaker.type.mean_twin, SibGroup == "2+" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.mean_twin, SibGroup == "One" & audio_video == "video")$MeanN
-  , paired = FALSE
-)  # p < .001
-
-```
-
-```{r Sibling input twin, message=FALSE, warning=FALSE}
-
-# Difference in amount of input from siblings
-
-speaker.type.SIB_twin <- speaker.type_twin %>% group_by(subj) %>% 
-  filter(Speaker == "SIBLING" & audio_video == "video") %>%
-  mutate(MeanN = mean(n),
-         TotalN = sum(n)) %>%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.SIB_twin, SibGroup == "2+" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.SIB_twin, SibGroup == "One" & audio_video == "video")$MeanN
-  , paired = FALSE
-) # NS
-
-# Difference in amount of input from mothers
-
-speaker.type.MOT_twin <- speaker.type_twin %>% group_by(subj) %>% 
-  filter(Speaker == "MOT" & audio_video == "video") %>%
-  mutate(MeanN = mean(n))  %>%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.MOT_twin, SibGroup == "None" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.MOT_twin, SibGroup == "One" & audio_video == "video")$MeanN
-  , paired = FALSE
-) # NS
-
-wilcox.test(
-  x = subset(speaker.type.MOT_twin, SibGroup == "2+" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.MOT_twin, SibGroup == "One" & audio_video == "video")$MeanN
-  , paired = FALSE
-) # p<.01
-
-# Difference in amount of input from fathers
-
-speaker.type.FAT_twin <- speaker.type_twin %>% group_by(subj) %>% 
-  filter(Speaker == "FAT" & audio_video == "video") %>%
-  mutate(MeanN = mean(n))  %>%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.FAT_twin, SibGroup == "None" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.FAT_twin, SibGroup == "One" & audio_video == "video")$MeanN
-  , paired = FALSE
-) # NS
-
-wilcox.test(
-  x = subset(speaker.type.FAT_twin, SibGroup == "2+" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.FAT_twin, SibGroup == "One" & audio_video == "video")$MeanN
-  , paired = FALSE
-) # NS
-
-
-```
-
-### Object presence
-
-```{r object.presence model twin}
-
-object.presence.model_twin <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence_twin,  audio_video == "video"), REML=FALSE)
-object.presence.model.null_twin <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence_twin,  audio_video == "video"), REML=FALSE)
-anova(object.presence.model_twin, object.presence.model.null_twin) # p<.001
-
-# Posthoc tests
-
-
-object.presence.summary_twin <- object.presence_twin %>%
-  filter(audio_video == "video") %>%
-  group_by(subj, SibGroup) %>%
-  summarise(mean.object = mean(PC),
-            sd.object = sd(PC),
-            med.object = median(PC))
-
-wilcox.test(
-  x = subset(object.presence.summary_twin, SibGroup == "None")$mean.object
-  , y = subset(object.presence.summary_twin, SibGroup == "One")$mean.object
-  , paired = FALSE)
- # p<.001
-
-wilcox.test(
-  x = subset(object.presence.summary_twin, SibGroup == "2+")$mean.object
-  , y = subset(object.presence.summary_twin, SibGroup == "One")$mean.object
-  , paired = FALSE
-) # p<.05
-
-
-```
-
 # Discrete sibling  number
 
 
@@ -356,81 +226,13 @@ anova(sibnumber.model, sibnumber.model.null) # significant
 
 ```{r speaker.type model discrete sibs, message=FALSE, warning=FALSE}
 
-speaker.type.model_siblings <- lmerTest::lmer(Log.n ~ Siblings6 + Speaker + (1|subj), 
+speaker.type.model_siblings <- lmerTest::lmer(Log.n ~ Siblings6 + month + sex + (1|subj), 
                                               data=subset(speaker.type, audio_video == "video"), REML=FALSE)
 
-speaker.type.model.null_siblings <- lmerTest::lmer(Log.n ~ Speaker + (1|subj), 
+speaker.type.model.null_siblings <- lmerTest::lmer(Log.n ~ month + sex + (1|subj), 
                                                    data=subset(speaker.type, audio_video == "video"), REML=FALSE)
 
 anova(speaker.type.model_siblings, speaker.type.model.null_siblings) # ns
-
-```
-
-```{r Sibling input discrete sibs, message=FALSE, warning=FALSE}
-
-# Difference in amount of input from siblings
-
-speaker.type.SIB <- speaker.type %>% group_by(subj) %>% 
-  filter(Speaker == "SIBLING" & audio_video == "video") %>%
-  mutate(MeanN = mean(n),
-         TotalN = sum(n)) %>%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.SIB, Siblings6 == "0")$MeanN
-  , y = subset(speaker.type.SIB, Siblings6 == "1")$MeanN
-  , paired = FALSE
-) # p<.001
-
-wilcox.test(
-  x = subset(speaker.type.SIB, Siblings6 == "2")$MeanN
-  , y = subset(speaker.type.SIB, Siblings6 == "1")$MeanN
-  , paired = FALSE
-) # NS
-
-wilcox.test(
-  x = subset(speaker.type.SIB, Siblings6 == "2")$MeanN
-  , y = subset(speaker.type.SIB, Siblings6 == "3")$MeanN
-  , paired = FALSE
-) # NS
-
-wilcox.test(
-  x = subset(speaker.type.SIB, Siblings6 == "3")$MeanN
-  , y = subset(speaker.type.SIB, Siblings6 == "4")$MeanN
-  , paired = FALSE
-) # NS
-
-# Difference in amount of input from mothers
-
-speaker.type.MOT <- speaker.type %>% group_by(subj) %>% 
-  filter(Speaker == "MOT" & audio_video == "video") %>%
-  mutate(MeanN = mean(n))  %>%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.MOT, Siblings6 == "0")$MeanN
-  , y = subset(speaker.type.MOT, Siblings6 == "1")$MeanN
-  , paired = FALSE
-) # NS
-
-wilcox.test(
-  x = subset(speaker.type.MOT, Siblings6 == "2")$MeanN
-  , y = subset(speaker.type.MOT, Siblings6 == "1")$MeanN
-  , paired = FALSE
-) # p<.01
-
-wilcox.test(
-  x = subset(speaker.type.MOT, Siblings6 == "2")$MeanN
-  , y = subset(speaker.type.MOT, Siblings6 == "3")$MeanN
-  , paired = FALSE
-) # NS
-
-wilcox.test(
-  x = subset(speaker.type.MOT, Siblings6 == "3")$MeanN
-  , y = subset(speaker.type.MOT, Siblings6 == "4")$MeanN
-  , paired = FALSE
-) # NS
-
 
 ```
 

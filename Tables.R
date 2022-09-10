@@ -49,7 +49,7 @@ table.data.summary.object <-
   group_by(SibGroup) %>%
   summarise(mean = mean(PC),
             sd = sd(PC)) %>%
-  mutate(Variable = "% object presence in input") %>%
+  mutate(Variable = "% object presence in input, 10-17 months") %>%
   select(Variable, SibGroup, mean, sd)
 
 table.data.summary.mean <- rbind(table.data.summary.sibgroup, table.data.summary.speaker, table.data.summary.object) %>% 

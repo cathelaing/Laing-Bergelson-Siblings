@@ -369,6 +369,81 @@ pre code {
 </div>
 
 
+<div id="correlations-with-maternal-factors" class="section level2">
+<h2>Correlations with maternal factors</h2>
+<pre class="r"><code># Maternal age and number of siblings
+
+cor.age &lt;- cor.test(
+  x = subset(SiblingsData, month == 18)$Siblings18
+  , y = subset(SiblingsData, month == 18)$age_mom
+  , method = &quot;spearman&quot;
+)
+
+cor.age</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  subset(SiblingsData, month == 18)$Siblings18 and subset(SiblingsData, month == 18)$age_mom
+## S = 10295, p-value = 0.07133
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.2745206</code></pre>
+<pre class="r"><code># Maternal education and number of siblings
+
+cor.edu &lt;- cor.test(
+  x = subset(SiblingsData, month == 18)$Siblings18
+  , y = subset(SiblingsData, month == 18)$MOTedulevel
+  , method = &quot;spearman&quot;
+)
+
+cor.edu</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  subset(SiblingsData, month == 18)$Siblings18 and subset(SiblingsData, month == 18)$MOTedulevel
+## S = 14246, p-value = 0.9796
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##          rho 
+## -0.003968169</code></pre>
+<pre class="r"><code># Maternal education and infant vocabulary at 18 months
+
+cor.edu.vocab &lt;- cor.test(
+  x = subset(SiblingsData, month == 18)$Total.words
+  , y = subset(SiblingsData, month == 18)$MOTedulevel
+  , method = &quot;spearman&quot;
+)
+
+cor.edu.vocab</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  subset(SiblingsData, month == 18)$Total.words and subset(SiblingsData, month == 18)$MOTedulevel
+## S = 5617.2, p-value = 0.1019
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.2770675</code></pre>
+<pre class="r"><code># Maternal age and infant vocabulary at 18 months
+
+cor.age.vocab &lt;- cor.test(
+  x = subset(SiblingsData, month == 18)$Total.words
+  , y = subset(SiblingsData, month == 18)$age_mom
+  , method = &quot;spearman&quot;
+)
+
+cor.age.vocab</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  subset(SiblingsData, month == 18)$Total.words and subset(SiblingsData, month == 18)$age_mom
+## S = 8183.7, p-value = 0.7578
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##         rho 
+## -0.05323808</code></pre>
+</div>
 <div id="effect-of-siblings-on-infants-input---audio-recordings" class="section level2">
 <h2>Effect of siblings on infants’ input - audio recordings</h2>
 <div id="parental-input" class="section level3">
@@ -399,17 +474,28 @@ anova(speaker.type.model_audio, speaker.type.model.null_audio) # p&lt;.001</code
   mutate(MeanN = mean(n)) %&gt;% 
   filter(month == 17) 
 
-speaker.type_wilcox_none_one_audio &lt;- wilcox.test(
+wilcox.test(
   x = subset(speaker.type.mean_audio, SibGroup == &quot;None&quot; &amp; audio_video == &quot;audio&quot;)$MeanN
   , y = subset(speaker.type.mean_audio, SibGroup == &quot;One&quot;  &amp; audio_video == &quot;audio&quot;)$MeanN
   , paired = FALSE
-) # NS
-
-speaker.type_wilcox_one_two_audio &lt;- wilcox.test(
+)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum exact test
+## 
+## data:  subset(speaker.type.mean_audio, SibGroup == &quot;None&quot; &amp; audio_video == &quot;audio&quot;)$MeanN and subset(speaker.type.mean_audio, SibGroup == &quot;One&quot; &amp; audio_video == &quot;audio&quot;)$MeanN
+## W = 123, p-value = 0.4339
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+<pre class="r"><code>wilcox.test(
   x = subset(speaker.type.mean_audio, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;audio&quot;)$MeanN
   , y = subset(speaker.type.mean_audio, SibGroup == &quot;One&quot; &amp; audio_video == &quot;audio&quot;)$MeanN
   , paired = FALSE
-) # p=.02</code></pre>
+)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum exact test
+## 
+## data:  subset(speaker.type.mean_audio, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;audio&quot;)$MeanN and subset(speaker.type.mean_audio, SibGroup == &quot;One&quot; &amp; audio_video == &quot;audio&quot;)$MeanN
+## W = 26, p-value = 0.01913
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
 <pre class="r"><code># Difference in amount of input from siblings
 
 speaker.type.SIB_audio &lt;- speaker.type %&gt;% group_by(subj) %&gt;% 
@@ -467,8 +553,7 @@ wilcox.test(
   summarise(mean.object = mean(PC),
             sd.object = sd(PC),
             med.object = median(PC))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;subj&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;subj&#39;. You can override using the `.groups` argument.</code></pre>
 <pre class="r"><code>object.presence.model_audio &lt;- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence, audio_video == &quot;audio&quot;), REML=FALSE)
 object.presence.model.null_audio &lt;- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence, audio_video == &quot;audio&quot;), REML=FALSE)
 anova(object.presence.model_audio, object.presence.model.null_audio) # p&lt;.001</code></pre>
@@ -477,11 +562,11 @@ anova(object.presence.model_audio, object.presence.model.null_audio) # p&lt;.001
 ## object.presence.model.null_audio: PC ~ month + (1 | subj)
 ## object.presence.model_audio: PC ~ SibGroup + month + (1 | subj)
 ##                                  npar     AIC     BIC logLik deviance  Chisq Df
-## object.presence.model.null_audio   14 -516.35 -456.64 272.18  -544.35          
-## object.presence.model_audio        16 -536.01 -467.77 284.00  -568.01 23.656  2
+## object.presence.model.null_audio    4 -520.52 -503.46 264.26  -528.52          
+## object.presence.model_audio         6 -540.15 -514.56 276.07  -552.15 23.628  2
 ##                                  Pr(&gt;Chisq)    
 ## object.presence.model.null_audio               
-## object.presence.model_audio       7.299e-06 ***
+## object.presence.model_audio       7.402e-06 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code># Posthoc tests
@@ -510,205 +595,6 @@ wilcox.test(
 ## alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
-<div id="running-all-analyses-with-one-twin-removed" class="section level1">
-<h1>Running all analyses with one twin removed</h1>
-<pre class="r"><code>SiblingsData_twin &lt;- SiblingsData %&gt;% filter(!subj %in% c(351, 794) &amp; !month %in% c(&quot;06&quot;, &quot;07&quot;, &quot;08&quot;, &quot;09&quot;))
-CDI_twin &lt;- CDI %&gt;% filter(!subj %in% c(424, 351, 794) )
-speaker.type_twin &lt;- speaker.type %&gt;% filter(!subj %in% c(351, 794) &amp; !month %in% c(&quot;06&quot;, &quot;07&quot;, &quot;08&quot;, &quot;09&quot;))
-object.presence_twin &lt;- object.presence %&gt;% filter(!subj %in% c(351, 794) &amp; !month %in% c(&quot;06&quot;, &quot;07&quot;, &quot;08&quot;, &quot;09&quot;))</code></pre>
-<pre class="r"><code># SibGroup: Does having more vs. fewer vs. no siblings affect language development over time?
-
-sibgroup.model_twin &lt;- lmerTest::lmer(Log.Totalwords ~ SibGroup + month + (1|subj), data = SiblingsData_twin, REML=FALSE)
-sibgroup.model.null_twin &lt;- lmerTest::lmer(Log.Totalwords ~ month + (1|subj), data = SiblingsData_twin, REML=FALSE)
-anova(sibgroup.model_twin, sibgroup.model.null_twin) %&gt;%  # p&lt;.05
-  rename(&quot;pval&quot; = `Pr(&gt;Chisq)`)</code></pre>
-<pre><code>## Data: SiblingsData_twin
-## Models:
-## sibgroup.model.null_twin: Log.Totalwords ~ month + (1 | subj)
-## sibgroup.model_twin: Log.Totalwords ~ SibGroup + month + (1 | subj)
-##                          npar    AIC    BIC  logLik deviance  Chisq Df     pval
-## sibgroup.model.null_twin   11 843.37 885.99 -410.69   821.37                   
-## sibgroup.model_twin        13 839.37 889.75 -406.69   813.37 7.9976  2 0.018338</code></pre>
-<div id="parental-input-1" class="section level3">
-<h3>Parental Input</h3>
-<pre class="r"><code>#shapiro.test(speaker.type$n) # not normal
-
-speaker.type.model_twin &lt;- lmerTest::lmer(Log.n ~ SibGroup + Speaker + (1|subj), data=subset(speaker.type_twin, audio_video == &quot;video&quot;), REML=FALSE)
-speaker.type.model.null_twin &lt;- lmerTest::lmer(Log.n ~ Speaker + (1|subj), data=subset(speaker.type_twin, audio_video == &quot;video&quot;), REML=FALSE)
-
-anova(speaker.type.model_twin, speaker.type.model.null_twin) %&gt;%
-  rename(&quot;pval&quot; = `Pr(&gt;Chisq)`) # p&lt;.01</code></pre>
-<pre><code>## Data: subset(speaker.type_twin, audio_video == &quot;video&quot;)
-## Models:
-## speaker.type.model.null_twin: Log.n ~ Speaker + (1 | subj)
-## speaker.type.model_twin: Log.n ~ SibGroup + Speaker + (1 | subj)
-##                              npar    AIC    BIC  logLik deviance  Chisq Df
-## speaker.type.model.null_twin    6 5026.0 5057.2 -2507.0   5014.0          
-## speaker.type.model_twin         8 5018.7 5060.4 -2501.4   5002.7 11.267  2
-##                                   pval
-## speaker.type.model.null_twin          
-## speaker.type.model_twin      0.0035757</code></pre>
-<pre class="r"><code># post hoc comparisons
-
-speaker.type.mean_twin &lt;- speaker.type_twin %&gt;% 
-  filter(audio_video == &quot;video&quot; &amp; Speaker == &quot;Family.input&quot;) %&gt;%
-  group_by(subj) %&gt;% 
-  mutate(MeanN = mean(n)) %&gt;%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.mean_twin, SibGroup == &quot;None&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , y = subset(speaker.type.mean_twin, SibGroup == &quot;One&quot;  &amp; audio_video == &quot;video&quot;)$MeanN
-  , paired = FALSE
-)  # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.mean_twin, SibGroup == &quot;None&quot; &amp; audio_video == &quot;video&quot;)$MeanN and subset(speaker.type.mean_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-## W = 118, p-value = 0.7822
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.mean_twin, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , y = subset(speaker.type.mean_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , paired = FALSE
-)  # p &lt; .001</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.mean_twin, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;video&quot;)$MeanN and subset(speaker.type.mean_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-## W = 7, p-value = 0.0003062
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code># Difference in amount of input from siblings
-
-speaker.type.SIB_twin &lt;- speaker.type_twin %&gt;% group_by(subj) %&gt;% 
-  filter(Speaker == &quot;SIBLING&quot; &amp; audio_video == &quot;video&quot;) %&gt;%
-  mutate(MeanN = mean(n),
-         TotalN = sum(n)) %&gt;%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.SIB_twin, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , y = subset(speaker.type.SIB_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.SIB_twin, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;video&quot;)$MeanN and subset(speaker.type.SIB_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-## W = 31, p-value = 0.1111
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code># Difference in amount of input from mothers
-
-speaker.type.MOT_twin &lt;- speaker.type_twin %&gt;% group_by(subj) %&gt;% 
-  filter(Speaker == &quot;MOT&quot; &amp; audio_video == &quot;video&quot;) %&gt;%
-  mutate(MeanN = mean(n))  %&gt;%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.MOT_twin, SibGroup == &quot;None&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , y = subset(speaker.type.MOT_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.MOT_twin, SibGroup == &quot;None&quot; &amp; audio_video == &quot;video&quot;)$MeanN and subset(speaker.type.MOT_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-## W = 124, p-value = 0.9559
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.MOT_twin, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , y = subset(speaker.type.MOT_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , paired = FALSE
-) # p&lt;.01</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.MOT_twin, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;video&quot;)$MeanN and subset(speaker.type.MOT_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-## W = 15, p-value = 0.0043
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code># Difference in amount of input from fathers
-
-speaker.type.FAT_twin &lt;- speaker.type_twin %&gt;% group_by(subj) %&gt;% 
-  filter(Speaker == &quot;FAT&quot; &amp; audio_video == &quot;video&quot;) %&gt;%
-  mutate(MeanN = mean(n))  %&gt;%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.FAT_twin, SibGroup == &quot;None&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , y = subset(speaker.type.FAT_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum test with continuity correction
-## 
-## data:  subset(speaker.type.FAT_twin, SibGroup == &quot;None&quot; &amp; audio_video == &quot;video&quot;)$MeanN and subset(speaker.type.FAT_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-## W = 143.5, p-value = 0.5234
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.FAT_twin, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , y = subset(speaker.type.FAT_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum test with continuity correction
-## 
-## data:  subset(speaker.type.FAT_twin, SibGroup == &quot;2+&quot; &amp; audio_video == &quot;video&quot;)$MeanN and subset(speaker.type.FAT_twin, SibGroup == &quot;One&quot; &amp; audio_video == &quot;video&quot;)$MeanN
-## W = 41.5, p-value = 0.3883
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-</div>
-<div id="object-presence-1" class="section level3">
-<h3>Object presence</h3>
-<pre class="r"><code>object.presence.model_twin &lt;- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence_twin,  audio_video == &quot;video&quot;), REML=FALSE)
-object.presence.model.null_twin &lt;- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence_twin,  audio_video == &quot;video&quot;), REML=FALSE)
-anova(object.presence.model_twin, object.presence.model.null_twin) # p&lt;.001</code></pre>
-<pre><code>## Data: subset(object.presence_twin, audio_video == &quot;video&quot;)
-## Models:
-## object.presence.model.null_twin: PC ~ month + (1 | subj)
-## object.presence.model_twin: PC ~ SibGroup + month + (1 | subj)
-##                                 npar     AIC     BIC logLik deviance  Chisq Df
-## object.presence.model.null_twin   10 -325.33 -287.55 172.66  -345.33          
-## object.presence.model_twin        12 -346.76 -301.43 185.38  -370.76 25.436  2
-##                                 Pr(&gt;Chisq)    
-## object.presence.model.null_twin               
-## object.presence.model_twin       2.997e-06 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code># Posthoc tests
-
-
-object.presence.summary_twin &lt;- object.presence_twin %&gt;%
-  filter(audio_video == &quot;video&quot;) %&gt;%
-  group_by(subj, SibGroup) %&gt;%
-  summarise(mean.object = mean(PC),
-            sd.object = sd(PC),
-            med.object = median(PC))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;subj&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(object.presence.summary_twin, SibGroup == &quot;None&quot;)$mean.object
-  , y = subset(object.presence.summary_twin, SibGroup == &quot;One&quot;)$mean.object
-  , paired = FALSE)</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(object.presence.summary_twin, SibGroup == &quot;None&quot;)$mean.object and subset(object.presence.summary_twin, SibGroup == &quot;One&quot;)$mean.object
-## W = 214, p-value = 0.0005815
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code> # p&lt;.001
-
-wilcox.test(
-  x = subset(object.presence.summary_twin, SibGroup == &quot;2+&quot;)$mean.object
-  , y = subset(object.presence.summary_twin, SibGroup == &quot;One&quot;)$mean.object
-  , paired = FALSE
-) # p&lt;.05</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(object.presence.summary_twin, SibGroup == &quot;2+&quot;)$mean.object and subset(object.presence.summary_twin, SibGroup == &quot;One&quot;)$mean.object
-## W = 20, p-value = 0.01477
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-</div>
-</div>
 <div id="discrete-sibling-number" class="section level1">
 <h1>Discrete sibling number</h1>
 <pre class="r"><code># Sibling number: Does number of siblings affect language development over time?
@@ -720,136 +606,33 @@ anova(sibnumber.model, sibnumber.model.null) # significant</code></pre>
 ## Models:
 ## sibnumber.model.null: Log.Totalwords ~ month + (1 | subj)
 ## sibnumber.model: Log.Totalwords ~ Siblings6 + month + (1 | subj)
-##                      npar    AIC    BIC  logLik deviance Chisq Df Pr(&gt;Chisq)  
-## sibnumber.model.null   15 1298.5 1363.0 -634.26   1268.5                      
-## sibnumber.model        16 1295.8 1364.7 -631.92   1263.8 4.669  1    0.03071 *
+##                      npar    AIC    BIC  logLik deviance  Chisq Df Pr(&gt;Chisq)  
+## sibnumber.model.null    4 1316.9 1334.1 -654.43   1308.9                       
+## sibnumber.model         5 1314.2 1335.7 -652.08   1304.2 4.7076  1    0.03003 *
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code># summary(sibnumber.model) # for each increasing sibling, infants know 30% fewer words at 18m</code></pre>
-<div id="parental-input-2" class="section level3">
+<div id="parental-input-1" class="section level3">
 <h3>Parental Input</h3>
-<pre class="r"><code>speaker.type.model_siblings &lt;- lmerTest::lmer(Log.n ~ Siblings6 + Speaker + (1|subj), 
+<pre class="r"><code>speaker.type.model_siblings &lt;- lmerTest::lmer(Log.n ~ Siblings6 + month + sex + (1|subj), 
                                               data=subset(speaker.type, audio_video == &quot;video&quot;), REML=FALSE)
 
-speaker.type.model.null_siblings &lt;- lmerTest::lmer(Log.n ~ Speaker + (1|subj), 
+speaker.type.model.null_siblings &lt;- lmerTest::lmer(Log.n ~ month + sex + (1|subj), 
                                                    data=subset(speaker.type, audio_video == &quot;video&quot;), REML=FALSE)
 
 anova(speaker.type.model_siblings, speaker.type.model.null_siblings) # ns</code></pre>
 <pre><code>## Data: subset(speaker.type, audio_video == &quot;video&quot;)
 ## Models:
-## speaker.type.model.null_siblings: Log.n ~ Speaker + (1 | subj)
-## speaker.type.model_siblings: Log.n ~ Siblings6 + Speaker + (1 | subj)
+## speaker.type.model.null_siblings: Log.n ~ month + sex + (1 | subj)
+## speaker.type.model_siblings: Log.n ~ Siblings6 + month + sex + (1 | subj)
 ##                                  npar    AIC    BIC  logLik deviance  Chisq Df
-## speaker.type.model.null_siblings    6 7706.8 7740.7 -3847.4   7694.8          
-## speaker.type.model_siblings         7 7708.1 7747.6 -3847.0   7694.1 0.7281  1
+## speaker.type.model.null_siblings    5 9482.5 9510.7 -4736.2   9472.5          
+## speaker.type.model_siblings         6 9483.7 9517.6 -4735.8   9471.7 0.7926  1
 ##                                  Pr(&gt;Chisq)
 ## speaker.type.model.null_siblings           
-## speaker.type.model_siblings          0.3935</code></pre>
-<pre class="r"><code># Difference in amount of input from siblings
-
-speaker.type.SIB &lt;- speaker.type %&gt;% group_by(subj) %&gt;% 
-  filter(Speaker == &quot;SIBLING&quot; &amp; audio_video == &quot;video&quot;) %&gt;%
-  mutate(MeanN = mean(n),
-         TotalN = sum(n)) %&gt;%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.SIB, Siblings6 == &quot;0&quot;)$MeanN
-  , y = subset(speaker.type.SIB, Siblings6 == &quot;1&quot;)$MeanN
-  , paired = FALSE
-) # p&lt;.001</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum test with continuity correction
-## 
-## data:  subset(speaker.type.SIB, Siblings6 == &quot;0&quot;)$MeanN and subset(speaker.type.SIB, Siblings6 == &quot;1&quot;)$MeanN
-## W = 0, p-value = 2.54e-08
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.SIB, Siblings6 == &quot;2&quot;)$MeanN
-  , y = subset(speaker.type.SIB, Siblings6 == &quot;1&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum test with continuity correction
-## 
-## data:  subset(speaker.type.SIB, Siblings6 == &quot;2&quot;)$MeanN and subset(speaker.type.SIB, Siblings6 == &quot;1&quot;)$MeanN
-## W = 21, p-value = 0.2112
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.SIB, Siblings6 == &quot;2&quot;)$MeanN
-  , y = subset(speaker.type.SIB, Siblings6 == &quot;3&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.SIB, Siblings6 == &quot;2&quot;)$MeanN and subset(speaker.type.SIB, Siblings6 == &quot;3&quot;)$MeanN
-## W = 2, p-value = 0.381
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.SIB, Siblings6 == &quot;3&quot;)$MeanN
-  , y = subset(speaker.type.SIB, Siblings6 == &quot;4&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.SIB, Siblings6 == &quot;3&quot;)$MeanN and subset(speaker.type.SIB, Siblings6 == &quot;4&quot;)$MeanN
-## W = 2, p-value = 1
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code># Difference in amount of input from mothers
-
-speaker.type.MOT &lt;- speaker.type %&gt;% group_by(subj) %&gt;% 
-  filter(Speaker == &quot;MOT&quot; &amp; audio_video == &quot;video&quot;) %&gt;%
-  mutate(MeanN = mean(n))  %&gt;%
-  filter(month == 17)
-
-wilcox.test(
-  x = subset(speaker.type.MOT, Siblings6 == &quot;0&quot;)$MeanN
-  , y = subset(speaker.type.MOT, Siblings6 == &quot;1&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.MOT, Siblings6 == &quot;0&quot;)$MeanN and subset(speaker.type.MOT, Siblings6 == &quot;1&quot;)$MeanN
-## W = 130, p-value = 0.5832
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.MOT, Siblings6 == &quot;2&quot;)$MeanN
-  , y = subset(speaker.type.MOT, Siblings6 == &quot;1&quot;)$MeanN
-  , paired = FALSE
-) # p&lt;.01</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.MOT, Siblings6 == &quot;2&quot;)$MeanN and subset(speaker.type.MOT, Siblings6 == &quot;1&quot;)$MeanN
-## W = 8, p-value = 0.01032
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.MOT, Siblings6 == &quot;2&quot;)$MeanN
-  , y = subset(speaker.type.MOT, Siblings6 == &quot;3&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.MOT, Siblings6 == &quot;2&quot;)$MeanN and subset(speaker.type.MOT, Siblings6 == &quot;3&quot;)$MeanN
-## W = 6, p-value = 0.8571
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<pre class="r"><code>wilcox.test(
-  x = subset(speaker.type.MOT, Siblings6 == &quot;3&quot;)$MeanN
-  , y = subset(speaker.type.MOT, Siblings6 == &quot;4&quot;)$MeanN
-  , paired = FALSE
-) # NS</code></pre>
-<pre><code>## 
-##  Wilcoxon rank sum exact test
-## 
-## data:  subset(speaker.type.MOT, Siblings6 == &quot;3&quot;)$MeanN and subset(speaker.type.MOT, Siblings6 == &quot;4&quot;)$MeanN
-## W = 2, p-value = 1
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
+## speaker.type.model_siblings          0.3733</code></pre>
 </div>
-<div id="object-presence-2" class="section level3">
+<div id="object-presence-1" class="section level3">
 <h3>Object presence</h3>
 <pre class="r"><code>object.presence.summary_siblings &lt;- object.presence %&gt;%
   filter(audio_video == &quot;video&quot;) %&gt;%
@@ -857,8 +640,7 @@ wilcox.test(
   summarise(mean.object = mean(PC),
             sd.object = sd(PC),
             med.object = median(PC))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;subj&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;subj&#39;. You can override using the `.groups` argument.</code></pre>
 <pre class="r"><code>object.presence.model_siblings &lt;- lmerTest::lmer(PC ~ Siblings6 + month + (1|subj), 
                                                  data=subset(object.presence, audio_video == &quot;video&quot;), REML=FALSE)
 
@@ -871,11 +653,11 @@ anova(object.presence.model_siblings, object.presence.model.null_siblings) # p&l
 ## object.presence.model.null_siblings: PC ~ month + (1 | subj)
 ## object.presence.model_siblings: PC ~ Siblings6 + month + (1 | subj)
 ##                                     npar     AIC     BIC logLik deviance  Chisq
-## object.presence.model.null_siblings   14 -468.95 -409.78 248.48  -496.95       
-## object.presence.model_siblings        15 -486.23 -422.83 258.11  -516.23 19.276
+## object.presence.model.null_siblings    4 -470.08 -453.17 239.04  -478.08       
+## object.presence.model_siblings         5 -487.34 -466.20 248.67  -497.34 19.261
 ##                                     Df Pr(&gt;Chisq)    
 ## object.presence.model.null_siblings                  
-## object.presence.model_siblings       1  1.131e-05 ***
+## object.presence.model_siblings       1   1.14e-05 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code># Posthoc tests
