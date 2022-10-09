@@ -7,7 +7,6 @@
 
 source("Demographics.R")  
 
-
 library(tidyverse)
 library(readr)
 library(feather)
@@ -19,7 +18,7 @@ library(forcats)
 
 sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
   filter(#audio_video =='video',   # Only use video data
-         speaker != 'CHI') %>%    # remove infant productions
+         !(speaker %in% c('CHI', "EFA", "EFB", "EFS", "EMM"))) %>%    # remove infant productions
   dplyr::select(
     audio_video,
     utterance_type, 
@@ -31,72 +30,78 @@ sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
   mutate(basic_level = str_to_lower(basic_level),
          speaker = factor(speaker),
          speaker = fct_collapse(speaker,
-                                "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2")),  # rename speakers
+                                "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2", "BTY", "SCU", "STY"),
+                                "AUNT" = c("AUN", "AU2"),
+                                "UNCLE" = c("UN2", "UNC"),
+                                "BABYSITTER" = c("BSE", "BSJ", "BSK", "BSS"),
+                                "FAT" = c("FTS"),
+                                "GRP" = c("GP2"),
+                                "GRM" = c("GRA", "GTY"),
+                                "MOT" = c("MBR", "MCU", "MIS", "MTY"), 
+                                "MOT+FAT" = c("MFT", "MFV"),    
+                                "COUSIN" = c("MC2")),  # rename speakers
+  
          subj = factor(subj),
          month = as.numeric(month))
 
 wordlist <- read_csv("Data/in_cdi_Wordlist.csv") # Read in CDI wordlist that matches sibsdata$basic_level with words on the CDI
 
+## Speaker type
 
-## Utterance type: What kinds of utterances occur in the infants' inputs?
-
-utterance.type.n <- sibsdata %>%
-  filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
-  filter(utterance_type %in%
-           c("d", "i", "n", "q", "r", "s", "u"))  %>% 
-    group_by(subj, month, utterance_type, audio_video) %>%
+speaker.type.all <- sibsdata %>%
+  group_by(subj, month, audio_video, speaker) %>%
   tally() %>%
-  spread(utterance_type, n) %>%
-  #spread(audio_video, n) %>%
-  ungroup() %>%
-  replace(is.na(.), 0) 
+  spread(speaker, n) %>%
+  dplyr::select(-contains("TV"), -TOY) %>%
+  replace(is.na(.), 0) %>%
+  rowwise() %>%
+  mutate(All.speakers = sum(c_across(ADM:X13))) %>%  # not including unknown speakers from audio data
+  dplyr::select(subj, month, audio_video, All.speakers)
 
-# Turn rows to columns for both N and PC, create new datasets to keep it manageable
+speaker.type.cg1 <- sibsdata %>%
+  filter((!grepl("TV", speaker)) & !(speaker %in% c("TOY", "SIBLING"))) %>%
+  group_by(subj, month, audio_video, speaker) %>%
+  tally() %>%
+  slice_max(n) %>%
+  mutate(caregiver = "CG1")
 
-utterance.type.PC <- utterance.type.n %>%
-  mutate(Total.input = (d + i + n + q + r + s + u),         # create % of each utterance type   
-         PCd = d/Total.input,                             
-         PCi = i/Total.input,
-         PCn = n/Total.input,                              
-         PCq = q/Total.input,
-         PCr = r/Total.input,
-         PCs = s/Total.input,
-         PCu = u/Total.input) %>% 
-  dplyr::select(subj, month, audio_video, PCd,PCi, PCn, PCq, PCr, PCs, PCu) %>%
-  gather(`PCd`,`PCi`, `PCn`, `PCq`, `PCr`, `PCs`, `PCu`, 
-         key = "TypePC", 
-         value = "PC") %>% 
-  dplyr::select(subj, month, audio_video, TypePC, PC) %>%  # Remove unnecessary columns 
-  mutate(TypePC = factor(TypePC),
-         TypePC = fct_recode(TypePC,
-                             "d" = "PCd",
-                             "i" = "PCi",
-                             "n" = "PCn",
-                             "q" = "PCq",
-                             "r" = "PCr",
-                             "s" = "PCs",
-                             "u" = "PCu")) %>%
-  rename(Type = TypePC) %>%
-  left_join(demographics)
+speaker.type.cg2 <- sibsdata %>%
+  filter((!grepl("TV", speaker)) & !(speaker %in% c("TOY", "SIBLING"))) %>%
+  group_by(subj, month, audio_video, speaker) %>%
+  tally() %>%
+  group_by(subj, month, audio_video) %>%
+  arrange(desc(n)) %>% 
+  slice(2) %>%
+  mutate(caregiver = "CG2")
 
-utterance.type <- utterance.type.n %>% 
-  gather(`d`,`i`, `n`, `q`, `r`, `s`, `u`, 
-         key = "Type", 
-         value = "n") %>%
-  mutate(Type = factor(Type)) %>%
-  dplyr::select(subj, month, audio_video, Type, n) %>%  
-  left_join(utterance.type.PC) %>%
-  left_join(demographics) %>%      # Combine with demographics spreadsheet
+speaker.type.sib <- sibsdata %>%
+  group_by(subj, month, audio_video, speaker) %>%
+  filter(speaker == "SIBLING") %>%
+  tally() %>%
+  mutate(caregiver = "SIB")
+
+speaker.type.n <- rbind(speaker.type.cg1, speaker.type.cg2, speaker.type.sib)
+
+speaker.type.household <- speaker.type.n %>%
+  group_by(subj, month, audio_video) %>%
+  summarise(n = sum(n)) %>%
+  mutate(caregiver = "FAMILY")
+
+
+speaker.type <- rbind(speaker.type.n, speaker.type.household) %>%
+  left_join(SiblingsData) %>%
   mutate(Log.n = log(n+1),
-         # Add a column to show which factors represent joint engagement (R, S, Q)
-         JE = ifelse((Type=='r'| Type=='s' | Type=='q'), T, F))
+         speaker = as.character(speaker),
+         speaker = ifelse(caregiver == "FAMILY", "Total.input", speaker))
 
+all.speaker.data <- speaker.type.household %>% left_join(speaker.type.all)
 
 
 ## Object presence: How much caregiver input relates to objects that are present in the infant's environment?
 
 object.presence <- sibsdata %>%
-  filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
+  left_join(speaker.type.n) %>%
+  filter(!is.na(caregiver)) %>%
   filter(object_present %in%
            c("y", "n")) %>%
   group_by(subj, month, audio_video, object_present) %>%
@@ -111,10 +116,14 @@ object.presence <- sibsdata %>%
   left_join(demographics) %>%
   mutate(Log.n = log(n+1)) 
 
+#check <- object.presence %>% group_by(subj, audio_video) %>% tally() %>% filter(audio_video == "video" & n<12) 
+# 129 has no video data in month 6 but that's not a problem because we start at month 10
+
 # how many instances of object presence were unclear?
 
 object.presence.unsure <- sibsdata %>%
-  filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
+  left_join(speaker.type.n) %>%
+  filter(!is.na(caregiver)) %>%
   filter(object_present %in%
            c("y", "n", "u")) %>%
   group_by(subj, month, audio_video, object_present) %>%
@@ -127,55 +136,6 @@ object.presence.unsure <- sibsdata %>%
   filter(audio_video == "video") %>%
   summarise(totalu = sum(u),
             meanu = (mean(PCu))*100)
-
-## Speaker type
-
-# Spread information across columns
-
-speaker.type.n <- sibsdata %>%
-  group_by(subj, month, audio_video, speaker) %>%
-  tally() %>%
-  spread(speaker, n) %>%
-  dplyr::select(-contains("TV"), -TOY) %>%
-  replace(is.na(.), 0) %>%
-  rowwise() %>%
-  mutate(All.speakers = sum(c_across(ADM:UNC))) %>%  # not including unknown speakers from audio data
-  ungroup() %>%
-  mutate(Family.input = (MOT + FAT + SIBLING)) %>%
-  dplyr::select(subj, month, audio_video, MOT, FAT, SIBLING, Family.input, All.speakers)
-  
-speaker.type <- speaker.type.n %>%
-  gather(`MOT`,`FAT`, `SIBLING`, Family.input,
-         key = "Speaker", 
-         value = "n") %>% 
-  left_join(demographics) %>%
-  mutate(Log.n = log(n+1))
-
-# CDI data: is the word the caregiver produces deemed to be 'learnable' in early acquisition (i.e. is it on the CDI)?
-
-# queries <- sibsdata %>%            # with updated basic_levels.feather I need to first go through and classify words that are not in the original wordlist doc
-#   left_join(wordlist) %>%
-#   select(-CDIform, -object) %>%
-#   filter(is.na(in_cdi) & speaker %in% c("MOT", "FAT", "SIBLING")) %>%
-#   distinct(basic_level, .keep_all = TRUE) %>%
-#   write_csv("cdi_queries_Apr22.csv")
-
-in.cdi <- sibsdata %>%            # create dataset that classifies each basic_level as matching or not matching CDI list in wordlist
-  filter(speaker %in% c("MOT", "FAT", "SIBLING"))  %>%    # Remove other speakers from data
-  left_join(wordlist) %>%
-  select(-CDIform, -object) %>%
-  group_by(subj, month, audio_video, in_cdi) %>%
-  tally() %>%
-  spread(in_cdi, n) %>%
-  replace(is.na(.), 0) %>%
-  ungroup() %>%
-  rename(n = `TRUE`,
-         False = `FALSE`) %>%
-  mutate(Total = False + n,
-         PC = n/Total,
-         Log.n = log(n+1)) %>%
-  dplyr::select(subj, month, audio_video, n, PC, Total) %>%
-  left_join(demographics)                        # Combine with demographics data
 
 
 sib.ages <- read_csv("Data/SiblingAges.csv") %>%   # Read in data showing age differences between subj and siblings

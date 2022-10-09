@@ -16,37 +16,23 @@ Figure.SibGroup <- ggplot(data = SiblingsData, mapping = aes(x=as.numeric(month)
                 aes(fill = SibGroup), color = "black", shape = 24,
                position = position_dodge(.2))
 
-Figure.speaker.count <- ggplot(subset(speaker.type, Speaker %in% c("MOT", "FAT", "SIBLING", "Family.input") & audio_video == "video"), 
-                               aes(x=Speaker, y=n, color = Speaker)) +
-  stat_summary(fun.y = mean, geom = "point", aes(group = subj), shape = 1, size = 3, position = position_jitter(.1)) +
+speaker.type2 <- speaker.type %>% 
+  filter(audio_video == "video") %>%
+  mutate(speaker = ifelse(speaker == "MT2", "MOT", speaker)) %>%
+  group_by(subj, month, speaker, SibGroup) %>%
+  summarise(mean.n = mean(n))
+
+Figure.speaker.count <- ggplot(subset(speaker.type2, speaker %in% c("MOT", "FAT", "SIBLING", "Total.input")), 
+                               aes(x=speaker, y=mean.n, color = speaker)) +
+  stat_summary(fun= mean, geom = "point", aes(group = subj), shape = 1, size = 3, position = position_jitter(.1)) +
   stat_summary(fun.data = "mean_cl_boot", colour = "red", shape = 17, size = 1) +
   facet_wrap(~SibGroup, ncol=3) +
-  scale_x_discrete(limits = c("MOT", "FAT", "SIBLING", "Family.input"), labels = c("Mother", "Father", "Sibling", "Total input")) +
+  scale_x_discrete(limits = c("MOT", "FAT", "SIBLING", "Total.input"), labels = c("Mother", "Father", "Sibling", "Total input")) +
+  ylab("Number of object words produced") +
+  xlab("Speaker") +
   theme_bw(base_size = 15) +
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 45, vjust = 0.5))
-
-Figure.reading <- ggplot(subset(utterance.type.PC, Type == "r" & audio_video == "video"), 
-                         aes(x=SibGroup, y=PC, colour = SibGroup, fill = SibGroup)) +
-  geom_violin(alpha = .3) + 
-  stat_summary(fun=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
-  stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
-  scale_colour_discrete(name="Sibling group",limits=c("None", "One", "2+"), labels=c("None", "One", "2+")) + 
-  scale_x_discrete(name=element_blank(),limits=c("None", "One", "2+")) +
-  theme_bw(base_size = 15) +
-  theme(legend.position = "none")
-
-Figure.in.cdi <- ggplot(data=subset(in.cdi, audio_video == "video"), 
-                        aes(x=SibGroup, y=PC, colour=SibGroup, fill = SibGroup)) + 
-  geom_violin(alpha = .3) + 
-  stat_summary(fun=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
-  stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
-  scale_colour_discrete(name="Sibling group",limits=c("None", "One", "2+"), labels=c("None", "One", "2+")) + 
-  scale_x_discrete(name=element_blank(),limits=c("None", "One", "2+")) + 
-  expand_limits(y=c(0, 1)) + 
-  theme_bw(base_size = 18) +
-  ylab('% early-acquired words in input') + 
-  theme(legend.position='none')
 
 
 Figure.object.presence <- ggplot(data=subset(object.presence, audio_video == "video"), 

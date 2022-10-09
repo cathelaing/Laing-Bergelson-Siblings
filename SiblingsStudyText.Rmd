@@ -147,12 +147,55 @@ low_missing <- missing_CDI %>% filter(n == min(n)) %>% tally()
 ```
 
 ### Parental report data 
-To index each child's language abilities, we draw on data from vocabulary checklists [MacArthur-Bates Communicative Development Inventory, hereafter CDI; Fenson et al., -@fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire; each month's CDI survey came pre-populated with the previous month's answers to save on reduplicated effort. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`), we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development. CDI data for production has been well validated by prior work, including work in this sample [@moore_point_2019; @frank_variability_2021]. Of the intended 13 CDIs collected for each of the 43 infants, `r total_missing` were missing across `r n_missing` infants (leaving 559 CDIs in total). `r high_missing` infants had 4 CDI data-points missing, while the majority (n = `r low_missing`) had only one missing data-point.
+To index each child's language abilities, we draw on data from vocabulary checklists [MacArthur-Bates Communicative Development Inventory, hereafter CDI, Fenson et al. -@fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire; each month's CDI survey came pre-populated with the previous month's answers to save on reduplicated effort. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`), we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development. CDI data for production has been well validated by prior work, including work in this sample [@moore_point_2019; @frank_variability_2021]. Of the intended 13 CDIs collected for each of the 43 infants, `r total_missing` were missing across `r n_missing` infants (leaving 559 CDIs in total). `r high_missing` infants had 4 CDI data-points missing, while the majority (n = `r low_missing`) had only one missing data-point.
 
+```{r caregiver 1 and 2}
+
+caregiver1 <- speaker.type %>% ungroup() %>% filter(caregiver == "CG1" & audio_video == "video") %>% summarise(total = sum(n))
+cg1mot <- speaker.type %>% ungroup() %>% 
+  filter(caregiver == "CG1" & speaker %in% c("MOT", "MT2") & audio_video == "video") %>% 
+  summarise(total = sum(n))
+cg1fat <- speaker.type %>% ungroup() %>% 
+  filter(caregiver == "CG1" & speaker == "FAT" & audio_video == "video") %>% 
+  summarise(total = sum(n))
+caregiver2 <- speaker.type %>% ungroup() %>% filter(caregiver == "CG2" & audio_video == "video") %>% summarise(total = sum(n))
+cg2mot <- speaker.type %>% ungroup() %>% 
+  filter(caregiver == "CG2" & speaker %in% c("MOT", "MT2") & audio_video == "video") %>% 
+  summarise(total = sum(n))
+cg2fat <- speaker.type %>% ungroup() %>% 
+  filter(caregiver == "CG2" & speaker == "FAT" & audio_video == "video") %>% 
+  summarise(total = sum(n))
+
+# PCCG1MOT <- cg1mot/caregiver1
+# PCCG2MOT <- cg2mot/caregiver2
+# PCCG1FAT <- cg1fat/caregiver1
+# PCCG2FAT <- cg2fat/caregiver2
+
+# speaker.type %>% filter(!(caregiver %in% c("SIB", "FAMILY")) & audio_video == "video") %>% 
+#   group_by(caregiver, speaker) %>% 
+#   tally() %>% arrange(desc(n))
+
+modal_mot <- speaker.type %>% filter(caregiver == "CG1" & (speaker %in% c("MOT", "MT2")) & audio_video == "video") %>% 
+  group_by(subj) %>%
+  tally() %>%
+  filter(n == 12) %>%
+  tally()
+
+modal_speaker <- speaker.type %>% filter(caregiver == "CG1"
+                                     #& speaker == "FAT" 
+                                     & audio_video == "video") %>% 
+  group_by(subj, speaker) %>%
+  tally() %>%
+  slice_max(n) %>%
+  group_by(speaker) %>%
+  tally()
+
+```
 
 ### Home-recorded video data 
-Every month between 0;6 and 1;5, infants were video-recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. We did not ask families to ensure certain family members were or were not present; our video recordings capture whoever was home at the time families opted to schedule. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this captured the scene from the infants’ perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder on a tripod was set up in the room where infants and caretakers were interacting to capture a broader view; families were asked to move this camcorder if they changed rooms. The dataset includes 12 videos for each child except one, who had 11.
+Every month between 0;6 and 1;5, infants were video-recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. We did not ask families to ensure certain family members were or were not present; our video recordings capture whoever was home at the time families opted to schedule. Here we draw on data from the two caregivers who produced the most words in each recording; in `r round((cg1mot/caregiver1)*100,0)`% of cases this was the mother, and `r round((cg1fat/caregiver1)*100,0)`% of cases the father. Fathers produced the second highest number of words in `r round((cg2fat/caregiver2)*100,0)`% of cases. At the child level, the modal caretaker across the 12 videos was the mother for `r subset(modal_speaker, speaker == "MOT")$n` infants, father for `r subset(modal_speaker, speaker == "FAT")$n` infants and grandmother for the remaining `r subset(modal_speaker, speaker == "GRM")$n` infants. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this captured the scene from the infants’ perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder on a tripod was set up in the room where infants and caretakers were interacting to capture a broader view; families were asked to move this camcorder if they changed rooms. The dataset includes 12 videos for each child except one, who had one video missing at 0;6.
 <!-- eb2cl: added preceding sentence. will need to think on whether this requires any change in analysis; it shouldn't matter for vocab or for % obj presence since that averaged across the months (right?) but for the thing that counted number of nouns that chidl should either be dropped from the relevant analyses or their mean across their other months should be imputed for the missing month or something.  -->
+<!-- cl2eb: the missing video is at 6m so this actually doesn't matter to the analysis since we don't analayse data before 10months -->
 
 Object words (i.e. concrete nouns) deemed to be said to, by, or loudly and clearly near the target child were annotated by trained coders for several properties of interest to the broader project on noun learning. Here we examine annotations for speaker, i.e. who produced each noun, and object presence, i.e. whether the noun’s referent was present and attended to by the infant (see "Derived Input Measures" below). See @bergelson_day_2019 for further details on the full set of home-recorded data and its annotations.
 
@@ -163,17 +206,19 @@ Two input measures were derived based on the annotations of concrete nouns in th
 ```{r other speaker input, include=FALSE}
 
 other.speaker.data <- 
-  speaker.type.n %>% 
-  mutate(other.speakers = All.speakers - Family.input,
+ all.speaker.data %>%
+  filter(audio_video == "video") %>%
+  mutate(other.speakers = All.speakers - n,
          prop.other = other.speakers/All.speakers) %>%
+  ungroup() %>%
   summarise(PC.other.m = mean(prop.other)*100,
             PC.other.sd = sd(prop.other)*100)
 
 ```
 
-*Household Input* reflects how many nouns infants heard in the recordings from their mother, father and (where relevant) siblings.  Other speakers’ input was relatively rare during video recordings, accounting for `r other.speaker.data$PC.other.m`% of input overall (SD=`r other.speaker.data$PC.other.sd`%), and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size [@anderson_linking_2021]. This analysis considers only nouns produced by speakers in the child's environment (which is what was annotated in the broader SEEDLingS project); concrete nouns are acquired earlier in development in English and cross-linguistically [@braginsky_consistency_2019]. In this corpus (as in any sample of naturalistic interaction) the number of nouns correlates highly with the number of words overall [e.g. based on automated  analyses of adult word counts vs. manual noun-only annotations; Bulgarelli & Bergelson, -@bulgarelli_look_2020]. Thus, noun count in the monthly hour of video data serves as our household input proxy.
+*Household Input* reflects how many nouns infants heard in the recordings from their two main caregivers (operationalized as the two adults who produced the most nouns in each recording; see above) and (where relevant) siblings.  Input from speakers other than these two caregivers was relatively rare during video recordings, accounting for `r other.speaker.data$PC.other.m`% of input overall (SD=`r other.speaker.data$PC.other.sd`%), and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size [@anderson_linking_2021]. This analysis considers only nouns produced by speakers in the child's environment (which is what was annotated in the broader SEEDLingS project); concrete nouns are acquired earlier in development in English and cross-linguistically [@braginsky_consistency_2019]. In this corpus (as in any sample of naturalistic interaction) the number of nouns correlates highly with the number of words overall [e.g. based on automated  analyses of adult word counts vs. manual noun-only annotations; Bulgarelli & Bergelson, -@bulgarelli_look_2020]. Thus, noun count in the monthly hour of video data serves as our household input proxy.
 
-*Object Presence* was coded as "yes", "no", or "unsure" for each object word annotated in the home recordings based on trained annotators' assessment of whether the referent of the word (i.e. the object) was present and attended to by the child. In the video data, `r object.presence.unsure$totalu` instances (`r round(object.presence.unsure$meanu,2)`% on average per infant) of object presence were marked as unsure; these instances were not included in this analysis.
+*Object Presence* was coded as "yes", "no", or "unsure" for each object word annotated in the home recordings, as produced by the two main caregivers detailed above, based on trained annotators' assessment of whether the referent of the word (i.e. the object) was present and attended to by the child. In the video data, `r object.presence.unsure$totalu` instances (`r round(object.presence.unsure$meanu,2)`% on average per infant) of object presence were marked as unsure; these instances were not included in this analysis.
 
 In the following analyses, we consider infants’ total productive vocabulary[^2] alongside these two input measures -- nouns in household input and extent of object presence in the input -- as a function of sibling number. Since the raw data are highly skewed, log-transformed data  and/or proportions are used for statistical analysis (1 was added to the raw infant production data of all infants before log-transformation to retain infants with vocabularies of 0.) All figures display non-transformed data for interpretive ease. 
 
@@ -195,7 +240,7 @@ Nsibs <- SiblingsData %>% filter(month == 18) %>% summarise(meansibs = mean(Sibl
 
 ```
 
-```{r Outliers, include=FALSE}
+```{r Outliers CDI, include=FALSE}
 
 # In overall vocabulary development
 
@@ -227,8 +272,6 @@ SiblingsData <- SiblingsData %>% filter(subj != 794 & !month %in% c("06", "07", 
 CDI <- CDI %>% filter(subj != 794)
 speaker.type <- speaker.type %>% filter(!month %in% c("06", "07", "08", "09"))
 object.presence <- object.presence %>% filter(!month %in% c("06", "07", "08", "09"))
-in.cdi <- in.cdi %>% filter(!month %in% c("06", "07", "08", "09"))
-utterance.type.PC <- utterance.type.PC %>% filter(!month %in% c("06", "07", "08", "09"))
 
 females <- SiblingsData %>% filter(month == 18 & sex == "F") %>% tally()
 
@@ -239,9 +282,10 @@ source("Figures.R")
 Vocabulary development was highly variable across the 43 infants, according to the CDI data we had available. By 18 months, `r nowords` infants produced no words (taken from `r nCDI18` available CDIs at this time-point), while mean productive vocabulary size was `r Nwords$meanwords` words (SD=`r Nwords$sdwords`, Mdn=`r Nwords$mdnwords`). Three infants had substantially larger-than-average (3SDs above the mean monthly vocabulary score) vocabularies at certain time-points in the data; we opted to count one of these infants as an outlier and remove this child's data from the CDI analysis given that their vocabulary was higher for multiple consecutive months (1;1-1;6). The other two infants had higher vocabularies at 10-11 months only (when variance was quite limited, see Figure 1), and were retained to maximize data inclusion. This left 42 infants (`r females` females) in the analysis of vocabulary size. Infants had one sibling on average (M=`r Nsibs$meansibs`, Mdn=`r Nsibs$mdnsibs`, SD=`r Nsibs$sdsibs`). See Table \@ref(tab:table-sibling-number).
 
 <!-- eb2cl: i think the wording on this is great, i made some microedits. might be worth saying in fig 1 caption that one child who was an outlier was removed from this figure, see text for details. we should also double check/state that no one is an outlier for our other measures but i'd be shocked if they were -->
+<!-- cl2eb: 2 infants have outliers for both input and obj presence - argh! for one it's just one session, the other is 4 recordings.I've addded a note about this below; none of the outputs change with this infant removed so can add this to the SI maybe. Though tbh that feels a bit OTT to me but will do so and then we can remove it if we decide it's not useful. -->
 
 ```{r table-sibling-number}
-cap = "Sibling number by female and male infants."
+cap = "Sibling number by female and male infants (n=42). One child was an outlier, and was removed from the CDI analysis and this figure; see text for details."
 apa_table(table.sibling.number, caption = cap, col_spanners = NULL, digits = 0, 
           #placement = "H", 
           font_size = "small")
@@ -249,11 +293,13 @@ apa_table(table.sibling.number, caption = cap, col_spanners = NULL, digits = 0,
 
 ## Model structure for fixed and random effects 
 
-All reported models were generated in R [@r_core_team_r_2019] using the *lmerTest* package to run linear mixed-effects regression models [@kuznetsova_lmertest_2017]. *P*-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables of interest (CDI score, household input and object presence) differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied (e.g. with an adjusted *p*-value threshold of .025 for 2 between-group comparisons are done). While we have a substantial amount of data for each participant, our limited *n* means we are under-powered to consider multiple demographic variables simultaneously given the data distribution (e.g. sibling number and sex, see Table \@ref(tab:table-sibling-number); as luck would have it both infants with 3 sibilngs were girls and both with 4 were boys). See Supplementary Data for correlations between sibling number and maternal age/education.
+All reported models were generated in R [@r_core_team_r_2019] using the *lmerTest* package to run linear mixed-effects regression models [@kuznetsova_lmertest_2017]. *P*-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables of interest (CDI score, household input and object presence) differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied (e.g. with an adjusted *p*-value threshold of .025 for 2 between-group comparisons). While we have a substantial amount of data for each participant, our limited *n* means we are under-powered to consider multiple demographic variables simultaneously given the data distribution (e.g. sibling number and sex, see Table \@ref(tab:table-sibling-number); as luck would have it both infants with 3 siblings were girls and both with 4 were boys). There were no correlations between sibling number or child word production and maternal age/education. See Supplementary Data for further details.
 
 <!-- eb2cl: i like this reorganization! could you add just a half a sentence summarizing the mat ed and age effects above and direct readers to SI for details? i.e. there weren't mat ed effects but mat age was correlated with number of siblings (or whatever) -->
+<!-- cl2eb: done -->
 
 <!-- eb2cl: I think since we also don't give background on sex effects in general that i'd couch that extra model comparison as a footnote: i did that, lmk what you think  -->
+<!-- cl2eb: yes, great! -->
 
 ## Effect of siblings on infants' productive vocabulary
 
@@ -321,7 +367,6 @@ We first modeled the effect of siblings on reported productive vocabulary. We ex
 
 1. vocabulary size (log-transformed) ~ age (months) + (1|subject)
 2. vocabulary size (log-transformed) ~ siblings [binary, group or discrete] + age (months) + (1|subject)
-<!-- 3. vocabulary size (log-transformed) ~ siblings [binary, group or discrete] + age (months) + sex + (1|subject) -->
 
 In our sample, simply having siblings (i.e. as a binary variable) did not predict CDI productive vocabulary size, while both discrete sibling number and sibling group did. See Table \@ref(tab:table-sibling-model-output).[^3]
 
@@ -402,6 +447,7 @@ In terms of our grouped sibling variable (i.e. 0 vs. 1 vs. 2+ siblings) infants 
 
 <!-- eb2cl: i added texta bove, i'd put versions of the model comparison for these here (i.e. binary: just age, age + sex (since we saw age + sib wasn't a better fit); grouped: just age, age + sib, age+sex+sib ) -->
 <!-- cl2eb: I'm a bit confused about mention of the binary variable here since this wasn't significant in the model and isn't considered further down; I've added the sex comparison above but can move it down if you prefer. Have also moved the section of text justifying our choice of the groupings down a bit//eb2cl: see what you think of it now as a footnote!-->
+<!-- cl2eb: happy with this change! -->
 
 ```{r Figure-SibGroup, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 
@@ -413,7 +459,44 @@ cap <- sprintf("Reported productive vocabulary acquisition (CDI) over time. Colo
 
 ## Effect of siblings on infants' input
 
-Having established that infants' productive vocabulary varied as a function of how many siblings in all but the binary version of the measure (0 vs. >0 siblings), we turn to our input measures to test whether *input* varied by a child's sibling status. For these analyses we report here the group sibling division (0 vs. 1 vs. 2+) for as this lets us keep relatively similar Ns across groups, thus making variance more comparable for post-hoc comparisons (the discrete sibling number (0-4) version is reported for completeness in the supplementals; results hold for object presence but diverged somewhat for overall household input). We also now include the child whose who was a multi-month vocabulary outlier above given that input and vocabulary are not tested in the same model.
+```{r Outliers input, include=FALSE}
+
+# caregiver input
+
+speaker.type %>% filter(audio_video == "video" & caregiver == "FAMILY") %>%
+  group_by(month) %>% 
+  mutate(outlier_cutoff3sd = 3*sd(n, na.rm=T),
+         mean_month = mean(n, na.rm=T),
+         outlier = (n > 
+                      (mean(n, na.rm=T) + 
+                         3*(sd(n, na.rm=T))) |
+                      n <
+                      (mean(n, na.rm=T) - 
+                         3*(sd(n, na.rm=T))))) %>% 
+  filter(outlier == TRUE) %>% 
+  filter(month>9)
+
+# 738 across 4 sessions
+
+# object presence
+
+object.presence %>% filter(audio_video == "video") %>%
+  group_by(month) %>% 
+  mutate(outlier_cutoff3sd = 3*sd(n, na.rm=T),
+         mean_month = mean(n, na.rm=T),
+         outlier = (n > 
+                      (mean(n, na.rm=T) + 
+                         3*(sd(n, na.rm=T))) |
+                      n <
+                      (mean(n, na.rm=T) - 
+                         3*(sd(n, na.rm=T))))) %>% 
+  filter(outlier == TRUE) %>% 
+  filter(month>9)
+
+# 738 across 4 sessions
+```
+
+Having established that infants' productive vocabulary varied as a function of how many siblings in all but the binary version of the measure (0 vs. >0 siblings), we turn to our input measures to test whether *input* varied by a child's sibling status. For these analyses we report here the group sibling division (0 vs. 1 vs. 2+) as this lets us keep relatively similar Ns across groups, thus making variance more comparable for post-hoc comparisons (the discrete sibling number (0-4) version is reported for completeness in the supplementals; results hold for object presence but diverged somewhat for overall household input). We also now include the child whose who was a multi-month vocabulary outlier above given that input and vocabulary are not tested in the same model. One infant of the full sample of 43 infants was an outlier in that they heard substantially more input words and words with object presence than all the other infants in the sample in four of their recording sessions. Given that these sessions were not contiguous, we opted to keep this infant in the analyses reported below, though all results hold when they are removed from our sample (see Supplementary Information).
 
 ```{r effects of age and sex on input, message=FALSE, warning=FALSE, include=FALSE}
 
@@ -421,8 +504,8 @@ Having established that infants' productive vocabulary varied as a function of h
 
 # age
 
-age.test.input <- lmer(Log.n ~ month + (1|subj), data = subset(speaker.type, Speaker == "Family.input" & audio_video == "video"), REML=FALSE)
-age.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "Family.input" & audio_video == "video"), REML=FALSE)
+age.test.input <- lmer(Log.n ~ month + (1|subj), data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "video"), REML=FALSE)
+age.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "video"), REML=FALSE)
 
 age.test.input_anova <- anova(age.test.input, age.test.input.null) %>% # p<.001 
   rename("pval" = `Pr(>Chisq)`)
@@ -433,8 +516,8 @@ age.test.input_p.value <- age.test.input_anova$pval[2]
 
 # sex
 
-sex.test.input <- lmer(Log.n ~ sex + (1|subj), data = subset(speaker.type, Speaker == "Family.input" & audio_video == "video"), REML=FALSE)
-sex.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, Speaker == "Family.input" & audio_video == "video"), REML=FALSE)
+sex.test.input <- lmer(Log.n ~ sex + (1|subj), data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "video"), REML=FALSE)
+sex.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "video"), REML=FALSE)
 
 sex.test.input_anova <- anova(sex.test.input, sex.test.input.null) %>% # p<.05
   rename("pval" = `Pr(>Chisq)`)
@@ -469,90 +552,23 @@ input.sex.age.pvals <- rbind(age.test.input_anova, sex.test.input_anova, age.tes
 
 ```
 
-We first tested for the effect of infant sex and age on our two input measures. Models of nouns in the input were a better fit when both age and sex were included alongside a random effect of infant, relative to a model with only this random effect (*p*s < `r printp(subset(input.sex.age.pvals, rowname == "sex.test.input")$pval)`), while age (*p* = `r printp(subset(input.sex.age.pvals, rowname == "age.test.OP")$pval)`) but not sex (*p* = `r printp(subset(input.sex.age.pvals, rowname == "sex.test.OP")$pval)`) improved model fit for object presence. Significant variables will be added to the relevant models below. See Supplementary Data for correlations between input and maternal education/age.
+While we didn't have strong a priori expectations about how overall input or object presence would vary by age or sex, these were included in initial model comparisons to see if they improved fit alongside a random effect of infant. Both variables improved fit for the input model, and only age did for the object presence model. Thus our baseline models include these sets of control variables, respectively. See Table \@ref(tab:table-input-model-summary) for final model estimates.
+
 <!-- eb2cl: i find this paragraph a bit confusing, as we don't do only maternal input below. but in line with my suggestion about that we move mat ed lower down maybe you could do the same here, showing only the kind of model comparison results for age and sex that i tried to descirbe in the new second sentence?  -->
 <!-- cl2eb: again, not sure if this is what you had in mind. It's inconsistent with how we report the additional effects above, though given the 2 additional effets this seems neater -->
 <!-- eb2cl: hm it feels a bit confusing still: we don't say anything about the effect sizes of the age or sex effects or how the sib effects compare, or show the model output that would clarify that. So I think we need something like. "While we didn't have strong a priori expectations about how overall input or object presence would vary by age or sex, these were included in initial model comparisons to see if they improved fit alongside a random effect of infant. Both variables improved fit for the input model, and only age did for the object presence model. Thus our baseline models include these sets of control variables, respectively. See Table XX for final model estimates." and then when you describe the effect size in your interpretable terms you could do the same for these ones so you can say e.g. the sex effect on input was half/double/whatever relative to the sibling effect, etc. for each case. lmk if that makes sense!-->
+<!-- cl2eb: ok, had a bit of an overhaul here with regard to reporting as well - let me know what you think! -->
 
-### Parental Input
-
-```{r Input - summary, include=FALSE}
-
-all.speakers <- speaker.type %>%
-  filter(audio_video == "video" & Speaker == "Family.input") %>%
-  group_by(subj) %>%
-  summarise(total.n = sum(n))
-
-speaker.summary <-
-  speaker.type %>%
-  filter(audio_video == "video" & Speaker != "Family.input") %>%
-  group_by(subj, Speaker) %>%
-  summarise(total.speaker = sum(n)) %>%
-  left_join(all.speakers) %>%
-  mutate(PC.input = (total.speaker/total.n)*100) %>%
-  ungroup()
-
-PC.MOT <- speaker.summary %>%
-  filter(Speaker == "MOT") %>%
-  summarise(PCMOT = mean(PC.input),
-            SDMOT = sd(PC.input))
-
-PC.FAT <- speaker.summary %>%
-  filter(Speaker == "FAT") %>%
-  summarise(PCFAT = mean(PC.input),
-            SDFAT = sd(PC.input))
-
-PC.SIB <- speaker.summary %>%
-  filter(Speaker == "SIBLING") %>%
-  summarise(PCSIB = mean(PC.input),
-            SDSIB = sd(PC.input))
-
-mean.input.MOT <- speaker.type %>% filter(Speaker == "MOT" & audio_video == "video") %>% summarise(mean.input = mean(n),  # 136.69
-                                                                          med.input = median(n),
-                                                                          sd.input = sd(n))      # 111.01
-
-mean.input.FAT <- speaker.type %>% filter(Speaker == "FAT" & audio_video == "video") %>% summarise(mean.input = mean(n),  # 18.14
-                                                                          med.input = median(n),
-                                                                          sd.input = sd(n))      # 42.01
-
-mean.input.SIB <- speaker.type %>% filter(Speaker == "SIBLING" & SibGroup != "None" & audio_video == "video") %>% 
-  summarise(mean.input = mean(n),  # 13
-            med.input = median(n), # 6
-            sd.input = sd(n))      # 15.8
-
-mean.input.all <- speaker.type %>%
-    filter(audio_video == "video" & Speaker != "Family.input") %>%
-  group_by(SibGroup) %>%
-  summarise(mean.input = mean(n),  # 53.9
-            med.input = median(n),
-            sd.input = sd(n))      # 90.6
-
-
-```
-
-```{r table-data-summary, comment=F, message=F, warning = F, echo = F, results = "asis"}
-cap = "Data summary of our two input measures and reported vocabulary size at 18 months."
-kable(table.data.summary, "latex", booktabs = T, caption = cap, digits = 2, align = "c", col.names = NULL)  %>%
-    add_header_above(c("Variable" = 1, "Mean" = 1, "SD" = 1, "Mean" = 1, "SD" = 1, "Mean" = 1, "SD" = 1)) %>%
-  add_header_above(c(" " = 1, "No siblings" = 2, "1 sibling" = 2, "2+ siblings" = 2))
-```
-
-```{r Figure-Speaker-count, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
-
-par(cex = 1.2)
-Figure.speaker.count
-cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings, as well as total family input (mother + father + sibling(s)), across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means.")
-
-```
+### Caregiver Input
 
 ```{r speaker.type model, message=FALSE, warning=FALSE, include=FALSE}
 
 #shapiro.test(speaker.type$n) # not normal
 
 speaker.type.model.null <- lmerTest::lmer(Log.n ~ month + sex + (1|subj), data=subset(speaker.type, audio_video == "video" & 
-                                                                                           Speaker != "Family.input"), REML=FALSE)
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
 speaker.type.model <- lmerTest::lmer(Log.n ~ SibGroup + month + sex + (1|subj), data=subset(speaker.type, audio_video == "video" & 
-                                                                                           Speaker != "Family.input"), REML=FALSE)
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
 
 speaker.type_anova <- anova(speaker.type.model, speaker.type.model.null) %>% #p<.001
   rename("pval" = `Pr(>Chisq)`)
@@ -564,13 +580,12 @@ speaker.type_p.value <- speaker.type_anova$pval[2]
 # post hoc comparisons
 
 speaker.type.mean <- speaker.type %>% 
-  filter(audio_video == "video" & Speaker == "Family.input") %>%
+  filter(audio_video == "video" & caregiver == "FAMILY") %>%
   group_by(subj) %>% 
   mutate(MeanN = mean(n)) %>% 
   filter(month == 17) 
 
 #shapiro.test(speaker.type.mean$MeanN) # not normal
-
 
 speaker.type_wilcox_none_one <- wilcox.test(
   x = subset(speaker.type.mean, SibGroup == "None" & audio_video == "video")$MeanN
@@ -584,36 +599,128 @@ speaker.type_wilcox_one_two <- wilcox.test(
   , paired = FALSE
 )
 
+```
 
-input.diff <- 
-  speaker.type %>% 
-    filter(audio_video == "video" & Speaker == "Family.input") %>%
-  group_by(SibGroup) %>%
- summarise(meaninput = mean(n))
+```{r descriptive statistics for input model outputs, include=FALSE}
 
-noneonediff <- input.diff$meaninput[2] - input.diff$meaninput[1]
-nonetwodiff <- input.diff$meaninput[1] - input.diff$meaninput[3]
-onetwodiff <- input.diff$meaninput[2] - input.diff$meaninput[3]
+input.model.summary <- summary(speaker.type.model)
 
+input.model.summary.table <- input.model.summary$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
 
+inputONE.beta <- as.numeric(input.model.summary.table$Estimate[2])
+
+inputONE.beta <- abs(inputONE.beta*100)
+
+inputTWO.beta <- as.numeric(input.model.summary.table$Estimate[3])
+
+inputTWO.beta <- abs(inputTWO.beta*100)
 
 ```
 
-Mothers provided the largest proportion of the infants’ overall input across the sample (`r round(PC.MOT$PCMOT)`%, M=`r mean.input.MOT$mean.input` object words, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`). Fathers accounted for an average of `r round(PC.FAT$PCFAT)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(PC.SIB$PCSIB)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-Speaker-count). We tested overall quantity of input (aggregated across mothers, fathers, and siblings) in our model alongside age, sex and subject, as reported above, and a significant effect was found for the effect of sibling group ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*=`r printp(speaker.type_p.value)`). 
-<!-- eb2cl: we need to say something about the family that had two mothers (MOT and MT2).i'm assuming you're counting MOT for mothers input right now but not the other mother. i'd suggest adjusting this and saying something like: "one family in our sample had two mothers; rather than artificially assigning one parent to another category, we averaged both mothers' input for this child; we acknowledge that this is an imperfect solution but found it better than the alternatives." (or i guess you could remove them from some analyses but sthat seems less good)-->
+We tested overall quantity of input (aggregated across the two main caregivers, as outlined above, and siblings) in our model alongside age, sex and subject, as reported above, and a significant effect was found for the effect of sibling group ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*=`r printp(speaker.type_p.value)`). Infants with one sibling heard on average `r round(inputONE.beta,2)`% more words than those with no siblings in any given hour-long recording, while infants with two or more siblings heard `r round(inputTWO.beta,0)`% fewer words. 
 
-We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`; Bonferroni-corrected *p*-threshold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). On average, in any given hour-long recording, infants with no siblings heard `r round(abs(noneonediff),1)` *fewer* object words in their input than those with one sibling, and `r round(nonetwodiff,0)` more than those with two or more siblings. Infants with one sibling heard `r round(onetwodiff,0)` more object words than those with two or more siblings. See Table \@ref(tab:table-data-summary) for overall group differences (M and SD) in amount of input.
+We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`; Bonferroni-corrected *p*-threshold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). See Table \@ref(tab:table-data-summary) for overall group differences (M and SD) in amount of input.
+
+```{r Input - summary, include=FALSE}
+
+nMOTFAT <- speaker.type %>% filter(caregiver %in% c("CG1", "CG2") & audio_video == "video" & speaker %in% c("MOT", "MT2", "FAT")) %>% nrow()
+nALL <- speaker.type %>% filter(audio_video == "video" & !is.na(speaker) & speaker != "SIBLING") %>% nrow()
+PCMOTFAT <- (nMOTFAT/nALL)*100
+
+non_parents <- nALL <- speaker.type %>% filter(audio_video == "video" & !is.na(speaker) & !(speaker %in% c("SIBLING", "MOT", "MT2", "FAT"))) 
+
+all.speakers <- speaker.type %>%
+  filter(audio_video == "video" & caregiver != "FAMILY") %>%
+  group_by(subj) %>%
+  summarise(total.n = sum(n))
+
+speaker.summary <-
+  speaker.type %>%
+  filter(audio_video == "video" & caregiver != "FAMILY") %>%
+  group_by(subj, speaker) %>%
+  summarise(total.speaker = sum(n)) %>%
+  left_join(all.speakers) %>%
+  mutate(PC.input = (total.speaker/total.n)*100) %>%
+  ungroup()
+
+PC.MOT <- speaker.summary %>%
+  group_by(subj) %>%
+  filter(speaker == "MOT" | speaker == "MT2") %>%
+  summarise(PC.input.mot = mean(PC.input)) %>%      # take the mean maternal input for family with 2 mothers
+  ungroup() %>%
+  summarise(PCMOT = mean(PC.input.mot),
+            SDMOT = sd(PC.input.mot, na.rm = T))
+
+PC.FAT <- speaker.summary %>%
+  filter(speaker == "FAT") %>%
+  summarise(PCFAT = mean(PC.input),
+            SDFAT = sd(PC.input))
+
+PC.SIB <- speaker.summary %>%
+  filter(speaker == "SIBLING") %>%
+  summarise(PCSIB = mean(PC.input),
+            SDSIB = sd(PC.input))
+
+mean.input.MOT <- speaker.type %>% group_by(subj) %>%
+  filter(speaker == "MOT" | speaker == "MT2" & audio_video == "video") %>% 
+  summarise(final_n = mean(n)) %>%      # take the mean maternal input for family with 2 mothers
+  ungroup() %>%
+  summarise(mean.input = mean(final_n),
+            med.input = median(final_n),
+            sd.input = sd(final_n))
+
+mean.input.FAT <- speaker.type %>% ungroup() %>%
+  filter(speaker == "FAT" & audio_video == "video") %>% summarise(mean.input = mean(n),  # 18.14
+                                                                          med.input = median(n),
+                                                                          sd.input = sd(n))      # 42.01
+
+mean.input.SIB <- speaker.type %>% ungroup() %>%
+  filter(speaker == "SIBLING" & SibGroup != "None" & audio_video == "video") %>% 
+  summarise(mean.input = mean(n),  # 13
+            med.input = median(n), # 6
+            sd.input = sd(n))      # 15.8
+
+```
+
+While we operationalized caregiver input in our models as input speech from the two adults who produced the most words in any given session. In `r round(PCMOTFAT,2)`% of cases this was the mother or father. Looking specifically now at input from mothers and fathers, as opposed to other speakers in the recordings, maternal input[^4] accounted for `r round(PC.MOT$PCMOT)`% of object words in the data overall (M=`r mean.input.MOT$mean.input`, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`). Fathers accounted for an average of `r round(PC.FAT$PCFAT)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(PC.SIB$PCSIB)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-Speaker-count). 
+<!-- eb2cl: we need to say something about the family that had two mothers (MOT and MT2).i'm assuming you're counting MOT for mothers input right now but not the other mother. i'd suggest adjusting this and saying something like: "one family in our sample had two mothers; rather than artificially assigning one parent to another category, we averaged both mothers' input for this child; we acknowledge that this is an imperfect solution but found it better than the alternatives." (or i guess you could remove them from some analyses but sthat seems less good)-->
+<!-- cl2eb: done -->
+
+[^4]: One family in our sample had two mothers; rather than artificially assigning one parent to another category, we averaged both mothers' input for this child; we acknowledge that this is an imperfect solution but found it better than the alternatives.
+
+```{r table-data-summary, comment=F, message=F, warning = F, echo = F, results = "asis"}
+cap = "Data summary of our two input measures and reported vocabulary size at 18 months."
+kable(table.data.summary, "latex", booktabs = T, caption = cap, digits = 2, align = "c", col.names = NULL)  %>%
+    add_header_above(c("Variable" = 1, "Mean" = 1, "SD" = 1, "Mean" = 1, "SD" = 1, "Mean" = 1, "SD" = 1)) %>%
+  add_header_above(c(" " = 1, "No siblings" = 2, "1 sibling" = 2, "2+ siblings" = 2))
+```
+
+```{r Figure-Speaker-count, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
+par(cex = 1.2)
+Figure.speaker.count
+cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings, as well as total family input (mother + father + sibling(s)), across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means. In the case where the infant had two mothers, mean maternal input is shown.")
+```
 
 ```{r Sibling presence}
 
 sib.present <- speaker.type %>%
-  filter(Speaker == "SIBLING" & SibsYN == "Y" & audio_video == "video") %>%
-  mutate(present = ifelse(n > 0, 1, 0)) %>%
+  filter(SibsYN == "Y" & audio_video == "video" & caregiver %in% c("CG1", "SIB")) %>%
+  group_by(subj, month) %>%
+  tally() %>%
+  mutate(present = ifelse(n==1, FALSE, TRUE)) %>%
   group_by(present) %>%
   tally() %>%
   mutate(total = sum(n),
          prop.present = n/total*100) %>%
-  filter(present == 1)
+  filter(TRUE == 1)
 
 ```
 
@@ -621,67 +728,55 @@ sib.present <- speaker.type %>%
 
 # Difference in amount of input from siblings
 
-speaker.type.SIB <- speaker.type %>% group_by(subj) %>% 
-  filter(Speaker == "SIBLING" & audio_video == "video") %>%
-  mutate(MeanN = mean(n),
-         TotalN = sum(n)) %>%
-  filter(month == 17)
+speaker.type.mean <- speaker.type %>% 
+    filter(audio_video == "video") %>%
+  mutate(speaker = fct_recode(speaker,
+                              "MOT" = "MT2")) %>%
+  group_by(subj, speaker, SibGroup) %>% 
+  summarise(MeanN = mean(n),
+         TotalN = sum(n))
 
-speaker.type.SIB_wilcox_none_one <- wilcox.test(
-  x = subset(speaker.type.SIB, SibGroup == "None" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.SIB, SibGroup == "One" & audio_video == "video")$MeanN
-  , paired = FALSE
-) # p<.001
+# Input difference siblings
 
 speaker.type.SIB_wilcox_one_two <- wilcox.test(
-  x = subset(speaker.type.SIB, SibGroup == "2+" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.SIB, SibGroup == "One" & audio_video == "video")$MeanN
+  x = subset(speaker.type.mean, SibGroup == "2+" & speaker == "SIBLING")$MeanN
+  , y = subset(speaker.type.mean, SibGroup == "One" & speaker == "SIBLING")$MeanN
   , paired = FALSE
 ) # NS
 
-# Difference in amount of input from mothers
-
-speaker.type.MOT <- speaker.type %>% group_by(subj) %>% 
-  filter(Speaker == "MOT" & audio_video == "video") %>%
-  mutate(MeanN = mean(n))  %>%
-  filter(month == 17)
+# Input difference mothers
 
 speaker.type.MOT_wilcox_none_one <- wilcox.test(
-  x = subset(speaker.type.MOT, SibGroup == "None" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.MOT, SibGroup == "One" & audio_video == "video")$MeanN
+  x = subset(speaker.type.mean, SibGroup == "None" & speaker == "MOT")$MeanN
+  , y = subset(speaker.type.mean, SibGroup == "One" & speaker == "MOT")$MeanN
   , paired = FALSE
 ) # NS
 
 speaker.type.MOT_wilcox_one_two <- wilcox.test(
-  x = subset(speaker.type.MOT, SibGroup == "2+" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.MOT, SibGroup == "One" & audio_video == "video")$MeanN
+  x = subset(speaker.type.mean, SibGroup == "2+" & speaker == "MOT")$MeanN
+  , y = subset(speaker.type.mean, SibGroup == "One" & speaker == "MOT")$MeanN
   , paired = FALSE
 ) # p<.001
 
-# Difference in amount of input from fathers
-
-speaker.type.FAT <- speaker.type %>% group_by(subj) %>% 
-  filter(Speaker == "FAT" & audio_video == "video") %>%
-  mutate(MeanN = mean(n))  %>%
-  filter(month == 17)
+# Input difference fathers
 
 speaker.type.FAT_wilcox_none_one <- wilcox.test(
-  x = subset(speaker.type.FAT, SibGroup == "None" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.FAT, SibGroup == "One" & audio_video == "video")$MeanN
+  x = subset(speaker.type.mean, SibGroup == "None" & speaker == "FAT")$MeanN
+  , y = subset(speaker.type.mean, SibGroup == "One" & speaker == "FAT")$MeanN
   , paired = FALSE
 ) # NS
 
 speaker.type.FAT_wilcox_one_two <- wilcox.test(
-  x = subset(speaker.type.FAT, SibGroup == "2+" & audio_video == "video")$MeanN
-  , y = subset(speaker.type.FAT, SibGroup == "One" & audio_video == "video")$MeanN
+  x = subset(speaker.type.mean, SibGroup == "2+" & speaker == "FAT")$MeanN
+  , y = subset(speaker.type.mean, SibGroup == "One" & speaker == "FAT")$MeanN
   , paired = FALSE
 ) # NS
 
 
+
 ```
 
-Next, we tested how much of that input came from siblings (for infants who had them). Overall, for infants who had siblings, at least one other child was present in `r sib.present$prop.present`% of recordings (n = `r sib.present$total`). Wilcoxon Rank Sum tests showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (*W*=`r round(speaker.type.SIB_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.SIB_wilcox_one_two$p.value)`). Looking at caregivers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (*W*=`r round(speaker.type.MOT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.MOT_wilcox_one_two$p.value)`), while there was no difference between those with one vs. no siblings (*W*=`r round(speaker.type.MOT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.MOT_wilcox_none_one$p.value)`). Finally, amount of paternal input did not differ between groups (one vs. none: *W*=`r round(speaker.type.FAT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.FAT_wilcox_none_one$p.value)`; one vs. 2+: *W*=`r round(speaker.type.FAT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_one_two$p.value)`).
-
+Overall, for infants who had siblings, at least one other child was present in `r sib.present$prop.present`% of recordings (n = `r sib.present$total`). Wilcoxon Rank Sum tests comparing mean monthly input showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (*W*=`r round(speaker.type.SIB_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.SIB_wilcox_one_two$p.value)`). Looking at mothers and fathers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (*W*=`r round(speaker.type.MOT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.MOT_wilcox_one_two$p.value)`), while there was no difference between those with one vs. no siblings (*W*=`r round(speaker.type.MOT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.MOT_wilcox_none_one$p.value)`). Finally, amount of paternal input did not differ between groups (one vs. none: *W*=`r round(speaker.type.FAT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.FAT_wilcox_none_one$p.value)`; one vs. 2+: *W*=`r round(speaker.type.FAT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_one_two$p.value)`).
 
 ### Object presence
 
@@ -710,23 +805,20 @@ object.presence_df <- object.presence.anova$Df[2]
 object.presence_chisq <- object.presence.anova$Chisq[2]
 object.presence_p.value <- object.presence.anova$pval[2] 
 
-
 object.presence.model.summary <- summary(object.presence.model)
 
 table.object.presence.model.summary <- object.presence.model.summary$coefficients %>%
   as.data.frame %>%
-  rename(
-    "$b$" = "Estimate"
-    , "SE" = "Std. Error"
-    , "$df$" = "df"
-    , "$t$" = "t value"
-    , "$p$" = "Pr(>|t|)"
-  ) %>%
-  printnum(
-     zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
-  ) %>%
-  select(`$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
-  rename("betaval" = `$b$`)
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Object presence", ""))
+
+input.variables.model.summaries <- rbind(input.model.summary.table, table.object.presence.model.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
 
 object.presence1.beta <- as.numeric(table.object.presence.model.summary$betaval[2])  # beta vals for Sib Group One
 
@@ -761,7 +853,15 @@ cap <- sprintf("Proportion of input words produced with object presence across s
 
 ```
 
-On average, `r round(mean(object.presence.summary$mean.object)*100)`% of annotated utterances included a referent that was present and attended to by the infant (Mdn=`r mean(object.presence.summary$med.object)`, SD=`r mean(object.presence.summary$sd.object)`). See Table \@ref(tab:table-data-summary). Consistent with our hypothesis that infants with more siblings would hear fewer words in referentially transparent conditions (i.e. they would experience lower object presence) than those with fewer siblings, our models reveal a significant effect for sibling group on object presence ($\chi^2 (`r object.presence_df`)$ = `r object.presence_chisq`, *p*`r printp(object.presence_p.value)`). See Figure \@ref(fig:Figure-object-presence). Infants with no siblings experienced `r object.presence2.beta`% more object presence in their input than those with two or more siblings, and `r object.presence1.beta`% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (*W*=`r round(object.presence_wilcox_none_one$statistic)`, *p*=`r printp(object.presence_wilcox_none_one$p.value)`; Bonferroni-corrected *p*-threshold = .025). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (*W*=`r round(object.presence_wilcox_one_two$statistic)`, *p*=`r printp(object.presence_wilcox_one_two$p.value)`).
+```{r table-input-model-summary, echo=FALSE}
+cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group. Age in months was included as a fixed effect in both models, sex was included in the caregiver input model only; subject was included as a random effect."
+ kable(input.variables.model.summaries, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") %>%
+   row_spec(5, hline_after = T)
+```
+
+On average, `r round(mean(object.presence.summary$mean.object)*100)`% of annotated utterances included a referent that was present and attended to by the infant (Mdn=`r mean(object.presence.summary$med.object)`, SD=`r mean(object.presence.summary$sd.object)`). See Table \@ref(tab:table-data-summary). Consistent with our hypothesis that infants with more siblings would hear fewer words in referentially transparent conditions (i.e. they would experience lower object presence) than those with fewer siblings, our models reveal a significant effect for sibling group on object presence ($\chi^2 (`r object.presence_df`)$ = `r object.presence_chisq`, *p*`r printp(object.presence_p.value)`). See Table \@ref(tab:table-input-model-summary) and Figure \@ref(fig:Figure-object-presence). Infants with no siblings experienced `r object.presence2.beta`% more object presence in their input than those with two or more siblings, and `r object.presence1.beta`% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (*W*=`r round(object.presence_wilcox_none_one$statistic)`, *p*=`r printp(object.presence_wilcox_none_one$p.value)`; Bonferroni-corrected *p*-threshold = .025). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (*W*=`r round(object.presence_wilcox_one_two$statistic)`, *p*=`r printp(object.presence_wilcox_one_two$p.value)`).
 
 # Discussion
 
@@ -780,20 +880,7 @@ In contrast to the other results, our analysis of object presence showed a more 
 We also found that infants with siblings did not hear much speech from their older brothers and sisters. Similar findings are reported in a lab-based interaction study by Oshima-Takane and Robbins [-@oshima-takane_linguistic_2003], who found that older siblings rarely talked directly to the target child; instead, most input from siblings was overheard speech from sibling-mother interactions. One possibility raised by these results is that perhaps parents are able to compensate or provide relatively similar input and learning support for one or two children, but once children outnumber parents, this balancing act of attention, care, and time, becomes unwieldy. While the current sample is relatively limited and homogeneous in the family structures and demographics it includes, future work could fruitfully investigate this possibility by considering whether [controlling for other potential contributors like SES, @hoff-ginsberg_relation_1998] the presence of more caregivers (whether parents, relatives, or other adults) helps foster language development. 
 <!-- eb2cl: flagging this based on suggested changes to consider sex above! -->
 <!-- cl2eb: here I'm not exactly sure what you're getting at//eb i just meant that we say we didnt' analyze sex but we did. but i really want to steer readers away from pushing on the potential sex/sib interactions here bc we're just not well positioned to evalutae them. cutting the havron stuff as we also already mentioned havron above. -->
-
-```{r Counting early-acquired tokens, include=FALSE}
-# eb2cl: this feels like a funny place for this code chunk, is this something we use somewhere? should it be closer to there?
-cdi_words <- in.cdi %>% summarise(total = sum(Total),
-                                  sum_n = sum(n),
-                                  PC_cdi = sum_n/total)
-
-nCDI <- wordlist %>% distinct(CDIform) %>% tally()
-
-wordlist %>% filter(in_cdi == T) %>% group_by(CDIform) %>% tally() %>% arrange(desc(n))
-
-```
-
-
+<!-- cl2eb: ok, that's fine! -->
 
 Alternatively, second-borns might ‘even out’ with children with no siblings due to a trade-off between direct attention from the caregiver and the possibility of more sophisticated social-communicative interactions. For these infants there is still ample opportunity to engage with the mother in one-to-one interactions, allowing a higher share of her attention than is available to third- or later-borns. Furthermore, triadic interactions can benefit the development of a number of linguistic and communication skills [@barton_joint_1991; @dunn_becoming_1989]. Second-borns may also benefit from overheard speech in their input, supporting the acquisition of nouns and even more complex lexical categories [@floor_can_2006; @oshima-takane_birth_1996]. For infants with one sibling, the benefits of observing/overhearing interactions between sibling and caregiver, as well as the possibility for partaking in such interactions, may outweigh the decrease in some aspects of the input (i.e., in our data, only observed in object presence). Having more than one sibling may throw this off-balance.
 <!-- eb2cl: well put! -->
@@ -802,7 +889,7 @@ Importantly, the present results make no claims about eventual outcomes for thes
 <!-- eb2cl:yes! -->
 
 ### Limitations
-Of course, the ‘success’ of early language development is defined by how success is measured. Here we chose word production as our measure of linguistic capability; we did not consider other equally valid measures such as language comprehension or early social-interaction skills. Similarly, our input measures focused on nouns; other lexical classes may reveal different effects, though they are generally far sparser in production until toddlerhood. There is also some imbalance in group sizes across our data; our sample was not pre-selected for sibling number, and so group sizes are unmatched across the analysis. Including a larger number of infants with 2+ siblings may have revealed a different pattern of results. Finally, more work across wider and larger populations is necessary to unpack the generalizability of the present results. Our sample is reflective of average household sizes in middle-class families across North America and Western Europe [@office_for_national_statistics_families_2018; @united_states_census_bureau_household_2010], but it is not unusual in some communities and parts of the world for households to include between three and six children on average [@institute_for_family_studies_world_2019]. Adding to this, it is also necessary to consider cross-cultural differences in the way children are addressed by their parents, other caretakers, and other children [@casillas_early_2019; @schneidman_language_2012; bunce_cross-cultural_2020]. For instance, Bunce and colleagues [-bunce_cross-cultural_2020] find relatively similar rates of target child directed speech across US, Canadian, Argentinian, UK, Papuan and Mayan samples, some differences in who the input comes from, and large effects of number of talkers present. These results suggest that caution is advisable before generalizing the current results to any other socio-cultural contexts, but also leave open exciting open question regarding what variability in experiences do--or don't--change about early language interaction and development. 
+Of course, the ‘success’ of early language development is defined by how success is measured. Here we chose word production as our measure of linguistic capability; we did not consider other equally valid measures such as language comprehension or early social-interaction skills. Similarly, our input measures focused on nouns; other lexical classes may reveal different effects, though they are generally far sparser in production until toddlerhood. There is also some imbalance in group sizes across our data; our sample was not pre-selected for sibling number, and so group sizes are unmatched across the analysis. Including a larger number of infants with 2+ siblings may have revealed a different pattern of results. Finally, more work across wider and larger populations is necessary to unpack the generalizability of the present results. Our sample is reflective of average household sizes in middle-class families across North America and Western Europe [@office_for_national_statistics_families_2018; @united_states_census_bureau_household_2010], but it is not unusual in some communities and parts of the world for households to include between three and six children on average [@institute_for_family_studies_world_2019]. Adding to this, it is also necessary to consider cross-cultural differences in the way children are addressed by their parents, other caretakers, and other children [@casillas_early_2019; @shneidman_language_2012; @bunce_cross-cultural_2020]. For instance, Bunce and colleagues [-bunce_cross-cultural_2020] find relatively similar rates of target child directed speech across US, Canadian, Argentinian, UK, Papuan and Mayan samples, some differences in who the input comes from, and large effects of number of talkers present. These results suggest that caution is advisable before generalizing the current results to any other socio-cultural contexts, but also leave open exciting open question regarding what variability in experiences do--or don't--change about early language interaction and development. 
 <!-- eb2cl: still ref'd the ones you had but added the more apples to apples aclew one (and added it to bib)-->
 
 ### Conclusion

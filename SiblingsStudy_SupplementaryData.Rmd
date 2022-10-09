@@ -7,6 +7,8 @@ output:
   pdf_document: default
 ---
 
+Need to remove subj 738 from data 
+
 ```{r setup, include = FALSE}
 library(tidyverse)
 library(dplyr)
@@ -19,7 +21,9 @@ source("DataGathering.R")
 
 ## Correlations with maternal factors
 
-```{r age_mom-Sibling correlation, message=TRUE, warning=FALSE}
+There were no correlations between sibling number or child word production and maternal age/education.
+
+```{r age_mom-Sibling correlation, echo=TRUE, message=TRUE, warning=FALSE}
 
 # Maternal age and number of siblings
 
@@ -64,13 +68,13 @@ cor.age.vocab
 ```
 
 
-```{r input correlations, message=TRUE, warning=FALSE, include=FALSE}
+```{r input correlations, echo=TRUE, message=TRUE, warning=FALSE}
 
 # Maternal input and maternal education
 
 cor.edu.input <- cor.test(
-  x = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$MOTedulevel
+  x = subset(speaker.type, month == 17 & speaker == "MOT" & audio_video == "video")$n
+  , y = subset(speaker.type, month == 17 & speaker == "MOT" & audio_video == "video")$MOTedulevel
   , method = "spearman"
 )
 
@@ -79,18 +83,18 @@ cor.edu.input
 # Maternal input and child vocabulary
 
 cor.vocab.input <- cor.test(
-  x = subset(SiblingsData, month == 17)$Total.words
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
+  x = subset(speaker.type, month == 17 & speaker == "MOT" & audio_video == "video")$Total.words
+  , y = subset(speaker.type, month == 17 & speaker == "MOT" & audio_video == "video")$n
   , method = "spearman"
 )
 
-cor.vocab.input
+cor.vocab.input  # p<.05
 
 # Maternal age and child vocabulary
 
 cor.age.input<- cor.test(
-  x = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$n
-  , y = subset(speaker.type, month == 17 & Speaker == "MOT" & audio_video == "video")$age_mom
+  x = subset(speaker.type, month == 17 & speaker == "MOT" & audio_video == "video")$n
+  , y = subset(speaker.type, month == 17 & speaker == "MOT" & audio_video == "video")$age_mom
   , method = "spearman"
 )
 

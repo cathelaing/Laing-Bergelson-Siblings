@@ -27,21 +27,12 @@ table.data.summary.sibgroup <-
 table.data.summary.speaker <- 
   speaker.type %>% 
   filter(audio_video == "video"  & 
-           Speaker == "Family.input") %>%
+           caregiver == "FAMILY") %>%
   group_by(SibGroup) %>%
   summarise(mean = mean(n),
             sd = sd(n)) %>%
   mutate(Variable = "N Input utterances, 10-17 months") %>%
   select(Variable, SibGroup, mean, sd)
-
-# table.data.summary.cdi <- 
-#   in.cdi %>% 
-#   filter(audio_video == "video") %>%
-#   group_by(SibGroup) %>%
-#   summarise(mean = mean(PC),
-#             sd = sd(PC)) %>%
-#   mutate(Variable = "% early-acquired words in input") %>%
-#   select(Variable, SibGroup, mean, sd)
 
 table.data.summary.object <- 
   object.presence %>% 
@@ -67,10 +58,4 @@ table.data.summary.sd <- rbind(table.data.summary.sibgroup, table.data.summary.s
          "2 sd" = "2+")
 
 table.data.summary <- table.data.summary.mean %>% left_join(table.data.summary.sd) %>%
-  select(Variable, `none m`, `none sd`, `1 m`, `1 sd`, `2 m`, `2 sd`)# %>%
-  # rename("mean" = "none m",
-  #        "sd" = "none sd",
-  #        "mean" = "1 m",
-  #        "sd" = "1 sd",
-  #        "mean" = "2 m",
-  #        "sd" = "2 sd")
+  select(Variable, `none m`, `none sd`, `1 m`, `1 sd`, `2 m`, `2 sd`)

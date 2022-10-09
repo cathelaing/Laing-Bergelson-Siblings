@@ -3,12 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  english,
   man,floatsintext]{apa6}
-\title{Analysing the effect of sibling number on input and output in the first 18 months}
-\author{Catherine Laing\textsuperscript{1} \& Elika Bergelson\textsuperscript{2}}
-\date{}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -38,16 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Analysing the effect of sibling number on input and output in the first 18 months},
-  pdfauthor={Catherine Laing1 \& Elika Bergelson2},
-  pdflang={en-EN},
-  pdfkeywords={Siblings, Lexical Development, Input Effects, Language Acquisition},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -97,6 +82,15 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -166,19 +160,23 @@
 
 \linenumbers
 \usepackage{csquotes}
-\ifXeTeX
-  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
-\else
-  \usepackage[main=english]{babel}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-\fi
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Analysing the effect of sibling number on input and output in the first 18 months},
+  pdfauthor={Catherine Laing1 \& Elika Bergelson2},
+  pdflang={en-EN},
+  pdfkeywords={Siblings, Lexical Development, Input Effects, Language Acquisition},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Analysing the effect of sibling number on input and output in the first 18 months}
+\author{Catherine Laing\textsuperscript{1} \& Elika Bergelson\textsuperscript{2}}
+\date{}
 
 
 \shorttitle{Effect of sibling number on language}
@@ -238,12 +236,12 @@ Sibling number was computed based on parental report in the demographics questio
 \hypertarget{parental-report-data}{%
 \subsubsection{Parental report data}\label{parental-report-data}}
 
-To index each child's language abilities, we draw on data from vocabulary checklists (MacArthur-Bates Communicative Development Inventory, hereafter CDI; Fenson et al., 1994), administered monthly from 0;6 to 1;6, along with a demographics questionnaire; each month's CDI survey came pre-populated with the previous month's answers to save on reduplicated effort. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=10.67, SD=2.23), we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants' lexical development. CDI data for production has been well validated by prior work, including work in this sample (Frank, Braginsky, Yurovsky, \& Marchman, 2021; Moore, Dailey, Garrison, Amatuni, \& Bergelson, 2019). Of the intended 13 CDIs collected for each of the 43 infants, 26 were missing across 11 infants (leaving 559 CDIs in total). 4 infants had 4 CDI data-points missing, while the majority (n = 5) had only one missing data-point.
+To index each child's language abilities, we draw on data from vocabulary checklists (MacArthur-Bates Communicative Development Inventory, hereafter CDI, Fenson et al. 1994), administered monthly from 0;6 to 1;6, along with a demographics questionnaire; each month's CDI survey came pre-populated with the previous month's answers to save on reduplicated effort. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=10.67, SD=2.23), we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants' lexical development. CDI data for production has been well validated by prior work, including work in this sample (Frank, Braginsky, Yurovsky, \& Marchman, 2021; Moore, Dailey, Garrison, Amatuni, \& Bergelson, 2019). Of the intended 13 CDIs collected for each of the 43 infants, 26 were missing across 11 infants (leaving 559 CDIs in total). 4 infants had 4 CDI data-points missing, while the majority (n = 5) had only one missing data-point.
 
 \hypertarget{home-recorded-video-data}{%
 \subsubsection{Home-recorded video data}\label{home-recorded-video-data}}
 
-Every month between 0;6 and 1;5, infants were video-recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. We did not ask families to ensure certain family members were or were not present; our video recordings capture whoever was home at the time families opted to schedule. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this captured the scene from the infants' perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder on a tripod was set up in the room where infants and caretakers were interacting to capture a broader view; families were asked to move this camcorder if they changed rooms. The dataset includes 12 videos for each child except one, who had 11.
+Every month between 0;6 and 1;5, infants were video-recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. We did not ask families to ensure certain family members were or were not present; our video recordings capture whoever was home at the time families opted to schedule. Here we draw on data from the two caregivers who produced the most words in each recording; in 87\% of cases this was the mother, and 8\% of cases the father. Fathers produced the second highest number of words in 49\% of cases. At the child level, the modal caretaker across the 12 videos was the mother for 37 infants, father for 4 infants and grandmother for the remaining 2 infants. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this captured the scene from the infants' perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder on a tripod was set up in the room where infants and caretakers were interacting to capture a broader view; families were asked to move this camcorder if they changed rooms. The dataset includes 12 videos for each child except one, who had one video missing at 0;6.
 
 Object words (i.e.~concrete nouns) deemed to be said to, by, or loudly and clearly near the target child were annotated by trained coders for several properties of interest to the broader project on noun learning. Here we examine annotations for speaker, i.e.~who produced each noun, and object presence, i.e.~whether the noun's referent was present and attended to by the infant (see ``Derived Input Measures'' below). See Bergelson et al. (2019) for further details on the full set of home-recorded data and its annotations.
 
@@ -252,9 +250,9 @@ Object words (i.e.~concrete nouns) deemed to be said to, by, or loudly and clear
 
 Two input measures were derived based on the annotations of concrete nouns in this corpus, each pertaining to an aspect of the input that is established as important in early language learning: \textbf{overall household input} (how many concrete nouns does each infant hear?) and \textbf{object presence} (how much of this input is referentially transparent?), detailed below. We note that neither of these measures are, in our view, interpretable as ``pure'' quality or quantity input measures; we hold that quality and quantity are inextricably linked in general, and specifically we include (by design) only object words that the recordings suggest were possible learning instances for the infants who heard them, wherein quantity and quality are conflated.
 
-\emph{Household Input} reflects how many nouns infants heard in the recordings from their mother, father and (where relevant) siblings. Other speakers' input was relatively rare during video recordings, accounting for 11.42\% of input overall (SD=22.82\%), and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size (Anderson, Graham, Prime, Jenkins, \& Madigan, 2021). This analysis considers only nouns produced by speakers in the child's environment (which is what was annotated in the broader SEEDLingS project); concrete nouns are acquired earlier in development in English and cross-linguistically (Braginsky, Yurovsky, Marchman, \& Frank, 2019). In this corpus (as in any sample of naturalistic interaction) the number of nouns correlates highly with the number of words overall (e.g.~based on automated analyses of adult word counts vs.~manual noun-only annotations; Bulgarelli \& Bergelson, 2020). Thus, noun count in the monthly hour of video data serves as our household input proxy.
+\emph{Household Input} reflects how many nouns infants heard in the recordings from their two main caregivers (operationalized as the two adults who produced the most nouns in each recording; see above) and (where relevant) siblings. Input from speakers other than these two caregivers was relatively rare during video recordings, accounting for 0.45\% of input overall (SD=2.41\%), and is excluded from our analysis. This measure of the early language environment is based on evidence showing strong links between the amount of speech heard in the early input and later vocabulary size (Anderson, Graham, Prime, Jenkins, \& Madigan, 2021). This analysis considers only nouns produced by speakers in the child's environment (which is what was annotated in the broader SEEDLingS project); concrete nouns are acquired earlier in development in English and cross-linguistically (Braginsky, Yurovsky, Marchman, \& Frank, 2019). In this corpus (as in any sample of naturalistic interaction) the number of nouns correlates highly with the number of words overall {[}e.g.~based on automated analyses of adult word counts vs.~manual noun-only annotations; Bulgarelli \& Bergelson, -Bulgarelli \& Bergelson (2020){]}. Thus, noun count in the monthly hour of video data serves as our household input proxy.
 
-\emph{Object Presence} was coded as ``yes,'' ``no,'' or ``unsure'' for each object word annotated in the home recordings based on trained annotators' assessment of whether the referent of the word (i.e.~the object) was present and attended to by the child. In the video data, 169 instances (0.25\% on average per infant) of object presence were marked as unsure; these instances were not included in this analysis.
+\emph{Object Presence} was coded as ``yes'', ``no'', or ``unsure'' for each object word annotated in the home recordings, as produced by the two main caregivers detailed above, based on trained annotators' assessment of whether the referent of the word (i.e.~the object) was present and attended to by the child. In the video data, 182 instances (0.24\% on average per infant) of object presence were marked as unsure; these instances were not included in this analysis.
 
 In the following analyses, we consider infants' total productive vocabulary\footnote{While in principle we could have just used noun productive vocabulary, in practice noun and total vocabulary is correlated \textgreater.95 in this age range; we opted to retain the overall total vocabulary, as lexical class is not a straightforward notion in the early lexicon.} alongside these two input measures -- nouns in household input and extent of object presence in the input -- as a function of sibling number. Since the raw data are highly skewed, log-transformed data and/or proportions are used for statistical analysis (1 was added to the raw infant production data of all infants before log-transformation to retain infants with vocabularies of 0.) All figures display non-transformed data for interpretive ease.
 
@@ -268,7 +266,7 @@ Vocabulary development was highly variable across the 43 infants, according to t
 \begin{center}
 \begin{threeparttable}
 
-\caption{\label{tab:table-sibling-number}Sibling number by female and male infants.}
+\caption{\label{tab:table-sibling-number}Sibling number by female and male infants (n=42). One child was an outlier, and was removed from the CDI analysis and this figure; see text for details.}
 
 \small{
 
@@ -295,7 +293,7 @@ Total & 20 & 23 & 43\\
 \hypertarget{model-structure-for-fixed-and-random-effects}{%
 \subsection{Model structure for fixed and random effects}\label{model-structure-for-fixed-and-random-effects}}
 
-All reported models were generated in R (R Core Team, 2019) using the \emph{lmerTest} package to run linear mixed-effects regression models (Kuznetsova, Brockhoff, \& Christensen, 2017). \emph{P}-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables of interest (CDI score, household input and object presence) differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied (e.g.~with an adjusted \emph{p}-value threshold of .025 for 2 between-group comparisons are done). While we have a substantial amount of data for each participant, our limited \emph{n} means we are under-powered to consider multiple demographic variables simultaneously given the data distribution (e.g.~sibling number and sex, see Table \ref{tab:table-sibling-number}; as luck would have it both infants with 3 sibilngs were girls and both with 4 were boys). See Supplementary Data for correlations between sibling number and maternal age/education.
+All reported models were generated in R (R Core Team, 2019) using the \emph{lmerTest} package to run linear mixed-effects regression models (Kuznetsova, Brockhoff, \& Christensen, 2017). \emph{P}-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables of interest (CDI score, household input and object presence) differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied (e.g.~with an adjusted \emph{p}-value threshold of .025 for 2 between-group comparisons). While we have a substantial amount of data for each participant, our limited \emph{n} means we are under-powered to consider multiple demographic variables simultaneously given the data distribution (e.g.~sibling number and sex, see Table \ref{tab:table-sibling-number}; as luck would have it both infants with 3 siblings were girls and both with 4 were boys). There were no correlations between sibling number or child word production and maternal age/education. See Supplementary Data for further details.
 
 \hypertarget{effect-of-siblings-on-infants-productive-vocabulary}{%
 \subsection{Effect of siblings on infants' productive vocabulary}\label{effect-of-siblings-on-infants-productive-vocabulary}}
@@ -364,12 +362,18 @@ In terms of our grouped sibling variable (i.e.~0 vs.~1 vs.~2+ siblings) infants 
 \hypertarget{effect-of-siblings-on-infants-input}{%
 \subsection{Effect of siblings on infants' input}\label{effect-of-siblings-on-infants-input}}
 
-Having established that infants' productive vocabulary varied as a function of how many siblings in all but the binary version of the measure (0 vs.~\textgreater0 siblings), we turn to our input measures to test whether \emph{input} varied by a child's sibling status. For these analyses we report here the group sibling division (0 vs.~1 vs.~2+) for as this lets us keep relatively similar Ns across groups, thus making variance more comparable for post-hoc comparisons (the discrete sibling number (0-4) version is reported for completeness in the supplementals; results hold for object presence but diverged somewhat for overall household input). We also now include the child whose who was a multi-month vocabulary outlier above given that input and vocabulary are not tested in the same model.
+Having established that infants' productive vocabulary varied as a function of how many siblings in all but the binary version of the measure (0 vs.~\textgreater0 siblings), we turn to our input measures to test whether \emph{input} varied by a child's sibling status. For these analyses we report here the group sibling division (0 vs.~1 vs.~2+) as this lets us keep relatively similar Ns across groups, thus making variance more comparable for post-hoc comparisons (the discrete sibling number (0-4) version is reported for completeness in the supplementals; results hold for object presence but diverged somewhat for overall household input). We also now include the child whose who was a multi-month vocabulary outlier above given that input and vocabulary are not tested in the same model. One infant of the full sample of 43 infants was an outlier in that they heard substantially more input words and words with object presence than all the other infants in the sample in four of their recording sessions. Given that these sessions were not contiguous, we opted to keep this infant in the analyses reported below, though all results hold when they are removed from our sample (see Supplementary Information).
 
-We first tested for the effect of infant sex and age on our two input measures. Models of nouns in the input were a better fit when both age and sex were included alongside a random effect of infant, relative to a model with only this random effect (\emph{p}s \textless{} .042), while age (\emph{p} = .002) but not sex (\emph{p} = .172) improved model fit for object presence. Significant variables will be added to the relevant models below. See Supplementary Data for correlations between input and maternal education/age.
+While we didn't have strong a priori expectations about how overall input or object presence would vary by age or sex, these were included in initial model comparisons to see if they improved fit alongside a random effect of infant. Both variables improved fit for the input model, and only age did for the object presence model. Thus our baseline models include these sets of control variables, respectively. See Table \ref{tab:table-input-model-summary} for final model estimates.
 
-\hypertarget{parental-input}{%
-\subsubsection{Parental Input}\label{parental-input}}
+\hypertarget{caregiver-input}{%
+\subsubsection{Caregiver Input}\label{caregiver-input}}
+
+We tested overall quantity of input (aggregated across the two main caregivers, as outlined above, and siblings) in our model alongside age, sex and subject, as reported above, and a significant effect was found for the effect of sibling group (\(\chi^2 (2)\) = 9.95, \emph{p}=.007). Infants with one sibling heard on average 0.71\% more words than those with no siblings in any given hour-long recording, while infants with two or more siblings heard 51\% fewer words.
+
+We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (\emph{W}=7, \emph{p}\textless{} .001; Bonferroni-corrected \emph{p}-threshold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (\emph{W}=133, \emph{p} = .917). See Table \ref{tab:table-data-summary} for overall group differences (M and SD) in amount of input.
+
+While we operationalized caregiver input in our models as input speech from the two adults who produced the most words in any given session. In 50.56\% of cases this was the mother or father. Looking specifically now at input from mothers and fathers, as opposed to other speakers in the recordings, maternal input\footnote{One family in our sample had two mothers; rather than artificially assigning one parent to another category, we averaged both mothers' input for this child; we acknowledge that this is an imperfect solution but found it better than the alternatives.} accounted for 75\% of object words in the data overall (M=207.96, Mdn=178.29, SD=108.23). Fathers accounted for an average of 15\% (M=53.15, Mdn=29, SD=59.53), while infants with siblings received around 11\% of their input from their brothers and sisters (M=22.44, Mdn=17.50, SD=19.34). See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-Speaker-count}.
 
 \begin{table}
 
@@ -381,8 +385,8 @@ We first tested for the effect of infant sex and age on our two input measures. 
 \cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-5} \cmidrule(l{3pt}r{3pt}){6-7}
 \multicolumn{1}{c}{Variable} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{SD} \\
 \cmidrule(l{3pt}r{3pt}){1-1} \cmidrule(l{3pt}r{3pt}){2-2} \cmidrule(l{3pt}r{3pt}){3-3} \cmidrule(l{3pt}r{3pt}){4-4} \cmidrule(l{3pt}r{3pt}){5-5} \cmidrule(l{3pt}r{3pt}){6-6} \cmidrule(l{3pt}r{3pt}){7-7}
-\% object presence in input, 10-17 months & 0.67 & 0.15 & 0.56 & 0.15 & 0.46 & 0.18\\
-N Input utterances, 10-17 months & 180.63 & 124.85 & 184.43 & 84.76 & 100.19 & 52.80\\
+\% object presence in input, 10-17 months & 0.67 & 0.15 & 0.56 & 0.15 & 0.47 & 0.17\\
+N Input utterances, 10-17 months & 199.40 & 118.73 & 188.66 & 82.92 & 110.35 & 50.62\\
 Productive Vocabulary 18m (CDI) & 58.89 & 60.76 & 92.64 & 111.42 & 13.00 & 9.49\\
 \bottomrule
 \end{tabular}
@@ -391,14 +395,10 @@ Productive Vocabulary 18m (CDI) & 58.89 & 60.76 & 92.64 & 111.42 & 13.00 & 9.49\
 \begin{figure}
 \centering
 \includegraphics{SiblingsStudyText_files/figure-latex/Figure-Speaker-count-1.pdf}
-\caption{\label{fig:Figure-Speaker-count}Mean number of words produced by Mothers, Fathers and Siblings, as well as total family input (mother + father + sibling(s)), across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means.}
+\caption{\label{fig:Figure-Speaker-count}Mean number of words produced by Mothers, Fathers and Siblings, as well as total family input (mother + father + sibling(s)), across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means. In the case where the infant had two mothers, mean maternal input is shown.}
 \end{figure}
 
-Mothers provided the largest proportion of the infants' overall input across the sample (81\%, M=136.71 object words, Mdn=115, SD=112.16). Fathers accounted for an average of 13\% (M=18.81, Mdn=0, SD=43.37), while infants with siblings received around 6\% of their input from their brothers and sisters (M=15.84, Mdn=10, SD=19.19). See Table \ref{tab:table-data-summary} and Figure \ref{fig:Figure-Speaker-count}. We tested overall quantity of input (aggregated across mothers, fathers, and siblings) in our model alongside age, sex and subject, as reported above, and a significant effect was found for the effect of sibling group (\(\chi^2 (2)\) = 14.66, \emph{p}=.001).
-
-We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (\emph{W}=4, \emph{p}\textless{} .001; Bonferroni-corrected \emph{p}-threshold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (\emph{W}=117, \emph{p} = .506). On average, in any given hour-long recording, infants with no siblings heard 0.50 \emph{fewer} object words in their input than those with one sibling, and 80 more than those with two or more siblings. Infants with one sibling heard 80 more object words than those with two or more siblings. See Table \ref{tab:table-data-summary} for overall group differences (M and SD) in amount of input.
-
-Next, we tested how much of that input came from siblings (for infants who had them). Overall, for infants who had siblings, at least one other child was present in 70.72\% of recordings (n = 263). Wilcoxon Rank Sum tests showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (\emph{W}=43, \emph{p}=.316). Looking at caregivers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (\emph{W}=12, \emph{p}=.001), while there was no difference between those with one vs.~no siblings (\emph{W}=126, \emph{p} = .727). Finally, amount of paternal input did not differ between groups (one vs.~none: \emph{W}=161, \emph{p} = .395; one vs.~2+: \emph{W}=45, \emph{p}=.382).
+Overall, for infants who had siblings, at least one other child was present in 29.28 and 70.72\% of recordings (n = 263 and 263). Wilcoxon Rank Sum tests comparing mean monthly input showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (\emph{W}=39, \emph{p}=.209). Looking at mothers and fathers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (\emph{W}=4, \emph{p}=\textless{} .001), while there was no difference between those with one vs.~no siblings (\emph{W}=117, \emph{p} = .754). Finally, amount of paternal input did not differ between groups (one vs.~none: \emph{W}=114, \emph{p} = .559; one vs.~2+: \emph{W}=18, \emph{p}=.462).
 
 \hypertarget{object-presence}{%
 \subsubsection{Object presence}\label{object-presence}}
@@ -409,7 +409,26 @@ Next, we tested how much of that input came from siblings (for infants who had t
 \caption{\label{fig:Figure-object-presence}Proportion of input words produced with object presence across sibling groups. Error bars and black triangles show 95\% CIs and mean proportion of object presence across sibling groups. Dots indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity.}
 \end{figure}
 
-On average, 59\% of annotated utterances included a referent that was present and attended to by the infant (Mdn=0.59, SD=0.14). See Table \ref{tab:table-data-summary}. Consistent with our hypothesis that infants with more siblings would hear fewer words in referentially transparent conditions (i.e.~they would experience lower object presence) than those with fewer siblings, our models reveal a significant effect for sibling group on object presence (\(\chi^2 (2)\) = 25.17, \emph{p}\textless{} .001). See Figure \ref{fig:Figure-object-presence}. Infants with no siblings experienced 20\% more object presence in their input than those with two or more siblings, and 10\% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (\emph{W}=224, \emph{p}=.001; Bonferroni-corrected \emph{p}-threshold = .025). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (\emph{W}=20, \emph{p}=.009).
+\begin{longtable}[t]{ccccccc}
+\caption{\label{tab:table-input-model-summary}Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group. Age in months was included as a fixed effect in both models, sex was included in the caregiver input model only; subject was included as a random effect.}\\
+\toprule
+Variable & Effect & Estimate & Std. Error & df & t value & p value\\
+\midrule
+Caregiver input & Intercept & 4.79 & 0.13 & 74.30 & 36.39 & <0.001\\
+ & SibGroupOne & 0.01 & 0.15 & 43.02 & 0.05 & 0.961\\
+ & SibGroup2+ & -0.51 & 0.16 & 42.99 & -3.13 & 0.003\\
+ & month & 0.04 & 0.01 & 472.05 & 6.36 & <0.001\\
+ & sexM & -0.19 & 0.13 & 43.01 & -1.50 & 0.140\\
+\midrule
+\addlinespace
+Object presence & Intercept & 0.61 & 0.03 & 209.32 & 22.98 & <0.001\\
+ & SibGroupOne & -0.11 & 0.03 & 43.09 & -4.00 & <0.001\\
+ & SibGroup2+ & -0.20 & 0.03 & 43.00 & -6.47 & <0.001\\
+ & month & 0.01 & 0.00 & 472.15 & 2.86 & 0.004\\
+\bottomrule
+\end{longtable}
+
+On average, 59\% of annotated utterances included a referent that was present and attended to by the infant (Mdn=0.60, SD=0.13). See Table \ref{tab:table-data-summary}. Consistent with our hypothesis that infants with more siblings would hear fewer words in referentially transparent conditions (i.e.~they would experience lower object presence) than those with fewer siblings, our models reveal a significant effect for sibling group on object presence (\(\chi^2 (2)\) = 31.08, \emph{p}\textless{} .001). See Table \ref{tab:} and Figure \ref{fig:Figure-object-presence}. Infants with no siblings experienced \% more object presence in their input than those with two or more siblings, and \% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (\emph{W}=237, \emph{p}=\textless{} .001; Bonferroni-corrected \emph{p}-threshold = .025). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (\emph{W}=22, \emph{p}=.014).
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -423,9 +442,9 @@ Importantly, and in contrast with some previous research (Hoff-Ginsberg, 1998; O
 
 When we considered the effect of sibling status -- that is, whether or not infants had any siblings, disregarding specific sibling number -- our findings showed that having siblings made no difference to infants' lexical production capacities. This contrasts with Hoff-Ginsberg (1998), who found that, by 18 months, laterborns exhibit lower language skills. However, Oshima-Takane and colleagues (1996) found no overall differences between first- and second-born children across a range of language measures taken at 21 months. Our results suggest that considering \emph{sibling quantity} may be a more sensitive way to reveal demographic effects than their (coarser-grained) first- vs.~later-born status. We find that more older siblings a child had, the lower their reported productive vocabulary at 18 months. This adds to findings from Fenson and colleagues (1994), who found a weak but significant negative correlation between birth order and production of both words and gestures. Controlling for age, our model showed that for each additional older sibling, infants produced more than 30\% fewer words by 18 months.
 
-While infants with more siblings heard less input speech overall, having one sibling did not significantly reduce the number of nouns in an infant's input. This is in direct contrast with reports from the literature; Hoff (2006) states that ``when a sibling is present, each child receives less speech directed solely at\ldots her \emph{because mothers produce the same amount of speech whether interacting with one or two children}'' (p.67, italics added). While this does not appear to be the case in the present dataset, it may be due to the circumstances of the home-recorded data: while siblings were present in many of the recordings (70.72\% of recordings in which the target child had a sibling), given the focus of the data collection, parents may have had a tendency to direct their attention - and consequently their linguistic input - more towards the target child; of course our samples also differed in other ways (e.g.~sociocultural context) that may have influenced the results as well. Alternatively, our results may diverge from those of Hoff (2006) due to the nature of our input measure, which only took nouns into account. That said, we find this alternative explanation unlikely given work by Bulgarelli and Bergelson (2020) showing that nouns are a reliable proxy for overall input in this dataset, suggesting that this measure provides an appropriate representation of overall input directed at the target child.
+While infants with more siblings heard less input speech overall, having one sibling did not significantly reduce the number of nouns in an infant's input. This is in direct contrast with reports from the literature; Hoff (2006) states that ``when a sibling is present, each child receives less speech directed solely at\ldots her \emph{because mothers produce the same amount of speech whether interacting with one or two children}'' (p.67, italics added). While this does not appear to be the case in the present dataset, it may be due to the circumstances of the home-recorded data: while siblings were present in many of the recordings (29.28 and 70.72\% of recordings in which the target child had a sibling), given the focus of the data collection, parents may have had a tendency to direct their attention - and consequently their linguistic input - more towards the target child; of course our samples also differed in other ways (e.g.~sociocultural context) that may have influenced the results as well. Alternatively, our results may diverge from those of Hoff (2006) due to the nature of our input measure, which only took nouns into account. That said, we find this alternative explanation unlikely given work by Bulgarelli and Bergelson (2020) showing that nouns are a reliable proxy for overall input in this dataset, suggesting that this measure provides an appropriate representation of overall input directed at the target child.
 
-In contrast to the other results, our analysis of object presence showed a more linear `sibling effect.' In this case, even having one sibling led to fewer word-object pairs presented in the input. Presence of a labeled object with congruent input speech has been found to support early word learning across several studies. For instance, Bergelson and Aslin (2017) combined analysis of this home-recorded data at six months with an experimental study to show that word-object co-presence in naturalistic caregiver input correlated with comprehension of nouns (tested using eye-tracking.) Relatedly, Gogate and colleagues (2000) propose that contingent word production supports the learning of novel word-object combinations, with ``multimodal motherese'' - whereby a target object word is produced in movement or touch-based synchrony with its referent - supporting word learning. More broadly, lower rates of referential transparency for common non-nouns like \emph{hi} and \emph{uh-oh} have been proposed to potentially explain why these words are learned later than common concrete nouns (Bergelson \& Swingley, 2013). While the present results on object presence don't speak directly to word learning, they do suggest that this potentially helpful learning support is less available for children with more siblings.
+In contrast to the other results, our analysis of object presence showed a more linear `sibling effect'. In this case, even having one sibling led to fewer word-object pairs presented in the input. Presence of a labeled object with congruent input speech has been found to support early word learning across several studies. For instance, Bergelson and Aslin (2017) combined analysis of this home-recorded data at six months with an experimental study to show that word-object co-presence in naturalistic caregiver input correlated with comprehension of nouns (tested using eye-tracking.) Relatedly, Gogate and colleagues (2000) propose that contingent word production supports the learning of novel word-object combinations, with ``multimodal motherese'' - whereby a target object word is produced in movement or touch-based synchrony with its referent - supporting word learning. More broadly, lower rates of referential transparency for common non-nouns like \emph{hi} and \emph{uh-oh} have been proposed to potentially explain why these words are learned later than common concrete nouns (Bergelson \& Swingley, 2013). While the present results on object presence don't speak directly to word learning, they do suggest that this potentially helpful learning support is less available for children with more siblings.
 
 \hypertarget{siblingese-as-a-learning-opportunity}{%
 \subsubsection{Siblingese as a learning opportunity?}\label{siblingese-as-a-learning-opportunity}}
@@ -439,7 +458,7 @@ Importantly, the present results make no claims about eventual outcomes for thes
 \hypertarget{limitations}{%
 \subsubsection{Limitations}\label{limitations}}
 
-Of course, the `success' of early language development is defined by how success is measured. Here we chose word production as our measure of linguistic capability; we did not consider other equally valid measures such as language comprehension or early social-interaction skills. Similarly, our input measures focused on nouns; other lexical classes may reveal different effects, though they are generally far sparser in production until toddlerhood. There is also some imbalance in group sizes across our data; our sample was not pre-selected for sibling number, and so group sizes are unmatched across the analysis. Including a larger number of infants with 2+ siblings may have revealed a different pattern of results. Finally, more work across wider and larger populations is necessary to unpack the generalizability of the present results. Our sample is reflective of average household sizes in middle-class families across North America and Western Europe (Office for National Statistics, 2018; United States Census Bureau, 2010), but it is not unusual in some communities and parts of the world for households to include between three and six children on average (Institute for Family Studies \& Wheatley Institution, 2019). Adding to this, it is also necessary to consider cross-cultural differences in the way children are addressed by their parents, other caretakers, and other children {[}Casillas, Brown, \& Levinson (2019); (\textbf{schneidman\_language\_2012?}); bunce\_cross-cultural\_2020{]}. For instance, Bunce and colleagues {[}-bunce\_cross-cultural\_2020{]} find relatively similar rates of target child directed speech across US, Canadian, Argentinian, UK, Papuan and Mayan samples, some differences in who the input comes from, and large effects of number of talkers present. These results suggest that caution is advisable before generalizing the current results to any other socio-cultural contexts, but also leave open exciting open question regarding what variability in experiences do--or don't--change about early language interaction and development.
+Of course, the `success' of early language development is defined by how success is measured. Here we chose word production as our measure of linguistic capability; we did not consider other equally valid measures such as language comprehension or early social-interaction skills. Similarly, our input measures focused on nouns; other lexical classes may reveal different effects, though they are generally far sparser in production until toddlerhood. There is also some imbalance in group sizes across our data; our sample was not pre-selected for sibling number, and so group sizes are unmatched across the analysis. Including a larger number of infants with 2+ siblings may have revealed a different pattern of results. Finally, more work across wider and larger populations is necessary to unpack the generalizability of the present results. Our sample is reflective of average household sizes in middle-class families across North America and Western Europe (Office for National Statistics, 2018; United States Census Bureau, 2010), but it is not unusual in some communities and parts of the world for households to include between three and six children on average (Institute for Family Studies \& Wheatley Institution, 2019). Adding to this, it is also necessary to consider cross-cultural differences in the way children are addressed by their parents, other caretakers, and other children (Bunce et al., 2020; Casillas, Brown, \& Levinson, 2019; Shneidman \& Goldin-Meadow, 2012). For instance, Bunce and colleagues {[}-bunce\_cross-cultural\_2020{]} find relatively similar rates of target child directed speech across US, Canadian, Argentinian, UK, Papuan and Mayan samples, some differences in who the input comes from, and large effects of number of talkers present. These results suggest that caution is advisable before generalizing the current results to any other socio-cultural contexts, but also leave open exciting open question regarding what variability in experiences do--or don't--change about early language interaction and development.
 
 \hypertarget{conclusion}{%
 \subsubsection{Conclusion}\label{conclusion}}
@@ -480,6 +499,9 @@ Braginsky, M., Yurovsky, D., Marchman, V. A., \& Frank, M. C. (2019). Consistenc
 
 \leavevmode\vadjust pre{\hypertarget{ref-bulgarelli_look_2020}{}}%
 Bulgarelli, F., \& Bergelson, E. (2020). Look who's talking: {A} comparison of automated and human-generated speaker tags in naturalistic day-long recordings. \emph{Behavior Research Methods}, \emph{52}(2), 641--653. \url{https://doi.org/10.3758/s13428-019-01265-7}
+
+\leavevmode\vadjust pre{\hypertarget{ref-bunce_cross-cultural_2020}{}}%
+Bunce, J., Soderstrom, M., Bergelson, E., Rosemberg, C., Stein, A., Alam, F., \ldots{} Casillas, M. (2020). \emph{A cross-cultural examination of young children's everyday language experiences}. {PsyArXiv}. \url{https://doi.org/10.31234/osf.io/723pr}
 
 \leavevmode\vadjust pre{\hypertarget{ref-cartmill_quality_2013}{}}%
 Cartmill, E. a., Armstrong, B. F., Gleitman, L. R., Goldin-Meadow, S., Medina, T. N., \& Trueswell, J. C. (2013). Quality of early parent input predicts child vocabulary 3 years later. \emph{Proceedings of the National Academy of Sciences of the United States of America}. \url{https://doi.org/10.1073/pnas.1309518110}
@@ -543,6 +565,9 @@ R Core Team. (2019). \emph{R: {A} {Language} {Environment} for {Statistical} {Co
 
 \leavevmode\vadjust pre{\hypertarget{ref-ramirez-esparza_look_2014}{}}%
 Ramírez-Esparza, N., García-Sierra, A., \& Kuhl, P. K. (2014). Look who's talking: Speech style and social context in language input to infants are linked to concurrent and future speech development. \emph{Developmental Science}, \emph{17}(6), 880--891. \url{https://doi.org/10.1016/j.surg.2006.10.010.Use}
+
+\leavevmode\vadjust pre{\hypertarget{ref-shneidman_language_2012}{}}%
+Shneidman, L. A., \& Goldin-Meadow, S. (2012). Language input and acquisition in a mayan village: How important is directed speech? \emph{Developmental Science}, \emph{15}(5), 659--673. \url{https://doi.org/10.1111/j.1467-7687.2012.01168.x}
 
 \leavevmode\vadjust pre{\hypertarget{ref-soderstrom_beyond_2007}{}}%
 Soderstrom, M. (2007). Beyond babytalk: {Re}-evaluating the nature and content of speech input to preverbal infants. \emph{Developmental Review}, \emph{27}(4), 501--532. \url{https://doi.org/10.1016/j.dr.2007.06.002}
