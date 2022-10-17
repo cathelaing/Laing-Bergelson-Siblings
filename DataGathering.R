@@ -18,7 +18,7 @@ library(forcats)
 
 sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
   filter(#audio_video =='video',   # Only use video data
-         !(speaker %in% c('CHI', "EFA", "EFB", "EFS", "EMM"))) %>%    # remove infant productions
+         !(speaker %in% c('CHI', "EFA", "EFB", "EFS", "EMM", "EFE", "GRO", "MBT"))) %>%    # remove infant productions
   dplyr::select(
     audio_video,
     utterance_type, 
@@ -30,16 +30,22 @@ sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
   mutate(basic_level = str_to_lower(basic_level),
          speaker = factor(speaker),
          speaker = fct_collapse(speaker,
-                                "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2", "BTY", "SCU", "STY"),
+                                "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2", "BTY", "SCU", "STY", "SIU"),
                                 "AUNT" = c("AUN", "AU2"),
                                 "UNCLE" = c("UN2", "UNC"),
-                                "BABYSITTER" = c("BSE", "BSJ", "BSK", "BSS"),
-                                "FAT" = c("FTS"),
+                                "BABYSITTER" = c("BSE", "BSJ", "BSK", "BSS", "BSC", "BSB", "BSD", "BSL"),
+                                "FAT" = c("FTS", "FTY", "MFT", "MFV"), # 2 instances of MFT and MFV in the data, in both cases MOT is CG1 and MFT/MFV CG2
                                 "GRP" = c("GP2"),
                                 "GRM" = c("GRA", "GTY"),
                                 "MOT" = c("MBR", "MCU", "MIS", "MTY"), 
-                                "MOT+FAT" = c("MFT", "MFV"),    
-                                "COUSIN" = c("MC2")),  # rename speakers
+                                #"MOT+FAT" = c("MFT", "MFV"),    
+                                "COUSIN" = c("MC2", "COU", "FCO", "MCO"),
+                                "OTHER ADULT" = c("AF2", "AF4", "AF5", "AF6", "AF7", "AF8", "AFA", 
+                                                  "AFB", "AFC", "AFD", "AFH", "AFJ", "AFL", "AFM", 
+                                                  "AFP", "AFR", "AFS", "AFT", "AM1", "AM2", "AM3", "AM6",
+                                                  "AMB","AMC","AMG","AMR", "X12"),
+                                "OTHER CHILD" = c("CFC", "CFR", "CFZ", 
+                                                  "CM1", "CM2")),  # rename speakers
   
          subj = factor(subj),
          month = as.numeric(month))
@@ -92,7 +98,8 @@ speaker.type <- rbind(speaker.type.n, speaker.type.household) %>%
   left_join(SiblingsData) %>%
   mutate(Log.n = log(n+1),
          speaker = as.character(speaker),
-         speaker = ifelse(caregiver == "FAMILY", "Total.input", speaker))
+         speaker = ifelse(caregiver == "FAMILY", "Total.input", speaker)) %>%
+  filter(!(speaker %in% c("OTHER CHILD", "COUSIN")))
 
 all.speaker.data <- speaker.type.household %>% left_join(speaker.type.all)
 

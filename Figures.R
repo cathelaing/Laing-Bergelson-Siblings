@@ -24,7 +24,7 @@ speaker.type2 <- speaker.type %>%
 
 Figure.speaker.count <- ggplot(subset(speaker.type2, speaker %in% c("MOT", "FAT", "SIBLING", "Total.input")), 
                                aes(x=speaker, y=mean.n, color = speaker)) +
-  stat_summary(fun= mean, geom = "point", aes(group = subj), shape = 1, size = 3, position = position_jitter(.1)) +
+  stat_summary(fun= mean, geom = "point", aes(group = subj), shape = 1, size = 2, position = position_jitter(.1)) +
   stat_summary(fun.data = "mean_cl_boot", colour = "red", shape = 17, size = 1) +
   facet_wrap(~SibGroup, ncol=3) +
   scale_x_discrete(limits = c("MOT", "FAT", "SIBLING", "Total.input"), labels = c("Mother", "Father", "Sibling", "Total input")) +
