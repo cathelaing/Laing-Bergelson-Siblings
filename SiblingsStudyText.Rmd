@@ -111,6 +111,8 @@ sibage <- sib.ages %>% filter(SibsYN == "Y") %>% summarise(meandays = mean(age.d
                                                            mindays = min(age.diff.d))
 
 age.diff.inyears <- sibage$mediandays/365
+mean.years <- sibage$meandays/365
+sd.years <- sibage$sddays/365
 minsib <- sibage$mindays/365
 maxsib <- sibage$maxdays/365
 
@@ -119,8 +121,9 @@ maxsib <- sibage$maxdays/365
 
 ### Sibling Details 
 
-Sibling number was computed based on parental report in the demographics questionnaires completed at 0;6 (R: `r sibnums$minsibs`-`r sibnums$maxsibs`). Siblings were on average `r age.diff.inyears` years older than the infants in this study (Mdn days: `r sibage$mediandays`, SD: `r round(sibage$sddays,0)`, R: `r minsib`-`r round(maxsib,0)` years).[^1] All siblings lived in the household with the infant full time, apart from one infant who had two older half siblings (and no other full siblings) who lived with their other parent part of the time. Both older siblings were present for at least some of the monthly recordings. One family had a foster child live in the home for 2 months of data collection, who is not accounted for in our data; the target infant had one sibling. All siblings were older than or of the same age as the infant in question.
+Sibling number was computed based on parental report in the demographics questionnaires completed at 0;6 (Sibling number range: `r sibnums$minsibs`-`r sibnums$maxsibs`). Siblings were on average `r age.diff.inyears` years older than the infants in this study (SD: `r sd.years` years, R: `r minsib`-`r round(maxsib,0)` years).[^1] All siblings lived in the household with the infant full time, apart from one infant who had two older half siblings (and no other full siblings) who lived with their other parent part of the time. Both older siblings were present for at least some of the monthly recordings. One family had a foster child live in the home for 2 months of data collection, who is not accounted for in our data; the target infant had one sibling. All siblings were older than or of the same age as the infant in question.
 <!-- eb2cl: not clear what the range is the referring to in the first sentence, can you clarify? i think it's the # of sibs, right? also can we convert siblings age to years instead of days in sentence 2? -->
+<!-- cl2eb: done -->
 
 [^1]: For six infants, siblings' exact birthdates were not provided, and so age difference was estimated by subtracting the infant's age (6 months) from the sibling's age in years, as listed on the questionnaire (e.g. if a sibling was 5 years old, they were classed as being 4.5 years older than the infant).
 
@@ -194,8 +197,6 @@ modal_speaker <- speaker.type %>% filter(caregiver == "CG1"
 
 ### Home-recorded video data 
 Every month between 0;6 and 1;5, infants were video-recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. We did not ask families to ensure certain family members were or were not present; our video recordings capture whoever was home at the time families opted to schedule. Here we draw on data from the two caregivers who produced the most words in each recording; in `r round((cg1mot/caregiver1)*100,0)`% of cases this was the mother, and `r round((cg1fat/caregiver1)*100,0)`% of cases the father. Fathers produced the second highest number of words in `r round((cg2fat/caregiver2)*100,0)`% of cases (see S2 for a full breakdown of speakers classed as caregivers in the dataset). At the child level, the modal caretaker across the 12 videos was the mother for `r subset(modal_speaker, speaker == "MOT")$n` infants, father for `r subset(modal_speaker, speaker == "FAT")$n` infants and grandmother for the remaining `r subset(modal_speaker, speaker == "GRM")$n` infants. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this captured the scene from the infants’ perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder on a tripod was set up in the room where infants and caretakers were interacting to capture a broader view; families were asked to move this camcorder if they changed rooms. The dataset includes 12 videos for each child at each month we analyzed.
-<!-- eb2cl: added preceding sentence. will need to think on whether this requires any change in analysis; it shouldn't matter for vocab or for % obj presence since that averaged across the months (right?) but for the thing that counted number of nouns that chidl should either be dropped from the relevant analyses or their mean across their other months should be imputed for the missing month or something.  -->
-<!-- cl2eb: the missing video is at 6m so this actually doesn't matter to the analysis since we don't analayse data before 10months//eb2cl:great! actually you're right that we needn't even mention this then bc it'll oly confuse ppl, editing it out. -->
 
 Object words (i.e. concrete nouns) deemed to be said to, by, or loudly and clearly near the target child were annotated by trained coders for several properties of interest to the broader project on noun learning. Here we examine annotations for speaker, i.e. who produced each noun, and object presence, i.e. whether the noun’s referent was present and attended to by the infant (see "Derived Input Measures" below). 
 
@@ -265,10 +266,10 @@ CDI %>% filter(!is.na(Total.words)) %>%
 
 ## Remove 794 from analysis
 
-SiblingsData <- SiblingsData %>% filter(subj != 794 & !month %in% c("06", "07", "08", "09"))
+SiblingsData <- SiblingsData %>% filter(subj != 794 & month >9)
 CDI <- CDI %>% filter(subj != 794)
-speaker.type <- speaker.type %>% filter(!month %in% c("06", "07", "08", "09"))
-object.presence <- object.presence %>% filter(!month %in% c("06", "07", "08", "09"))
+speaker.type <- speaker.type %>% filter(month >9)
+object.presence <- object.presence %>% filter(month >9)
 
 females <- SiblingsData %>% filter(month == 18 & sex == "F") %>% tally()
 
@@ -282,9 +283,6 @@ Our analyses consider infants’ total productive vocabulary[^2] alongside our t
 [^2]: While in principle we could have just used noun productive vocabulary, in practice noun and total vocabulary is correlated >.95 in this age range; we opted to retain the overall total vocabulary, as lexical class is not a straightforward notion in the early lexicon.
 
 Vocabulary development was highly variable across the 43 infants, according to the CDI data we had available. By 18 months, `r nowords` infants produced no words (taken from `r nCDI18` available CDIs at this time-point), while mean productive vocabulary size was `r Nwords$meanwords` words (SD=`r Nwords$sdwords`, Mdn=`r Nwords$mdnwords`). Three infants had substantially larger-than-average (3SDs above the monthly mean) vocabularies at certain time-points in the data; we counted one of these infants as an outlier and remove this child's data from the CDI analysis given that their vocabulary was higher for multiple consecutive months (1;1-1;6). The other two infants had higher vocabularies at 10-11 months only (when variance was quite limited, see Figure 1), and were retained to maximize data inclusion. This left 42 infants (`r females` females) in the analysis of vocabulary size. Infants had one sibling on average (M=`r Nsibs$meansibs`, Mdn=`r Nsibs$mdnsibs`, SD=`r Nsibs$sdsibs`). See Table \@ref(tab:table-sibling-number).
-
-<!-- eb2cl: i think the wording on this is great, i made some microedits. might be worth saying in fig 1 caption that one child who was an outlier was removed from this figure, see text for details. we should also double check/state that no one is an outlier for our other measures but i'd be shocked if they were -->
-<!-- cl2eb: 2 infants have outliers for both input and obj presence - argh! for one it's just one session, the other is 4 recordings.I've addded a note about this below; none of the outputs change with this infant removed so can add this to the SI maybe. Though tbh that feels a bit OTT to me but will do so and then we can remove it if we decide it's not useful.//eb2cl might as well keep it in supplementals for now though i agree it's a little extra;) -->
 
 ```{r table-sibling-number}
 cap = "Sibling number by female and male infants (n=42). One child was an outlier, and was removed from the CDI analysis and this table; see text for details."
@@ -617,7 +615,7 @@ inputTWO.beta <- abs(inputTWO.beta*100)
 
 We tested overall quantity of input (aggregated across the two main caregivers, as outlined above, and siblings) in our model alongside age, sex and subject, as noted above, and a significant effect was found for the effect of sibling group ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*=`r printp(speaker.type_p.value)`). Infants with one sibling heard on average `r round(inputONE.beta,0)`% more words than those with no siblings in any given hour-long recording, while infants with two or more siblings heard `r round(inputTWO.beta,0)`% fewer words. 
 
-We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*`r printp(speaker.type_wilcox_one_two$p.value)`; Bonferroni-corrected *p*-threshold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). See Table \@ref(tab:table-data-summary) for overall group differences (M and SD) in amount of input.
+We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type_wilcox_one_two$p.value)`; Bonferroni-corrected *p*-threshold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`). See Table \@ref(tab:table-data-summary) for overall group differences (M and SD) in amount of input.
 
 ```{r Input - summary, include=FALSE}
 
@@ -765,7 +763,7 @@ speaker.type.FAT_wilcox_one_two <- wilcox.test(
 
 ```
 
-Overall, for infants who had siblings, at least one other child was present in `r sib.present$prop.present`% of recordings (n = `r sib.present$total`). Wilcoxon Rank Sum tests comparing mean monthly input showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (*W*=`r round(speaker.type.SIB_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.SIB_wilcox_one_two$p.value)`). Looking at mothers and fathers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (*W*=`r round(speaker.type.MOT_wilcox_one_two$statistic)`, *p*`r printp(speaker.type.MOT_wilcox_one_two$p.value)`), while there was no difference between those with one vs. no siblings (*W*=`r round(speaker.type.MOT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.MOT_wilcox_none_one$p.value)`). Finally, amount of paternal input did not differ between groups (one vs. none: *W*=`r round(speaker.type.FAT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.FAT_wilcox_none_one$p.value)`; one vs. 2+: *W*=`r round(speaker.type.FAT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_one_two$p.value)`).
+Overall, for infants who had siblings, at least one other child was present in `r sib.present$prop.present`% of recordings (n = `r sib.present$total`). Wilcoxon Rank Sum tests comparing mean monthly input showed no difference between the amount of sibling input received by infants with one sibling compared with those with two or more siblings (*W*=`r round(speaker.type.SIB_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.SIB_wilcox_one_two$p.value)`). Looking at mothers and fathers individually, infants with two or more siblings heard significantly less input from their mothers than those with one sibling (*W*=`r round(speaker.type.MOT_wilcox_one_two$statistic)`, *p*`r printp(speaker.type.MOT_wilcox_one_two$p.value)`), while there was no difference between those with one vs. no siblings (*W*=`r round(speaker.type.MOT_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type.MOT_wilcox_none_one$p.value)`). Finally, amount of paternal input did not differ between groups (one vs. none: *W*=`r round(speaker.type.FAT_wilcox_none_one$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_none_one$p.value)`; one vs. 2+: *W*=`r round(speaker.type.FAT_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type.FAT_wilcox_one_two$p.value)`).
 
 ### Object presence
 

@@ -46,6 +46,7 @@ library(lmerTest)
 library(afex)
 #library(citr)
 library(feather)
+library(ggcorrplot)
 library(corrplot)
 library(kableExtra)
 
@@ -55,10 +56,10 @@ source("DataGathering.R")
 
 demographics <- demographics %>% filter(subj != 351)
 sib.ages <- sib.ages %>% filter(subj != 351)
-SiblingsData <- SiblingsData %>% filter(subj != 351 & !month %in% c("06", "07", "08", "09"))
-CDI <- CDI %>% filter(subj != 351 & !month %in% c("06", "07", "08", "09"))
-speaker.type <- speaker.type %>% filter(subj != 351 & !month %in% c("06", "07", "08", "09"))
-object.presence <- object.presence %>% filter(subj != 351 & !month %in% c("06", "07", "08", "09"))
+SiblingsData <- SiblingsData %>% filter(subj != 351 & month > 9)
+CDI <- CDI %>% filter(subj != 351 & month > 9)
+speaker.type <- speaker.type %>% filter(subj != 351 & month > 9)
+object.presence <- object.presence %>% filter(subj != 351 & month > 9)
 
 # eb2cl: hm wait a sec you have month as a numeric var so those filters aren't actually going to work; please check and correct as needed here and in main
 ```
@@ -68,12 +69,25 @@ object.presence <- object.presence %>% filter(subj != 351 & !month %in% c("06", 
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<!-- eb2cl: we need a bit of a preview of what the SI are going to contain, a little intro summary paragraph to the SI that delineates what the supplement contains (kinda like our infancy one) or even just a table of contents type of list would work! -->
+The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. Full information about the larger study from which this dataset was extracted can be found on the project’s OSF wiki at https://osf.io/rm3ec/. All scripts and data for our analysis can be found at https://github.com/cathelaing/Laing-Bergelson-Siblings.
+
+The analyses below (S1:S5) show:
+
+* S1: re-analysis of caregiver input variables using data from day-long audio recordings  
+* S2: summary of speakers classed as two main caregivers in our input data
+* S3: correlations of input and output measures with maternal factors (age, education) and number of siblings
+* S4: re-analysis of caregiver input variables using discrete sibling number as our main variable of interest 
+* S5: re-analysis of caregiver input variables with one outlier infant
+
+Consistent with our main analysis, all analyses here draw on data from age 10 months, given that the majority of infants did not produce their first word until around 0;11, according to CDI reports. In addition, the twin removed from the main analyses is also removed from the data analysed here.
 
 ## S1: Effect of siblings on infants' input - audio recordings
 
-Our main results analyse input data from the hour-long video recordings taken in the home on a monthly basis. We re-ran our analysis using the home-recorded audio data, which captures a snapshot from a daylong recording using a LENA device (https://www.lena.org/) worn in a vest. In this case, age but not sex was included in both models.
+Our main results analyse input data from the hour-long video recordings taken in the home on a monthly basis. We opted to use the video data in the main analysis due to consistency in data collection across time-points (one hour of video recording per month, per child). We re-ran our analysis using the home-recorded audio data, which captures a snapshot from a daylong recording using a LENA device (https://www.lena.org/) worn in a vest. Between **XX and XX** hours were transcribed per monthly recording; despite variability in the monthly transcriptions, the amount of data included at each month was consistent across the sample. 
+
+Initial model comparisons including the caregiver input/object presence as a dependent variable and age and sex as fixed effects showed no effect for sex on either measure, but an effect of age on both. Age, but not sex, was thus included in our regression models; data was included from age 10 months onwards.
 <!-- eb2cl: i think the reader needs a little more background: how much data per child is this, why did we opt to only use video in the main, and why is age but not sex included? -->
+<!-- cl2eb: see comment in email about hours for audio.  -->
 
 ```{r effects of age and sex on input, include=FALSE}
 
@@ -179,7 +193,12 @@ input.variables.model.summaries.audio <- rbind(input.model.summary.table, table.
 
 ```
 
-Outputs from model comparisons and full model outputs including estimates are shown in Tables \@ref(tab:table-model-comparisons-audio) and \@ref(tab:table-input-model-summary-audio). Results were consistent with the video data for object presence, but not overall input.
+We tested our two input variables using nested model comparisons, where (1) is the baseline model and (2) includes siblings as the variable of interest.
+
+1. caregiver input/object presence (log-transformed) ~ age (months) + (1|subject)
+2. caregiver input/object presence (log-transformed) ~ sibling group + age (months) + (1|subject)
+
+Outputs from these model comparisons and full model outputs including estimates are shown in Tables \@ref(tab:table-model-comparisons-audio) and \@ref(tab:table-input-model-summary-audio). Results were consistent with the video data for object presence, where a significant effect was found for sibling group. Unlike the video data, this effect was not found in the model testing overall input.
 <!-- eb2cl: needs a little more: what model comparison? what full model output? not consistent how? -->
 <!-- for this first pair of tables (and the other versions that also show up below): 
 i find the captions a little confusing. the first one isnt' full model output right, it's just model comparison?
@@ -188,14 +207,14 @@ Here and below can we put the actual model formulas (written out in the text wit
 -->
 
 ```{r table-model-comparisons-audio, echo=FALSE}
-cap = "Full model output from linear mixed effects regression models comparing our two input measures in relation to sibling group in the audio data. Age in months was included as a fixed effect; subject was included as a random effect."
+cap = "Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the audio data. Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group (0 vs. 1 vs. 2+) in the audio data. Age in months was included as a fixed effect; subject was included as a random effect."
 kable(table.input.model.output, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
        caption=cap, digits=2, align="c") 
 ```
 
 ```{r table-input-model-summary-audio, echo=FALSE}
-cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, for the audio data. Age in months was included as a fixed effect in both models and subject was included as a random effect."
+cap = "Full model outputs from two linear mixed effects regression models comparing our input measures (object words produced in caregiver input and object presence) in relation to sibling group (0 vs. 1 vs. 2+), for the audio data. Age in months was included as a fixed effect in both models and subject was included as a random effect."
  kable(input.variables.model.summaries.audio, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
        caption=cap, digits=2, align="c") %>%
@@ -206,9 +225,10 @@ cap = "Full model output from linear mixed effects regression models comparing o
 
 ## S2: Speakers in the dataset
 
-The table below provides a summary of which two caregivers produced the most words in each video recording analyized in the main manuscript. This was usually the mother and/or the father.
+The table below provides a summary of which two caregivers produced the most words in each video recording analyzed in the main manuscript. This was usually the mother and/or the father. In the case where the infant had two mothers, their data was aggregated into the 'Mother' category; in all but two sessions from this family, the two mothers were the two main caregivers. There were 344 hour-long video recordings in total across the 43 infants in the data set; two speakers were present in 146 of these.
 <!-- eb2cl: i'm confused about where the 344 in the caption comes from--oh i see your note, i'd remind readers that these recordings are from 10-17mo not the full range (which i think you also did for the audio analysis above, right?) 
 Hm but then i'm still confused: what shoudl the columns be tallying up to? e.g looks like 515 and 214, but shouldn't it be 344*2?-->
+<!-- cl2eb: yes, fixed now the filtering above is sorted!-->
 
 
 ```{r speaker type count, include = FALSE}
@@ -230,14 +250,35 @@ speakers.sessions <- speaker.type %>% filter(caregiver %in% c("CG1", "CG2") & au
             `Caregiver 2` = sum(CG2,na.rm = T)) %>%
   arrange(desc(`Caregiver 1`))
 
+#sum(speakers.sessions$`Caregiver 1`) # 344
+#sum(speakers.sessions$`Caregiver 2`) # 146
+
 # data with 2 mothers - both are counted in the mother row
 # number of video sessions (from a total of )
 #43*8 # 344 sessions recorded in total
+
+#sum(speakers.sessions$`Caregiver 2`) # 344
+#sum(speakers.sessions$`Caregiver 2`) # 146
+
+# speaker.type %>% filter(caregiver %in% c("CG1", "CG2") & audio_video == "video") %>%
+#   group_by(subj, caregiver, month) %>%
+#   tally() %>% ungroup() %>%
+#   group_by(subj) %>%
+#   tally() %>%
+#   mutate(singlecg = 16-n) %>%
+#   filter(n<16) %>%
+#   summarise(missing_cg = sum(singlecg))
+
+# 198 videos with just 1 caregiver
+
+#344-198
+#198+146 = 344
+
 ```
 
 
 ```{r table-speakers-sessions, echo = FALSE}
-cap = "Numer of sessions in which each adult speaker is one of the two main caregivers. There were 344 hour-long video recordings in total across the 43 infants in the dataset. In the case where the infant had two mothers, their data was aggregated into the 'Mother' category; in all but two sessions from this family, the two mothers were the two main caregivers."
+cap = "Numer of sessions in which each adult speaker is one of the two main caregivers. There were 344 hour-long video sessions in total, and two caregivers were present in 146 of these."
  kable(speakers.sessions, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
        caption=cap, align="c")
@@ -246,6 +287,8 @@ cap = "Numer of sessions in which each adult speaker is one of the two main care
 \newpage
 
 ## S3: Correlations with maternal factors
+
+We tested the extent to which maternal factors such as age and education level correlate with number of siblings, productive vocabulary measures, and amount of input. Spearman's correlation tests confirmed a significant negative correlation between sibling number and words produced in the infant's input by the mother. No other correlations were significant, though weak positive correlations were identified bwteen amount of input and productive vocabulary, and maternal age and sibling number. See Figure \@ref(fig:Figure-correlations).
 
 ```{r age_mom-Sibling correlation, include = FALSE}
 
@@ -264,19 +307,36 @@ corr.data.mat <- SiblingsData %>%
     "Input words" = "n")
 
 corr.matrix <- cor(corr.data.mat, method = "spearman", use="complete.obs")
+testRes = cor.mtest(corr.matrix, conf.level = 0.95)
 
 #mat.corr.matrix <- corrplot(corr.matrix, method = "number")
 
 ```
 
-There were no correlations between sibling number or child word production and maternal age/education. See Figure \@ref(fig:Figure-correlations).
+
 <!-- eb2cl: the fig # isn't rendering in the text & either is the caption -->
 <!-- eb2cl: i'm also a little confused here: it looks like these are spearman correlations coeffecients but you have'nt told the reader that and i'm also not sure how you're inferring that none of the correlations are significant from what you've graphed? based on a quick skim of the help for corrplot, corrplot has various ways to visualize which corrs are significant by a certain threshold but i think you'd have to reformulate your data a bit -->
 
-```{r Figure-correlations, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
+```{r Figure-correlations, echo=FALSE, fig.cap=cap, message=FALSE, warning=FALSE}
+#par(cex = 1.2)
+#ggcorrplot(corr.matrix, hc.order = TRUE, lab = TRUE, p.mat = testRes$p, insig = 'pch')
+
+corrplot(cor(corr.data.mat, method = "spearman", use="complete.obs"),  p.mat = testRes$p, 
+         insig = 'label_sig', 
+         sig.level = c(.001, .01, .05), 
+         outline=TRUE,
+         type = "lower", 
+         diag = FALSE)
+
+#corrplot(corr.matrix, method = "number", conf.level = 0.95)
+cap <- sprintf("Correlation matrix showing Spearman's correlation coefficients between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours and circles represent direction and strength of correlation, whereby bolder colours and larger circles indicate a stronger correlation between variables; blue and red indicate positive/negative correlations, respectively. Asterisks indicate significant p values; where * *p*<.05.")
+
+```
+
+```{r Figure-correlations1, echo=FALSE, fig.cap=cap, message=FALSE, warning=FALSE}
 par(cex = 1.2)
-corrplot(corr.matrix, method = "number")
-cap <- sprintf("Correlation matrix showing correlation coefficient of Spearman's correlation tests between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours represent strength of correlation, whereby bolder colours indicate a stronger correlation between variables.")
+#ggcorrplot(corr.matrix, hc.order = TRUE, lab = TRUE, type = "lower")
+cap <- sprintf("Correlation matrix showing Spearman's correlation coefficients between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours represent strength of correlation, whereby bolder colours indicate a stronger correlation between variables.")
 
 ```
 \newpage
@@ -287,9 +347,19 @@ cap <- sprintf("Correlation matrix showing correlation coefficient of Spearman's
 
 #shapiro.test(speaker.type$n) # not normal
 
-speaker.type.model.null.discrete <- lmerTest::lmer(Log.n ~ month + sex + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+speaker.type.model.0.discrete <- lmerTest::lmer(Log.n ~ 1 + (1|subj), data=subset(speaker.type, audio_video == "video" & 
                                                                                            caregiver == "FAMILY"), REML=FALSE)
-speaker.type.model.discrete <- lmerTest::lmer(Log.n ~ Siblings6 + month + sex + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+speaker.type.model.month.discrete <- lmerTest::lmer(Log.n ~ month + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+speaker.type.model.sex.discrete <- lmerTest::lmer(Log.n ~ sex + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+#anova(speaker.type.model.0.discrete,speaker.type.model.month.discrete) # significant
+#anova(speaker.type.model.0.discrete,speaker.type.model.sex.discrete) # not significant
+
+speaker.type.model.null.discrete <- lmerTest::lmer(Log.n ~ month + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+speaker.type.model.discrete <- lmerTest::lmer(Log.n ~ Siblings6 + month + (1|subj), data=subset(speaker.type, audio_video == "video" & 
                                                                                            caregiver == "FAMILY"), REML=FALSE)
 
 speaker.type_anova.discrete <- anova(speaker.type.model.discrete, speaker.type.model.null.discrete) %>% #p<.01
@@ -301,7 +371,9 @@ input.model.summary.table.discrete <- input.model.summary.discrete$coefficients 
   as.data.frame %>%
   rename("p value" = "Pr(>|t|)") %>%
   rownames_to_column(var="Effect") %>%
-  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect),
+         Effect = fct_recode(Effect,
+                             "n Siblings" = "Siblings6")) %>%
   # printnum(
   #   digits = c(2, 2, 2, 2, 3, 3)) %>%
   mutate(`p value` = scales::pvalue(`p value`),
@@ -323,7 +395,12 @@ object.presence.discrete.summary <- object.presence %>%
 ```{r object.presence model discrete, include=FALSE}
 
 object.presence.model.discrete <- lmerTest::lmer(PC ~ Siblings6 + month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
-object.presence.model.null.discrete <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+object.presence.model.null.discrete <- lmerTest::lmer(PC ~ 1 + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+object.presence.model.month.discrete <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+object.presence.model.sex.discrete <- lmerTest::lmer(PC ~ sex + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+
+anova(object.presence.model.null.discrete, object.presence.model.month.discrete)# significant
+anova(object.presence.model.null.discrete, object.presence.model.sex.discrete)  # not significant
 
 object.presence.anova.discrete <- anova(object.presence.model.discrete, object.presence.model.null.discrete) %>% # p<.01
   rename("pval" = `Pr(>Chisq)`)
@@ -334,7 +411,9 @@ table.object.presence.model.discrete.summary <- object.presence.model.summary.di
   as.data.frame %>%
   rename("p value" = "Pr(>|t|)") %>%
   rownames_to_column(var="Effect") %>%
-  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+   mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect),
+         Effect = fct_recode(Effect,
+                             "n Siblings" = "Siblings6")) %>%
   # printnum(
   #   digits = c(2, 2, 2, 2, 3, 3)) %>%
   mutate(`p value` = scales::pvalue(`p value`),
@@ -357,7 +436,14 @@ table.input.model.output.discrete <- rbind(speaker.type_anova.discrete, object.p
 
 ```
 
-As discrete sibling number, as well as sibling group, revealed siblings to be a significant predictor of vocabulary size at 18 months, we re-ran our input models using discrete sibling number as a fixed effect, instead of sibling group. Outputs from model comparisons and full model outputs including estimates are shown in Tables \@ref(tab:table-model-comparisons-discrete) and \@ref(tab:table-input-model-summary-discrete). Results were consistent with those reported for sibling group suggesting both characterizations of siblinghood capture similar relationships among our variables.
+Our main analyses report the effects of sibling group (infants with 0, 1 or 2+ siblings) on our two input measures (number of input words produced by caregivers and object presence). We opted to go with this measure of sibling number owing to more balanced group sizes. Since discrete sibling number (raw number of siblings) also revealed siblings to be a significant predictor of vocabulary size at 18 months, here we re-run our input models using discrete sibling number as a fixed effect, instead of sibling group, to test whether this effect is consistent across our input measures.
+
+Once again, initial model comparisons including the caregiver input/object presence as a dependent variable and age/sex as fixed effects showed no effect for sex on either measure, but an effect of age on both. Age, but not sex, was thus included in our regression models; data was included from age 10 months on-wards. As above, we tested our two input variables using nested model comparisons, where (1) is the baseline model and (2) includes siblings as the variable of interest.
+
+1. caregiver input/object presence (log-transformed) ~ age (months) + (1|subject)
+2. caregiver input/object presence (log-transformed) ~ sibling number + age (months) + (1|subject)
+
+Outputs from model comparisons and full model outputs including estimates are shown in Tables \@ref(tab:table-model-comparisons-discrete) and \@ref(tab:table-input-model-summary-discrete). Results were consistent with those reported for sibling group, suggesting both characterizations of siblinghood capture similar relationships among our variables.
 
 <!-- eb2cl: remind reader what discrete sib # and sib group means and what you put in the main and why (and thus what this SI section adds) -->
 <!-- eb2cl: same comments as for audio section above regarding model stuff. -->
@@ -365,14 +451,14 @@ As discrete sibling number, as well as sibling group, revealed siblings to be a 
 
 
 ```{r table-model-comparisons-discrete, echo = FALSE}
-cap = "Full model output from linear mixed effects regression models comparing our two input measures in relation to discrete sibling number. Age in months was included as a fixed effect; subject was included as a random effect."
+cap = "Results of nested model comparisons testing the effect of discrete sibling number on caregiver input/object presence in the video data. Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling number (R = 0-4). Age in months was included as a fixed effect; subject was included as a random effect."
  kable(table.input.model.output.discrete, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
        caption=cap, digits=2, align="c") 
 ```
 
 ```{r table-input-model-summary-discrete, echo = FALSE}
-cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to discrete sibling number. Age in months was included as a fixed effect in both models and subject was included as a random effect."
+cap = "Full model outputs from two linear mixed effects regression models comparing our input measures (object words produced in caregiver input and object presence) in relation to discrete sibling number (R = 0-4), for the video data. Age in months was included as a fixed effect in both models and subject was included as a random effect."
  kable(input.variables.model.summaries.discrete, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
        caption=cap, digits=2, align="c") %>%
@@ -452,19 +538,20 @@ input.variables.model.summaries.red <- rbind(input.model.summary.table.red, tabl
 
 ```
 
-One infant heard substantially more nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results were consistent when this child was removed from the analysis of input data (n=42). Results were consistent with those reported for sibling group. See Tables \@ref(tab:table-model-comparisons-red) and \@ref(tab:table-input-model-summary-red). 
+One infant heard substantially more (=>3SDs above the mean) nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results reported for sibling group were consistent when this child was removed from the analysis of input data (n=42). See Tables \@ref(tab:table-model-comparisons-red) and \@ref(tab:table-input-model-summary-red). 
+
 <!-- eb2cl: can we simplify sentence 2 and 3 to jsut say all patterns of results in the main analysis hold when this child is removed (if that's true)? -->
 <!-- eb2cl: same comments as above for models; i'd probably put some of the caption info like 3 SDd above the mean etc in the blurb not the caption but not a big deal either way -->
 
 ```{r table-model-comparisons-red, echo = FALSE}
-cap = "Full model output from linear mixed effects regression models comparing our two input measures in relation to sibling group, with one infant removed who was identified as hearing substantially more input speech (3SDs above the group mean) in 4 recordings (n=42). Age in months was included as a fixed effect; subject was included as a random effect."
+cap = "Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with one infant identified as an outlier removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect."
  kable(table.input.model.output.red, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
        caption=cap, digits=2, align="c") 
 ```
 
 ```{r table-input-model-summary-red, echo = FALSE}
-cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, with one infant removed who was identified as hearing substantially more input speech (3SDs above the group mean) in 4 recordings (n=42). Age in months was included as a fixed effect in both models and subject was included as a random effect."
+cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, with one infant removed who was identified as an outlier (n=42). Age in months was included as a fixed effect in both models, sex was included in the model testing caregiver inpit; subject was included as a random effect."
  kable(input.variables.model.summaries.red, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
        caption=cap, digits=2, align="c") %>%

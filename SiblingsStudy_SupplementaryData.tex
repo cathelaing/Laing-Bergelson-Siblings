@@ -3,12 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  english,
   man,floatsintext]{apa6}
-\title{Analysing the effect of sibling number on input and output in the first 18 months: Supplementals}
-\author{Catherine Laing\textsuperscript{1} \& Elika Bergelson\textsuperscript{2}}
-\date{}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -38,16 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Analysing the effect of sibling number on input and output in the first 18 months: Supplementals},
-  pdfauthor={Catherine Laing1 \& Elika Bergelson2},
-  pdflang={en-EN},
-  pdfkeywords={Siblings, Lexical Development, Input Effects, Language Acquisition},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -74,6 +59,15 @@
   \let\oldsubparagraph\subparagraph
   \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -143,19 +137,23 @@
 
 \linenumbers
 \usepackage{csquotes}
-\ifXeTeX
-  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
-\else
-  \usepackage[main=english]{babel}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-\fi
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Analysing the effect of sibling number on input and output in the first 18 months: Supplementals},
+  pdfauthor={Catherine Laing1 \& Elika Bergelson2},
+  pdflang={en-EN},
+  pdfkeywords={Siblings, Lexical Development, Input Effects, Language Acquisition},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Analysing the effect of sibling number on input and output in the first 18 months: Supplementals}
+\author{Catherine Laing\textsuperscript{1} \& Elika Bergelson\textsuperscript{2}}
+\date{}
 
 
 \shorttitle{Effect of sibling number on language: Supplementals}
@@ -171,38 +169,71 @@ Correspondence concerning this article should be addressed to Catherine Laing, D
 \begin{document}
 \maketitle
 
+The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. Full information about the larger study from which this dataset was extracted can be found on the project's OSF wiki at \url{https://osf.io/rm3ec/}. All scripts and data for our analysis can be found at \url{https://github.com/cathelaing/Laing-Bergelson-Siblings}.
+
+The analyses below (S1:S5) show:
+
+\begin{itemize}
+\tightlist
+\item
+  S1: re-analysis of caregiver input variables using data from day-long audio recordings\\
+\item
+  S2: summary of speakers classed as two main caregivers in our input data
+\item
+  S3: correlations of input and output measures with maternal factors (age, education) and number of siblings
+\item
+  S4: re-analysis of caregiver input variables using discrete sibling number as our main variable of interest
+\item
+  S5: re-analysis of caregiver input variables with one outlier infant
+\end{itemize}
+
+Consistent with our main analysis, all analyses here draw on data from age 10 months, given that the majority of infants did not produce their first word until around 0;11, according to CDI reports. In addition, the twin removed from the main analyses is also removed from the data analysed here.
+
 \hypertarget{s1-effect-of-siblings-on-infants-input---audio-recordings}{%
 \subsection{S1: Effect of siblings on infants' input - audio recordings}\label{s1-effect-of-siblings-on-infants-input---audio-recordings}}
 
-Our main results analyse input data from the hour-long video recordings taken in the home on a monthly basis. We re-ran our analysis using the home-recorded audio data, which captures a snapshot from a daylong recording using a LENA device (\url{https://www.lena.org/}) worn in a vest. In this case, age but not sex was included in both models.
+Our main results analyse input data from the hour-long video recordings taken in the home on a monthly basis. We opted to use the video data in the main analysis due to consistency in data collection across time-points (one hour of video recording per month, per child). We re-ran our analysis using the home-recorded audio data, which captures a snapshot from a daylong recording using a LENA device (\url{https://www.lena.org/}) worn in a vest. Between \textbf{XX and XX} hours were transcribed per monthly recording; despite variability in the monthly transcriptions, the amount of data included at each month was consistent across the sample.
 
-Outputs from model comparisons and full model outputs including estimates are shown in Tables \ref{tab:table-model-comparisons-audio} and \ref{tab:table-input-model-summary-audio}. Results were consistent with the video data for object presence, but not overall input.
+Initial model comparisons including the caregiver input/object presence as a dependent variable and age and sex as fixed effects showed no effect for sex on either measure, but an effect of age on both. Age, but not sex, was thus included in our regression models; data was included from age 10 months onwards.
+
+We tested our two input variables using nested model comparisons, where (1) is the baseline model and (2) includes siblings as the variable of interest.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  caregiver input/object presence (log-transformed) \textasciitilde{} age (months) + (1\textbar subject)
+\item
+  caregiver input/object presence (log-transformed) \textasciitilde{} sibling group + age (months) + (1\textbar subject)
+\end{enumerate}
+
+Outputs from these model comparisons and full model outputs including estimates are shown in Tables \ref{tab:table-model-comparisons-audio} and \ref{tab:table-input-model-summary-audio}. Results were consistent with the video data for object presence, where a significant effect was found for sibling group. Unlike the video data, this effect was not found in the model testing overall input.
 
 \begin{longtable}[t]{cccc}
-\caption{\label{tab:table-model-comparisons-audio}Full model output from linear mixed effects regression models comparing our two input measures in relation to sibling group in the audio data. Age in months was included as a fixed effect; subject was included as a random effect.}\\
+\caption{\label{tab:table-model-comparisons-audio}Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the audio data. Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group (0 vs. 1 vs. 2+) in the audio data. Age in months was included as a fixed effect; subject was included as a random effect.}\\
 \toprule
 Model & Df & Chisq & p value\\
 \midrule
-Caregiver input & 2 & 3.00 & 0.22\\
-Object presence & 2 & 23.83 & 0.00\\
+Caregiver input & 2 & 2.81 & 0.24\\
+Object presence & 2 & 19.45 & 0.00\\
 \bottomrule
 \end{longtable}
 
 \begin{longtable}[t]{ccccccc}
-\caption{\label{tab:table-input-model-summary-audio}Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, for the audio data. Age in months was included as a fixed effect in both models and subject was included as a random effect.}\\
+\caption{\label{tab:table-input-model-summary-audio}Full model outputs from two linear mixed effects regression models comparing our input measures (object words produced in caregiver input and object presence) in relation to sibling group (0 vs. 1 vs. 2+), for the audio data. Age in months was included as a fixed effect in both models and subject was included as a random effect.}\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 6.15 & 0.13 & 83.68 & 46.58 & <0.001\\
- & SibGroupOne & 0.13 & 0.18 & 42.99 & 0.73 & 0.469\\
- & SibGroup2+ & -0.26 & 0.20 & 42.99 & -1.26 & 0.213\\
- & month & -0.04 & 0.01 & 472.00 & -6.01 & <0.001\\
+Caregiver input & Intercept & 5.23 & 0.18 & 168.46 & 29.32 & <0.001\\
+ & SibGroupOne & 0.13 & 0.20 & 43.00 & 0.65 & 0.518\\
+ & SibGroup2+ & -0.28 & 0.22 & 43.00 & -1.26 & 0.214\\
+ & month & 0.03 & 0.01 & 301.00 & 3.04 & 0.003\\
 \midrule
-Object presence & Intercept & 0.42 & 0.03 & 222.79 & 16.82 & <0.001\\
+Object presence & Intercept & 0.37 & 0.04 & 341.27 & 8.42 & <0.001\\
 \addlinespace
- & SibGroupOne & -0.08 & 0.03 & 43.02 & -3.20 & 0.003\\
- & SibGroup2+ & -0.16 & 0.03 & 43.01 & -5.46 & <0.001\\
- & month & 0.02 & 0.00 & 472.05 & 9.59 & <0.001\\
+ & SibGroupOne & -0.09 & 0.03 & 43.00 & -3.13 & 0.003\\
+ & SibGroup2+ & -0.15 & 0.03 & 43.00 & -4.68 & <0.001\\
+ & month & 0.02 & 0.00 & 301.00 & 6.50 & <0.001\\
 \bottomrule
 \end{longtable}
 
@@ -211,22 +242,22 @@ Object presence & Intercept & 0.42 & 0.03 & 222.79 & 16.82 & <0.001\\
 \hypertarget{s2-speakers-in-the-dataset}{%
 \subsection{S2: Speakers in the dataset}\label{s2-speakers-in-the-dataset}}
 
-The table below provides a summary of which two caregivers produced the most words in each video recording analyized in the main manuscript. This was usually the mother and/or the father.
+The table below provides a summary of which two caregivers produced the most words in each video recording analyzed in the main manuscript. This was usually the mother and/or the father. In the case where the infant had two mothers, their data was aggregated into the `Mother' category; in all but two sessions from this family, the two mothers were the two main caregivers. There were 344 hour-long video recordings in total across the 43 infants in the data set; two speakers were present in 146 of these.
 
 \begin{longtable}[t]{ccc}
-\caption{\label{tab:table-speakers-sessions}Numer of sessions in which each adult speaker is one of the two main caregivers. There were 344 hour-long video recordings in total across the 43 infants in the dataset. In the case where the infant had two mothers, their data was aggregated into the 'Mother' category; in all but two sessions from this family, the two mothers were the two main caregivers.}\\
+\caption{\label{tab:table-speakers-sessions}Numer of sessions in which each adult speaker is one of the two main caregivers. There were 344 hour-long video sessions in total, and two caregivers were present in 146 of these.}\\
 \toprule
 Speaker & Caregiver 1 & Caregiver 2\\
 \midrule
-Mother & 425 & 26\\
-Father & 62 & 121\\
-Grandmother & 21 & 32\\
-Babysitter & 5 & 4\\
-Grandfather & 1 & 9\\
+Mother & 282 & 16\\
+Father & 45 & 82\\
+Grandmother & 11 & 23\\
+Babysitter & 4 & 4\\
+Grandfather & 1 & 5\\
 \addlinespace
-Other Adult & 1 & 11\\
-Aunt & 0 & 8\\
-Uncle & 0 & 3\\
+Other Adult & 1 & 7\\
+Aunt & 0 & 7\\
+Uncle & 0 & 2\\
 \bottomrule
 \end{longtable}
 
@@ -235,40 +266,57 @@ Uncle & 0 & 3\\
 \hypertarget{s3-correlations-with-maternal-factors}{%
 \subsection{S3: Correlations with maternal factors}\label{s3-correlations-with-maternal-factors}}
 
-There were no correlations between sibling number or child word production and maternal age/education. See Figure \ref{fig:Figure-correlations}.
+We tested the extent to which maternal factors such as age and education level correlate with number of siblings, productive vocabulary measures, and amount of input. Spearman's correlation tests confirmed a significant negative correlation between sibling number and words produced in the infant's input by the mother. No other correlations were significant, though weak positive correlations were identified bwteen amount of input and productive vocabulary, and maternal age and sibling number. See Figure \ref{fig:Figure-correlations}.
 
+\begin{figure}
+\centering
 \includegraphics{SiblingsStudy_SupplementaryData_files/figure-latex/Figure-correlations-1.pdf}
+\caption{\label{fig:Figure-correlations}Correlation matrix showing Spearman's correlation coefficients between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours and circles represent direction and strength of correlation, whereby bolder colours and larger circles indicate a stronger correlation between variables; blue and red indicate positive/negative correlations, respectively. Asterisks indicate significant p values; where * \emph{p}\textless.05.}
+\end{figure}
+
 \newpage
 
 \hypertarget{s4-discrete-sibling-number}{%
 \subsection{S4: Discrete sibling number}\label{s4-discrete-sibling-number}}
 
-As discrete sibling number, as well as sibling group, revealed siblings to be a significant predictor of vocabulary size at 18 months, we re-ran our input models using discrete sibling number as a fixed effect, instead of sibling group. Outputs from model comparisons and full model outputs including estimates are shown in Tables \ref{tab:table-model-comparisons-discrete} and \ref{tab:table-input-model-summary-discrete}. Results were consistent with those reported for sibling group suggesting both characterizations of siblinghood capture similar relationships among our variables.
+Our main analyses report the effects of sibling group (infants with 0, 1 or 2+ siblings) on our two input measures (number of input words produced by caregivers and object presence). We opted to go with this measure of sibling number owing to more balanced group sizes. Since discrete sibling number (raw number of siblings) also revealed siblings to be a significant predictor of vocabulary size at 18 months, here we re-run our input models using discrete sibling number as a fixed effect, instead of sibling group, to test whether this effect is consistent across our input measures.
+
+Once again, initial model comparisons including the caregiver input/object presence as a dependent variable and age/sex as fixed effects showed no effect for sex on either measure, but an effect of age on both. Age, but not sex, was thus included in our regression models; data was included from age 10 months on-wards. As above, we tested our two input variables using nested model comparisons, where (1) is the baseline model and (2) includes siblings as the variable of interest.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  caregiver input/object presence (log-transformed) \textasciitilde{} age (months) + (1\textbar subject)
+\item
+  caregiver input/object presence (log-transformed) \textasciitilde{} sibling number + age (months) + (1\textbar subject)
+\end{enumerate}
+
+Outputs from model comparisons and full model outputs including estimates are shown in Tables \ref{tab:table-model-comparisons-discrete} and \ref{tab:table-input-model-summary-discrete}. Results were consistent with those reported for sibling group, suggesting both characterizations of siblinghood capture similar relationships among our variables.
 
 \begin{longtable}[t]{cccc}
-\caption{\label{tab:table-model-comparisons-discrete}Full model output from linear mixed effects regression models comparing our two input measures in relation to discrete sibling number. Age in months was included as a fixed effect; subject was included as a random effect.}\\
+\caption{\label{tab:table-model-comparisons-discrete}Results of nested model comparisons testing the effect of discrete sibling number on caregiver input/object presence in the video data. Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling number (R = 0-4). Age in months was included as a fixed effect; subject was included as a random effect.}\\
 \toprule
 Model & Df & Chisq & p value\\
 \midrule
-Caregiver input & 1 & 7.02 & 0.01\\
-Object presence & 1 & 22.98 & 0.00\\
+Caregiver input & 1 & 5.40 & 0.02\\
+Object presence & 2 & 30.45 & 0.00\\
 \bottomrule
 \end{longtable}
 
 \begin{longtable}[t]{ccccccc}
-\caption{\label{tab:table-input-model-summary-discrete}Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to discrete sibling number. Age in months was included as a fixed effect in both models and subject was included as a random effect.}\\
+\caption{\label{tab:table-input-model-summary-discrete}Full model outputs from two linear mixed effects regression models comparing our input measures (object words produced in caregiver input and object presence) in relation to discrete sibling number (R = 0-4), for the video data. Age in months was included as a fixed effect in both models and subject was included as a random effect.}\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 4.83 & 0.13 & 79.35 & 38.53 & <0.001\\
- & Siblings6 & -0.16 & 0.06 & 42.99 & -2.76 & 0.008\\
- & month & 0.04 & 0.01 & 472.04 & 6.38 & <0.001\\
- & sexM & -0.20 & 0.13 & 43.00 & -1.51 & 0.138\\
+Caregiver input & Intercept & 4.80 & 0.16 & 272.03 & 30.38 & <0.001\\
+ & n Siblings & -0.15 & 0.06 & 43.00 & -2.40 & 0.021\\
+ & month & 0.03 & 0.01 & 301.00 & 3.02 & 0.003\\
+Object presence & Intercept & 0.55 & 0.04 & 328.26 & 12.39 & <0.001\\
 \midrule
-Object presence & Intercept & 0.59 & 0.03 & 218.11 & 22.45 & <0.001\\
+ & n Siblings & -0.08 & 0.01 & 43.00 & -5.31 & <0.001\\
 \addlinespace
- & Siblings6 & -0.07 & 0.01 & 43.00 & -5.51 & <0.001\\
- & month & 0.01 & 0.00 & 472.13 & 2.87 & 0.004\\
+ & month & 0.01 & 0.00 & 301.00 & 2.98 & 0.003\\
 \bottomrule
 \end{longtable}
 
@@ -277,34 +325,34 @@ Object presence & Intercept & 0.59 & 0.03 & 218.11 & 22.45 & <0.001\\
 \hypertarget{s5-possible-outlier-for-input-data-removed}{%
 \subsection{S5: Possible outlier for input data removed}\label{s5-possible-outlier-for-input-data-removed}}
 
-One infant heard substantially more nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results were consistent when this child was removed from the analysis of input data (n=42). Results were consistent with those reported for sibling group. See Tables \ref{tab:table-model-comparisons-red} and \ref{tab:table-input-model-summary-red}.
+One infant heard substantially more (=\textgreater3SDs above the mean) nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results reported for sibling group were consistent when this child was removed from the analysis of input data (n=42). See Tables \ref{tab:table-model-comparisons-red} and \ref{tab:table-input-model-summary-red}.
 
 \begin{longtable}[t]{cccc}
-\caption{\label{tab:table-model-comparisons-red}Full model output from linear mixed effects regression models comparing our two input measures in relation to sibling group, with one infant removed who was identified as hearing substantially more input speech (3SDs above the group mean) in 4 recordings (n=42). Age in months was included as a fixed effect; subject was included as a random effect.}\\
+\caption{\label{tab:table-model-comparisons-red}Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with one infant identified as an outlier removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect.}\\
 \toprule
 Model & Df & Chisq & p value\\
 \midrule
-Caregiver input & 2 & 10.26 & 0.01\\
-Object presence & 2 & 29.34 & 0.00\\
+Caregiver input & 2 & 9.02 & 0.01\\
+Object presence & 2 & 25.87 & 0.00\\
 \bottomrule
 \end{longtable}
 
 \begin{longtable}[t]{ccccccc}
-\caption{\label{tab:table-input-model-summary-red}Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, with one infant removed who was identified as hearing substantially more input speech (3SDs above the group mean) in 4 recordings (n=42). Age in months was included as a fixed effect in both models and subject was included as a random effect.}\\
+\caption{\label{tab:table-input-model-summary-red}Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, with one infant removed who was identified as an outlier (n=42). Age in months was included as a fixed effect in both models, sex was included in the model testing caregiver inpit; subject was included as a random effect.}\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 4.76 & 0.12 & 80.32 & 38.13 & <0.001\\
- & SibGroupOne & 0.06 & 0.13 & 42.03 & 0.42 & 0.679\\
- & SibGroup2+ & -0.46 & 0.15 & 41.99 & -3.03 & 0.004\\
- & month & 0.04 & 0.01 & 461.06 & 6.24 & <0.001\\
- & sexM & -0.24 & 0.12 & 42.01 & -2.02 & 0.049\\
+Caregiver input & Intercept & 4.85 & 0.17 & 204.78 & 27.94 & <0.001\\
+ & SibGroupOne & 0.06 & 0.14 & 42.00 & 0.40 & 0.688\\
+ & SibGroup2+ & -0.43 & 0.15 & 42.00 & -2.81 & 0.008\\
+ & month & 0.03 & 0.01 & 294.00 & 2.91 & 0.004\\
+ & sexM & -0.22 & 0.12 & 42.00 & -1.87 & 0.069\\
 \midrule
 \addlinespace
-Object presence & Intercept & 0.61 & 0.03 & 202.66 & 22.20 & <0.001\\
- & SibGroupOne & -0.11 & 0.03 & 42.09 & -3.82 & <0.001\\
- & SibGroup2+ & -0.20 & 0.03 & 42.00 & -6.28 & <0.001\\
- & month & 0.01 & 0.00 & 461.15 & 2.91 & 0.004\\
+Object presence & Intercept & 0.56 & 0.05 & 311.42 & 12.24 & <0.001\\
+ & SibGroupOne & -0.12 & 0.03 & 42.00 & -3.66 & <0.001\\
+ & SibGroup2+ & -0.22 & 0.04 & 42.00 & -5.71 & <0.001\\
+ & month & 0.01 & 0.00 & 294.00 & 3.07 & 0.002\\
 \bottomrule
 \end{longtable}
 
