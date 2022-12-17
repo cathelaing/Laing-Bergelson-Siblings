@@ -38,7 +38,6 @@ Note that one child had no siblings at 6 months but had one sibling at age 18 mo
 
 This file extracts the relevant data from the basiclevels dataset (basic_levels_randsubj.csv). This is the dataset incorporating all variables extracted from the SEEDLingS corpus (Bergelson, 2016). All video and audio recordings were annotated for each object word (i.e. concrete noun) produced either by or towards the target child, included in the *basic_level* column. For the analysis of caregiver input, this was filtered to include a) only video data, and b) no productions from the target child. Three main variables were then extracted and joined with the Demographics spreadsheet: object presence, utterance type, and speaker type. These are filtered to include only the data relevant to the caregiver input aspect of the analysis. The following dataframes are then generated:
 
-* *utterance.type*: raw number and proportion of all basic_level words that were produced accross 7 utterance type variables (d = declarative, i = imperative, n = non-utterance (i.e. single-word utterance), q = question, r = reading, s = singing, u = unclear). All utterance types were used for the analyses except in the analysis of reading, when the data was filtered to include only object words produced while reading.
 * *object.presence*: raw number and proportion of all basic_level words that were produced while being touched, held or pointed at by the speaker or baby, or were clearly being visually focused on.
 * *speaker.type*:  raw number and proportion of all utterances produced by the mother (MOT), father (FAT) and sibling/s (SIBLING). An additional variable is created called *Family.input* which aggregates all words produced by the three speaker types
 
@@ -53,29 +52,9 @@ with a list of all basic_level words (as produced by all speakers except the inf
 
 *cdi* - CDI data of all participants, copied from Work study folder on 9th July 2019 and then joined with randomly-generated anonymous subject numbers 
 
-*in_cdi_Wordlist.csv* - This file contains all of the CDI words, with a list of all basic_level words (as produced by all speakers except the infant) that match the CDI words. This was generated using the following code (where 'data' is the all_basic_levels spreadsheet):
-
-```{r}
-in_cdi_queries <- data %>%
-    distinct(basic_level, object) %>%
-    left_join(wordlist, by=c("basic_level"="Word")) %>% # match words to CDI forms using the CDI_wordlist.csv spreadsheet
-    mutate(in_cdi = ifelse(!is.na(Form),T, F)) %>%
-    arrange(desc(in_cdi))
-
-write_csv(in_cdi_queries, "Data/in_cdi_queries.csv")
-```
-
-This generates a spreadsheet with all object words in the data, all corresponding basic_levels, and whether the word matches a CDI word (TRUE or FALSE). If there is a match between object word and CDI word, the CDI word is listed in the Form column.
-
-CL and EB then cross-checked this list in 2017 (updated in 2022!) to make sure that all forms in the list were correctly coded, and to remove any that were not appropriate for the analysis. Since the SEEDLingS corpus looks at object words only, any non-object words (such as onomatopoeia, adjectives, prepositions, etc) were removed from the list. All book titles, character names and people (e.g. 'daddy', 'grandpa') were also removed. The spreadsheet was then saved as in_CDI_wordlist.csv.
-
 ## Other documents ##
 
-*Sibling ages.xslx* includes all relevant information about sibling ages to calculate mean age of siblings.
-
-*Sibling_ages.csv* is a new version of the .xslx spreadsheet above, with SibGroup information added for analysis. Siblings are coded as being 'Younger' or 'Older': younger siblings are <3 years older than the infant, older siblings are older than the infant by 3 years or more.
-
-*CDI_wordlist2* is a database of all words on the CDI, 'matched' against basic levels. Each word on the CDI was compared against the basic levels to determine which variants of the CDI form were produced in the Seedlings data. For example, I did a search for the word 'dog' in the basic_levels spreadsheet to see which variants of 'dog' were produced in the data. This included e.g. 'doggie', 'dogs', 'doggie+dog'. These words were entered into the CDI spreadsheet. The CDI_wordlist2 dataset is therefore a list of all CDI words and all of their variants in the Seedlings data. This can be used to determine whether or not a word in the data is a match to a CDI word.
+*Sibling_ages.csv* includes age of siblings, sibling group, and whether the sibling is older or younger
 
 
 
