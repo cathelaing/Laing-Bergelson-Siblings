@@ -3,19 +3,22 @@ title             : "Analysing the effect of sibling number on input and output 
 shorttitle        : "Effect of sibling number on language"
 
 author: 
-  - name          : "Catherine Laing"
+  - name          : " "
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
-    address       : "Department of Language and Linguistic Science, University of York, Heslington, York, UK, YO10 5DD"
-    email         : "catherine.laing@york.ac.uk"
-  - name          : "Elika Bergelson"
+    address       : " "
+    email         : " "
+  - name          : " "
     affiliation   : "2"
 
 affiliation:
   - id            : "1"
-    institution   : "University of York, York, UK"
+    institution   : " "
   - id            : "2"
-    institution   : "Duke University, Durham, NC, USA"
+    institution   : " "
+    
+authornote: |
+  Supplementary materials, including code, for this manuscript can be found at https://osf.io/rm3ec/?view_only=7cb606ed6805419b8b483e7c437e458f. 
 
 abstract: |
   Prior research suggests that across a wide range of cognitive, educational, and health-based measures, first-born children outperform their later-born peers. Expanding on this literature using naturalistic home-recorded data and parental vocabulary report, we find that early language outcomes vary by number of siblings in a sample of 43 English-learning U.S. children from mid-to-high socioeconomic status homes. More specifically, we find that children in our sample with two or more - but not one - older siblings had smaller productive vocabularies at 18 months, and heard less input from caregivers across several measures than their peers with two or more siblings. We discuss implications regarding what infants experience and learn across a range of family sizes in infancy. 
@@ -26,12 +29,12 @@ wordcount         : "X"
 bibliography      : ["Siblings.bib"]
 
 floatsintext      : yes
-figsintext        : yes 
+figsintext        : no 
 figurelist        : no
 tablelist         : no
 footnotelist      : no
 linenumbers       : yes
-mask              : no
+mask              : yes
 draft             : no
 replace_ampersands: no
 
@@ -122,8 +125,6 @@ maxsib <- sibage$maxdays/365
 ### Sibling Details 
 
 Sibling number was computed based on parental report in the demographics questionnaires completed at 0;6 (Sibling number range: `r sibnums$minsibs`-`r sibnums$maxsibs`). Siblings were on average `r age.diff.inyears` years older than the infants in this study (SD: `r sd.years` years, R: `r minsib`-`r round(maxsib,0)` years).[^1] All siblings lived in the household with the infant full time, apart from one infant who had two older half siblings (and no other full siblings) who lived with their other parent part of the time. Both older siblings were present for at least some of the monthly recordings. One family had a foster child live in the home for 2 months of data collection, who is not accounted for in our data; the target infant had one sibling. All siblings were older than or of the same age as the infant in question.
-<!-- eb2cl: not clear what the range is the referring to in the first sentence, can you clarify? i think it's the # of sibs, right? also can we convert siblings age to years instead of days in sentence 2? -->
-<!-- cl2eb: done -->
 
 [^1]: For six infants, siblings' exact birthdates were not provided, and so age difference was estimated by subtracting the infant's age (6 months) from the sibling's age in years, as listed on the questionnaire (e.g. if a sibling was 5 years old, they were classed as being 4.5 years older than the infant).
 
@@ -489,7 +490,6 @@ object.presence %>% filter(audio_video == "video") %>%
 ```
 
 Having established that infants' productive vocabulary varied as a function of sibling number in all but the binary version of the measure (0 vs. >0 siblings), we turn to our input measures to test whether *input* varied by a child's sibling status. For these analyses we report here the group sibling division (0 vs. 1 vs. 2+) as this lets us keep relatively similar Ns across groups, thus making variance more comparable for post-hoc comparisons (the discrete sibling number (0-4) version is reported for completeness in S4; results hold for both input variables). We also now include the child whose who was a multi-month vocabulary outlier above given that input and vocabulary are not tested in the same model. One infant of the full sample of 43 infants was an outlier in that they heard substantially more input words and words with object presence than all the other infants in the sample in four of their recording sessions. Given that these sessions were not contiguous, we opted to keep this infant in the analyses reported below, though all results hold when they are removed from our sample (see S5).
-<!-- eb2cl: just a note to double check that what we say about S4 is true once we fix the analyses there -->
 
 ```{r effects of age and sex on input, message=FALSE, warning=FALSE, include=FALSE}
 
@@ -867,10 +867,8 @@ In contrast to the other results, our analysis of object presence showed a more 
 We also found that infants with siblings did not hear much speech from their older brothers and sisters. Similar findings are reported in a lab-based interaction study by Oshima-Takane and Robbins [-@oshima-takane_linguistic_2003], who found that older siblings rarely talked directly to the target child; instead, most input from siblings was overheard speech from sibling-mother interactions. One possibility raised by these results is that perhaps parents are able to compensate or provide relatively similar input and learning support for one or two children, but once children outnumber parents, this balancing act of attention, care, and time becomes unwieldy. While the current sample is relatively limited and homogeneous in the family structures and demographics it includes, future work could fruitfully investigate this possibility by considering whether [controlling for other potential contributors like SES, @hoff-ginsberg_relation_1998] the presence of more caregivers (whether parents, relatives, or other adults) helps foster language development. 
 
 Alternatively, second-borns might ‘even out’ with children with no siblings due to a trade-off between direct attention from the caregiver and the possibility of more sophisticated social-communicative interactions. For these infants there is still ample opportunity to engage with the mother in one-to-one interactions, allowing a higher share of her attention than is available to third- or later-borns. Furthermore, triadic interactions can benefit the development of a number of linguistic and communication skills [@barton_joint_1991; @dunn_becoming_1989]. Second-borns may also benefit from overheard speech in their input, supporting the acquisition of nouns and even more complex lexical categories [@floor_can_2006; @oshima-takane_birth_1996]. For infants with one sibling, the benefits of observing/overhearing interactions between sibling and caregiver, as well as the possibility for partaking in such interactions, may outweigh the decrease in some aspects of the input (i.e., in our data, only observed in object presence). Having more than one sibling may throw this off-balance.
-<!-- eb2cl: well put! -->
 
 Importantly, the present results make no claims about eventual outcomes for these children: generally speaking, regardless of sibling number, all typically-developing infants reach full and fluent language use. Indeed, some research suggests that sibling effects, while they may be clear in early development, are not always sustained into childhood; e.g. twins are known to experience a delay in language development into the third year, but are quick to catch up thereafter [@dales_motor_1969; @tomasello_linguistic_1986]. This demonstrates the cognitive adaptability of early development, which brings about the acquisition of language across varying and allegedly ‘imperfect’ learning environments. Infants’ capacity to develop linguistic skills from the resources that are available to them – whether that is infant-directed object labels or overheard abstract concepts – highlights the dynamic and adaptable nature of early cognitive development, and a system that is sufficiently robust to bring about the same outcome across populations. 
-<!-- eb2cl:yes! -->
 
 ### Limitations
 Of course, the ‘success’ of early language development is defined by how success is measured. Here we chose word production as our measure of linguistic capability; we did not consider other equally valid measures such as language comprehension or early social-interaction skills. Similarly, our input measures focused on nouns; other lexical classes may reveal different effects, though they are generally far sparser in production until toddlerhood. 

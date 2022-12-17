@@ -50,8 +50,6 @@ sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
          subj = factor(subj),
          month = as.numeric(month))
 
-wordlist <- read_csv("Data/in_cdi_Wordlist.csv") # Read in CDI wordlist that matches sibsdata$basic_level with words on the CDI
-
 ## Speaker type
 
 speaker.type.all <- sibsdata %>%
