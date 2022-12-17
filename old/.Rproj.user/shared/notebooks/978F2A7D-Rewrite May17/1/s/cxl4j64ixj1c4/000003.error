@@ -1,1 +1,0 @@
-{"frames":[{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"shapiro.test(in.cdi$log(PC))","line_number":0},{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"stopifnot(is.numeric(x))","line_number":0}],"message":"Error: attempt to apply non-function\n"}
