@@ -20,8 +20,6 @@ affiliation:
 keywords          : "Siblings, Lexical Development, Input Effects, Language Acquisition"
 wordcount         : "X"
 
-#bibliography      : ["supplementaries.bib"]
-
 floatsintext      : yes
 figsintext        : yes 
 figurelist        : no
