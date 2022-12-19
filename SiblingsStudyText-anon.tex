@@ -155,7 +155,13 @@
     {}{\InnerPatchFailed}%
   }
 {}{\PatchFailed}
-\keywords{Siblings, Lexical Development, Input Effects, Language Acquisition\newline\indent Word count: X}
+\keywords{Siblings, Lexical Development, Input Effects, Language Acquisition}
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
 \usepackage{lineno}
 
 \linenumbers
@@ -182,6 +188,7 @@
 
 \authornote{
 
+This work was funded by NIH Grant DP5-OD019812 to EB. Special thanks to Bergelson Lab trainees, staff, and RAs at Duke and Rochester (and especially Shannon Dailey, Andrei Amatuni and Hallie Garrison).
 Supplementary materials, including code, for this manuscript can be found at \url{https://osf.io/rm3ec/?view_only=7cb606ed6805419b8b483e7c437e458f}.
 
 Correspondence concerning this article should be addressed to , . E-mail:
@@ -242,7 +249,7 @@ To index each child's language abilities, we draw on data from vocabulary checkl
 \hypertarget{home-recorded-video-data}{%
 \subsubsection{Home-recorded video data}\label{home-recorded-video-data}}
 
-Every month between 0;6 and 1;5, infants were video-recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. We did not ask families to ensure certain family members were or were not present; our video recordings capture whoever was home at the time families opted to schedule. Here we draw on data from the two caregivers who produced the most words in each recording; in 87\% of cases this was the mother, and 8\% of cases the father. Fathers produced the second highest number of words in 50\% of cases (see S2 for a full breakdown of speakers classed as caregivers in the dataset). At the child level, the modal caretaker across the 12 videos was the mother for 37 infants, father for 4 infants and grandmother for the remaining 2 infants. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this captured the scene from the infants' perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder on a tripod was set up in the room where infants and caretakers were interacting to capture a broader view; families were asked to move this camcorder if they changed rooms. The dataset includes 12 videos for each child at each month we analyzed.
+Every month between 0;6 and 1;5, infants were video-recorded for one hour in their home, capturing a naturalistic representation of each infant's day-to-day input. We did not ask families to ensure certain family members were or were not present; our video recordings capture whoever was home at the time families opted to schedule. Here we draw on data from the two caregivers who produced the most words in each recording; in 87\% of cases this was the mother, and 8\% of cases the father. Fathers produced the second highest number of words in 50\% of cases (see S2 for a full breakdown of speakers classed as caregivers in the dataset). At the child level, the modal caretaker across the 12 videos was the mother for 37 infants, father for 4 infants and grandmother for the remaining 2 infants. Infants wore a hat with two small Looxcie video cameras attached, one pointed slightly up, and one pointed slightly down; this captured the scene from the infants' perspective. In the event that infants refused to wear the hats, caregivers wore the same kind of camera on a headband. Additionally, a camcorder on a tripod was set up in the room where infants and caretakers were interacting to capture a broader view; families were asked to move this camcorder if they changed rooms. The dataset includes 12 videos for each child, one for each month that we analyzed.
 
 Object words (i.e.~concrete nouns) deemed to be said to, by, or loudly and clearly near the target child were annotated by trained coders for several properties of interest to the broader project on noun learning. Here we examine annotations for speaker, i.e.~who produced each noun, and object presence, i.e.~whether the noun's referent was present and attended to by the infant (see ``Derived Input Measures'' below).
 
@@ -352,7 +359,7 @@ month & 0.34 & 0.01 & 315.13 & 25.19 & <0.001\\
 
 Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings (Hoff-Ginsberg, 1998; Pine, 1995). We find that for each additional sibling, infants were reported to have produced 30.52\% fewer words. The `sibling effect' is thus present in our data.
 
-In terms of our grouped sibling variable (i.e.~0 vs.~1 vs.~2+ siblings) infants with one sibling acquire only 1\% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce 94\% fewer words. See Table \ref{tab:table-sibgroup-model-summary} and and Figure \ref{fig:Figure-SibGroup}. Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months (where there's the widest vocabulary range) revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (\emph{W}=5, \emph{p} = .004), but no difference between infants with one sibling and those with no siblings (\emph{W}=79.50, \emph{p} = .631). See Table \ref{tab:table-data-summary}.
+In terms of our grouped sibling variable (i.e.~0 vs.~1 vs.~2+ siblings), infants with one sibling acquire only 1\% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce 94\% fewer words. See Table \ref{tab:table-sibgroup-model-summary} and and Figure \ref{fig:Figure-SibGroup}. Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months (where there's the widest vocabulary range) revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (\emph{W}=5, \emph{p} = .004), but no difference between infants with one sibling and those with no siblings (\emph{W}=79.50, \emph{p} = .631). See Table \ref{tab:table-data-summary}.
 
 \begin{figure}
 \centering
@@ -363,7 +370,7 @@ In terms of our grouped sibling variable (i.e.~0 vs.~1 vs.~2+ siblings) infants 
 \hypertarget{effect-of-siblings-on-infants-input}{%
 \subsection{Effect of siblings on infants' input}\label{effect-of-siblings-on-infants-input}}
 
-Having established that infants' productive vocabulary varied as a function of sibling number in all but the binary version of the measure (0 vs.~\textgreater0 siblings), we turn to our input measures to test whether \emph{input} varied by a child's sibling status. For these analyses we report here the group sibling division (0 vs.~1 vs.~2+) as this lets us keep relatively similar Ns across groups, thus making variance more comparable for post-hoc comparisons (the discrete sibling number (0-4) version is reported for completeness in S4; results hold for both input variables). We also now include the child whose who was a multi-month vocabulary outlier above given that input and vocabulary are not tested in the same model. One infant of the full sample of 43 infants was an outlier in that they heard substantially more input words and words with object presence than all the other infants in the sample in four of their recording sessions. Given that these sessions were not contiguous, we opted to keep this infant in the analyses reported below, though all results hold when they are removed from our sample (see S5).
+Having established that infants' productive vocabulary varied as a function of sibling number in all but the binary version of the measure (0 vs.~\textgreater0 siblings), we turn to our input measures to test whether \emph{input} varied by a child's sibling status. For these analyses we report here the group sibling division (0 vs.~1 vs.~2+) as this lets us keep relatively similar Ns across groups, thus making variance more comparable for post-hoc comparisons (the discrete sibling number (0-4) version is reported for completeness in S4; results hold for both input variables). We also now include the child who was a multi-month vocabulary outlier above, given that input and vocabulary are not tested in the same model. One infant of the full sample of 43 infants was an outlier in that they heard substantially more input words and words with object presence than all the other infants in the sample in four of their recording sessions. Given that these sessions were not contiguous, we opted to keep this infant in the analyses reported below, though all results hold when they are removed from our sample (see S5).
 
 While we didn't have strong a priori expectations about how overall input or object presence would vary by age or sex, these were included in initial model comparisons to see if they improved fit alongside a random effect of infant. Both variables improved fit for the input model, and only age did for the object presence model. Thus our baseline models include these sets of control variables, respectively. See Table \ref{tab:table-input-model-summary} for final model estimates.
 

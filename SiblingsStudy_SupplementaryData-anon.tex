@@ -168,7 +168,7 @@ Correspondence concerning this article should be addressed to , . E-mail:
 \begin{document}
 \maketitle
 
-The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. Full information about the larger study from which this dataset was extracted can be found on the project's OSF wiki at \url{https://osf.io/rm3ec/}. All scripts and data for our analysis can be found at \url{https://github.com/cathelaing/Laing-Bergelson-Siblings}.
+The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. All scripts and data for our analysis can be found on the project's OSF wiki at \url{https://osf.io/rm3ec/}. .
 
 The analyses below (S1:S5) show:
 
@@ -191,7 +191,7 @@ Consistent with our main analysis, all analyses here draw on data from age 10 mo
 \hypertarget{s1-effect-of-siblings-on-infants-input---audio-recordings}{%
 \subsection{S1: Effect of siblings on infants' input - audio recordings}\label{s1-effect-of-siblings-on-infants-input---audio-recordings}}
 
-Our main results analyse input data from the hour-long video recordings taken in the home on a monthly basis. We opted to use the video data in the main analysis due to consistency in data collection across time-points (one hour of video recording per month, per child). We re-ran our analysis using the home-recorded audio data, which captures a snapshot from a daylong recording using a LENA device (\url{https://www.lena.org/}) worn in a vest. Three or four hours were transcribed per monthly recording; four hours in the 10-13-month recordings, and three hours in the 14-17-month recordings; these regions were selected based on talkativeness in each recording.
+Our main results analyse input data from the hour-long video recordings taken in the home on a monthly basis. We opted to use the video data in the main analysis due to consistency in data collection across time-points (one hour of video recording per month, per child). We re-ran our analysis using the home-recorded audio data, which captures a snapshot from a 16h daylong recording using a LENA device (\url{https://www.lena.org/}) worn in a vest. Three or four hours were transcribed per monthly recording; four hours in the 10-13-month recordings, and three hours in the 14-17-month recordings. These transcribed sections were selected based on the most talkative hours in each recording, as determined by an algorithm that ranked hour-long subregions according to LENA's CVC and CTC metrics over the entire 16h recording.
 
 Initial model comparisons including the caregiver input/object presence as a dependent variable and age and sex as fixed effects showed no effect for sex on either measure, but an effect of age on both. Age, but not sex, was thus included in our regression models; data was included from age 10 months onwards.
 
@@ -270,7 +270,7 @@ We tested the extent to which maternal factors such as age and education level c
 \begin{figure}
 \centering
 \includegraphics{SiblingsStudy_SupplementaryData-anon_files/figure-latex/Figure-correlations-1.pdf}
-\caption{\label{fig:Figure-correlations}Correlation matrix showing Spearman's correlation coefficients between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours and circles represent direction and strength of correlation, whereby bolder colours and larger circles indicate a stronger correlation between variables; blue and red indicate positive/negative correlations, respectively. Asterisks indicate significant p values; where * \emph{p}\textless.05.}
+\caption{\label{fig:Figure-correlations}Correlation matrix showing Spearman's correlation coefficients between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours and circles represent direction and strength of correlation, whereby bolder colours and larger circles indicate a stronger correlation between variables; blue and red indicate positive/negative correlations, respectively. Asterisk indicatea significant \emph{p} value at \emph{p}\textless.05.}
 \end{figure}
 
 \newpage
@@ -311,8 +311,8 @@ Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 Caregiver input & Intercept & 4.80 & 0.16 & 272.03 & 30.38 & <0.001\\
  & n Siblings & -0.15 & 0.06 & 43.00 & -2.40 & 0.021\\
  & month & 0.03 & 0.01 & 301.00 & 3.02 & 0.003\\
-Object presence & Intercept & 0.55 & 0.04 & 328.26 & 12.39 & <0.001\\
 \midrule
+Object presence & Intercept & 0.55 & 0.04 & 328.26 & 12.39 & <0.001\\
  & n Siblings & -0.08 & 0.01 & 43.00 & -5.31 & <0.001\\
 \addlinespace
  & month & 0.01 & 0.00 & 301.00 & 2.98 & 0.003\\
@@ -324,7 +324,7 @@ Object presence & Intercept & 0.55 & 0.04 & 328.26 & 12.39 & <0.001\\
 \hypertarget{s5-possible-outlier-for-input-data-removed}{%
 \subsection{S5: Possible outlier for input data removed}\label{s5-possible-outlier-for-input-data-removed}}
 
-One infant heard substantially more (=\textgreater3SDs above the mean) nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results reported for sibling group were consistent when this child was removed from the analysis of input data (n=42). See Tables \ref{tab:table-model-comparisons-red} and \ref{tab:table-input-model-summary-red}.
+One infant heard substantially more (\textgreater3SDs above the mean) nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results reported for sibling group were consistent when this child was removed from the analysis of input data (n=42). See Tables \ref{tab:table-model-comparisons-red} and \ref{tab:table-input-model-summary-red}.
 
 \begin{longtable}[t]{cccc}
 \caption{\label{tab:table-model-comparisons-red}Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with one infant identified as an outlier removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect.}\\
