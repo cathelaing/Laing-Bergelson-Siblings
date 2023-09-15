@@ -1,0 +1,624 @@
+---
+title             : "Analysing the effect of sibling number on input and output in the first 18 months: Supplementals"
+shorttitle        : "Effect of sibling number on language: Supplementals"
+
+author:
+  - name          : " "
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : " "
+    email         : " "
+  - name          : " "
+    affiliation   : "2"
+
+affiliation:
+  - id            : "1"
+    institution   : " "
+  - id            : "2"
+    institution   : " "
+
+keywords          : "Siblings, Lexical Development, Input Effects, Language Acquisition"
+wordcount         : "X"
+
+floatsintext      : yes
+figsintext        : yes 
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : yes
+draft             : no
+replace_ampersands: no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library(papaja)
+library(tidyverse)
+library(dplyr)
+library(tibble)
+library(lmerTest)
+library(afex)
+#library(citr)
+library(feather)
+library(ggcorrplot)
+library(corrplot)
+library(kableExtra)
+
+source("DataGathering.R")
+
+# remove one of the twins from each dataset
+
+demographics <- demographics %>% filter(subj != 351)
+sib.ages <- sib.ages %>% filter(subj != 351)
+SiblingsData <- SiblingsData %>% filter(subj != 351 & month > 9)
+CDI <- CDI %>% filter(subj != 351 & month > 9)
+speaker.type <- speaker.type %>% filter(subj != 351 & month > 9)
+object.presence <- object.presence %>% filter(subj != 351 & month > 9)
+```
+
+
+```{r setup2, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. All scripts and data for our analysis can be found on the project’s OSF wiki at https://osf.io/rm3ec/. .
+
+The analyses below (S1:S5) show:
+
+* S1: re-analysis of caregiver input variables using data from day-long audio recordings  
+* S2: summary of speakers classed as two main caregivers in our input data
+* S3: correlations of input and output measures with maternal factors (age, education) and number of siblings
+* S4: re-analysis of caregiver input variables using discrete sibling number as our main variable of interest 
+* S5: re-analysis of caregiver input variables with one outlier infant
+* S6: re-analysis of caregiver input variables with both dizygotic twins excluded
+
+Consistent with our main analysis, all analyses here draw on data from age 10 months, given that the majority of infants did not produce their first word until around 0;11, according to CDI reports. In addition, the twin removed from the main analyses is also removed from the data analysed here.
+
+## S1: Effect of siblings on infants' input - audio recordings
+
+Our main results analyse input data from the hour-long video recordings taken in the home on a monthly basis. We opted to use the video data in the main analysis due to consistency in data collection across time-points (one hour of video recording per month, per child). We re-ran our analysis using the home-recorded audio data, which captures a snapshot from a 16h daylong recording using a LENA device (https://www.lena.org/) worn in a vest. Three or four hours were transcribed per monthly recording; four hours in the 10-13-month recordings, and three hours in the 14-17-month recordings. These transcribed sections were selected based on the most talkative hours in each recording, as determined by an algorithm that ranked hour-long subregions according to LENA's CVC and CTC metrics over the entire 16h recording. 
+
+Initial model comparisons including the caregiver input/object presence as a dependent variable and age and sex as fixed effects showed no effect for sex on either measure, but an effect of age on both. Age, but not sex, was thus included in our regression models; data was included from age 10 months onwards.
+
+```{r effects of age and sex on input, include=FALSE}
+
+# Parental input
+
+# age
+
+age.test.input <- lmer(Log.n ~ month + (1|subj), data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "audio"), REML=FALSE)
+age.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "audio"), REML=FALSE)
+
+age.test.input_anova <- anova(age.test.input, age.test.input.null) %>% # p<.001 
+  rename("pval" = `Pr(>Chisq)`) # significant effect of age on input
+
+# sex
+
+sex.test.input <- lmer(Log.n ~ sex + (1|subj), data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "audio"), REML=FALSE)
+sex.test.input.null <- lmer(Log.n ~ (1|subj), data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "audio"), REML=FALSE)
+
+sex.test.input_anova <- anova(sex.test.input, sex.test.input.null) %>% # NS
+  rename("pval" = `Pr(>Chisq)`)
+
+# Object presence
+
+# age
+
+age.test.OP <- lmer(PC ~ month + (1|subj), data = subset(object.presence, audio_video == "audio"), REML=FALSE)
+age.test.OP.null <- lmer(PC ~ (1|subj), data = subset(object.presence, audio_video == "audio"), REML=FALSE)
+
+age.test.OP_anova <- anova(age.test.OP, age.test.OP.null) %>% # p<.001
+  rename("pval" = `Pr(>Chisq)`)
+
+# sex
+
+sex.test.OP <- lmer(Log.n ~ sex + (1|subj), data = subset(object.presence, audio_video == "audio"), REML=FALSE)
+sex.test.OP.null <- lmer(Log.n ~ (1|subj), data = subset(object.presence, audio_video == "audio"), REML=FALSE)
+
+sex.test.OP_anova <- anova(sex.test.OP, sex.test.OP.null) %>% #NS
+  rename("pval" = `Pr(>Chisq)`)
+
+input.sex.age.pvals <- rbind(age.test.input_anova, sex.test.input_anova, age.test.OP_anova, sex.test.OP_anova) %>% rownames_to_column()
+
+```
+
+```{r speaker.type model audio, include=FALSE}
+
+speaker.type.model.null <- lmerTest::lmer(Log.n ~ month + (1|subj), data=subset(speaker.type, audio_video == "audio" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+speaker.type.model <- lmerTest::lmer(Log.n ~ SibGroup + month + (1|subj), data=subset(speaker.type, audio_video == "audio" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+speaker.type_anova <- anova(speaker.type.model, speaker.type.model.null) %>% # NS
+  rename("pval" = `Pr(>Chisq)`)
+
+input.model.summary <- summary(speaker.type.model)
+
+input.model.summary.table <- input.model.summary$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
+
+```
+
+```{r object.presence model audio, include = FALSE}
+
+object.presence.model <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence,  audio_video == "audio"), REML=FALSE)
+object.presence.model.null <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence,  audio_video == "audio"), REML=FALSE)
+
+object.presence.anova <- anova(object.presence.model, object.presence.model.null) %>% # p<.001
+  rename("pval" = `Pr(>Chisq)`)
+
+object.presence.model.summary <- summary(object.presence.model)
+
+table.object.presence.model.summary <- object.presence.model.summary$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Object presence", ""))
+
+```
+
+```{r model outputs - audio data, include = FALSE}
+
+table.input.model.output <- rbind(speaker.type_anova, object.presence.anova
+                                ) %>%
+  rownames_to_column(var="model") %>%
+  filter(Chisq > 0) %>%
+  rename("p value" = "pval") %>%
+  mutate(Model = ifelse(grepl("speaker", model), "Caregiver input", "Object presence")) %>%
+  select(Model, Df, Chisq, `p value`)
+
+
+input.variables.model.summaries.audio <- rbind(input.model.summary.table, table.object.presence.model.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
+
+```
+
+We tested our two input variables using nested model comparisons, where (1) is the baseline model and (2) includes siblings as the variable of interest.
+
+1. caregiver input/object presence (log-transformed) ~ age (months) + (1|subject)
+2. caregiver input/object presence (log-transformed) ~ sibling group + age (months) + (1|subject)
+
+Outputs from these model comparisons and full model outputs including estimates are shown in Tables \@ref(tab:table-model-comparisons-audio) and \@ref(tab:table-input-model-summary-audio). Results were consistent with the video data for object presence, where a significant effect was found for sibling group. Unlike the video data, this effect was not found in the model testing overall input.
+
+```{r table-model-comparisons-audio, echo=FALSE}
+cap = "Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the audio data. Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group (0 vs. 1 vs. 2+) in the audio data. Age in months was included as a fixed effect; subject was included as a random effect."
+kable(table.input.model.output, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") 
+```
+
+```{r table-input-model-summary-audio, echo=FALSE}
+cap = "Full model outputs from two linear mixed effects regression models comparing our input measures (object words produced in caregiver input and object presence) in relation to sibling group (0 vs. 1 vs. 2+), for the audio data. Age in months was included as a fixed effect in both models and subject was included as a random effect."
+ kable(input.variables.model.summaries.audio, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") %>%
+   row_spec(4, hline_after = T)
+```
+
+\newpage
+
+## S2: Speakers in the dataset
+
+```{r speaker type count, include = FALSE}
+
+speakers.sessions <- speaker.type %>% filter(caregiver %in% c("CG1", "CG2") & audio_video == "video") %>% 
+  group_by(speaker, caregiver, month) %>% tally() %>% summarise(total = sum(n)) %>%
+  mutate(speaker = str_to_title(speaker)) %>%
+  mutate(Speaker = ifelse(speaker == "Fat", "Father", speaker),
+         Speaker = ifelse(speaker %in% c("Mot", "Mt2"), "Mother", Speaker),
+         Speaker = ifelse(speaker == "Grm", "Grandmother", Speaker),
+         Speaker = ifelse(speaker == "Grp", "Grandfather", Speaker),
+         Speaker = ifelse(speaker == "Mot+Fat", "Both parents", Speaker),
+         Speaker = as.factor(Speaker)) %>%
+  pivot_wider(names_from = caregiver, values_from = total) %>%
+  ungroup() %>%
+  dplyr::select(-speaker) %>%
+  group_by(Speaker) %>%
+  summarise(`Caregiver 1` = sum(CG1,na.rm = T),
+            `Caregiver 2` = sum(CG2,na.rm = T)) %>%
+  arrange(desc(`Caregiver 1`))
+
+total.sessionsCG1 <- sum(speakers.sessions$`Caregiver 1`) # 344
+total.sessionsCG2 <- sum(speakers.sessions$`Caregiver 2`) # 146
+
+# data with 2 mothers - both are counted in the mother row
+# number of video sessions (from a total of )
+#43*8 # 344 sessions recorded in total
+
+#sum(speakers.sessions$`Caregiver 2`) # 344
+#sum(speakers.sessions$`Caregiver 2`) # 146
+
+# speaker.type %>% filter(caregiver %in% c("CG1", "CG2") & audio_video == "video") %>%
+#   group_by(subj, caregiver, month) %>%
+#   tally() %>% ungroup() %>%
+#   group_by(subj) %>%
+#   tally() %>%
+#   mutate(singlecg = 16-n) %>%
+#   filter(n<16) %>%
+#   summarise(missing_cg = sum(singlecg))
+
+# 198 videos with just 1 caregiver
+
+#344-198
+#198+146 = 344
+
+```
+
+The table below provides a summary of which two caregivers produced the most words in each video recording analyzed in the main manuscript. This was usually the mother and/or the father. In the case where the infant had two mothers, their data was aggregated into the 'Mother' category; in all but two sessions from this family, the two mothers were the two main caregivers. There were `r total.sessionsCG1` hour-long video recordings in total across the 43 infants in the data set; two speakers were present in `r total.sessionsCG2` of these.
+
+```{r table-speakers-sessions, echo = FALSE}
+cap = "Numer of sessions in which each adult speaker is one of the two main caregivers. There were 344 hour-long video sessions in total, and two caregivers were present in 146 of these."
+ kable(speakers.sessions, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, align="c")
+```
+
+\newpage
+
+## S3: Correlations with maternal factors
+
+```{r age_mom-Sibling correlation, include = FALSE}
+
+corr.data.input <- speaker.type %>% filter(audio_video == "video", month == 17, speaker == "MOT") %>% ungroup() %>%
+  dplyr::select(subj, n)
+
+corr.data.mat <- SiblingsData %>%
+  filter(month == 18) %>% 
+    left_join(corr.data.input, by = "subj") %>%
+           dplyr::select(age_mom, MOTedulevel, Siblings18, Total.words, n) %>%
+  rename(
+    "Maternal age" = "age_mom",
+    "Maternal education" = "MOTedulevel",
+    "N Siblings" = "Siblings18",
+    "CDI words" = "Total.words",
+    "Input words" = "n")
+
+corr.matrix <- cor(corr.data.mat, method = "spearman", use="complete.obs")
+testRes = cor.mtest(corr.matrix, conf.level = 0.95)
+
+cor.res <- cor.test(corr.data.mat$`Input words`, corr.data.mat$`N Siblings`, method = "spearman")
+
+#mat.corr.matrix <- corrplot(corr.matrix, method = "number")
+
+```
+
+We tested the extent to which maternal factors such as age and education level correlate with number of siblings, productive vocabulary measures, and amount of input. Spearman's correlation tests confirmed a significant negative correlation between sibling number and words produced in the infant's input by the mother (rho=`r cor.res$estimate`, *p*=`r printp(cor.res$p.value)`). No other correlations were significant, though weak positive correlations were identified bwteen amount of input and productive vocabulary, and maternal age and sibling number. See Figure \@ref(fig:Figure-correlations).
+
+```{r Figure-correlations, echo=FALSE, fig.cap=cap, message=FALSE, warning=FALSE}
+#par(cex = 1.2)
+#ggcorrplot(corr.matrix, hc.order = TRUE, lab = TRUE, p.mat = testRes$p, insig = 'pch')
+
+corrplot(cor(corr.data.mat, method = "spearman", use="complete.obs"),  p.mat = testRes$p, 
+         insig = 'label_sig', 
+         sig.level = c(.001, .01, .05), 
+         outline=TRUE,
+         type = "lower", 
+         diag = FALSE)
+
+#corrplot(corr.matrix, method = "number", conf.level = 0.95)
+cap <- sprintf("Correlation matrix showing Spearman's correlation coefficients between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours and circles represent direction and strength of correlation, whereby bolder colours and larger circles indicate a stronger correlation between variables; blue and red indicate positive/negative correlations, respectively. Asterisk indicatea significant *p* value at *p*<.05.")
+
+```
+
+```{r Figure-correlations1, echo=FALSE, fig.cap=cap, message=FALSE, warning=FALSE}
+par(cex = 1.2)
+#ggcorrplot(corr.matrix, hc.order = TRUE, lab = TRUE, type = "lower")
+cap <- sprintf("Correlation matrix showing Spearman's correlation coefficients between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours represent strength of correlation, whereby bolder colours indicate a stronger correlation between variables.")
+
+```
+\newpage
+
+## S4: Discrete sibling  number
+
+```{r speaker.type model, include = FALSE}
+
+#shapiro.test(speaker.type$n) # not normal
+
+speaker.type.model.0.discrete <- lmerTest::lmer(Log.n ~ 1 + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+speaker.type.model.month.discrete <- lmerTest::lmer(Log.n ~ month + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+speaker.type.model.sex.discrete <- lmerTest::lmer(Log.n ~ sex + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+#anova(speaker.type.model.0.discrete,speaker.type.model.month.discrete) # significant
+#anova(speaker.type.model.0.discrete,speaker.type.model.sex.discrete) # not significant
+
+speaker.type.model.null.discrete <- lmerTest::lmer(Log.n ~ month + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+speaker.type.model.discrete <- lmerTest::lmer(Log.n ~ Siblings6 + month + (1|subj), data=subset(speaker.type, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+speaker.type_anova.discrete <- anova(speaker.type.model.discrete, speaker.type.model.null.discrete) %>% #p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+input.model.summary.discrete <- summary(speaker.type.model.discrete)
+
+input.model.summary.table.discrete <- input.model.summary.discrete$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect),
+         Effect = fct_recode(Effect,
+                             "n Siblings" = "Siblings6")) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
+
+```
+
+```{r Object.presence summary, include=FALSE}
+
+object.presence.discrete.summary <- object.presence %>%
+  filter(audio_video == "video") %>%
+  group_by(subj, Siblings6) %>%
+  summarise(mean.object = mean(PC),
+            sd.object = sd(PC),
+            med.object = median(PC))
+
+```
+
+```{r object.presence model discrete, include=FALSE}
+
+object.presence.model.discrete <- lmerTest::lmer(PC ~ Siblings6 + month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+object.presence.model.null.discrete <- lmerTest::lmer(PC ~ 1 + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+object.presence.model.month.discrete <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+object.presence.model.sex.discrete <- lmerTest::lmer(PC ~ sex + (1|subj), data=subset(object.presence,  audio_video == "video"), REML=FALSE)
+
+anova(object.presence.model.null.discrete, object.presence.model.month.discrete)# significant
+anova(object.presence.model.null.discrete, object.presence.model.sex.discrete)  # not significant
+
+object.presence.anova.discrete <- anova(object.presence.model.discrete, object.presence.model.null.discrete) %>% # p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+object.presence.model.summary.discrete <- summary(object.presence.model.discrete)
+
+table.object.presence.model.discrete.summary <- object.presence.model.summary.discrete$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+   mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect),
+         Effect = fct_recode(Effect,
+                             "n Siblings" = "Siblings6")) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Object presence", ""))
+
+input.variables.model.summaries.discrete <- rbind(input.model.summary.table.discrete, table.object.presence.model.discrete.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
+
+```
+
+```{r model outputs - discrete siblings, include = FALSE}
+
+table.input.model.output.discrete <- rbind(speaker.type_anova.discrete, object.presence.anova.discrete
+                                ) %>%
+  rownames_to_column(var="model") %>%
+  filter(Chisq > 0) %>%
+  rename("p value" = "pval") %>%
+  mutate(Model = ifelse(grepl("speaker", model), "Caregiver input", "Object presence")) %>%
+  select(Model, Df, Chisq, `p value`)
+
+```
+
+Our main analyses report the effects of sibling group (infants with 0, 1 or 2+ siblings) on our two input measures (number of input words produced by caregivers and object presence). We opted to go with this measure of sibling number owing to more balanced group sizes. Since discrete sibling number (raw number of siblings) also revealed siblings to be a significant predictor of vocabulary size at 18 months, here we re-run our input models using discrete sibling number as a fixed effect, instead of sibling group, to test whether this effect is consistent across our input measures.
+
+Once again, initial model comparisons including the caregiver input/object presence as a dependent variable and age/sex as fixed effects showed no effect for sex on either measure, but an effect of age on both. Age, but not sex, was thus included in our regression models; data was included from age 10 months on-wards. As above, we tested our two input variables using nested model comparisons, where (1) is the baseline model and (2) includes siblings as the variable of interest.
+
+1. caregiver input/object presence (log-transformed) ~ age (months) + (1|subject)
+2. caregiver input/object presence (log-transformed) ~ sibling number + age (months) + (1|subject)
+
+Outputs from model comparisons and full model outputs including estimates are shown in Tables \@ref(tab:table-model-comparisons-discrete) and \@ref(tab:table-input-model-summary-discrete). Results were consistent with those reported for sibling group, suggesting both characterizations of siblinghood capture similar relationships among our variables.
+
+```{r table-model-comparisons-discrete, echo = FALSE}
+cap = "Results of nested model comparisons testing the effect of discrete sibling number on caregiver input/object presence in the video data. Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling number (R = 0-4). Age in months was included as a fixed effect; subject was included as a random effect."
+ kable(table.input.model.output.discrete, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") 
+```
+
+```{r table-input-model-summary-discrete, echo = FALSE}
+cap = "Full model outputs from two linear mixed effects regression models comparing our input measures (object words produced in caregiver input and object presence) in relation to discrete sibling number (R = 0-4), for the video data. Age in months was included as a fixed effect in both models and subject was included as a random effect."
+ kable(input.variables.model.summaries.discrete, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") %>%
+   row_spec(3, hline_after = T)
+```
+
+\newpage
+
+## S5: Possible outlier for input data removed
+
+```{r speaker.type model one infant removed, include = FALSE}
+
+speaker.type.red <- speaker.type %>% filter(subj != 738)
+
+speaker.type.model.null.red <- lmerTest::lmer(Log.n ~ month + sex + (1|subj), data=subset(speaker.type.red, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+speaker.type.model.red <- lmerTest::lmer(Log.n ~ SibGroup + month + sex + (1|subj), data=subset(speaker.type.red, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+speaker.type_anova.red <- anova(speaker.type.model.red, speaker.type.model.null.red) %>% #p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+input.model.summary.red <- summary(speaker.type.model.red)
+
+input.model.summary.table.red <- input.model.summary.red$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
+
+```
+
+```{r object.presence model one infant removed, include=FALSE}
+
+object.presence.red <- object.presence %>% filter(subj != 738)
+
+object.presence.model.red <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence.red,  audio_video == "video"), REML=FALSE)
+object.presence.model.null.red <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence.red,  audio_video == "video"), REML=FALSE)
+
+object.presence.anova.red <- anova(object.presence.model.red, object.presence.model.null.red) %>% # p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+object.presence.model.summary.red <- summary(object.presence.model.red)
+
+table.object.presence.model.red.summary <- object.presence.model.summary.red$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Object presence", ""))
+
+input.variables.model.summaries.red <- rbind(input.model.summary.table.red, table.object.presence.model.red.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
+
+```
+
+```{r model outputs - one infant removed, include = FALSE}
+
+table.input.model.output.red <- rbind(speaker.type_anova.red, object.presence.anova.red
+                                ) %>%
+  rownames_to_column(var="model") %>%
+  filter(Chisq > 0) %>%
+  rename("p value" = "pval") %>%
+  mutate(Model = ifelse(grepl("speaker", model), "Caregiver input", "Object presence")) %>%
+  select(Model, Df, Chisq, `p value`)
+
+
+input.variables.model.summaries.red <- rbind(input.model.summary.table.red, table.object.presence.model.red.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
+
+```
+
+One infant heard substantially more (>3SDs above the mean) nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results reported for sibling group were consistent when this child was removed from the analysis of input data (n=42). See Tables \@ref(tab:table-model-comparisons-red) and \@ref(tab:table-input-model-summary-red). 
+
+```{r table-model-comparisons-red, echo = FALSE}
+cap = "Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with one infant identified as an outlier removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect."
+ kable(table.input.model.output.red, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") 
+```
+
+```{r table-input-model-summary-red, echo = FALSE}
+cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, with one infant removed who was identified as an outlier (n=42). Age in months was included as a fixed effect in both models, sex was included in the model testing caregiver inpit; subject was included as a random effect."
+ kable(input.variables.model.summaries.red, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") %>%
+   row_spec(5, hline_after = T)
+```
+
+## S6: re-analysis of caregiver input variables with both dizygotic twins excluded
+
+```{r speaker.type model one infant removed, include = FALSE}
+
+speaker.type.no.twins <- speaker.type %>% filter(subj != 424)
+
+speaker.type.model.null.no.twins <- lmerTest::lmer(Log.n ~ month + sex + (1|subj), 
+                                                   data=subset(speaker.type.no.twins, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+speaker.type.model.no.twins <- lmerTest::lmer(Log.n ~ SibGroup + month + sex + (1|subj), 
+                                              data=subset(speaker.type.no.twins, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+speaker.type_anova.red <- anova(speaker.type.model.red, speaker.type.model.null.red) %>% #p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+input.model.summary.red <- summary(speaker.type.model.red)
+
+input.model.summary.table.red <- input.model.summary.red$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
+
+```
+
+```{r object.presence model one infant removed, include=FALSE}
+
+object.presence.red <- object.presence %>% filter(subj != 738)
+
+object.presence.model.red <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence.red,  audio_video == "video"), REML=FALSE)
+object.presence.model.null.red <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence.red,  audio_video == "video"), REML=FALSE)
+
+object.presence.anova.red <- anova(object.presence.model.red, object.presence.model.null.red) %>% # p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+object.presence.model.summary.red <- summary(object.presence.model.red)
+
+table.object.presence.model.red.summary <- object.presence.model.summary.red$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Object presence", ""))
+
+input.variables.model.summaries.red <- rbind(input.model.summary.table.red, table.object.presence.model.red.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
+
+```
+
+```{r model outputs - one infant removed, include = FALSE}
+
+table.input.model.output.red <- rbind(speaker.type_anova.red, object.presence.anova.red
+                                ) %>%
+  rownames_to_column(var="model") %>%
+  filter(Chisq > 0) %>%
+  rename("p value" = "pval") %>%
+  mutate(Model = ifelse(grepl("speaker", model), "Caregiver input", "Object presence")) %>%
+  select(Model, Df, Chisq, `p value`)
+
+
+input.variables.model.summaries.red <- rbind(input.model.summary.table.red, table.object.presence.model.red.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
+
+```
+
+One infant heard substantially more (>3SDs above the mean) nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results reported for sibling group were consistent when this child was removed from the analysis of input data (n=42). See Tables \@ref(tab:table-model-comparisons-red) and \@ref(tab:table-input-model-summary-red). 
+
+```{r table-model-comparisons-red, echo = FALSE}
+cap = "Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with one infant identified as an outlier removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect."
+ kable(table.input.model.output.red, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") 
+```
+
+```{r table-input-model-summary-red, echo = FALSE}
+cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, with one infant removed who was identified as an outlier (n=42). Age in months was included as a fixed effect in both models, sex was included in the model testing caregiver inpit; subject was included as a random effect."
+ kable(input.variables.model.summaries.red, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") %>%
+   row_spec(5, hline_after = T)
+```

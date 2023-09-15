@@ -31,15 +31,8 @@ speaker.type %>% filter(caregiver == "FAMILY" & audio_video == "video") %>%
   group_by(subj) %>% 
   summarise(mean_input = mean(n)) %>% 
   left_join(sib.ages) %>%
-  filter(Group == "Older") %>%
-  summarise(cor_older = cor(mean_input, age.diff.d)) # r = .32
-
-speaker.type %>% filter(caregiver == "FAMILY" & audio_video == "video") %>% 
-  group_by(subj) %>% 
-  summarise(mean_input = mean(n)) %>% 
-  left_join(sib.ages) %>%
-  filter(Group == "Younger") %>%
-  summarise(cor_younger = cor(mean_input, age.diff.d)) # r = -.48
+  filter(!(is.na(Group))) %>%
+  summarise(cor_older = cor(mean_input, age.diff.d, method = "spearman")) # r = -.29
 
 # remove input from sibling
 
@@ -47,15 +40,8 @@ speaker.type %>% filter(caregiver %in% c("CG1", "CG2") & audio_video == "video")
   group_by(subj) %>% 
   summarise(mean_input = mean(n)) %>% 
   left_join(sib.ages) %>%
-  filter(Group == "Older") %>%
-  summarise(cor_older = cor(mean_input, age.diff.d)) # r = .15
-
-speaker.type %>% filter(caregiver %in% c("CG1", "CG2") & audio_video == "video") %>% 
-  group_by(subj) %>% 
-  summarise(mean_input = mean(n)) %>% 
-  left_join(sib.ages) %>%
-  filter(Group == "Younger") %>%
-  summarise(cor_younger = cor(mean_input, age.diff.d)) # r = -.22
+  filter(!(is.na(Group))) %>%
+  summarise(cor_older = cor(mean_input, age.diff.d, method = "spearman")) # r = -.27
 
 # now look only at sibling input
 
@@ -63,15 +49,8 @@ speaker.type %>% filter(caregiver == "SIB" & audio_video == "video") %>%
   group_by(subj) %>% 
   summarise(mean_input = mean(n)) %>% 
   left_join(sib.ages) %>%
-  filter(Group == "Older") %>%
-  summarise(cor_older = cor(mean_input, age.diff.d)) # r = .02
-
-speaker.type %>% filter(caregiver == "SIB" & audio_video == "video") %>% 
-  group_by(subj) %>% 
-  summarise(mean_input = mean(n)) %>% 
-  left_join(sib.ages) %>%
-  filter(Group == "Younger") %>%
-  summarise(cor_younger = cor(mean_input, age.diff.d)) # r = .29
+  filter(!(is.na(Group))) %>%
+  summarise(cor_older = cor(mean_input, age.diff.d, method = "spearman")) # r = .113
 
 # Reviewer 1 comment 4: is it possible to analyse this measure in terms of whether or not a sibling was present in the room with the infant?
 
@@ -211,3 +190,15 @@ input.sibs.vocab <- lmerTest::lmer(Log.Totalwords ~ SibGroup + Log.n + month + s
                                    data=subset(speaker.type, audio_video == "video" & 
                                                caregiver == "FAMILY"), REML=FALSE)
 summary(input.sibs.vocab)
+
+# reporting bias for infants with no siblings
+
+# run correlations between words produced in the video/audio data and CDI scores
+
+ProductionData %>%
+  filter(month == 17) %>%
+ summarise(cdi_tok_vid = cor(Total.words, tokens_video, method = "spearman", use = "complete.obs"),
+            cdi_typ_vid = cor(Total.words, types_video, method = "spearman", use = "complete.obs"),
+            cdi_tok_aud = cor(Total.words, tokens_audio, method = "spearman", use = "complete.obs"),
+            cdi_typ_aud = cor(Total.words, types_audio, method = "spearman", use = "complete.obs"))
+  

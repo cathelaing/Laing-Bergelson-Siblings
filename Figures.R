@@ -36,7 +36,7 @@ Figure.speaker.count <- ggplot(subset(speaker.type2, speaker %in% c("MOT", "FAT"
 
 
 Figure.object.presence <- ggplot(data=subset(object.presence, audio_video == "video"), 
-                                 aes(x=SibGroup, y=PC, color = SibGroup, fill = SibGroup)) +
+                                 aes(x=SibGroup, y=(PC*100), color = SibGroup, fill = SibGroup)) +
   geom_violin(alpha = .3) +
   stat_summary(fun.y=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
