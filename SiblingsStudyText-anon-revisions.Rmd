@@ -383,7 +383,7 @@ table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anov
          Model = ifelse(grepl("sibnumber", model), "Sibling number", Model)) %>%
   select(Model, Df, Chisq, `p value`) %>%
   cbind(models_r2) %>%
-  rename( = "models_r2")
+  rename("R2" = "models_r2") # need to change this to formula
 
 ```
 
@@ -448,13 +448,15 @@ sibgroup2.beta <- abs(sibgroup2.beta*100)
 sibgroup_wilcox_none_one <- wilcox.test(
   x = subset(SiblingsData, month == 18 & SibGroup == "None")$Total.words
   , y = subset(SiblingsData, month == 18 & SibGroup == "One")$Total.words
-  , paired = FALSE
+  , paired = FALSE,
+  conf.int = TRUE
 )
 
 sibgroup_wilcox_one_two <- wilcox.test(
   x = subset(SiblingsData, month == 18 & SibGroup == "2+")$Total.words
   , y = subset(SiblingsData, month == 18 & SibGroup == "One")$Total.words
-  , paired = FALSE
+  , paired = FALSE,
+  conf.int = TRUE
 )
 
 ```
