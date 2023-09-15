@@ -54,6 +54,7 @@ library(lmerTest)
 library(afex)
 #library(citr)
 library(feather)
+library(pander)
 
 source("DataGathering.R")
 
@@ -381,7 +382,8 @@ table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anov
          Model = ifelse(grepl("sibgroup", model), "Sibling group", Model),
          Model = ifelse(grepl("sibnumber", model), "Sibling number", Model)) %>%
   select(Model, Df, Chisq, `p value`) %>%
-  
+  cbind(models_r2) %>%
+  rename( = "models_r2")
 
 ```
 
