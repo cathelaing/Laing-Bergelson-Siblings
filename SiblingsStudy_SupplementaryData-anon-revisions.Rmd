@@ -625,4 +625,65 @@ cap = "Full model output from linear mixed effects regression models comparing o
        caption=cap, digits=2, align="c") %>%
    row_spec(5, hline_after = T)
 ```
+\newpage
 
+## S7: Change to input variables over time
+
+We re-plotted Figures 2 and 3 from the main paper with age on the x-axis, to determine whether there was any age-related changes in these variables. Note that age was a significant factor in both linear mixed effects models testing caregiver input/object presence as dependent variables.
+
+```{r Figure input ~ age, include=FALSE}
+
+Figure.input.age <- ggplot(data = subset(speaker.type, caregiver == "FAMILY"), mapping = aes(x=as.numeric(month), y=Log.n)) +
+  geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_jitter(.15)) + 
+  geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
+  ylab('Total number of words heard in input') +
+  xlab('Age in Months') +
+  scale_x_continuous(breaks = c(6:18)) +
+  scale_y_continuous(breaks = c(0, log(11), log(51), log(151), log(301)), labels = c(0, 10, 50, 150, 300)) +
+  theme_bw() + 
+  theme(axis.text=element_text(size=18),
+        text = element_text(size=18),
+        legend.position = c(.15, .85),
+        legend.title = element_blank()) +
+  stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
+               aes(fill = SibGroup), color = "black", shape = 24,
+               position = position_dodge(.2))
+
+```
+
+```{r Figure-input-age, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
+
+par(cex = 1.2)
+Figure.input.age
+cap <- sprintf("Number of input words produced by caregivers over time (n=43). Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over individual infants’ input at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (jittered horizontally) show individual infants' input at each month.")
+
+```
+
+```{r Figure object presence ~ age, include=FALSE}
+
+Figure.objpresence.age <- ggplot(data = object.presence, mapping = aes(x=as.numeric(month), y=(PC*100))) +
+  geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_jitter(.15)) + 
+  geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
+  ylab('% object presence') +
+  xlab('Age in Months') +
+  scale_x_continuous(breaks = c(6:18)) +
+  theme_bw() + 
+  theme(axis.text=element_text(size=18),
+        text = element_text(size=18),
+        legend.position = c(.15, .85),
+        legend.title = element_blank()) +
+  stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
+               aes(fill = SibGroup), color = "black", shape = 24,
+               position = position_dodge(.2))
+
+```
+
+```{r Figure-OP-age, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
+
+par(cex = 1.2)
+Figure.objpresence.age
+cap <- sprintf("Amount (%%) of object presence in infants' input over time (n=43). Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over object presence at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (jittered horizontally) show object presence in individual infants' inputs at each month.")
+
+```
+
+Inspection of both Figures \@ref(fig:Figure-input-age) and \@ref(fig:Figure-OP-age) suggest that both measures were relatively consistent in the data over time, across each sibling group. 

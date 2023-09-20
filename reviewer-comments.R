@@ -119,7 +119,7 @@ ggplot(subset(input.sib.presence, speaker == "Total.input" & SibGroup != "None")
 
 # input
 
-Figure.input <- ggplot(data = subset(speaker.type, caregiver == "FAMILY"), mapping = aes(x=as.numeric(month), y=Log.n)) +
+Figure.input.age <- ggplot(data = subset(speaker.type, caregiver == "FAMILY"), mapping = aes(x=as.numeric(month), y=Log.n)) +
   geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_jitter(.15)) + 
   geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
   ylab('Total number of words heard in input') +
@@ -137,7 +137,7 @@ Figure.input <- ggplot(data = subset(speaker.type, caregiver == "FAMILY"), mappi
 
 # object presence
 
-Figure.objpresence <- ggplot(data = object.presence, mapping = aes(x=as.numeric(month), y=(PC*100))) +
+Figure.objpresence.age <- ggplot(data = object.presence, mapping = aes(x=as.numeric(month), y=(PC*100))) +
   geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_jitter(.15)) + 
   geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
   ylab('% object presence') +
