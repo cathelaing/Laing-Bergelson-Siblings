@@ -69,12 +69,13 @@ The supplementary materials below present further analyses on our sample. We inc
 
 The analyses below (S1:S5) show:
 
-* S1: re-analysis of caregiver input variables using data from day-long audio recordings  
-* S2: summary of speakers classed as two main caregivers in our input data
-* S3: correlations of input and output measures with maternal factors (age, education) and number of siblings
-* S4: re-analysis of caregiver input variables using discrete sibling number as our main variable of interest 
-* S5: re-analysis of caregiver input variables with one outlier infant
-* S6: re-analysis of caregiver input variables with both dizygotic twins excluded
+* S1: re-analysis of caregiver input variables using data from day-long audio recordings
+* S2: re-analysis of caregiver input variables with both dizygotic twins excluded
+* S3: summary of speakers classed as two main caregivers in our input data
+* S4: correlations of input and output measures with maternal factors (age, education) and number of siblings
+* S5: re-analysis of caregiver input variables using discrete sibling number as our main variable of interest 
+* S6: re-analysis of caregiver input variables with one outlier infant
+
 
 Consistent with our main analysis, all analyses here draw on data from age 10 months, given that the majority of infants did not produce their first word until around 0;11, according to CDI reports. In addition, the twin removed from the main analyses is also removed from the data analysed here.
 
@@ -212,7 +213,100 @@ cap = "Full model outputs from two linear mixed effects regression models compar
 
 \newpage
 
-## S2: Speakers in the dataset
+## S2: re-analysis of caregiver input variables with both dizygotic twins excluded
+
+```{r speaker.type model both twins removed, include = FALSE}
+
+speaker.type.no.twins <- speaker.type %>% filter(subj != 424)
+
+speaker.type.model.null.no.twins <- lmerTest::lmer(Log.n ~ month + sex + (1|subj), 
+                                                   data=subset(speaker.type.no.twins, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+speaker.type.model.no.twins <- lmerTest::lmer(Log.n ~ SibGroup + month + sex + (1|subj), 
+                                              data=subset(speaker.type.no.twins, audio_video == "video" & 
+                                                                                           caregiver == "FAMILY"), REML=FALSE)
+
+speaker.type_anova.no.twins <- anova(speaker.type.model.no.twins, speaker.type.model.null.no.twins) %>% #p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+input.model.summary.no.twins <- summary(speaker.type.model.no.twins)
+
+input.model.summary.table.no.twins <- input.model.summary.no.twins$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
+
+```
+
+```{r object.presence model both twins removed, include=FALSE}
+
+object.presence.no.twins <- object.presence %>% filter(subj != 424)
+
+object.presence.model.no.twins <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence.no.twins,  audio_video == "video"), REML=FALSE)
+object.presence.model.null.no.twins <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence.no.twins,  audio_video == "video"), REML=FALSE)
+
+object.presence.anova.no.twins <- anova(object.presence.model.no.twins, object.presence.model.null.no.twins) %>% # p<.01
+  rename("pval" = `Pr(>Chisq)`)
+
+object.presence.model.summary.no.twins <- summary(object.presence.model.no.twins)
+
+table.object.presence.model.no.twins.summary <- object.presence.model.summary.no.twins$coefficients %>%
+  as.data.frame %>%
+  rename("p value" = "Pr(>|t|)") %>%
+  rownames_to_column(var="Effect") %>%
+  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
+  # printnum(
+  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
+  mutate(`p value` = scales::pvalue(`p value`),
+         Variable = ifelse(Effect == "Intercept", "Object presence", ""))
+
+input.variables.model.summaries.no.twins <- rbind(input.model.summary.table.no.twins, table.object.presence.model.no.twins.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
+
+```
+
+```{r model outputs - both twins removed, include = FALSE}
+
+table.input.model.output.no.twins <- rbind(speaker.type_anova.no.twins, object.presence.anova.no.twins
+                                ) %>%
+  rownames_to_column(var="model") %>%
+  filter(Chisq > 0) %>%
+  rename("p value" = "pval") %>%
+  mutate(Model = ifelse(grepl("speaker", model), "Caregiver input", "Object presence")) %>%
+  select(Model, Df, Chisq, `p value`)
+
+
+input.variables.model.summaries.no.twins <- rbind(input.model.summary.table.no.twins, table.object.presence.model.no.twins.summary) %>%
+  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
+
+```
+
+As stated in the main paper, there was one pair of dizygotic twins in the original dataset. We retain one infant in the main analysis in order to maximise sample size, but we acknowledge that this is not a perfect solution given that the presence of another twin in the home (counted as a sibling in the main analysis) may affect caregiver interactions in a different way than the presence of an older sibling. By removing both twins from our data and re-analysing the input measures, we can confirm that our results were consistent with and without one of the twins included in our data (n=42). See Tables \@ref(tab:table-model-comparisons-no-twins) and \@ref(tab:table-input-model-summary-no-twins). 
+
+```{r table-model-comparisons-no-twins, echo = FALSE}
+cap = "Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with both dizygotic twins removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect."
+ kable(table.input.model.output.no.twins, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") 
+```
+
+```{r table-input-model-summary-no-twins, echo = FALSE}
+cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, with both dizygotic twins removed from our sample (n=42). Age in months was included as a fixed effect in both models, sex was included in the model testing caregiver inpit; subject was included as a random effect."
+ kable(input.variables.model.summaries.no.twins, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") %>%
+   row_spec(5, hline_after = T)
+```
+
+\newpage
+
+## S3: Speakers in the dataset
 
 ```{r speaker type count, include = FALSE}
 
@@ -270,7 +364,7 @@ cap = "Numer of sessions in which each adult speaker is one of the two main care
 
 \newpage
 
-## S3: Correlations with maternal factors
+## S4: Correlations with maternal factors
 
 ```{r age_mom-Sibling correlation, include = FALSE}
 
@@ -323,7 +417,7 @@ cap <- sprintf("Correlation matrix showing Spearman's correlation coefficients b
 ```
 \newpage
 
-## S4: Discrete sibling  number
+## S5: Discrete sibling  number
 
 ```{r speaker.type model, include = FALSE}
 
@@ -444,7 +538,7 @@ cap = "Full model outputs from two linear mixed effects regression models compar
 
 \newpage
 
-## S5: Possible outlier for input data removed
+## S6: Possible outlier for input data removed
 
 ```{r speaker.type model one infant removed, include = FALSE}
 
@@ -532,93 +626,3 @@ cap = "Full model output from linear mixed effects regression models comparing o
    row_spec(5, hline_after = T)
 ```
 
-## S6: re-analysis of caregiver input variables with both dizygotic twins excluded
-
-```{r speaker.type model one infant removed, include = FALSE}
-
-speaker.type.no.twins <- speaker.type %>% filter(subj != 424)
-
-speaker.type.model.null.no.twins <- lmerTest::lmer(Log.n ~ month + sex + (1|subj), 
-                                                   data=subset(speaker.type.no.twins, audio_video == "video" & 
-                                                                                           caregiver == "FAMILY"), REML=FALSE)
-
-speaker.type.model.no.twins <- lmerTest::lmer(Log.n ~ SibGroup + month + sex + (1|subj), 
-                                              data=subset(speaker.type.no.twins, audio_video == "video" & 
-                                                                                           caregiver == "FAMILY"), REML=FALSE)
-
-speaker.type_anova.red <- anova(speaker.type.model.red, speaker.type.model.null.red) %>% #p<.01
-  rename("pval" = `Pr(>Chisq)`)
-
-input.model.summary.red <- summary(speaker.type.model.red)
-
-input.model.summary.table.red <- input.model.summary.red$coefficients %>%
-  as.data.frame %>%
-  rename("p value" = "Pr(>|t|)") %>%
-  rownames_to_column(var="Effect") %>%
-  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
-  # printnum(
-  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
-  mutate(`p value` = scales::pvalue(`p value`),
-         Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
-
-```
-
-```{r object.presence model one infant removed, include=FALSE}
-
-object.presence.red <- object.presence %>% filter(subj != 738)
-
-object.presence.model.red <- lmerTest::lmer(PC ~ SibGroup + month + (1|subj), data=subset(object.presence.red,  audio_video == "video"), REML=FALSE)
-object.presence.model.null.red <- lmerTest::lmer(PC ~ month + (1|subj), data=subset(object.presence.red,  audio_video == "video"), REML=FALSE)
-
-object.presence.anova.red <- anova(object.presence.model.red, object.presence.model.null.red) %>% # p<.01
-  rename("pval" = `Pr(>Chisq)`)
-
-object.presence.model.summary.red <- summary(object.presence.model.red)
-
-table.object.presence.model.red.summary <- object.presence.model.summary.red$coefficients %>%
-  as.data.frame %>%
-  rename("p value" = "Pr(>|t|)") %>%
-  rownames_to_column(var="Effect") %>%
-  mutate(Effect = ifelse(Effect == "(Intercept)", "Intercept", Effect)) %>%
-  # printnum(
-  #   digits = c(2, 2, 2, 2, 3, 3)) %>%
-  mutate(`p value` = scales::pvalue(`p value`),
-         Variable = ifelse(Effect == "Intercept", "Object presence", ""))
-
-input.variables.model.summaries.red <- rbind(input.model.summary.table.red, table.object.presence.model.red.summary) %>%
-  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
-
-```
-
-```{r model outputs - one infant removed, include = FALSE}
-
-table.input.model.output.red <- rbind(speaker.type_anova.red, object.presence.anova.red
-                                ) %>%
-  rownames_to_column(var="model") %>%
-  filter(Chisq > 0) %>%
-  rename("p value" = "pval") %>%
-  mutate(Model = ifelse(grepl("speaker", model), "Caregiver input", "Object presence")) %>%
-  select(Model, Df, Chisq, `p value`)
-
-
-input.variables.model.summaries.red <- rbind(input.model.summary.table.red, table.object.presence.model.red.summary) %>%
-  dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
-
-```
-
-One infant heard substantially more (>3SDs above the mean) nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results reported for sibling group were consistent when this child was removed from the analysis of input data (n=42). See Tables \@ref(tab:table-model-comparisons-red) and \@ref(tab:table-input-model-summary-red). 
-
-```{r table-model-comparisons-red, echo = FALSE}
-cap = "Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with one infant identified as an outlier removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect."
- kable(table.input.model.output.red, "latex", booktabs=T, longtable=T, 
-       escape=FALSE,
-       caption=cap, digits=2, align="c") 
-```
-
-```{r table-input-model-summary-red, echo = FALSE}
-cap = "Full model output from linear mixed effects regression models comparing our two input measures (object words produced in caregiver input and object presence) over time in relation to sibling group, with one infant removed who was identified as an outlier (n=42). Age in months was included as a fixed effect in both models, sex was included in the model testing caregiver inpit; subject was included as a random effect."
- kable(input.variables.model.summaries.red, "latex", booktabs=T, longtable=T, 
-       escape=FALSE,
-       caption=cap, digits=2, align="c") %>%
-   row_spec(5, hline_after = T)
-```

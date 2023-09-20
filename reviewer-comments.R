@@ -80,6 +80,10 @@ object.sib.presence <- object.presence %>%
   filter(audio_video == "video") %>% 
   left_join(sib.presence)
 
+input.sib.presence <- speaker.type2 %>% 
+  #filter(audio_video == "video") %>% 
+  left_join(sib.presence)
+
 ggplot(subset(object.sib.presence, SibGroup != "None"), aes(x = sib.present, y = PC, fill = sib.present)) +
   geom_point(aes(colour = SibGroup), shape= 1, 
              position = position_jitter(.1), size=1.5, 
@@ -99,6 +103,17 @@ ggplot(object.sib.presence, aes(x = SibGroup, y = PC, fill = SibGroup)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=1, aes(colour = sib.present), position = position_jitter(.1)) +
   theme_bw() +
   ylim(0,1)
+
+ggplot(subset(input.sib.presence, speaker == "Total.input" & SibGroup != "None"), 
+                               aes(x=SibGroup, y=mean.n, group = sib.present)) +
+  geom_point(aes(colour = sib.present),
+             shape= 1, 
+             position = position_jitter(.1), size=1.5, 
+             stroke = 1.1, alpha = .5) +
+  geom_violin(aes(colour = sib.present)) +
+  # stat_summary(fun.y=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, alpha = .3, position = position_jitter(.03)) +
+  stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=1, aes(colour = sib.present), position = position_jitter(.1)) +
+  theme_bw()
 
 # Reviewer 1 comment 5: is there a change over time across measures?
 
@@ -122,10 +137,10 @@ Figure.input <- ggplot(data = subset(speaker.type, caregiver == "FAMILY"), mappi
 
 # object presence
 
-Figure.objpresence <- ggplot(data = object.presence, mapping = aes(x=as.numeric(month), y=PC)) +
+Figure.objpresence <- ggplot(data = object.presence, mapping = aes(x=as.numeric(month), y=(PC*100))) +
   geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_jitter(.15)) + 
   geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
-  ylab('Total proprtion of object presence') +
+  ylab('% object presence') +
   xlab('Age in Months') +
   scale_x_continuous(breaks = c(6:18)) +
   #scale_y_continuous(breaks = c(0, log(11), log(51), log(151), log(301)), labels = c(0, 10, 50, 150, 300)) +

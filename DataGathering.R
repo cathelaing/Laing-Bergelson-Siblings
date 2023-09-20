@@ -146,3 +146,11 @@ object.presence.unsure <- sibsdata %>%
 sib.ages <- read_csv("Data/SiblingAges.csv") %>%   # Read in data showing age differences between subj and siblings
   mutate(subj = factor(subj))
 
+# dataframe to show which recordings included speech from a sibling
+
+sib.presence <- speaker.type %>% filter(audio_video == "video") %>% 
+  dplyr::select(subj, month, caregiver, n, SibGroup) %>% 
+  group_by(subj, month) %>%
+  pivot_wider(names_from = caregiver, values_from = n) %>%
+  mutate(sib.present = ifelse((SibGroup != "None" & !is.na(SIB)), "Sibling present", "Sibling not present"))
+
