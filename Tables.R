@@ -1,6 +1,6 @@
 library(janitor)
 library(kableExtra)
-library(knitr)
+#library(knitr)
 library(magrittr)
 
 table.sibling.number <- 
