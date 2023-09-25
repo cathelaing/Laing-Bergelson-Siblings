@@ -641,8 +641,8 @@ Figure.input.age <- ggplot(data = subset(speaker.type, caregiver == "FAMILY"), m
   scale_x_continuous(breaks = c(6:18)) +
   scale_y_continuous(breaks = c(0, log(11), log(51), log(151), log(301)), labels = c(0, 10, 50, 150, 300)) +
   theme_bw() + 
-  theme(axis.text=element_text(size=18),
-        text = element_text(size=18),
+  theme(axis.text=element_text(size=16),
+        text = element_text(size=16),
         legend.position = c(.15, .85),
         legend.title = element_blank()) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
@@ -668,8 +668,8 @@ Figure.objpresence.age <- ggplot(data = object.presence, mapping = aes(x=as.nume
   xlab('Age in Months') +
   scale_x_continuous(breaks = c(6:18)) +
   theme_bw() + 
-  theme(axis.text=element_text(size=18),
-        text = element_text(size=18),
+  theme(axis.text=element_text(size=16),
+        text = element_text(size=16),
         legend.position = c(.15, .85),
         legend.title = element_blank()) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 

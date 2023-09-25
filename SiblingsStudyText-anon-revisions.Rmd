@@ -56,6 +56,7 @@ library(afex)
 library(feather)
 library(pander)
 
+
 source("DataGathering.R")
 
 # remove one of the twins from each dataset
@@ -98,8 +99,7 @@ There thus may be a trade-off, even in early development, between highly support
 
 
 ## Hypotheses
-<!-- eb2cl: made some edits in this para -->
-Synthesizing the work above in broad strokes, given prior research showing that early lexical development is more advanced among first-born infants [e.g. @hoff-ginsberg_relation_1998], we predict that children with more siblings will have lower productive vocabularies than their peers with fewer siblings. However, we have no *a priori* predictions about how these differences will manifest gradiently (e.g. linear decrease for each additional sibilng, a threshold effect where we see a drop after a certain sibship size, etc.). With regard to the infants’ linguistic environment, we hypothesize that infants with more siblings will experience lower prevalence of two aspects of the language input previously shown to support language development: **amount of input** and **amount of object presence.** Just as for productive vocabulary size, we do not make *a priori* predictions regarding the shape of these effects, beyond predicting a decrease with sibling number. More specifically regarding input, following previous studies that show infants with siblings to receive less speech directed at them [@jones_language_1987; @oshima-takane_linguistic_2003], we expect to see the same effect in our sample. As noted above, by object presence we mean word and object co-occurrence, e.g. mother saying "cat" when the child is looking at a cat. We predict object presence will decrease as sibling number increases, because as caregivers' attention is drawn away from one-to-one interactions with the infant, there is likely less opportunity for contingent talk and joint attention. Prior research suggests links between object presence and early word learning [@bergelson_nature_2017;@cartmill_quality_2013], though to our knowledge this has not been examined in relation to sibling number.
+Synthesizing the work above in broad strokes, given prior research showing that early lexical development is more advanced among first-born infants [e.g. @hoff-ginsberg_relation_1998], we predict that children with more siblings will have lower productive vocabularies than their peers with fewer siblings. However, we have no *a priori* predictions about how these differences will manifest gradiently (e.g. linear decrease for each additional sibling, a threshold effect where we see a drop after a certain sibship size, etc.). With regard to the infants’ linguistic environment, we hypothesize that infants with more siblings will experience lower prevalence of two aspects of the language input previously shown to support language development: **amount of input** and **amount of object presence.** Just as for productive vocabulary size, we do not make *a priori* predictions regarding the shape of these effects, beyond predicting a decrease with sibling number. More specifically regarding input, following previous studies that show infants with siblings to receive less speech directed at them [@jones_language_1987; @oshima-takane_linguistic_2003], we expect to see the same effect in our sample. As noted above, by object presence we mean word and object co-occurrence, e.g. mother saying "cat" when the child is looking at a cat. We predict object presence will decrease as sibling number increases, because as caregivers' attention is drawn away from one-to-one interactions with the infant, there is likely less opportunity for contingent talk and joint attention. Prior research suggests links between object presence and early word learning [@bergelson_nature_2017;@cartmill_quality_2013], though to our knowledge this has not been examined in relation to sibling number.
 
 # Methods
 
@@ -231,10 +231,9 @@ other.speaker.data <-
 *Object Presence* was coded as "yes", "no", or "unsure" for each object word annotated in the home recordings, as produced by the two main caregivers detailed above, based on trained annotators' assessment of whether the referent of the word (i.e. the object) was present and attended to or touched by the child or the caregiver. For example, if the caregiver was pointing at a ball while the saying the word *ball*, this was coded as "yes". If the infant was holding (but not looking at) a bottle while the caregiver said *bottle*, this would also be coded as "yes". On the other hand, if the caregiver refers to a dog that is barking in the other room, that would be coded as "no", as it was not present during object labeling. In the video data, `r object.presence.unsure$totalu` instances (`r round(object.presence.unsure$meanu,2)`% on average per infant) of object presence were marked as unsure; these instances were not included in this analysis.
 
 ## Data analysis
-<!-- eb2cl: slight rewording below -->
 While we set out to test the hypotheses outlined above, aspects of our analysis were exploratory in nature. In respect of this, and on the advice of a helpful anonymous reviewer, we focus on descriptive and confirmatory measures of analysis through data visualization and effect size reporting alongside significance testing. For each of key variable tested, we present these three avenues for understanding the data, alongside any further follow-up exploratory analyses, where appropriate.
 
-All reported models were generated in R [@r_core_team_r_2019] using the *lmerTest* package to run linear mixed-effects regression models when needed[@kuznetsova_lmertest_2017]. *P*-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables of interest (CDI score, household input and object presence) differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied (e.g. with an adjusted *p*-value threshold of .025 for 2 between-group comparisons). While we have a substantial amount of data for each participant, our limited *n* means we are under-powered to consider multiple demographic variables simultaneously given the data distribution (e.g. sibling number and sex, see Table \@ref(tab:table-sibling-number); as luck would have it both infants with 3 siblings were girls and both with 4 were boys). There were no correlations between sibling number or child word production and maternal age/education. See S4 for further details.
+All reported models were generated in R [@r_core_team_r_2019] using the *lmerTest* package to run linear mixed-effects regression models when needed [@kuznetsova_lmertest_2017]. *P*-values were generated by likelihood ratio tests resulting from nested model comparison. All models include infant as a random effect. All post-hoc tests are two-sample, two-tailed Wilcoxon Tests; given that all of our variables of interest (CDI score, household input and object presence) differed significantly from normal by Shapiro tests, we opted to run non-parametric tests for all post-hoc comparisons. Where multiple post-hoc comparisons are run on the same dataset, Bonferroni corrections are applied (e.g. with an adjusted *p*-value threshold of .025 for 2 between-group comparisons). While we have a substantial amount of data for each participant, our limited *n* means we are under-powered to consider multiple demographic variables simultaneously given the data distribution (e.g. sibling number and sex, see Table \@ref(tab:table-sibling-number); as luck would have it both infants with 3 siblings were girls and both with 4 were boys). There were no correlations between sibling number or child word production and maternal age/education. See S4 for further details.
 
 
 # Results
@@ -374,7 +373,7 @@ table.sibling.model.output <- rbind(sibsYN_anova, sibgroup_anova, sibnumber_anov
          Model = ifelse(grepl("sibnumber", model), "Sibling number", Model)) %>%
   select(Model, Df, Chisq, `p value`) %>%
   cbind(models_r2) %>%
-  rename("R2" = "models_r2") # need to change this to formula
+  rename("R2" = "models_r2") 
 
 row.names(table.sibling.model.output) <- NULL
 
@@ -391,9 +390,10 @@ In our sample, simply having siblings (i.e. as a binary variable) did not predic
 [^3]: While our sample size and distribution leaves it statistically questionable to consider both sex and sibling number, for completeness we did also run a model that included sex in addition to age and sibling number (our primary variable of interest). Sex did not improve model fit over and above the effect of siblings in any of the three comparisons (*p*s all >`r round(min.pval.sex,2)`).
 
 ```{r table-sibling-model-output, echo=FALSE}
-cap = "Output from likelihood ratio tests comparing regression models that predict the effects of sibling number (binary, grouped and discrete variables) on vocabulary size. Month was included in each model as a fixed effect; subject was included as a random effect."
+cap = "Output from likelihood ratio tests comparing regression models that predict the effects of sibling number (binary, grouped and discrete variables) on vocabulary size. Month was included in each model as a fixed effect; subject was included as a random effect. R2 values are included to reflect model goodness-of-fit."
 apa_table(table.sibling.model.output, caption = cap, col_spanners = NULL, digits = 2, placement = "H", 
-          font_size = "small")
+          font_size = "small",
+          note = "While we report R2 values for completeness, we note that utility and interpretability of this metric for this model type is debated, see https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html.")
 ```
 
 ```{r descriptive statistics for sibling model outputs, include=FALSE}
@@ -409,9 +409,7 @@ siblings.model.summary.table <- siblings.model.summary$coefficients %>%
   #   digits = c(2, 2, 2, 2, 3, 3)) %>%
   mutate(`p value` = scales::pvalue(`p value`))
 
-siblingnum.beta <- as.numeric(siblings.model.summary.table$Estimate[2])
-
-siblingnum.beta <- abs(siblingnum.beta*100)
+siblingnum.beta <- (1-(exp(as.numeric(siblings.model.summary.table$Estimate[2]))))*100
 
 sibgroup.model.summary <- summary(sibgroup.model)
 
@@ -423,14 +421,6 @@ sibgroup.model.summary.table <- sibgroup.model.summary$coefficients %>%
   # printnum(
   #   digits = c(2, 2, 2, 2, 3, 3)) %>%
   mutate(p = scales::pvalue(p))
-
-sibgroup1.beta <- as.numeric(sibgroup.model.summary.table$Estimate[2])
-
-sibgroup1.beta <- abs(sibgroup1.beta*100)
-
-sibgroup2.beta <- as.numeric(sibgroup.model.summary.table$Estimate[3])
-
-sibgroup2.beta <- abs(sibgroup2.beta*100)
 
 ```
 
@@ -468,9 +458,9 @@ cap = "Full model output from linear mixed effects regression models comparing l
   kable_styling(latex_options = "hold_position")
 ```
 
-Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. We find that for each additional sibling, infants were reported to have produced `r siblingnum.beta`% fewer words. The 'sibling effect' is thus present in our data.
+Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. We find that for each additional sibling, infants were reported to have produced `r round(siblingnum.beta,0)`% fewer words. The 'sibling effect' is thus present in our data.
 
-In terms of our grouped sibling variable (i.e. 0 vs. 1 vs. 2+ siblings), infants with one sibling acquire only `r round(sibgroup1.beta,0)`% fewer words than firstborns over the course of our analysis, while infants with two or more siblings produce `r round(sibgroup2.beta,0)`% fewer words. See Table \@ref(tab:table-sibgroup-model-summary) and and Figure \@ref(fig:Figure-SibGroup). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months (where there's the widest vocabulary range) revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`, CI=[`r (sibgroup_one_two_confint[1,])`,`r (sibgroup_one_two_confint[2,])`]), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`, CI=[`r (sibgroup_none_one_confint[1,])`,`r (sibgroup_none_one_confint[2,])`]). See Table \@ref(tab:table-data-summary).
+In terms of our grouped sibling variable (i.e. 0 vs. 1 vs. 2+ siblings), infants with one sibling produced `r round(subset(sibgroup.summary, SibGroup == "One")$mean,0)` words on average at 18 months, which is, on average, `r round((subset(sibgroup.summary, SibGroup == "One")$mean)-(subset(sibgroup.summary, SibGroup == "None")$mean),0)` words *more* than their firstborn peers. On the other hand, infants with two or more siblings produced `r round(subset(sibgroup.summary, SibGroup == "2+")$mean,0)` words on average, which is `r round((((subset(sibgroup.summary, SibGroup == "None")$mean)-(subset(sibgroup.summary, SibGroup == "2+")$mean))/(subset(sibgroup.summary, SibGroup == "2+")$mean))*100,0)`% fewer words than the firstborns in our data. See Table \@ref(tab:table-sibgroup-model-summary) and and Figure \@ref(fig:Figure-SibGroup). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months (where there's the widest vocabulary range) revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`, CI=[`r (sibgroup_one_two_confint[1,])`,`r (sibgroup_one_two_confint[2,])`]), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`, CI=[`r (sibgroup_none_one_confint[1,])`,`r (sibgroup_none_one_confint[2,])`]). See Table \@ref(tab:table-data-summary).
 
 
 ```{r Figure-SibGroup, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
@@ -641,17 +631,9 @@ input.model.summary.table <- input.model.summary$coefficients %>%
   mutate(`p value` = scales::pvalue(`p value`),
          Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
 
-inputONE.beta <- as.numeric(input.model.summary.table$Estimate[2])
-
-inputONE.beta <- abs(inputONE.beta*100)
-
-inputTWO.beta <- as.numeric(input.model.summary.table$Estimate[3])
-
-inputTWO.beta <- abs(inputTWO.beta*100)
-
 ```
 
-We tested overall quantity of input (aggregated across the two main caregivers, as outlined above, and siblings) in our model alongside age, sex and subject, as noted above, and a significant effect was found for the effect of sibling group ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*=`r printp(speaker.type_p.value)`, $R^2$=`r round(speaker.type_r2,2)`). Infants with one sibling heard on average `r round(inputONE.beta,0)`% more words than those with no siblings in any given hour-long recording, while infants with two or more siblings heard `r round(inputTWO.beta,0)`% fewer words. 
+We tested overall quantity of input (aggregated across the two main caregivers, as outlined above, and siblings) in our model alongside age, sex and subject, as noted above, and a significant effect was found for the effect of sibling group ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*=`r printp(speaker.type_p.value)`, $R^2$=`r round(speaker.type_r2,2)`). Infants with one sibling heard on average `r round((((subset(table.data.summary.speaker, SibGroup == "None")$mean)-(subset(table.data.summary.speaker, SibGroup == "One")$mean))/(subset(table.data.summary.speaker, SibGroup == "One")$mean))*100,0)`% fewer words than those with no siblings in any given hour-long recording, while infants with two or more siblings heard `r round((((subset(table.data.summary.speaker, SibGroup == "None")$mean)-(subset(table.data.summary.speaker, SibGroup == "2+")$mean))/(subset(table.data.summary.speaker, SibGroup == "2+")$mean))*100,0)`% fewer words. 
 
 We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type_wilcox_one_two$p.value)`, CI=[`r (speaker.type_one_two_confint[1,])`,`r (speaker.type_one_two_confint[2,])`]; Bonferroni-corrected *p*-threshold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`, CI=[`r (speaker.type_none_one_confint[1,])`,`r (speaker.type_none_one_confint[2,])`]). See Table \@ref(tab:table-data-summary) for overall group differences (M and SD) in amount of input.
 
@@ -732,7 +714,7 @@ kable(table.data.summary, "latex", booktabs = T, caption = cap, digits = 2, alig
 ```{r Figure-Speaker-count, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 par(cex = 1.2)
 Figure.speaker.count
-cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings, as well as total family input (mother + father + sibling(s)), across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means. In the case where the infant had two mothers, mean maternal input is shown.")
+cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings, as well as total family input (mother + father + sibling(s)), across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means. In the case where the infant had two mothers, mean maternal input is shown. See S7 for a month-by-month visualisation of caregiver input.")
 ```
 
 ```{r Sibling input, message=FALSE, warning=FALSE}
@@ -845,14 +827,6 @@ table.object.presence.model.summary <- object.presence.model.summary$coefficient
 input.variables.model.summaries <- rbind(input.model.summary.table, table.object.presence.model.summary) %>%
   dplyr::select(Variable, Effect, Estimate, `Std. Error`, `df`, `t value`, `p value`)
 
-object.presence1.beta <- as.numeric(table.object.presence.model.summary$Estimate[2])  # beta vals for Sib Group One
-
-object.presence1.beta <- abs(object.presence1.beta*100)
-
-object.presence2.beta <- as.numeric(table.object.presence.model.summary$Estimate[3]) # beta vals for Sib Group 2+
-
-object.presence2.beta <- abs(object.presence2.beta*100)
-
 # Posthoc tests
 
 object.presence_wilcox_none_one <- wilcox.test(
@@ -875,13 +849,15 @@ object.presence_one_two_confint <- as.data.frame(object.presence_wilcox_one_two$
 
 ```
 
-On average, `r round(mean(object.presence.summary$mean.object)*100)`% of annotated utterances included a referent that was present and attended to by the infant (Mdn=`r mean(object.presence.summary$med.object)`, SD=`r mean(object.presence.summary$sd.object)`). See Table \@ref(tab:table-data-summary). Consistent with our hypothesis that infants with more siblings would hear fewer words in referentially transparent conditions (i.e. they would experience lower object presence) than those with fewer siblings, our models reveal a significant effect for sibling group on object presence ($\chi^2 (`r object.presence_df`)$ = `r object.presence_chisq`, *p*`r printp(object.presence_p.value)`, $R^2$=`r round(object.presence_r2,2)`). See Table \@ref(tab:table-input-model-summary) and Figure \@ref(fig:Figure-object-presence). Infants with no siblings experienced `r object.presence2.beta`% more object presence in their input than those with two or more siblings, and `r object.presence1.beta`% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (*W*=`r round(object.presence_wilcox_none_one$statistic)`, *p*`r printp(object.presence_wilcox_none_one$p.value)`, CI=[`r (object.presence_none_one_confint[1,])`,`r (object.presence_none_one_confint[2,])`]; Bonferroni-corrected *p*-threshold = .025). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (*W*=`r round(object.presence_wilcox_one_two$statistic)`, *p*=`r printp(object.presence_wilcox_one_two$p.value)`, CI=[`r (object.presence_one_two_confint[1,])`,`r (object.presence_one_two_confint[2,])`]).
+On average, `r round(mean(object.presence.summary$mean.object)*100)`% of annotated utterances included a referent that was present and attended to by the infant (Mdn=`r mean(object.presence.summary$med.object)`, SD=`r mean(object.presence.summary$sd.object)`). See Table \@ref(tab:table-data-summary). Consistent with our hypothesis that infants with more siblings would hear fewer words in referentially transparent conditions (i.e. they would experience lower object presence) than those with fewer siblings, our models reveal a significant effect for sibling group on object presence ($\chi^2 (`r object.presence_df`)$ = `r object.presence_chisq`, *p*`r printp(object.presence_p.value)`, $R^2$=`r round(object.presence_r2,2)`). See Table \@ref(tab:table-input-model-summary) and Figure \@ref(fig:Figure-object-presence). 
+
+Descriptively, infants with no siblings experienced on average `r round((((subset(table.data.summary.object, SibGroup == "None")$mean)-(subset(table.data.summary.object, SibGroup == "2+")$mean))/(subset(table.data.summary.object, SibGroup == "2+")$mean))*100,0)`% more object presence in their input than those with two or more siblings, and `r round((((subset(table.data.summary.object, SibGroup == "None")$mean)-(subset(table.data.summary.object, SibGroup == "One")$mean))/(subset(table.data.summary.object, SibGroup == "One")$mean))*100,0)`% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (*W*=`r round(object.presence_wilcox_none_one$statistic)`, *p*`r printp(object.presence_wilcox_none_one$p.value)`, CI=[`r (object.presence_none_one_confint[1,])`,`r (object.presence_none_one_confint[2,])`]; Bonferroni-corrected *p*-threshold = .025). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (*W*=`r round(object.presence_wilcox_one_two$statistic)`, *p*=`r printp(object.presence_wilcox_one_two$p.value)`, CI=[`r (object.presence_one_two_confint[1,])`,`r (object.presence_one_two_confint[2,])`]).
 
 ```{r Figure-object-presence, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 
 par(cex = 1.2)
 Figure.object.presence
-cap <- sprintf("Percentage of input words produced with object presence across sibling groups. Error bars and black triangles show 95%% CIs and mean proportion of object presence across sibling groups. Dots indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity.")
+cap <- sprintf("Percentage of input words produced with object presence across sibling groups. Error bars and black triangles show 95%% CIs and mean proportion of object presence across sibling groups. Dots indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity. See S7 for a month-by-month visualisation of object presence.")
 
 ```
 
@@ -895,8 +871,7 @@ cap = "Full model output from linear mixed effects regression models comparing o
 
 
 ### Sibling presence 
-<!-- eb2cl: edits in this para here -->
-So far, our analysis takes into account the differences in input based on whether or not the target child has a sibling, but does not directly consider whether sibling presence in the recordings affected these variables. That is, if it is the active presence of the sibling that affects how the caretaker interacts with the target child, then we would expect to see a difference in our input measures when the sibling is present vs. absent. On the other hand, if the very fact of having a sibling changes the way that a caregiver interacts with the infant regardless of whether any sibling is actual present on the scene, then no difference should be observed. While sibling presence in each recordings was not coded directly in the dataset, for this exploratory analysis we can get at this with an admittedly imperfect proxy: did the sibling produce nouns in the recording. If yes, we can safely assume they are present; if not we (less safely, but reasonably for initial exploratory purposes) assume they are not. As reported above, by this measure, at least one sibling was present in `r round(sib.presence.summary$mean.present*100,0)`% of recordings for the infants who had a sibling. 
+So far, our analysis takes into account the differences in input based on whether or not the target child has a sibling, but does not directly consider whether sibling presence in the recordings affected these variables. That is, if it is the active presence of the sibling that affects how the caretaker interacts with the target child, then we would expect to see a difference in our input measures when the sibling is present vs. absent. On the other hand, if the very fact of having a sibling changes the way that a caregiver interacts with the infant regardless of whether any sibling is actually present on the scene, then no difference should be observed. While sibling presence in each recordings was not coded directly in the dataset, for this exploratory analysis we can get at this with an admittedly imperfect proxy: did the sibling produce nouns in the recording. If yes, we can safely assume they are present; if not we (less safely, but reasonably for initial exploratory purposes) assume they are not. As reported above, by this measure, at least one sibling was present in `r round(sib.presence.summary$mean.present*100,0)`% of recordings for the infants who had a sibling. 
 
 ```{r sib-presence-table-data-summary, comment=F, message=F, warning = F, echo = F, results = "asis"}
 cap = "Data summary of our two input measures according to presence or absence of siblings during the recording."
@@ -906,113 +881,21 @@ kable(sib.presence.table.data.summary, "latex", booktabs = T, caption = cap, dig
   kable_styling(latex_options = "hold_position")
 ```
 
-
-```{r figure-sibpresence, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
+```{r figure-sibpresence-input, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 par(cex = 1.2)
-multiplot(Figure.input.sibling, Figure.object.presence.sibling, cols=2)
-cap <- sprintf("Difference in number of input words and %% of object presence in infants' input according to whether or not a sibling or siblings were present during the time of recording. Infants with no siblings were not included in the plots for visual ease. White shapes represent individual infants in the data; filled shapes represent means and 95%%CIs. For both plots, colours represent presence or absence of siblings during the recording session.")
+Figure.input.sibling
+cap <- sprintf("Difference in number of input words in infants' input according to whether or not a sibling or siblings were present during the time of recording, for each month of data. Infants with no siblings were not included in the plots for visual ease. White shapes represent individual infants in the data; filled shapes represent means and 95%%CIs, colours represent presence or absence of siblings during the recording session.")
 
 ```
 
-
-Descriptively, the presence of a sibling affected the amount of object presence in the data, but not the amount of input. See Table \@ref(tab:sib-presence-table-data-summary) and Figure \@ref(fig:figure-sibpresence).  In both cases, there was a gradient decline according to sibling group: infants with 2+ siblings heard fewer input words and less object presence than infants with one sibling, and this was more notable when siblings were present.  
-
-
-
-```{r sibling presence - input, include=FALSE}
-
-speaker.type.sib.mean <- sib.presence.input %>% 
-  group_by(subj, sib.present) %>% 
-  mutate(MeanN = mean(n)) %>% 
-  filter(month == 17) 
-
-sib.input_wilcox_one <- wilcox.test(
-  x = subset(speaker.type.sib.mean, SibGroup == "One" & sib.present == "Sibling not present")$MeanN
-  , y = subset(speaker.type.sib.mean, SibGroup == "One" & sib.present == "Sibling present")$MeanN
-  , paired = FALSE,
-  conf.int = TRUE
-)
-
-sib.input_wilcox_one_confint <- as.data.frame(sib.input_wilcox_one$conf.int)
-
-sib.input_wilcox_two <- wilcox.test(
-  x = subset(speaker.type.sib.mean, SibGroup == "2+" & sib.present == "Sibling not present")$MeanN
-  , y = subset(speaker.type.sib.mean, SibGroup == "2+" & sib.present == "Sibling present")$MeanN
-  , paired = FALSE,
-  conf.int = TRUE
-)
-
-sib.input_wilcox_two_confint <- as.data.frame(sib.input_wilcox_two$conf.int)
-
-sib.input_wilcox_one_two_present <- wilcox.test(
-  x = subset(speaker.type.sib.mean, SibGroup == "2+" & sib.present == "Sibling present")$MeanN
-  , y = subset(speaker.type.sib.mean, SibGroup == "One" & sib.present == "Sibling present")$MeanN
-  , paired = FALSE,
-  conf.int = TRUE
-)
-
-sib.input_wilcox_one_two_present_confint <- as.data.frame(sib.input_wilcox_one_two_present$conf.int)
-
-sib.input_wilcox_one_two_not_present <- wilcox.test(
-  x = subset(speaker.type.sib.mean, SibGroup == "2+" & sib.present == "Sibling not present")$MeanN
-  , y = subset(speaker.type.sib.mean, SibGroup == "One" & sib.present == "Sibling not present")$MeanN
-  , paired = FALSE,
-  conf.int = TRUE
-)
-
-sib.input_wilcox_one_two_not_present_confint <- as.data.frame(sib.input_wilcox_one_two_not_present$conf.int)
-
+```{r figure-sibpresence-obj, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
+par(cex = 1.2)
+Figure.object.presence.sibling
+cap <- sprintf("Difference in %% of object presence in infants' input according to whether or not a sibling or siblings were present during the time of recording, for each month of data. Infants with no siblings were not included in the plots for visual ease. White shapes represent individual infants in the data; filled shapes represent means and 95%%CIs, colours represent presence or absence of siblings during the recording session.")
 
 ```
 
-```{r sibling presence - object presence, include=FALSE}
-
-object.presence.sib.summary <- sib.presence.OP %>%
-  group_by(subj, SibGroup, sib.present) %>%
-  summarise(mean.object = mean(PC, na.rm=T),
-            sd.object = sd(PC, na.rm=T))
-
-sib.object.presence_wilcox_one <- wilcox.test(
-  x = subset(object.presence.sib.summary, SibGroup == "One" & sib.present == "Sibling not present")$mean.object
-  , y = subset(object.presence.sib.summary, SibGroup == "One" & sib.present == "Sibling present")$mean.object
-  , paired = FALSE,
-  conf.int = TRUE
-)
-
-sib.object.presence_wilcox_one_confint <- as.data.frame(sib.object.presence_wilcox_one$conf.int)
-
-sib.object.presence_wilcox_two <- wilcox.test(
-  x = subset(object.presence.sib.summary, SibGroup == "2+" & sib.present == "Sibling not present")$mean.object
-  , y = subset(object.presence.sib.summary, SibGroup == "2+" & sib.present == "Sibling present")$mean.object
-  , paired = FALSE,
-  conf.int = TRUE
-)
-
-sib.object.presence_wilcox_two_confint <- as.data.frame(sib.object.presence_wilcox_two$conf.int)
-
-sib.object.presence_wilcox_one_two_present <- wilcox.test(
-  x = subset(object.presence.sib.summary, SibGroup == "2+" & sib.present == "Sibling present")$mean.object
-  , y = subset(object.presence.sib.summary, SibGroup == "One" & sib.present == "Sibling present")$mean.object
-  , paired = FALSE,
-  conf.int = TRUE
-)
-
-sib.object.presence_wilcox_one_two_present_confint <- as.data.frame(sib.object.presence_wilcox_one_two_present$conf.int)
-
-sib.object.presence_wilcox_one_two_not_present <- wilcox.test(
-  x = subset(object.presence.sib.summary, SibGroup == "2+" & sib.present == "Sibling not present")$mean.object
-  , y = subset(object.presence.sib.summary, SibGroup == "One" & sib.present == "Sibling not present")$mean.object
-  , paired = FALSE,
-  conf.int = TRUE
-)
-
-sib.object.presence_wilcox_one_two_not_present_confint <- as.data.frame(sib.object.presence_wilcox_one_two_not_present$conf.int)
-
-```
-
-We ran Wilcoxon tests to determine the extent of these differences in the data. Note that in some cases, individual infants were recorded both with and without their sibling(s) across different sessions, meaning that the data takes into account mean 'sibling present' and 'sibling not present' values for each individual infant. First, looking at amount of input words, there was no statistical difference in the amount of input words produced by the caregivers when siblings were present vs. when they weren't, for either sibling group (One: *W*=`r round(sib.input_wilcox_one$statistic)`, *p*=`r printp(sib.input_wilcox_one$p.value)`, CI=[`r (sib.input_wilcox_one_confint[1,])`,`r (sib.input_wilcox_one_confint[2,])`]; 2+: *W*=`r round(sib.input_wilcox_two$statistic)`, *p*=`r printp(sib.input_wilcox_two$p.value)`, CI=[`r (sib.input_wilcox_two_confint[1,])`,`r (sib.input_wilcox_two_confint[2,])`]). However, when siblings were present, infants with one sibling heard more input words than infants with two or more siblings (*W*=`r round(sib.input_wilcox_one_two_present$statistic)`, *p*=`r printp(sib.input_wilcox_one_two_present$p.value)`, CI=[`r (sib.input_wilcox_one_two_present_confint[1,])`,`r (sib.input_wilcox_one_two_present_confint[2,])`]) (though note that the exact number of siblings present is not taken into account here). When siblings were not present, there were no group differences (*W*=`r round(sib.input_wilcox_one_two_not_present$statistic)`, *p*=`r printp(sib.input_wilcox_one_two_not_present$p.value)`, CI=[`r (sib.input_wilcox_one_two_not_present_confint[1,])`,`r (sib.input_wilcox_one_two_not_present_confint[2,])`]). 
-
-Next, comparing object presence within groups, we found that amount of object presence was significantly higher when a sibling was not present, across both groups (One: *W*=`r round(sib.object.presence_wilcox_one$statistic)`, *p*=`r printp(sib.object.presence_wilcox_one$p.value)`, CI=[`r (sib.object.presence_wilcox_one_confint[1,])`,`r (sib.object.presence_wilcox_one_confint[2,])`]; 2+: *W*=`r round(sib.object.presence_wilcox_two$statistic)`, *p*`r printp(sib.object.presence_wilcox_two$p.value)`, CI=[`r (sib.object.presence_wilcox_two_confint[1,])`,`r (sib.object.presence_wilcox_two_confint[2,])`]). Comparing between groups, object presence was higher for infants with one versus 2 or more siblings even when a sibling was present (*W*=`r round(sib.object.presence_wilcox_one_two_present$statistic)`, *p*=`r printp(sib.object.presence_wilcox_one_two_present$p.value)`, CI=[`r (sib.object.presence_wilcox_one_two_present_confint[1,])`,`r (sib.object.presence_wilcox_one_two_present_confint[2,])`]), but there was no difference between sibling groups when siblings were not present (*W*=`r round(sib.object.presence_wilcox_one_two_not_present$statistic)`, *p*=`r printp(sib.object.presence_wilcox_one_two_not_present$p.value)`, CI=[`r (sib.object.presence_wilcox_one_two_not_present_confint[1,])`,`r (sib.object.presence_wilcox_one_two_not_present_confint[2,])`]). Note that these effects should be interpreted with caution given the exploratory nature of this analysis. 
+Since the presence of a sibling in any given infant's data changed month-on-month (i.e. sometimes the sibling was present and sometimes they were not), and since our measure of sibling presence is imperfect, we opt here to describe the pattern of data without drawing any strong conclusions from statistical models. Descriptively, the presence of a sibling affected the amount of object presence in the data, but not the amount of input. See Table \@ref(tab:sib-presence-table-data-summary) and Figures \@ref(fig:figure-sibpresence-input) and \@ref(fig:figure-sibpresence-obj). Overall, the presence of a sibling negatively affected object presence, and this was consistent over time; when a sibling was present, infants in both groups heard less object presence. This effect was stronger for infants with two or more siblings (though note that it is unclear from our measure how many siblings were present, and it is possible that only one sibling was present in the recording), and overall this was true regardless of whether the sibling was present, or whether the infant was alone with the caregiver. The picture is less clear for caregiver input, where the presence of a sibling has a more variable effect on the number of object words produced by caregivers (see Figure \@ref(fig:figure-sibpresence-input)), particularly for infants with only one sibling. This supports our findings above, suggesting that the presence of one additional child does not have any negative effects on the amount of input that caregiver provide. However, input was consistently lower for the group with two or more siblings, and this was true regardless of whether or not a sibling was present; again, this is consistent with the findings reported above for this input measure.
 
 # Discussion
 

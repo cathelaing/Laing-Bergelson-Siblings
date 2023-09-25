@@ -31,8 +31,11 @@ speaker.type %>% filter(caregiver == "FAMILY" & audio_video == "video") %>%
   group_by(subj) %>% 
   summarise(mean_input = mean(n)) %>% 
   left_join(sib.ages) %>%
-  filter(!(is.na(Group))) %>%
-  summarise(cor_older = cor(mean_input, age.diff.d, method = "spearman")) # r = -.29
+  group_by(subj, mean_input) %>%
+  summarise(mean_age = mean(age.diff.d)) %>%
+  filter(!(is.na(mean_age))) %>%
+  ungroup() %>%
+  summarise(cor_older = cor(mean_input, mean_age, method = "spearman")) # r = -.47
 
 # remove input from sibling
 
@@ -40,8 +43,11 @@ speaker.type %>% filter(caregiver %in% c("CG1", "CG2") & audio_video == "video")
   group_by(subj) %>% 
   summarise(mean_input = mean(n)) %>% 
   left_join(sib.ages) %>%
-  filter(!(is.na(Group))) %>%
-  summarise(cor_older = cor(mean_input, age.diff.d, method = "spearman")) # r = -.27
+  group_by(subj, mean_input) %>%
+  summarise(mean_age = mean(age.diff.d)) %>%
+  filter(!(is.na(mean_age))) %>%
+  ungroup() %>%
+  summarise(cor_older = cor(mean_input, mean_age, method = "spearman")) # r = -.34
 
 # now look only at sibling input
 
@@ -49,8 +55,17 @@ speaker.type %>% filter(caregiver == "SIB" & audio_video == "video") %>%
   group_by(subj) %>% 
   summarise(mean_input = mean(n)) %>% 
   left_join(sib.ages) %>%
-  filter(!(is.na(Group))) %>%
-  summarise(cor_older = cor(mean_input, age.diff.d, method = "spearman")) # r = .113
+  group_by(subj, mean_input) %>%
+  summarise(mean_age = mean(age.diff.d)) %>%
+  filter(!(is.na(mean_age))) %>%
+  ungroup() %>%
+  summarise(cor_older = cor(mean_input, mean_age, method = "spearman")) # r = -.03
+
+library(rmcorr)
+
+my.rmc <- rmcorr(participant = subj, measure1 = mean_input, measure2 = acc,
+                 dataset = gilden2010)
+
 
 # Reviewer 1 comment 4: is it possible to analyse this measure in terms of whether or not a sibling was present in the room with the infant?
 
