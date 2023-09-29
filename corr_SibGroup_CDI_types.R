@@ -1,6 +1,6 @@
 library(tidyverse)
 library(blabr)
-
+install.packages("blabr")
 
 # for converting subject numbers, NOT PUSHING this file for data anonymity
 random_subjnums <- read_csv("Data/random_subnums.csv")

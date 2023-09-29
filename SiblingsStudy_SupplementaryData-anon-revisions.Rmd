@@ -67,7 +67,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. All scripts and data for our analysis can be found on the project’s OSF wiki at https://osf.io/rm3ec/. .
 
-The analyses below (S1:S5) show:
+The analyses below (S1:S7) show:
 
 * S1: re-analysis of caregiver input variables using data from day-long audio recordings
 * S2: re-analysis of caregiver input variables with both dizygotic twins excluded
@@ -75,6 +75,7 @@ The analyses below (S1:S5) show:
 * S4: correlations of input and output measures with maternal factors (age, education) and number of siblings
 * S5: re-analysis of caregiver input variables using discrete sibling number as our main variable of interest 
 * S6: re-analysis of caregiver input variables with one outlier infant
+* S7: Change to input variables over time
 
 
 Consistent with our main analysis, all analyses here draw on data from age 10 months, given that the majority of infants did not produce their first word until around 0;11, according to CDI reports. In addition, the twin removed from the main analyses is also removed from the data analysed here.
@@ -630,22 +631,20 @@ cap = "Full model output from linear mixed effects regression models comparing o
 ## S7: Change to input variables over time
 
 We re-plotted Figures 2 and 3 from the main paper with age on the x-axis, to determine whether there was any notable age-related changes in these variables. 
-<!--eb2cl: if we dont' test/report this then doesn't make sense to put in text, commenting out-->
-<!--Note that age was a significant factor in both linear mixed effects models testing caregiver input/object presence as dependent variables. -->
 
 ```{r Figure input ~ age, include=FALSE}
 
 Figure.input.age <- ggplot(data = subset(speaker.type, caregiver == "FAMILY"), mapping = aes(x=as.numeric(month), y=Log.n)) +
   geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_dodge(.2)) + 
   geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
-  ylab('Total number of words heard in input') +
+  ylab('Total number of words heard in input (log-transformed)') +
   xlab('Age in Months') +
   scale_x_continuous(breaks = c(6:18)) +
   scale_y_continuous(breaks = c(0, log(11), log(51), log(151), log(301)), labels = c(0, 10, 50, 150, 300)) +
   theme_bw() + 
   theme(axis.text=element_text(size=10),
         text = element_text(size=10),
-        legend.position = c(.05, .1),
+        legend.position = c(.05, .9),
         legend.title = element_blank(),
         legend.background = element_rect(fill='transparent')) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
@@ -658,13 +657,13 @@ Figure.input.age <- ggplot(data = subset(speaker.type, caregiver == "FAMILY"), m
 
 par(cex = 1.2)
 Figure.input.age
-cap <- sprintf("Number of input words produced by caregivers over time (n=43). Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over individual infants’ input at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (dodged horizontally for visual clarity) show individual infants' input at each month.")
+cap <- sprintf("Number of input words produced by caregivers over time (n=43). Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over individual infants’ input at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (dodged horizontally for visual clarity) show individual infants' input at each month. Y-axis utilizes log-transformed vertical spacing for visual clarity.")
 
 ```
 
 ```{r Figure object presence ~ age, include=FALSE}
 
-Figure.objpresence.age <- ggplot(data = object.presence, mapping = aes(x=as.numeric(month), y=(PC*100))) +
+Figure.objpresence.age <- ggplot(data = subset(object.presence, audio_video == "video"), mapping = aes(x=as.numeric(month), y=(PC*100))) +
   geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_dodge(.5)) + 
   geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
   ylab('% object presence') +

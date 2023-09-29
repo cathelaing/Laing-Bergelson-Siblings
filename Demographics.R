@@ -1,4 +1,4 @@
-## Demographics: Updated March 2022 ##
+## Demographics: Updated September 2023 ##
 
 # This is the main file containing all demographics data, incorporating some data from the demographics questionnaires at 6 and 18 months,
 # mothers' PVT scores, and CDI data (productive vocabulary) from 6-18 months. THis also includes infant productions from audio and video recordings in the Seedlings corpus.
@@ -74,16 +74,16 @@ demographics <- read_csv("Data/demo_deid_cleaned.csv") %>%
     subj,
     sex,
     maternal_education_18mos,
-    #maternal_employment_18mos,
-    #maternal_employment_hours_18mos,
+    maternal_employment_18mos,
+    maternal_employment_hours_18mos,
     #paternal_employment_18mos,
     #paternal_employment_hours_18mos,
     children_in_household_18mos_staff,
     children_in_household_6mos_staff
   ) %>%
-  dplyr::rename(MOTedu = maternal_education_18mos  ## rename columns
-         #MOTwork = maternal_employment_18mos,
-         #MOTworkhours = maternal_employment_hours_18mos,
+  dplyr::rename(MOTedu = maternal_education_18mos,  ## rename columns
+         MOTwork = maternal_employment_18mos,
+         MOTworkhours = maternal_employment_hours_18mos
          #FATwork = paternal_employment_18mos,
          #FATworkhours = paternal_employment_hours_18mos
          ) %>%
@@ -95,13 +95,13 @@ demographics <- read_csv("Data/demo_deid_cleaned.csv") %>%
                              "Bachelors Degree" = "J",
                              "Masters Degree" = "K",
                              "Doctorate" = "L"),
-        # MOTwork = ifelse(MOTwork %in% c("H","I"),"Other", MOTwork),       # Three mothers not classed as working FT, PT or Home; class as 'Other' or PT, as relevant
-        # MOTwork = ifelse(MOTwork == "B_E", "B", MOTwork), 
-        # MOTwork = factor(MOTwork),                          
-        # MOTwork = fct_recode(MOTwork,
-        #                      "Full-time" = "A",
-        #                      "Part-time" = "B",
-        #                      "Home" = "C"),
+        MOTwork = ifelse(MOTwork %in% c("H","I"),"Other", MOTwork),       # Three mothers not classed as working FT, PT or Home; class as 'Other' or PT, as relevant
+        MOTwork = ifelse(MOTwork == "B_E", "B", MOTwork),
+        MOTwork = factor(MOTwork),
+        MOTwork = fct_recode(MOTwork,
+                             "Full-time" = "A",
+                             "Part-time" = "B",
+                             "Home" = "C"),
         # FATwork = ifelse(FATwork !="A" & FATwork !="B" & FATwork != "C", "Other",  # Recode fathers' work status so that fathers who don't work FT, PT,
         #             FATwork),                                                      # or stay home (e.g. full-time students) are listed as 'other'
         # FATwork = factor(FATwork),
@@ -156,7 +156,7 @@ SiblingsData <- demographics %>%
     age_mom,
     PVTscore,
     #MOTwork,
-    #MOTworkhours,
+    MOTworkhours,
     #FATwork,
     #FATworkhours,
     SibsYN,
