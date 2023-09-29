@@ -56,10 +56,11 @@ speaker.type %>% filter(caregiver == "SIB" & audio_video == "video") %>%
   summarise(mean_input = mean(n)) %>% 
   left_join(sib.ages) %>%
   group_by(subj, mean_input) %>%
-  summarise(mean_age = mean(age.diff.d)) %>%
-  filter(!(is.na(mean_age))) %>%
+  #summarise(mean_age = mean(age.diff.d)) %>%
+  #filter(!(is.na(mean_age))) %>%
   ungroup() %>%
-  summarise(cor_older = cor(mean_input, mean_age, method = "spearman")) # r = -.03
+  summarise(estimate = cor.test(mean_input, age.diff.d)$estimate,
+            p_val = cor.test(mean_input, age.diff.d)$p.value)# r = -.03
 
 library(rmcorr)
 

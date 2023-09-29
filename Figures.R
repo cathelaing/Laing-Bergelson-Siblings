@@ -41,12 +41,12 @@ Figure.speaker.count_fixed <- ggplot(subset(speaker.type2, speaker %in% c("MOT",
         axis.text.x = element_text(angle = 45, vjust = 0.5))
 
 
-# Figure.object.presence <- ggplot(data=subset(object.presence, audio_video == "video"), 
+# Figure.object.presence <- ggplot(data=subset(object.presence, audio_video == "video"),
 #                                  aes(x=SibGroup, y=(PC*100), color = SibGroup, fill = SibGroup)) +
 #   geom_violin(alpha = .3) +
 #   stat_summary(fun.y=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
-#   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') + 
-#   scale_x_discrete(name=element_blank(),limits=c("None", "One", "2+")) + 
+#   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') +
+#   scale_x_discrete(name=element_blank(),limits=c("None", "One", "2+")) +
 #   theme_bw(base_size = 18) +
 #   ylab('% input words with object presence') +
 #   theme(legend.position='none')

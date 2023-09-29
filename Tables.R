@@ -64,7 +64,7 @@ table.data.summary <- table.data.summary.mean %>% left_join(table.data.summary.s
 
 sib.presence.summary <- sib.presence %>%
   filter(audio_video == "video" & SibGroup != "None") %>%
-  mutate(sib.present = ifelse(is.na(SIB), "Sibling not present", "Sibling present")) %>%
+  #mutate(sib.present = ifelse(is.na(SIB), "Sibling not present", "Sibling present")) %>%
   group_by(subj, sib.present) %>%
   tally() %>%
   pivot_wider(names_from = sib.present, values_from = n) %>%
