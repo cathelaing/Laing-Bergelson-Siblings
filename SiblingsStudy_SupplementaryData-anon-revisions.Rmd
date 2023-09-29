@@ -375,10 +375,11 @@ corr.data.input <- speaker.type %>% filter(audio_video == "video", month == 17, 
 corr.data.mat <- SiblingsData %>%
   filter(month == 18) %>% 
     left_join(corr.data.input, by = "subj") %>%
-           dplyr::select(age_mom, MOTedulevel, Siblings18, Total.words, n) %>%
+           dplyr::select(age_mom, MOTedulevel, MOTworkhours, Siblings18, Total.words, n) %>%
   rename(
     "Maternal age" = "age_mom",
     "Maternal education" = "MOTedulevel",
+    "Maternal work hours" = "MOTworkhours",
     "N Siblings" = "Siblings18",
     "CDI words" = "Total.words",
     "Input words" = "n")
@@ -389,7 +390,6 @@ testRes = cor.mtest(corr.matrix, conf.level = 0.95)
 cor.res <- cor.test(corr.data.mat$`Input words`, corr.data.mat$`N Siblings`, method = "spearman")
 
 #mat.corr.matrix <- corrplot(corr.matrix, method = "number")
-
 ```
 
 We tested the extent to which maternal factors such as age and education level correlate with number of siblings, productive vocabulary measures, and amount of input. Spearman's correlation tests confirmed a significant negative correlation between sibling number and words produced in the infant's input by the mother (rho=`r cor.res$estimate`, *p*=`r printp(cor.res$p.value)`). No other correlations were significant, though weak positive correlations were identified bwteen amount of input and productive vocabulary, and maternal age and sibling number. See Figure \@ref(fig:Figure-correlations).
