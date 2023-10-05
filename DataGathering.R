@@ -154,3 +154,40 @@ sib.presence <- speaker.type %>% filter(audio_video == "video") %>%
   pivot_wider(names_from = caregiver, values_from = n) %>%
   mutate(sib.present = ifelse((SibGroup != "None" & !is.na(SIB)), "Sibling present", "Sibling not present"))
 
+# dataframe to test for correlations between home-recordings and CDI word productions
+
+#grabbing sibgroup and CDI from SiblingsData df
+SibGroup_cdi <- SiblingsData %>% 
+  filter(month==18) %>% 
+  dplyr::select(subj, SibGroup,Total.words) %>% 
+  rename(CDI = Total.words)
+
+#grabbing type and token counts overall and for CHI
+
+types_tokens <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
+  filter(!(speaker %in% c('CHI', "EFA", "EFB", "EFS", "EMM", "EFE", "GRO", "MBT")) &  # remove infant productions
+           subj != 351
+         ) %>%    
+  dplyr::group_by(subj) %>%
+  mutate(subj = as.factor(subj)) %>%
+  summarise(numtokens = n(),
+            numtypes = n_distinct(basic_level)) %>%
+  replace(is.na(.), 0)
+
+types_tokens_CHI <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
+  filter(speaker == "CHI" & 
+           subj != 351
+         ) %>%
+  dplyr::group_by(subj) %>%
+  mutate(subj = as.factor(subj)) %>%
+  summarise(numtokens_chi = n(),
+            numtypes_chi = n_distinct(basic_level)) %>%
+  replace(is.na(.), 0)
+
+types_tokens_overall_CDI_sibgroup<- types_tokens %>% 
+  left_join(types_tokens_CHI) %>% 
+  replace(is.na(.), 0) %>% # to replace the NAs for input
+  mutate(subj=as.factor(subj)) %>% 
+  left_join(SibGroup_cdi)
+
+#write_csv(types_tokens_overall_CDI_sibgroup, "Data/types_tokens_overall_CDI_sibgroup.csv")

@@ -115,13 +115,13 @@
   {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
 \makeatother
 
-% \usepackage{etoolbox}
 \makeatletter
-\patchcmd{\HyOrg@maketitle}
+\usepackage{etoolbox}
+\patchcmd{\maketitle}
   {\section{\normalfont\normalsize\abstractname}}
   {\section*{\normalfont\normalsize\abstractname}}
   {}{\typeout{Failed to patch abstract.}}
-\patchcmd{\HyOrg@maketitle}
+\patchcmd{\maketitle}
   {\section{\protect\normalfont{\@title}}}
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
@@ -173,7 +173,7 @@ Correspondence concerning this article should be addressed to , . E-mail:
 
 The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. All scripts and data for our analysis can be found on the project's OSF wiki at \url{https://osf.io/rm3ec/}. .
 
-The analyses below (S1:S7) show:
+The analyses below (S1:S8) show:
 
 \begin{itemize}
 \tightlist
@@ -190,7 +190,9 @@ The analyses below (S1:S7) show:
 \item
   S6: re-analysis of caregiver input variables with one outlier infant
 \item
-  S7: Change to input variables over time
+  S7: change to input variables over time
+\item
+  S8: validating CDI scores with infant productions in the home-recorded data
 \end{itemize}
 
 Consistent with our main analysis, all analyses here draw on data from age 10 months, given that the majority of infants did not produce their first word until around 0;11, according to CDI reports. In addition, the twin removed from the main analyses is also removed from the data analysed here.
@@ -220,8 +222,8 @@ Outputs from these model comparisons and full model outputs including estimates 
 \toprule
 Model & Df & Chisq & p value\\
 \midrule
-Caregiver input & 2 & 2.81 & 0.24\\
-Object presence & 2 & 19.45 & 0.00\\
+Caregiver input & 2 & 2.83 & 0.24\\
+Object presence & 2 & 19.46 & 0.00\\
 \bottomrule
 \end{longtable}
 
@@ -230,14 +232,14 @@ Object presence & 2 & 19.45 & 0.00\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 5.23 & 0.18 & 168.46 & 29.32 & <0.001\\
- & SibGroupOne & 0.13 & 0.20 & 43.00 & 0.65 & 0.518\\
- & SibGroup2+ & -0.28 & 0.22 & 43.00 & -1.26 & 0.214\\
- & month & 0.03 & 0.01 & 301.00 & 3.04 & 0.003\\
+Caregiver input & Intercept & 5.23 & 0.18 & 168.02 & 29.32 & <0.001\\
+ & SibGroupOne & 0.13 & 0.20 & 43.00 & 0.65 & 0.516\\
+ & SibGroup2+ & -0.28 & 0.22 & 43.00 & -1.27 & 0.212\\
+ & month & 0.03 & 0.01 & 301.00 & 3.05 & 0.002\\
 \midrule
 Object presence & Intercept & 0.37 & 0.04 & 341.27 & 8.42 & <0.001\\
 \addlinespace
- & SibGroupOne & -0.09 & 0.03 & 43.00 & -3.13 & 0.003\\
+ & SibGroupOne & -0.09 & 0.03 & 43.00 & -3.14 & 0.003\\
  & SibGroup2+ & -0.15 & 0.03 & 43.00 & -4.68 & <0.001\\
  & month & 0.02 & 0.00 & 301.00 & 6.50 & <0.001\\
 \bottomrule
@@ -255,8 +257,8 @@ As stated in the main paper, there was one pair of dizygotic twins in the origin
 \toprule
 Model & Df & Chisq & p value\\
 \midrule
-Caregiver input & 2 & 8.50 & 0.01\\
-Object presence & 2 & 27.74 & 0.00\\
+Caregiver input & 2 & 8.51 & 0.01\\
+Object presence & 2 & 27.73 & 0.00\\
 \bottomrule
 \end{longtable}
 
@@ -265,17 +267,17 @@ Object presence & 2 & 27.74 & 0.00\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 4.88 & 0.18 & 185.20 & 27.49 & <0.001\\
+Caregiver input & Intercept & 4.88 & 0.18 & 185.19 & 27.49 & <0.001\\
  & SibGroupOne & -0.05 & 0.15 & 42.00 & -0.32 & 0.754\\
  & SibGroup2+ & -0.49 & 0.16 & 42.00 & -2.99 & 0.005\\
  & month & 0.03 & 0.01 & 294.00 & 3.02 & 0.003\\
  & sexM & -0.21 & 0.13 & 42.00 & -1.64 & 0.108\\
 \midrule
 \addlinespace
-Object presence & Intercept & 0.56 & 0.05 & 316.24 & 12.42 & <0.001\\
+Object presence & Intercept & 0.56 & 0.05 & 316.26 & 12.42 & <0.001\\
  & SibGroupOne & -0.14 & 0.03 & 42.00 & -3.97 & <0.001\\
  & SibGroup2+ & -0.22 & 0.04 & 42.00 & -5.89 & <0.001\\
- & month & 0.01 & 0.00 & 294.00 & 3.10 & 0.002\\
+ & month & 0.01 & 0.00 & 294.00 & 3.11 & 0.002\\
 \bottomrule
 \end{longtable}
 
@@ -342,7 +344,7 @@ Outputs from model comparisons and full model outputs including estimates are sh
 Model & Df & Chisq & p value\\
 \midrule
 Caregiver input & 1 & 5.40 & 0.02\\
-Object presence & 2 & 30.45 & 0.00\\
+Object presence & 2 & 30.47 & 0.00\\
 \bottomrule
 \end{longtable}
 
@@ -351,14 +353,14 @@ Object presence & 2 & 30.45 & 0.00\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 4.80 & 0.16 & 272.03 & 30.38 & <0.001\\
+Caregiver input & Intercept & 4.80 & 0.16 & 272.03 & 30.39 & <0.001\\
  & n Siblings & -0.15 & 0.06 & 43.00 & -2.40 & 0.021\\
  & month & 0.03 & 0.01 & 301.00 & 3.02 & 0.003\\
 \midrule
-Object presence & Intercept & 0.55 & 0.04 & 328.26 & 12.39 & <0.001\\
+Object presence & Intercept & 0.55 & 0.04 & 328.28 & 12.39 & <0.001\\
  & n Siblings & -0.08 & 0.01 & 43.00 & -5.31 & <0.001\\
 \addlinespace
- & month & 0.01 & 0.00 & 301.00 & 2.98 & 0.003\\
+ & month & 0.01 & 0.00 & 301.00 & 2.99 & 0.003\\
 \bottomrule
 \end{longtable}
 
@@ -374,8 +376,8 @@ One infant heard substantially more (\textgreater3SDs above the mean) nouns in t
 \toprule
 Model & Df & Chisq & p value\\
 \midrule
-Caregiver input & 2 & 9.02 & 0.01\\
-Object presence & 2 & 25.87 & 0.00\\
+Caregiver input & 2 & 9.02 & 0.011\\
+Object presence & 2 & 25.87 & <0.001\\
 \bottomrule
 \end{longtable}
 
@@ -384,14 +386,14 @@ Object presence & 2 & 25.87 & 0.00\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 4.85 & 0.17 & 204.78 & 27.94 & <0.001\\
+Caregiver input & Intercept & 4.85 & 0.17 & 204.76 & 27.94 & <0.001\\
  & SibGroupOne & 0.06 & 0.14 & 42.00 & 0.40 & 0.688\\
  & SibGroup2+ & -0.43 & 0.15 & 42.00 & -2.81 & 0.008\\
  & month & 0.03 & 0.01 & 294.00 & 2.91 & 0.004\\
  & sexM & -0.22 & 0.12 & 42.00 & -1.87 & 0.069\\
 \midrule
 \addlinespace
-Object presence & Intercept & 0.56 & 0.05 & 311.42 & 12.24 & <0.001\\
+Object presence & Intercept & 0.56 & 0.05 & 311.43 & 12.24 & <0.001\\
  & SibGroupOne & -0.12 & 0.03 & 42.00 & -3.66 & <0.001\\
  & SibGroup2+ & -0.22 & 0.04 & 42.00 & -5.71 & <0.001\\
  & month & 0.01 & 0.00 & 294.00 & 3.07 & 0.002\\
@@ -417,6 +419,30 @@ We re-plotted Figures 2 and 3 from the main paper with age on the x-axis, to det
 \end{figure}
 
 Inspection of both Figures \ref{fig:Figure-input-age} and \ref{fig:Figure-OP-age} suggest that both measures were relatively consistent in the data over time, across each sibling group.
+
+\newpage
+
+\hypertarget{s8-validating-cdi-scores-with-infant-productions-in-the-home-recorded-data}{%
+\subsection{S8: Validating CDI scores with infant productions in the home-recorded data}\label{s8-validating-cdi-scores-with-infant-productions-in-the-home-recorded-data}}
+
+Parents with more children may have been less aware of the variety of words that their infant could produce, owing to having less time and attention capacity to closely observe their infant's word production. To test the reliability of the reported CDI data used in our analysis, we draw on infants' word production in the home-recorded data (video and audio recordings). Figure \ref{fig:Figure-cdi-types} shows positive correlations between reported productive vocabulary size (CDI) at 18 months and total number of word types produced by the infants in the video and audio recordings by 17 months. Outcomes from Pearson correlation tests are shown in Table \ref{tab:production-corrs}; correlations are positive across all groups, but only significant in the One and None groups, likely owing to the small sample size (n=7) in the 2+ group.
+
+\begin{figure}
+\centering
+\includegraphics{SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-cdi-types-1.pdf}
+\caption{\label{fig:Figure-cdi-types}Correlation between reported productive vocabulary at 18 months and n word types produced in the audio and video recordings at 6-17 months (n=43), faceted by sibling group. Crosses represent individual participants in each sibling group, blue lines represent the predicted relationship between the two variables with 95\% confident intervals for each group.}
+\end{figure}
+
+\begin{longtable}[t]{cccc}
+\caption{\label{tab:production-corrs}Pearson correlation coefficients (r) and p values of correlations between reported productive vocabulary (CDI) at 18 months and number of words produced by infants in the audio/video recordings between 6 and 17 months across sibling groups.}\\
+\toprule
+SibGroup & n & r & p value\\
+\midrule
+None & 18 & 0.87 & <0.001\\
+One & 11 & 0.92 & <0.001\\
+2+ & 7 & 0.50 & 0.252\\
+\bottomrule
+\end{longtable}
 
 
 \end{document}

@@ -67,7 +67,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. All scripts and data for our analysis can be found on the project’s OSF wiki at https://osf.io/rm3ec/. .
 
-The analyses below (S1:S7) show:
+The analyses below (S1:S8) show:
 
 * S1: re-analysis of caregiver input variables using data from day-long audio recordings
 * S2: re-analysis of caregiver input variables with both dizygotic twins excluded
@@ -75,7 +75,8 @@ The analyses below (S1:S7) show:
 * S4: correlations of input and output measures with maternal factors (age, education) and number of siblings
 * S5: re-analysis of caregiver input variables using discrete sibling number as our main variable of interest 
 * S6: re-analysis of caregiver input variables with one outlier infant
-* S7: Change to input variables over time
+* S7: change to input variables over time
+* S8: validating CDI scores with infant productions in the home-recorded data
 
 
 Consistent with our main analysis, all analyses here draw on data from age 10 months, given that the majority of infants did not produce their first word until around 0;11, according to CDI reports. In addition, the twin removed from the main analyses is also removed from the data analysed here.
@@ -602,7 +603,8 @@ table.input.model.output.red <- rbind(speaker.type_anova.red, object.presence.an
   filter(Chisq > 0) %>%
   rename("p value" = "pval") %>%
   mutate(Model = ifelse(grepl("speaker", model), "Caregiver input", "Object presence")) %>%
-  select(Model, Df, Chisq, `p value`)
+  select(Model, Df, Chisq, `p value`) %>%
+  mutate(`p value` = scales::pvalue(`p value`))
 
 
 input.variables.model.summaries.red <- rbind(input.model.summary.table.red, table.object.presence.model.red.summary) %>%
@@ -690,4 +692,57 @@ cap <- sprintf("Amount (%%) of object presence in infants' input over time (n=43
 
 ```
 
-Inspection of both Figures \@ref(fig:Figure-input-age) and \@ref(fig:Figure-OP-age) suggest that both measures were relatively consistent in the data over time, across each sibling group. 
+Inspection of both Figures \@ref(fig:Figure-input-age) and \@ref(fig:Figure-OP-age) suggest that both measures were relatively consistent in the data over time, across each sibling group.
+
+\newpage
+
+## S8: Validating CDI scores with infant productions in the home-recorded data
+
+Parents with more children may have been less aware of the variety of words that their infant could produce, owing to having less time and attention capacity to closely observe their infant's word production. To test the reliability of the reported CDI data used in our analysis, we draw on infants' word production in the home-recorded data (video and audio recordings). Figure \@ref(fig:Figure-cdi-types) shows positive correlations between reported productive vocabulary size (CDI) at 18 months and total number of word types produced by the infants in the video and audio recordings by 17 months. Outcomes from Pearson correlation tests are shown in Table \@ref(tab:production-corrs); correlations are positive across all groups, but only significant in the One and None groups, likely owing to the small sample size (n=7) in the 2+ group.
+
+```{r Figure CDI ~ word types, include=FALSE}
+
+figure_sibgroup_numtypes_cdi <- types_tokens_overall_CDI_sibgroup %>% 
+  ggplot(aes(numtypes_chi, CDI)) + 
+  geom_point(shape=3) + 
+  stat_smooth(method = "lm") +
+  ylab("Reported productive vocabulary size (CDI)") +
+  xlab("Total word types produced (audio and video recordings)") +
+  facet_wrap(~SibGroup, scales="free", nrow=3) +
+  theme_bw()
+
+
+```
+
+```{r Figure-cdi-types, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
+
+par(cex = 1.2)
+figure_sibgroup_numtypes_cdi
+cap <- sprintf("Correlation between reported productive vocabulary at 18 months and n word types produced in the audio and video recordings at 6-17 months (n=43), faceted by sibling group. Crosses represent individual participants in each sibling group, blue lines represent the predicted relationship between the two variables with 95%% confident intervals for each group.")
+
+```
+
+```{r correlations between CDI scores and word production, include=FALSE}
+
+n_corrs <- types_tokens_overall_CDI_sibgroup %>% 
+  group_by(SibGroup) %>%
+  filter(!is.na(CDI)) %>% 
+  tally()
+
+measures.corrs <- types_tokens_overall_CDI_sibgroup %>%
+  group_by(SibGroup) %>%
+ summarise(r = cor.test(CDI, numtypes_chi, use = "complete.obs")$estimate,
+          `p value` = cor.test(CDI, numtypes_chi, use = "complete.obs")$p.value) %>%
+  mutate(`p value` = scales::pvalue(`p value`)) %>%
+  left_join(n_corrs) %>%
+  dplyr::select(SibGroup, n, r, `p value`)
+
+
+```
+
+```{r production-corrs, echo = FALSE}
+cap = "Pearson correlation coefficients (r) and p values of correlations between reported productive vocabulary (CDI) at 18 months and number of words produced by infants in the audio/video recordings between 6 and 17 months across sibling groups."
+ kable(measures.corrs, "latex", booktabs=T, longtable=T, 
+       escape=FALSE,
+       caption=cap, digits=2, align="c") 
+```
