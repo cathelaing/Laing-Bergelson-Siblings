@@ -217,13 +217,13 @@ We tested our two input variables using nested model comparisons, where (1) is t
 
 Outputs from these model comparisons and full model outputs including estimates are shown in Tables \ref{tab:table-model-comparisons-audio} and \ref{tab:table-input-model-summary-audio}. Results were consistent with the video data for object presence, where a significant effect was found for sibling group. Unlike the video data, this effect was not found in the model testing overall input.
 
-\begin{longtable}[t]{cccc}
+\begin{longtable}[t]{ccccc}
 \caption{\label{tab:table-model-comparisons-audio}Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the audio data. Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group (0 vs. 1 vs. 2+) in the audio data. Age in months was included as a fixed effect; subject was included as a random effect.}\\
 \toprule
-Model & Df & Chisq & p value\\
+Model & Df & Chisq & p value & $R^{2}$\\
 \midrule
-Caregiver input & 2 & 2.83 & 0.24\\
-Object presence & 2 & 19.46 & 0.00\\
+Caregiver input & 2 & 2.75 & 0.252 & 0.69\\
+Object presence & 2 & 19.47 & <0.001 & 0.44\\
 \bottomrule
 \end{longtable}
 
@@ -232,16 +232,16 @@ Object presence & 2 & 19.46 & 0.00\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 5.23 & 0.18 & 168.02 & 29.32 & <0.001\\
- & SibGroupOne & 0.13 & 0.20 & 43.00 & 0.65 & 0.516\\
+Caregiver input & Intercept & 5.24 & 0.18 & 168.10 & 29.34 & <0.001\\
+ & SibGroupOne & 0.12 & 0.20 & 43.00 & 0.62 & 0.539\\
  & SibGroup2+ & -0.28 & 0.22 & 43.00 & -1.27 & 0.212\\
- & month & 0.03 & 0.01 & 301.00 & 3.05 & 0.002\\
+ & month & 0.03 & 0.01 & 301.00 & 2.97 & 0.003\\
 \midrule
-Object presence & Intercept & 0.37 & 0.04 & 341.27 & 8.42 & <0.001\\
+Object presence & Intercept & 0.38 & 0.04 & 341.19 & 8.50 & <0.001\\
 \addlinespace
- & SibGroupOne & -0.09 & 0.03 & 43.00 & -3.14 & 0.003\\
- & SibGroup2+ & -0.15 & 0.03 & 43.00 & -4.68 & <0.001\\
- & month & 0.02 & 0.00 & 301.00 & 6.50 & <0.001\\
+ & SibGroupOne & -0.09 & 0.03 & 43.00 & -3.11 & 0.003\\
+ & SibGroup2+ & -0.15 & 0.03 & 43.00 & -4.69 & <0.001\\
+ & month & 0.02 & 0.00 & 301.00 & 6.46 & <0.001\\
 \bottomrule
 \end{longtable}
 
@@ -252,13 +252,13 @@ Object presence & Intercept & 0.37 & 0.04 & 341.27 & 8.42 & <0.001\\
 
 As stated in the main paper, there was one pair of dizygotic twins in the original dataset. We retain one infant in the main analysis in order to maximise sample size, but we acknowledge that this is not a perfect solution given that the presence of another twin in the home (counted as a sibling in the main analysis) may affect caregiver interactions in a different way than the presence of an older sibling. By removing both twins from our data and re-analysing the input measures, we can confirm that our results were consistent with and without one of the twins included in our data (n=42). See Tables \ref{tab:table-model-comparisons-no-twins} and \ref{tab:table-input-model-summary-no-twins}.
 
-\begin{longtable}[t]{cccc}
+\begin{longtable}[t]{ccccc}
 \caption{\label{tab:table-model-comparisons-no-twins}Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with both dizygotic twins removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect.}\\
 \toprule
-Model & Df & Chisq & p value\\
+Model & Df & Chisq & p value & $R^{2}$\\
 \midrule
-Caregiver input & 2 & 8.51 & 0.01\\
-Object presence & 2 & 27.73 & 0.00\\
+Caregiver input & 2 & 8.70 & 0.013 & 0.58\\
+Object presence & 2 & 27.93 & <0.001 & 0.55\\
 \bottomrule
 \end{longtable}
 
@@ -267,17 +267,17 @@ Object presence & 2 & 27.73 & 0.00\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 4.88 & 0.18 & 185.19 & 27.49 & <0.001\\
- & SibGroupOne & -0.05 & 0.15 & 42.00 & -0.32 & 0.754\\
- & SibGroup2+ & -0.49 & 0.16 & 42.00 & -2.99 & 0.005\\
- & month & 0.03 & 0.01 & 294.00 & 3.02 & 0.003\\
- & sexM & -0.21 & 0.13 & 42.00 & -1.64 & 0.108\\
+Caregiver input & Intercept & 4.89 & 0.18 & 188.47 & 27.37 & <0.001\\
+ & SibGroupOne & -0.05 & 0.15 & 42.00 & -0.31 & 0.757\\
+ & SibGroup2+ & -0.49 & 0.16 & 42.00 & -3.02 & 0.004\\
+ & month & 0.03 & 0.01 & 294.00 & 2.95 & 0.003\\
+ & sexM & -0.21 & 0.13 & 42.00 & -1.67 & 0.102\\
 \midrule
 \addlinespace
-Object presence & Intercept & 0.56 & 0.05 & 316.26 & 12.42 & <0.001\\
- & SibGroupOne & -0.14 & 0.03 & 42.00 & -3.97 & <0.001\\
- & SibGroup2+ & -0.22 & 0.04 & 42.00 & -5.89 & <0.001\\
- & month & 0.01 & 0.00 & 294.00 & 3.11 & 0.002\\
+Object presence & Intercept & 0.56 & 0.05 & 316.86 & 12.44 & <0.001\\
+ & SibGroupOne & -0.14 & 0.03 & 42.00 & -3.98 & <0.001\\
+ & SibGroup2+ & -0.22 & 0.04 & 42.00 & -5.92 & <0.001\\
+ & month & 0.01 & 0.00 & 294.00 & 3.05 & 0.003\\
 \bottomrule
 \end{longtable}
 
@@ -286,7 +286,7 @@ Object presence & Intercept & 0.56 & 0.05 & 316.26 & 12.42 & <0.001\\
 \hypertarget{s3-speakers-in-the-dataset}{%
 \subsection{S3: Speakers in the dataset}\label{s3-speakers-in-the-dataset}}
 
-The table below provides a summary of which two caregivers produced the most words in each video recording analyzed in the main manuscript. This was usually the mother and/or the father. In the case where the infant had two mothers, their data was aggregated into the `Mother' category; in all but two sessions from this family, the two mothers were the two main caregivers. There were 344 hour-long video recordings in total across the 43 infants in the data set; two speakers were present in 146 of these.
+The table below provides a summary of which two caregivers produced the most words in each video recording analyzed in the main manuscript. This was usually the mother and/or the father. In the case where the infant had two mothers, their data was aggregated into the `Mother' category; in all but two sessions from this family, the two mothers were the two main caregivers. There were 344 hour-long video recordings in total across the 43 infants in the data set; two speakers were present in 148 of these.
 
 \begin{longtable}[t]{ccc}
 \caption{\label{tab:table-speakers-sessions}Numer of sessions in which each adult speaker is one of the two main caregivers. There were 344 hour-long video sessions in total, and two caregivers were present in 146 of these.}\\
@@ -294,8 +294,8 @@ The table below provides a summary of which two caregivers produced the most wor
 Speaker & Caregiver 1 & Caregiver 2\\
 \midrule
 Mother & 282 & 16\\
-Father & 45 & 82\\
-Grandmother & 11 & 23\\
+Father & 45 & 83\\
+Grandmother & 11 & 24\\
 Babysitter & 4 & 4\\
 Grandfather & 1 & 5\\
 \addlinespace
@@ -338,13 +338,13 @@ Once again, initial model comparisons including the caregiver input/object prese
 
 Outputs from model comparisons and full model outputs including estimates are shown in Tables \ref{tab:table-model-comparisons-discrete} and \ref{tab:table-input-model-summary-discrete}. Results were consistent with those reported for sibling group, suggesting both characterizations of siblinghood capture similar relationships among our variables.
 
-\begin{longtable}[t]{cccc}
+\begin{longtable}[t]{ccccc}
 \caption{\label{tab:table-model-comparisons-discrete}Results of nested model comparisons testing the effect of discrete sibling number on caregiver input/object presence in the video data. Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling number (R = 0-4). Age in months was included as a fixed effect; subject was included as a random effect.}\\
 \toprule
-Model & Df & Chisq & p value\\
+Model & Df & Chisq & p value & $R^{2}$\\
 \midrule
-Caregiver input & 1 & 5.40 & 0.02\\
-Object presence & 2 & 30.47 & 0.00\\
+Caregiver input & 1 & 5.45 & 0.020 & 0.59\\
+Object presence & 2 & 30.24 & <0.001 & 0.55\\
 \bottomrule
 \end{longtable}
 
@@ -353,14 +353,14 @@ Object presence & 2 & 30.47 & 0.00\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 4.80 & 0.16 & 272.03 & 30.39 & <0.001\\
- & n Siblings & -0.15 & 0.06 & 43.00 & -2.40 & 0.021\\
- & month & 0.03 & 0.01 & 301.00 & 3.02 & 0.003\\
+Caregiver input & Intercept & 4.81 & 0.16 & 274.49 & 30.17 & <0.001\\
+ & n Siblings & -0.15 & 0.06 & 43.00 & -2.41 & 0.020\\
+ & month & 0.03 & 0.01 & 301.00 & 2.95 & 0.003\\
 \midrule
-Object presence & Intercept & 0.55 & 0.04 & 328.28 & 12.39 & <0.001\\
- & n Siblings & -0.08 & 0.01 & 43.00 & -5.31 & <0.001\\
+Object presence & Intercept & 0.55 & 0.04 & 328.64 & 12.41 & <0.001\\
+ & n Siblings & -0.08 & 0.01 & 43.00 & -5.32 & <0.001\\
 \addlinespace
- & month & 0.01 & 0.00 & 301.00 & 2.99 & 0.003\\
+ & month & 0.01 & 0.00 & 301.00 & 2.93 & 0.004\\
 \bottomrule
 \end{longtable}
 
@@ -371,13 +371,13 @@ Object presence & Intercept & 0.55 & 0.04 & 328.28 & 12.39 & <0.001\\
 
 One infant heard substantially more (\textgreater3SDs above the mean) nouns in their input and nouns with object presence than the other 42 infants in the main sample for four of their recording sessions. We retain this infant in the main analysis, but confirm here that results reported for sibling group were consistent when this child was removed from the analysis of input data (n=42). See Tables \ref{tab:table-model-comparisons-red} and \ref{tab:table-input-model-summary-red}.
 
-\begin{longtable}[t]{cccc}
+\begin{longtable}[t]{ccccc}
 \caption{\label{tab:table-model-comparisons-red}Results of nested model comparisons testing the effect of sibling group on caregiver input/object presence in the video data, with one infant identified as an outlier removed from our sample (n=42). Linear mixed-effects regression models compared our two input measures (object words produced in caregiver input  and object presence) in relation to sibling group. Age in months was included as a fixed effect for both models; sex was included for caregiver input only following model structures in the main analysis. Subject was included as a random effect.}\\
 \toprule
-Model & Df & Chisq & p value\\
+Model & Df & Chisq & p value & $R^{2}$\\
 \midrule
-Caregiver input & 2 & 9.02 & 0.011\\
-Object presence & 2 & 25.87 & <0.001\\
+Caregiver input & 2 & 9.25 & 0.010 & 0.56\\
+Object presence & 2 & 26.06 & <0.001 & 0.55\\
 \bottomrule
 \end{longtable}
 
@@ -386,17 +386,17 @@ Object presence & 2 & 25.87 & <0.001\\
 \toprule
 Variable & Effect & Estimate & Std. Error & df & t value & p value\\
 \midrule
-Caregiver input & Intercept & 4.85 & 0.17 & 204.76 & 27.94 & <0.001\\
- & SibGroupOne & 0.06 & 0.14 & 42.00 & 0.40 & 0.688\\
- & SibGroup2+ & -0.43 & 0.15 & 42.00 & -2.81 & 0.008\\
- & month & 0.03 & 0.01 & 294.00 & 2.91 & 0.004\\
- & sexM & -0.22 & 0.12 & 42.00 & -1.87 & 0.069\\
+Caregiver input & Intercept & 4.86 & 0.17 & 208.33 & 27.81 & <0.001\\
+ & SibGroupOne & 0.06 & 0.14 & 42.00 & 0.41 & 0.682\\
+ & SibGroup2+ & -0.44 & 0.15 & 42.00 & -2.85 & 0.007\\
+ & month & 0.03 & 0.01 & 294.00 & 2.84 & 0.005\\
+ & sexM & -0.23 & 0.12 & 42.00 & -1.90 & 0.064\\
 \midrule
 \addlinespace
-Object presence & Intercept & 0.56 & 0.05 & 311.43 & 12.24 & <0.001\\
- & SibGroupOne & -0.12 & 0.03 & 42.00 & -3.66 & <0.001\\
- & SibGroup2+ & -0.22 & 0.04 & 42.00 & -5.71 & <0.001\\
- & month & 0.01 & 0.00 & 294.00 & 3.07 & 0.002\\
+Object presence & Intercept & 0.56 & 0.05 & 312.10 & 12.26 & <0.001\\
+ & SibGroupOne & -0.12 & 0.03 & 42.00 & -3.67 & <0.001\\
+ & SibGroup2+ & -0.22 & 0.04 & 42.00 & -5.74 & <0.001\\
+ & month & 0.01 & 0.00 & 294.00 & 3.02 & 0.003\\
 \bottomrule
 \end{longtable}
 \newpage
