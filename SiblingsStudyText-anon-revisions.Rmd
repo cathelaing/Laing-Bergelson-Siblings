@@ -212,7 +212,7 @@ Object words (i.e. concrete nouns) deemed to be said to, by, or loudly and clear
 
 #### Derived Input measures
 
-Two input measures were derived based on the individual word level annotations of concrete nouns directed to or near the target child in this corpus, each pertaining to an aspect of the input that is established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear? Note that this measure only includes speech produced directly to or close by the target child; see example below) and **object presence** (what proportion of this input is referentially transparent?), detailed below. The original dataset coded for synthesised speech from toys/electronics and overheard speech from screens or radio; these were excluded here, alongside speech from experimenters.
+Two input measures were derived based on the individual word level annotations of concrete nouns directed to or near the target child in this corpus, each pertaining to an aspect of the input that is established as important in early language learning: **overall household input** (how many concrete nouns does each infant hear? Note that this measure only includes speech produced directly to or close by the target child; see example below) and **object presence** (what proportion of this input is referentially transparent?), detailed below. The original dataset coded for synthesised speech from toys/electronics and speech from speakers on screens or radio; these were excluded here, alongside speech from experimenters (n tokens = `r (n_excluded)`).
 
 Neither of these measures are, in our view, interpretable as "pure" quality or quantity input measures; we hold that quality and quantity are inextricably linked in general, and specifically we include (by design) only object words that the recordings suggest were possible learning instances for the infants who heard them, wherein quantity and quality are conflated. This included only concrete, imageable words that were addressed directly to the child (e.g. "Have you got your toy *bear*?"), or sufficiently loud and proximal that they were clearly audible to the child (e.g. "Can you pass me the toy *bear*?", directed at the sibling while mother, infant, and sibling play on the rug). As mentioned above, only speech produced in the infant's immediate surroundings (i.e. speech that would have been clearly heard by the target infant) was coded.
 
@@ -316,6 +316,15 @@ sibgroup.summary <- SiblingsData %>% filter(month==18) %>%
             sd = sd(Total.words, na.rm=T)) %>%
   mutate(Variable = "Productive Vocabulary 18m") %>%
   select(Variable, SibGroup, mean, sd)
+
+sibnumber.summary <- SiblingsData %>% filter(month==18) %>%
+  group_by(Siblings6) %>%
+  summarise(mean = mean(Total.words, na.rm=T),
+            sd = sd(Total.words, na.rm=T)) %>%
+  mutate(vocab.diff = mean-lag(mean)) %>%
+  summarise(mean.diff = mean(vocab.diff, na.rm=T))
+
+sib_voc_pc <- (abs(sibnumber.summary)/(subset(sibgroup.summary, SibGroup == "None")$mean))*100
 
 ```
 
@@ -424,11 +433,6 @@ sibgroup.model.summary.table <- sibgroup.model.summary$coefficients %>%
   # printnum(
   #   digits = c(2, 2, 2, 2, 3, 3)) %>%
   mutate(p = scales::pvalue(p))
-
-siblinggroup1.beta <- (1-(exp(as.numeric(sibgroup.model.summary.table$Estimate[2]))))*100
-siblinggroup2.beta <- (1-(exp(as.numeric(sibgroup.model.summary.table$Estimate[3]))))*100
-
-
 ```
 
 ```{r post hoc tests sibling groups, include=FALSE}
@@ -465,16 +469,16 @@ cap = "Full model output from linear mixed effects regression models comparing l
   kable_styling(latex_options = "hold_position")
 ```
 
-Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. We find that for each additional sibling, infants were reported to have produced `r round(siblingnum.beta,0)`% fewer words. The 'sibling effect' is thus present in our data.
+Having more siblings was associated with a smaller vocabulary size over the course of early development. This is consistent with previous findings [@hoff-ginsberg_relation_1998; @pine_variation_1995]. We find that for each additional sibling, infants were reported to have produced `r round(sib_voc_pc,0)`% fewer words on average. The 'sibling effect' is thus present in our data.
 
-In terms of our grouped sibling variable (i.e. 0 vs. 1 vs. 2+ siblings), infants with one sibling produced `r round(subset(sibgroup.summary, SibGroup == "One")$mean,0)` words on average at 18 months. According to model estimates, this is around `r round(siblinggroup1.beta,2)`% fewer words than their firstborn peers. On the other hand, infants with two or more siblings produced `r round(siblinggroup2.beta,2)`% fewer words on average. See Table \@ref(tab:table-sibgroup-model-summary) and and Figure \@ref(fig:Figure-SibGroup) for overall means and SDs. Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months (where there's the widest vocabulary range) revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`, CI=[`r (sibgroup_one_two_confint[1,])`,`r (sibgroup_one_two_confint[2,])`]), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`, CI=[`r (sibgroup_none_one_confint[1,])`,`r (sibgroup_none_one_confint[2,])`]). See Table \@ref(tab:table-data-summary).
+In terms of our grouped sibling variable (i.e. 0 vs. 1 vs. 2+ siblings), infants with one sibling produced `r round(subset(sibgroup.summary, SibGroup == "One")$mean,0)` words on average at 18 months, which is, on average, `r round((subset(sibgroup.summary, SibGroup == "One")$mean)-(subset(sibgroup.summary, SibGroup == "None")$mean),0)` words *more* than their firstborn peers. Consistent with the model results, infants with two or more siblings produced substantially fewer words at 18 months than those with one or 2+ siblings (based on the raw data: None vs. 2+: `r round(subset(sibgroup.summary, SibGroup == "None")$mean,0)` vs. `r round(subset(sibgroup.summary, SibGroup == "2+")$mean,0)`; One vs. 2+: `r round(subset(sibgroup.summary, SibGroup == "One")$mean,0)` vs. `r round(subset(sibgroup.summary, SibGroup == "2+")$mean,0)`). Post-hoc Wilcoxon Rank Sum tests comparing reported productive vocabulary at 18 months (where there's the widest vocabulary range) revealed significantly larger vocabularies for infants with one sibling compared to those with two or more siblings (*W*=`r round(sibgroup_wilcox_one_two$statistic)`, *p* = `r printp(sibgroup_wilcox_one_two$p.value)`, CI=[`r (sibgroup_one_two_confint[1,])`,`r (sibgroup_one_two_confint[2,])`]), but no difference between infants with one sibling and those with no siblings (*W*=`r sibgroup_wilcox_none_one$statistic`, *p* = `r printp(sibgroup_wilcox_none_one$p.value)`, CI=[`r (sibgroup_none_one_confint[1,])`,`r (sibgroup_none_one_confint[2,])`]). See Table \@ref(tab:table-data-summary).
 
 
 ```{r Figure-SibGroup, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 
 par(cex = 1.2)
 Figure.SibGroup
-cap <- sprintf("Reported productive vocabulary acquisition (CDI) over time (n=42; one child was an outlier, and was removed from the CDI analysis and this figure; see text for details). Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over individual infants’ vocabulary at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (jittered horizontally) show individual infants' vocabulary size at each month. Y-axis utilizes log-transformed vertical spacing for visual clarity.")
+cap <- sprintf("Reported productive vocabulary acquisition (CDI) over time (n=42; one child was an outlier, and was removed from the CDI analysis and this figure; see text for details). Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over individual infants’ vocabulary at each month. Filled circles indicate mean with bootstrapped CIs computed over each month's data. Open circles (jittered horizontally) show individual infants' vocabulary size at each month. Y-axis utilizes log-transformed vertical spacing for visual clarity.")
 
 ```
 
@@ -652,12 +656,9 @@ input.model.summary.table <- input.model.summary$coefficients %>%
   mutate(`p value` = scales::pvalue(`p value`),
          Variable = ifelse(Effect == "Intercept", "Caregiver input", ""))
 
-input1.beta <- abs((1-(exp(as.numeric(input.model.summary.coef$Estimate[2]))))*100)
-input2.beta <- (1-(exp(as.numeric(input.model.summary.coef$Estimate[3]))))*100
-
 ```
 
-We tested overall quantity of input (aggregated across the two main caregivers, as outlined above, and siblings) in our model alongside age, sex and subject, as noted above, and a significant effect was found for the effect of sibling group ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*=`r printp(speaker.type_p.value)`, $R^2$=`r round(speaker.type_r2,2)`). Infants with one sibling heard on average `r round(input1.beta,2)`% *more* words than those with no siblings in any given hour-long recording, while infants with two or more siblings heard `r round(input2.beta,2)`% fewer words. See Table \@ref(tab:table-data-summary) for overall group differences (M and SD) in amount of input.
+We tested overall quantity of input (aggregated across the two main caregivers, as outlined above, and siblings) in our model alongside age, sex and subject, as noted above, and a significant effect was found for the effect of sibling group ($\chi^2 (`r speaker.type_df`)$ = `r speaker.type_chisq`, *p*=`r printp(speaker.type_p.value)`, $R^2$=`r round(speaker.type_r2,2)`). Infants with one sibling heard on average `r round((((subset(table.data.summary.speaker, SibGroup == "None")$mean)-(subset(table.data.summary.speaker, SibGroup == "One")$mean))/(subset(table.data.summary.speaker, SibGroup == "One")$mean))*100,0)`% fewer words than those with no siblings in any given hour-long recording, while infants with two or more siblings heard `r round((((subset(table.data.summary.speaker, SibGroup == "None")$mean)-(subset(table.data.summary.speaker, SibGroup == "2+")$mean))/(subset(table.data.summary.speaker, SibGroup == "2+")$mean))*100,0)`% fewer words.
 
 We then ran post-hoc tests to compare mean amount of input across sibling groups; these showed a significant difference in average input received between infants with one sibling versus those with two or more siblings (*W*=`r round(speaker.type_wilcox_one_two$statistic)`, *p*=`r printp(speaker.type_wilcox_one_two$p.value)`, CI=[`r (speaker.type_one_two_confint[1,])`,`r (speaker.type_one_two_confint[2,])`]; Bonferroni-corrected *p*-threshold = .025 for all reported Wilcoxon tests) while amount of input did not differ between infants with no siblings and those with one sibling (*W*=`r round(speaker.type_wilcox_none_one$statistic)`, *p* = `r printp(speaker.type_wilcox_none_one$p.value)`, CI=[`r (speaker.type_none_one_confint[1,])`,`r (speaker.type_none_one_confint[2,])`]). 
 
@@ -722,7 +723,7 @@ mean.input.SIB <- speaker.type %>% ungroup() %>%
 
 ```
 
-While we operationalized caregiver input in our models as input speech from the two adults who produced the most words in any given session, in `r round(PCMOTFAT,2)`% of cases this was the mother or father. Considering mothers and father specifically, maternal input accounted for `r round(PC.MOT$PCMOT)`% of object words in the data overall (M=`r mean.input.MOT$mean.input` words, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`)[^4]. Fathers accounted for an average of `r round(PC.FAT$PCFAT)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(PC.SIB$PCSIB)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Table \@ref(tab:table-data-summary) and Figure \@ref(fig:Figure-Speaker-count). As well as the overall input being greater for firstborns, compared with infants with one or 2+ siblings, note also that the variance is greater for this group, and decreases  as sibling number increases. This is shown in the SDs reported in Table \@ref(tab:table-data-summary), and in the data points visualized in Figure \@ref(fig:Figure-Speaker-count).
+While we operationalized caregiver input in our models as input speech from the two adults who produced the most words in any given session, in `r round(PCMOTFAT,2)`% of cases this was the mother or father. Considering mothers and fathers specifically, maternal input accounted for `r round(PC.MOT$PCMOT)`% of object words in the data overall (M=`r mean.input.MOT$mean.input` words, Mdn=`r mean.input.MOT$med.input`, SD=`r mean.input.MOT$sd.input`)[^4]. Fathers accounted for an average of `r round(PC.FAT$PCFAT)`% (M=`r mean.input.FAT$mean.input`, Mdn=`r mean.input.FAT$med.input`, SD=`r mean.input.FAT$sd.input`), while infants with siblings received around `r round(PC.SIB$PCSIB)`% of their input from their brothers and sisters (M=`r mean.input.SIB$mean.input`, Mdn=`r mean.input.SIB$med.input`, SD=`r mean.input.SIB$sd.input`). See Figure \@ref(fig:Figure-Speaker-count), showing the raw values of input from mothers, fathers and siblings, which are consistent with the group trends reported above. As well as the overall input being greater for firstborns, compared with infants with one or 2+ siblings, note also that the variance is greater for this group, and decreases  as sibling number increases. This is shown in the SDs reported in Table \@ref(tab:table-data-summary), and in the data points visualized in Figure \@ref(fig:Figure-Speaker-count).
 
 
 [^4]: One family in our sample had two mothers; rather than artificially assigning one parent to another category, we averaged both mothers' input for this child; we acknowledge that this is an imperfect solution but found it better than the alternatives.
@@ -739,7 +740,7 @@ kable(table.data.summary, "latex", booktabs = T, caption = cap, digits = 2, alig
 par(cex = 1.2)
 #Figure.speaker.count
 Figure.speaker.count_fixed
-cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings, as well as mean total family input (mother + father + sibling(s)), across sessions recorded between 10-17 months. Circles represent values for individual infants; red triangles show group means. In the case where the infant had two mothers, mean maternal input is shown. See S7 for a month-by-month visualisation of caregiver input.")
+cap <- sprintf("Mean number of words produced by Mothers, Fathers and Siblings, as well as total family input (mean input from mother + father + sibling(s)), across sessions recorded between 10-17 months. Open triangles represent values for individual infants; filled triangles show group means. In the case where the infant had two mothers, mean maternal input is shown. See S7 for a month-by-month visualisation of caregiver input.")
 ```
 
 ```{r Sibling input, message=FALSE, warning=FALSE}
@@ -845,9 +846,6 @@ object.presence.model.summary <- summary(object.presence.model)
 
 object.presence.model.coefs <- as.data.frame(object.presence.model.summary$coefficients)
 
-objpres1.beta <- (1-(exp(as.numeric(object.presence.model.coefs$Estimate[2]))))*100
-objpres2.beta <- (1-(exp(as.numeric(object.presence.model.coefs$Estimate[3]))))*100
-
 table.object.presence.model.summary <- object.presence.model.summary$coefficients %>%
   as.data.frame %>%
   rename("p value" = "Pr(>|t|)") %>%
@@ -885,14 +883,14 @@ object.presence_one_two_confint <- as.data.frame(object.presence_wilcox_one_two$
 
 On average, `r round(mean(object.presence.summary$mean.object)*100)`% of annotated utterances included a referent that was present and attended to by the infant (Mdn=`r mean(object.presence.summary$med.object)`, SD=`r mean(object.presence.summary$sd.object)`). See Table \@ref(tab:table-data-summary). Consistent with our hypothesis that infants with more siblings would hear fewer words in referentially transparent conditions (i.e. they would experience lower object presence) than those with fewer siblings, our models reveal a significant effect for sibling group on object presence ($\chi^2 (`r object.presence_df`)$ = `r object.presence_chisq`, *p*`r printp(object.presence_p.value)`, $R^2$=`r round(object.presence_r2,2)`). 
 
-Infants with no siblings experienced on average `r round(objpres2.beta,2)`% more object presence in their input than those with two or more siblings, and `r round(objpres1.beta,2)`% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (*W*=`r round(object.presence_wilcox_none_one$statistic)`, *p*`r printp(object.presence_wilcox_none_one$p.value)`, CI=[`r (object.presence_none_one_confint[1,])`,`r (object.presence_none_one_confint[2,])`]; Bonferroni-corrected *p*-threshold = .025). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (*W*=`r round(object.presence_wilcox_one_two$statistic)`, *p*=`r printp(object.presence_wilcox_one_two$p.value)`, CI=[`r (object.presence_one_two_confint[1,])`,`r (object.presence_one_two_confint[2,])`]). See Table \@ref(tab:table-input-model-summary) and Figure \@ref(fig:Figure-object-presence). 
+Descriptively, infants with no siblings experienced on average `r round((((subset(table.data.summary.object, SibGroup == "None")$mean)-(subset(table.data.summary.object, SibGroup == "2+")$mean))/(subset(table.data.summary.object, SibGroup == "2+")$mean))*100,0)`% more object presence in their input than those with two or more siblings, and `r round((((subset(table.data.summary.object, SibGroup == "None")$mean)-(subset(table.data.summary.object, SibGroup == "One")$mean))/(subset(table.data.summary.object, SibGroup == "One")$mean))*100,0)`% more than those with one sibling. Post-hoc comparisons revealed significant between-group differences: infants with no siblings experienced significantly more object presence than those with one sibling (*W*=`r round(object.presence_wilcox_none_one$statistic)`, *p*`r printp(object.presence_wilcox_none_one$p.value)`, CI=[`r (object.presence_none_one_confint[1,])`,`r (object.presence_none_one_confint[2,])`]; Bonferroni-corrected *p*-threshold = .025). Likewise, infants with one sibling experienced significantly more object presence those with two or more siblings (*W*=`r round(object.presence_wilcox_one_two$statistic)`, *p*=`r printp(object.presence_wilcox_one_two$p.value)`, CI=[`r (object.presence_one_two_confint[1,])`,`r (object.presence_one_two_confint[2,])`]). See Table \@ref(tab:table-input-model-summary) and Figure \@ref(fig:Figure-object-presence). 
 
 ```{r Figure-object-presence, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 
 par(cex = 1.2)
 #Figure.object.presence
 Figure.object.presence_fixed
-cap <- sprintf("Percentage of input words produced with object presence across sibling groups. Error bars and black triangles show 95%% CIs and mean proportion of object presence across sibling groups. Dots indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity. See S7 for a month-by-month visualisation of object presence.")
+cap <- sprintf("Percentage of input words produced with object presence across sibling groups. Error bars and filled diamonds show 95%% CIs and mean proportion of object presence across sibling groups. Open diamonds indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity. See S7 for a month-by-month visualisation of object presence.")
 
 ```
 
@@ -919,7 +917,7 @@ kable(sib.presence.table.data.summary, "latex", booktabs = T, caption = cap, dig
 ```{r figure-sibpresence-input, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 par(cex = 1.2)
 Figure.input.sibling
-cap <- sprintf("Difference in number of input words in infants' input according to whether or not a sibling or siblings were present during the time of recording, for each month of data. Infants with no siblings were not included in the plots for visual ease. White shapes represent individual infants in the data; filled shapes represent means and 95%%CIs, colours represent presence or absence of siblings during the recording session.")
+cap <- sprintf("Difference in number of input words in infants' input according to whether or not a sibling or siblings were present during the time of recording, for each month of data. Infants with no siblings were not included in the plots for visual ease. Open diamonds represent individual infants in the data; filled diamonds represent means and 95%%CIs, colours represent presence or absence of siblings during the recording session.")
 
 ```
 

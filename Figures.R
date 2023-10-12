@@ -32,8 +32,13 @@ speaker.type.fig <- speaker.type %>%
   filter(audio_video == "video") %>%
   mutate(speaker = ifelse(speaker == "MT2", "MOT", speaker)) %>%
   filter(speaker %in% c("MOT", "FAT", "SIBLING")) %>%
+  group_by(subj, SibGroup, speaker) %>%
+    summarise(speaker.mean = mean(n)) %>%
+  ungroup() %>%
   group_by(subj, SibGroup) %>%
-    summarise(mean.n = mean(n)) %>%
+  summarise(mean.n = sum(speaker.mean)) %>%  
+  ## not actually mean - this is the total of the average input from each speaker
+  ## labelling this way for generating the figure below
   mutate(speaker = "FAMILY") %>%
   rbind(speaker.type2)
 
