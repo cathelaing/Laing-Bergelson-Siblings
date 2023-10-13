@@ -761,7 +761,7 @@ figure_sibgroup_numtypes_cdi <- types_tokens_overall_CDI_sibgroup %>%
   ylab("Reported productive vocabulary size (CDI)") +
   xlab("Total word types produced (audio and video recordings)") +
   facet_wrap(~SibGroup, scales="free", nrow=3) +
-  theme_bw()
+  theme_bw(base_size = 10)
 
 
 ```
