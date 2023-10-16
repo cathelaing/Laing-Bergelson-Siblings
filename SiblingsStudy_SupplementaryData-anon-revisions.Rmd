@@ -50,15 +50,6 @@ library(kableExtra)
 
 source("DataGathering.R")
 
-# remove one of the twins from each dataset
-
-demographics <- demographics %>% filter(subj != 351)
-sib.ages <- sib.ages %>% filter(subj != 351)
-SiblingsData <- SiblingsData %>% filter(subj != 351 & month > 9)
-CDI <- CDI %>% filter(subj != 351 & month > 9)
-speaker.type <- speaker.type %>% filter(subj != 351 & month > 9)
-object.presence <- object.presence %>% filter(subj != 351 & month > 9)
-
 # function for calculating R^2:
 r2.corr.mer <- function(m) {
   lmfit <-  lm(model.response(model.frame(m)) ~ fitted(m))

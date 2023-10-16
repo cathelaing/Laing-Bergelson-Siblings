@@ -12,11 +12,13 @@ library(forcats)
 
 PVT <- read_csv("Data/ParentPVT.csv") %>%
   mutate(subj = factor(subj)) %>%
+  filter(subj != 351) %>%
   rename(PVTscore = uncorrected_standard_score) %>%
   select(-ed_pvt)
 
 CDI <- read_csv("Data/CDI.csv") %>%
   mutate(subj = factor(subj)) %>%
+  filter(subj != 351) %>%
   rename(Total.words = CDI_TotalProd,
         month = Month) %>%
   mutate(Log.Totalwords = log(Total.words+1),
@@ -24,7 +26,7 @@ CDI <- read_csv("Data/CDI.csv") %>%
   select(subj, month, Total.words, Log.Totalwords)
 
 chidata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%   # Read in basic levels data and then join with CDI data to create a dataset of infant production
-  filter(speaker == 'CHI') %>%
+  filter(speaker == 'CHI' &   subj != 351) %>%
   dplyr::select(
     basic_level, 
     audio_video,
@@ -70,6 +72,7 @@ ProductionData <- CDI %>%
 
 demographics <- read_csv("Data/demo_deid_cleaned.csv") %>%
   mutate(subj = factor(subj)) %>%
+  filter(subj != 351) %>%
   dplyr::select(
     subj,
     sex,

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.9)  12 OCT 2023 20:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.9)  16 OCT 2023 14:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -677,18 +677,12 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 [6] [7] [8] [9] [10] [11] [12] [13]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10.95> on input line 289.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 [14] [15{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}] [16]
-<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf, id=198, 469.755pt x 325.215pt>
+<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf, id=199, 469.755pt x 325.215pt>
 File: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf Graphic file (type pdf)
 <use SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf>
 Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf  used on input line 356.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 [17] [18 <./SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf>] [19]
 Overfull \hbox (11.59154pt too wide) in paragraph at lines 380--391
  [][] 
@@ -697,31 +691,31 @@ Overfull \hbox (11.59154pt too wide) in paragraph at lines 380--391
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf, id=232, 469.755pt x 325.215pt>
+<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf, id=234, 469.755pt x 325.215pt>
 File: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf Graphic file (type pdf)
 <use SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf>
 Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf  used on input line 395.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [20]
-<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf, id=242, 469.755pt x 325.215pt>
+<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf, id=244, 469.755pt x 325.215pt>
 File: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf Graphic file (type pdf)
 <use SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf>
 Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf  used on input line 410.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [21] [22 <./SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf>]
-Overfull \hbox (32.94504pt too wide) in paragraph at lines 442--454
+Overfull \hbox (27.07005pt too wide) in paragraph at lines 442--454
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf, id=258, 469.755pt x 325.215pt>
+<SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf, id=260, 469.755pt x 325.215pt>
 File: SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf Graphic file (type pdf)
 <use SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf>
 Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf  used on input line 458.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf, id=259, 469.755pt x 325.215pt>
+<SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf, id=261, 469.755pt x 325.215pt>
 File: SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf Graphic file (type pdf)
 <use SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf>
 Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf  used on input line 464.
@@ -746,7 +740,13 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 [28]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[29] [30] [31] [32] [33]
+[29] [30]
+Underfull \vbox (badness 2189) has occurred while \output is active []
+
+[31]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[32] [33]
 Underfull \vbox (badness 1028) has occurred while \output is active []
 
 [34]
@@ -773,18 +773,18 @@ Package rerunfilecheck Info: File `SiblingsStudyText-anon-revisions.out' has not
 (rerunfilecheck)             Checksum: 20E5BEA3062D3102A160A22861096AE4;2876.
  ) 
 Here is how much of TeX's memory you used:
- 16239 strings out of 476893
- 266060 string characters out of 5807518
+ 16240 strings out of 476893
+ 266071 string characters out of 5807518
  1938785 words of memory out of 5000000
  37078 multiletter control sequences out of 15000+600000
  650364 words of font info for 112 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,11n,79p,2436b,632s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,79p,2436b,634s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb>
-Output written on SiblingsStudyText-anon-revisions.pdf (40 pages, 380262 bytes).
+Output written on SiblingsStudyText-anon-revisions.pdf (40 pages, 381957 bytes).
 PDF statistics:
- 562 PDF objects out of 1000 (max. 8388607)
- 483 compressed objects within 5 object streams
- 156 named destinations out of 1000 (max. 500000)
+ 565 PDF objects out of 1000 (max. 8388607)
+ 486 compressed objects within 5 object streams
+ 157 named destinations out of 1000 (max. 500000)
  186 words of extra memory for PDF output out of 10000 (max. 10000000)
 
