@@ -18,6 +18,7 @@ library(forcats)
 
 sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
   filter(#audio_video =='video',   # Only use video data
+    subj != 351 &                  # filter out one twin
          !(speaker %in% c('CHI', #remove infant productions
                           "EFA", "EFB", "EFS", "EFE", # exclude female experimenters
                           "EMM", # exclude male experimenters
@@ -63,7 +64,8 @@ sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
 
 n_excluded <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
   filter(audio_video =='video' &   # Only use video data
-         month > "09" &
+           subj != 351 &                  # filter out one twin
+           month > "09" &
     (speaker %in% c("TOY",
                      "EFA", "EFB", "EFS", "EFE", # exclude female experimenters
                      "EMM", # exclude male experimenters
@@ -153,7 +155,8 @@ speaker.type <- rbind(speaker.type.n, speaker.type.household) %>%
          speaker = ifelse(caregiver == "FAMILY", "Total.input", speaker))
 
 all.speaker.data <- speaker.type.household %>% left_join(speaker.type.all) %>%
-  group_by(subj, month, audio_video) %>%
+  filter(audio_video == "video") %>%
+  group_by(subj, month) %>%
   mutate(other.input = All.speakers - n,
          prop.other = other.input/All.speakers) %>%
   ungroup()
@@ -183,24 +186,24 @@ object.presence <- sibsdata %>%
 # how many instances of object presence were unclear?
 
 object.presence.unsure <- sibsdata %>%
-  left_join(speaker.type.n) %>%
+  filter(audio_video == "video") %>%
+    left_join(speaker.type.n) %>%
   filter(!is.na(caregiver)) %>%
   filter(object_present %in%
            c("y", "n", "u")) %>%
-  group_by(subj, month, audio_video, object_present) %>%
+  group_by(subj, audio_video, object_present) %>%
   tally() %>%
   spread(object_present, n) %>%
   replace(is.na(.), 0) %>%
   ungroup() %>%
   mutate(Total = n + y + u,
          PCu = u/Total) %>%
-  filter(audio_video == "video") %>%
   summarise(totalu = sum(u),
             meanu = (mean(PCu))*100)
 
-
 sib.ages <- read_csv("Data/SiblingAges.csv") %>%   # Read in data showing age differences between subj and siblings
-  mutate(subj = factor(subj))
+  mutate(subj = factor(subj)) %>%
+  filter( subj != 351)                  # filter out one twinv
 
 # dataframe to show which recordings included speech from a sibling
 

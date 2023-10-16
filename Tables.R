@@ -28,18 +28,24 @@ table.data.summary.speaker <-
   speaker.type %>% 
   filter(audio_video == "video"  & 
            caregiver == "FAMILY") %>%
+  group_by(subj, SibGroup) %>%
+  summarise(mean.n = mean(n)) %>%
+  ungroup() %>%
   group_by(SibGroup) %>%
-  summarise(mean = mean(n),
-            sd = sd(n)) %>%
+  summarise(mean = mean(mean.n),
+            sd = sd(mean.n)) %>%
   mutate(Variable = "N Input utterances, 10-17 months") %>%
   select(Variable, SibGroup, mean, sd)
 
 table.data.summary.object <- 
   object.presence %>% 
   filter(audio_video == "video") %>%
+  group_by(subj, SibGroup) %>%
+  summarise(mean.PC = (mean(PC))) %>%
+  ungroup() %>%
   group_by(SibGroup) %>%
-  summarise(mean = (mean(PC)*100),
-            sd = (sd(PC)*100)) %>%
+  summarise(mean = mean(mean.PC)*100,
+            sd = sd(mean.PC)*100) %>%
   mutate(Variable = "% object presence in input, 10-17 months") %>%
   select(Variable, SibGroup, mean, sd)
 
@@ -58,7 +64,11 @@ table.data.summary.sd <- rbind(table.data.summary.sibgroup, table.data.summary.s
          "2 sd" = "2+")
 
 table.data.summary <- table.data.summary.mean %>% left_join(table.data.summary.sd) %>%
-  select(Variable, `none m`, `none sd`, `1 m`, `1 sd`, `2 m`, `2 sd`)
+  select(Variable, `none m`, `none sd`, `1 m`, `1 sd`, `2 m`, `2 sd`) %>%
+  mutate(Variable=factor(Variable, levels = c("Productive Vocabulary 18m (CDI)", 
+                                              "N Input utterances, 10-17 months", 
+                                              "% object presence in input, 10-17 months"))) %>% 
+  arrange(Variable)
 
 # sibling presence
 
@@ -80,9 +90,12 @@ sib.presence.table.input <-
   speaker.type %>%
   filter(audio_video == "video" & SibGroup != "None" & (caregiver %in% c("CG1","CG2"))) %>%
   left_join(sib.presence) %>%
+  group_by(subj, SibGroup, sib.present) %>%
+  summarise(mean.n.sib = mean(n)) %>%
+  ungroup() %>%
   group_by(SibGroup, sib.present) %>%
-  summarise("Mean" = mean(n),
-            "SD" = sd(n)) %>%
+  summarise("Mean" = mean(mean.n.sib),
+            "SD" = sd(mean.n.sib)) %>%
   rename(
     "Sibling presence" = "sib.present"
   )%>%
@@ -92,9 +105,12 @@ sib.presence.table.OP <-
   object.presence %>%
   filter(audio_video == "video" & SibGroup != "None") %>%
   left_join(sib.presence) %>%
+  group_by(subj, SibGroup, sib.present) %>%
+  summarise(mean.PC.sib = mean(PC)) %>%
+  ungroup() %>%
   group_by(SibGroup, sib.present) %>%
-  summarise("Mean" = (mean(PC, na.rm=T)*100),
-            "SD" = (sd(PC, na.rm=T)*100)) %>%
+  summarise("Mean" = (mean(mean.PC.sib, na.rm=T)*100),
+            "SD" = (sd(mean.PC.sib, na.rm=T)*100)) %>%
   rename(
     "Sibling presence" = "sib.present"
   )%>%
