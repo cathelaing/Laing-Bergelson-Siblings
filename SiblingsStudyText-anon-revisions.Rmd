@@ -153,7 +153,7 @@ low_missing <- missing_CDI %>% filter(n == min(n)) %>% tally()
 ### Parental report data 
 To index each child's language abilities, we draw on data from vocabulary checklists [MacArthur-Bates Communicative Development Inventory, hereafter CDI, Fenson et al. -@fenson_variability_1994], administered monthly from 0;6 to 1;6, along with a demographics questionnaire; each month's CDI survey came pre-populated with the previous month's answers to save on reduplicated effort. Because the majority of infants did not produce their first word until around 0;11 according to CDI reports (M=`r firstword$meanfirstword`, SD=`r firstword$sdfirstword`), we use CDI data from 0;10 onwards in our analysis. CDI production data for each month is taken as a measure of the infants’ lexical development. CDI data for production has been well validated by prior work, including work in this sample [@moore_point_2019; @frank_variability_2021]. Of the intended 13 CDIs collected for each of the 43 infants, `r total_missing` were missing across `r n_missing` infants (leaving 559 CDIs in total). `r high_missing` infants had 4 CDI data-points missing, while the majority (n = `r low_missing`) had only one missing data-point.
 
-```{r caregiver 1 and 2}
+```{r caregiver 1 and 2, include=FALSE}
 
 caregiver1 <- speaker.type %>% ungroup() %>% filter(caregiver == "CG1" & audio_video == "video") %>% summarise(total = sum(n))
 cg1mot <- speaker.type %>% ungroup() %>% 

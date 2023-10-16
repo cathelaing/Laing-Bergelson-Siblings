@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.16)  16 OCT 2023 18:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.16)  16 OCT 2023 18:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**SiblingsStudyText-anon-revisions.tex
-(./SiblingsStudyText-anon-revisions.tex
+**SiblingsStudy_SupplementaryData-anon-revisions.tex
+(./SiblingsStudy_SupplementaryData-anon-revisions.tex
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-10>
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/apa6/apa6.cls
@@ -305,30 +305,14 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
-)
-\cslhangindent=\skip75
-\csllabelwidth=\skip76
-\cslentryspacingunit=\skip77
-(c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
-Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count290
-\calc@Bcount=\count291
-\calc@Adimen=\dimen181
-\calc@Bdimen=\dimen182
-\calc@Askip=\skip78
-\calc@Bskip=\skip79
-LaTeX Info: Redefining \setlength on input line 80.
-LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count292
-\calc@Cskip=\skip80
 ) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2023/09/29 v3.95 The Babel package
-\babel@savecnt=\count293
-\U@D=\dimen183
+\babel@savecnt=\count290
+\U@D=\dimen181
 \l@unhyphenated=\language3
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
-\bbl@dirlevel=\count294
+\bbl@dirlevel=\count291
 Package babel Info: You haven't specified a language as a class or package
 (babel)             option. I'll load 'nil'. Reported on input line 4295.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/nil.ldf
@@ -338,7 +322,7 @@ Language: nil 2023/09/29 v3.95 Nil language
 \everypar=\toks28
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
 Package babel Info: Importing data for english
-(babel)             from babel-en.ini. Reported on input line 93.
+(babel)             from babel-en.ini. Reported on input line 70.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/was/upgreek.sty
 Package: upgreek 2003/02/12 v2.0 (WaS)
 Package upgreek Info: Using Euler Roman for upright Greek on input line 31.
@@ -347,48 +331,48 @@ LaTeX Font Info:    Overwriting symbol font `ugrf@m' in version `bold'
 (Font)                  U/eur/m/n --> U/eur/b/n on input line 38.
 ) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
-\LTleft=\skip81
-\LTright=\skip82
-\LTpre=\skip83
-\LTpost=\skip84
-\LTchunksize=\count295
-\LTcapwidth=\dimen184
+\LTleft=\skip75
+\LTright=\skip76
+\LTpre=\skip77
+\LTpost=\skip78
+\LTchunksize=\count292
+\LTcapwidth=\dimen182
 \LT@head=\box57
 \LT@firsthead=\box58
 \LT@foot=\box59
 \LT@lastfoot=\box60
 \LT@gbox=\box61
-\LT@cols=\count296
-\LT@rows=\count297
-\c@LT@tables=\count298
-\c@LT@chunks=\count299
+\LT@cols=\count293
+\LT@rows=\count294
+\c@LT@tables=\count295
+\c@LT@chunks=\count296
 \LT@p@ftn=\toks29
 ) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 ) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip85
-\multirow@cntb=\count300
-\multirow@dima=\skip86
-\bigstrutjot=\dimen185
+\multirow@colwidth=\skip79
+\multirow@cntb=\count297
+\multirow@dima=\skip80
+\bigstrutjot=\dimen183
 ) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/tabularx.sty
 Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
 Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen186
+\col@sep=\dimen184
 \ar@mcellbox=\box62
-\extrarowheight=\dimen187
+\extrarowheight=\dimen185
 \NC@list=\toks30
-\extratabsurround=\skip87
-\backup@length=\skip88
+\extratabsurround=\skip81
+\backup@length=\skip82
 \ar@cellbox=\box63
 )
-\TX@col@width=\dimen188
-\TX@old@table=\dimen189
-\TX@old@col=\dimen190
-\TX@target=\dimen191
-\TX@delta=\dimen192
-\TX@cols=\count301
+\TX@col@width=\dimen186
+\TX@old@table=\dimen187
+\TX@old@col=\dimen188
+\TX@target=\dimen189
+\TX@delta=\dimen190
+\TX@cols=\count298
 \TX@ftn=\toks31
 ) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
 Package: threeparttablex 2013/07/23 v0.3 by daleif
@@ -397,14 +381,14 @@ Package: environ 2014/05/04 v0.3 A new way to define environments
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
-\TPTL@width=\skip89
+\TPTL@width=\skip83
 )
-\longtablewidth=\skip90
+\longtablewidth=\skip84
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xpatch/xpatch.sty (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
 Package: expl3 2023-10-10 L3 programming layer (loader) 
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-10-10 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count302
+\l__color_backend_stack_int=\count299
 \l__pdf_internal_box=\box64
 ))
 Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
@@ -412,30 +396,30 @@ Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
 Package: xparse 2023-10-10 L3 Experimental document command parser
 )) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2023/05/20 line numbers on paragraphs v5.3
-\linenopenalty=\count303
+\linenopenalty=\count300
 \output=\toks32
-\linenoprevgraf=\count304
-\linenumbersep=\dimen193
-\linenumberwidth=\dimen194
-\c@linenumber=\count305
-\c@pagewiselinenumber=\count306
-\c@LN@truepage=\count307
-\c@internallinenumber=\count308
-\c@internallinenumbers=\count309
-\quotelinenumbersep=\dimen195
-\bframerule=\dimen196
-\bframesep=\dimen197
+\linenoprevgraf=\count301
+\linenumbersep=\dimen191
+\linenumberwidth=\dimen192
+\c@linenumber=\count302
+\c@pagewiselinenumber=\count303
+\c@LN@truepage=\count304
+\c@internallinenumber=\count305
+\c@internallinenumbers=\count306
+\quotelinenumbersep=\dimen193
+\bframerule=\dimen194
+\bframesep=\dimen195
 \bframebox=\box65
-\linenoamsmath@ams@eqpen=\count310
+\linenoamsmath@ams@eqpen=\count307
 LaTeX Info: Redefining \\ on input line 3180.
 ) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2022-09-14 v5.2n context-sensitive quotations (JAW)
-\csq@reset=\count311
-\csq@gtype=\count312
-\csq@glevel=\count313
-\csq@qlevel=\count314
-\csq@maxlvl=\count315
-\csq@tshold=\count316
+\csq@reset=\count308
+\csq@gtype=\count309
+\csq@glevel=\count310
+\csq@qlevel=\count311
+\csq@maxlvl=\count312
+\csq@tshold=\count313
 \csq@ltx@everypar=\toks33
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2022-09-14 v5.2n csquotes generic definitions (JAW)
@@ -469,11 +453,11 @@ Package: nameref 2023-08-07 v2.53 Cross-referencing by name of section
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-\c@section@level=\count317
+\c@section@level=\count314
 )
-\@linkdim=\dimen198
-\Hy@linkcounter=\count318
-\Hy@pagecounter=\count319
+\@linkdim=\dimen196
+\Hy@linkcounter=\count315
+\Hy@pagecounter=\count316
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2023-07-08 v7.01b Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -481,7 +465,7 @@ Now handling font encoding PD1 ...
 ) (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count320
+\Hy@SavedSpaceFactor=\count317
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2023-07-08 v7.01b Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
@@ -495,21 +479,21 @@ Package hyperref Info: Plain pages OFF on input line 4182.
 Package hyperref Info: Backreferencing OFF on input line 4187.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4434.
-\c@Hy@tempcnt=\count321
+\c@Hy@tempcnt=\count318
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4772.
-\XeTeXLinkMargin=\dimen199
+\XeTeXLinkMargin=\dimen197
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count322
-\Field@Width=\dimen256
-\Fld@charsize=\dimen257
+\Fld@menulength=\count319
+\Field@Width=\dimen198
+\Fld@charsize=\dimen199
 Package hyperref Info: Hyper figures OFF on input line 6051.
 Package hyperref Info: Link nesting OFF on input line 6056.
 Package hyperref Info: Hyper index ON on input line 6059.
@@ -521,9 +505,9 @@ Package hyperref Info: PDF/A mode OFF on input line 6081.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count323
-\c@Item=\count324
-\c@Hfootnote=\count325
+\Hy@abspage=\count320
+\c@Item=\count321
+\c@Hfootnote=\count322
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
@@ -532,8 +516,8 @@ File: hpdftex.def 2023-07-08 v7.01b Hyperref driver for pdfTeX
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
-\Fld@listcount=\count326
-\c@bookmark@seq@number=\count327
+\Fld@listcount=\count323
+\c@bookmark@seq@number=\count324
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
@@ -541,33 +525,33 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
-\Hy@SectionHShift=\skip91
+\Hy@SectionHShift=\skip85
 )
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
-(./SiblingsStudyText-anon-revisions.aux)
-\openout1 = `SiblingsStudyText-anon-revisions.aux'.
+(./SiblingsStudy_SupplementaryData-anon-revisions.aux)
+\openout1 = `SiblingsStudy_SupplementaryData-anon-revisions.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 203.
-LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -618,179 +602,100 @@ Package caption Info: longtable package is loaded.
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 203.
-(./SiblingsStudyText-anon-revisions.out) (./SiblingsStudyText-anon-revisions.out)
+Package hyperref Info: Link coloring OFF on input line 171.
+(./SiblingsStudy_SupplementaryData-anon-revisions.out) (./SiblingsStudy_SupplementaryData-anon-revisions.out)
 \@outlinefile=\write5
-\openout5 = `SiblingsStudyText-anon-revisions.out'.
+\openout5 = `SiblingsStudy_SupplementaryData-anon-revisions.out'.
 
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 205.
+
+Class apa6 Warning: Abstract not defined.
+
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 173.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [1{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}
 
-] [2]
-Underfull \vbox (badness 1838) has occurred while \output is active []
-
-[3]
-Underfull \vbox (badness 7649) has occurred while \output is active []
-
-[4] [5]
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 216.
+]
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 174.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 216.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 174.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 216.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 174.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 216.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 174.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 216.
+(Font)              <12> on input line 174.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 216.
+(Font)              <8> on input line 174.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 216.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 216.
+(Font)              <6> on input line 174.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 174.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 216.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 174.
 (c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 216.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 216.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 216.
-[6] [7]
-Underfull \vbox (badness 4353) has occurred while \output is active []
-
-[8] [9]
-Underfull \vbox (badness 2189) has occurred while \output is active []
-
-[10] [11] [12]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[13]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 289.
-[14] [15] [16{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
-<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf, id=199, 469.755pt x 325.215pt>
-File: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf Graphic file (type pdf)
-<use SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf>
-Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf  used on input line 356.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 181.
+(c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [2{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] [3] [4{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}] [5] [6] [7]
+<SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-correlations-1.pdf, id=91, 469.755pt x 325.215pt>
+File: SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-correlations-1.pdf Graphic file (type pdf)
+<use SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-correlations-1.pdf>
+Package pdftex.def Info: SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-correlations-1.pdf  used on input line 316.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[17] [18 <./SiblingsStudyText-anon-revisions_files/figure-latex/Figure-SibGroup-1.pdf>] [19]
-Overfull \hbox (11.59154pt too wide) in paragraph at lines 380--391
- [][] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf, id=234, 469.755pt x 325.215pt>
-File: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf Graphic file (type pdf)
-<use SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf>
-Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf  used on input line 395.
+[8] [9 <./SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-correlations-1.pdf>] [10] [11] [12] [13]
+<SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-input-age-1.pdf, id=136, 469.755pt x 325.215pt>
+File: SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-input-age-1.pdf Graphic file (type pdf)
+<use SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-input-age-1.pdf>
+Package pdftex.def Info: SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-input-age-1.pdf  used on input line 409.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[20]
-<SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf, id=244, 469.755pt x 325.215pt>
-File: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf Graphic file (type pdf)
-<use SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf>
-Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf  used on input line 410.
+<SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-OP-age-1.pdf, id=137, 469.755pt x 325.215pt>
+File: SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-OP-age-1.pdf Graphic file (type pdf)
+<use SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-OP-age-1.pdf>
+Package pdftex.def Info: SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-OP-age-1.pdf  used on input line 415.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[21] [22 <./SiblingsStudyText-anon-revisions_files/figure-latex/Figure-Speaker-count-1.pdf>]
-Overfull \hbox (27.07005pt too wide) in paragraph at lines 442--454
- [][] 
- []
+[14 <./SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-input-age-1.pdf>] [15 <./SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-OP-age-1.pdf>]
+<SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-cdi-types-1.pdf, id=172, 289.08pt x 505.89pt>
+File: SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-cdi-types-1.pdf Graphic file (type pdf)
+<use SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-cdi-types-1.pdf>
+Package pdftex.def Info: SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-cdi-types-1.pdf  used on input line 430.
+(pdftex.def)             Requested size: 289.0837pt x 505.89645pt.
 
+LaTeX Warning: Float too large for page by 9.45132pt on input line 432.
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf, id=260, 469.755pt x 325.215pt>
-File: SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf Graphic file (type pdf)
-<use SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf>
-Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf  used on input line 458.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf, id=261, 469.755pt x 325.215pt>
-File: SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf Graphic file (type pdf)
-<use SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf>
-Package pdftex.def Info: SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf  used on input line 464.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \vbox (badness 1127) has occurred while \output is active []
-
-[23]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[24 <./SiblingsStudyText-anon-revisions_files/figure-latex/Figure-object-presence-1.pdf>] [25]
-Underfull \vbox (badness 3623) has occurred while \output is active []
-
-[26 <./SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-input-1.pdf>]
-Underfull \vbox (badness 3623) has occurred while \output is active []
-
-[27 <./SiblingsStudyText-anon-revisions_files/figure-latex/figure-sibpresence-obj-1.pdf>]
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 482.
-
-[28]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[29] [30]
-Underfull \vbox (badness 2189) has occurred while \output is active []
-
-[31]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[32] [33]
-Underfull \vbox (badness 1028) has occurred while \output is active []
-
-[34]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[35]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[36]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[37]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[38]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[39] AED endfloat: Processing end Figures and Tables [40] (./SiblingsStudyText-anon-revisions.aux)
+AED endfloat: Processing end Figures and Tables [16] [17 <./SiblingsStudy_SupplementaryData-anon-revisions_files/figure-latex/Figure-cdi-types-1.pdf>] (./SiblingsStudy_SupplementaryData-anon-revisions.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
-Package rerunfilecheck Info: File `SiblingsStudyText-anon-revisions.out' has not changed.
-(rerunfilecheck)             Checksum: 20E5BEA3062D3102A160A22861096AE4;2876.
+Package rerunfilecheck Info: File `SiblingsStudy_SupplementaryData-anon-revisions.out' has not changed.
+(rerunfilecheck)             Checksum: D8B811A91DBB549C91F34944C29354B3;2444.
  ) 
 Here is how much of TeX's memory you used:
- 16241 strings out of 476469
- 266096 string characters out of 5800681
- 1941043 words of memory out of 5000000
- 37502 multiletter control sequences out of 15000+600000
- 650364 words of font info for 112 fonts, out of 8000000 for 9000
+ 15969 strings out of 476469
+ 262545 string characters out of 5800681
+ 1935043 words of memory out of 5000000
+ 37354 multiletter control sequences out of 15000+600000
+ 598671 words of font info for 71 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,11n,79p,2436b,634s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb>
-Output written on SiblingsStudyText-anon-revisions.pdf (40 pages, 382500 bytes).
+ 72i,11n,79p,2285b,632s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/cs524/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb>
+Output written on SiblingsStudy_SupplementaryData-anon-revisions.pdf (17 pages, 226712 bytes).
 PDF statistics:
- 566 PDF objects out of 1000 (max. 8388607)
- 487 compressed objects within 5 object streams
- 158 named destinations out of 1000 (max. 500000)
- 186 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 237 PDF objects out of 1000 (max. 8388607)
+ 195 compressed objects within 2 object streams
+ 53 named destinations out of 1000 (max. 500000)
+ 85 words of extra memory for PDF output out of 10000 (max. 10000000)
 
