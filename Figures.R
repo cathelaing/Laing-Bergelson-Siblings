@@ -131,3 +131,4 @@ Figure.input.sibling <- ggplot(sib.presence.input,
   guides(shape = FALSE,
          color = guide_legend(override.aes = list(shape=15))) +
   facet_wrap(vars(month), nrow=2)
+
