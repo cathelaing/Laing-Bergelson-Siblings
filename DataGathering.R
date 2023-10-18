@@ -63,9 +63,10 @@ sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
   filter(month >9)
 
 n_excluded <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
+  mutate(month = as.numeric(month)) %>%
   filter(audio_video =='video' &   # Only use video data
            subj != 351 &                  # filter out one twin
-           month > "09" &
+           month > 9 &
     (speaker %in% c("TOY",
                      "EFA", "EFB", "EFS", "EFE", # exclude female experimenters
                      "EMM", # exclude male experimenters
@@ -224,8 +225,10 @@ SibGroup_cdi <- SiblingsData %>%
 #grabbing type and token counts overall and for CHI
 
 types_tokens <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
+  mutate(month = as.numeric(month)) %>%
   filter(!(speaker %in% c('CHI', "EFA", "EFB", "EFS", "EMM", "EFE", "GRO", "MBT")) &  # remove infant productions
-           subj != 351
+           subj != 351 &
+           month > 9
          ) %>%    
   dplyr::group_by(subj) %>%
   mutate(subj = as.factor(subj)) %>%
@@ -234,8 +237,10 @@ types_tokens <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
   replace(is.na(.), 0)
 
 types_tokens_CHI <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
+  mutate(month = as.numeric(month)) %>%
   filter(speaker == "CHI" & 
-           subj != 351
+           subj != 351 &
+           month > 9
          ) %>%
   dplyr::group_by(subj) %>%
   mutate(subj = as.factor(subj)) %>%

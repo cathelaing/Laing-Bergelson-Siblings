@@ -830,17 +830,16 @@ We re-plotted Figures 2 and 3 from the main paper with age on the x-axis, to det
 ```{r Figure input ~ age, include=FALSE}
 
 Figure.input.age <- ggplot(data = subset(speaker.type, caregiver == "FAMILY" & audio_video == "video"), 
-                           mapping = aes(x=as.numeric(month), y=Log.n)) +
+                           mapping = aes(x=as.numeric(month), y=n)) +
   geom_point(aes(colour = SibGroup), shape = 1, size = 3, position = position_dodge(.2)) + 
   geom_smooth(aes(colour = SibGroup, fill = SibGroup),size=2) + 
-  ylab('Total number of words heard in input (log-transformed)') +
+  ylab('Total number of words heard in input') +
   xlab('Age in Months') +
   scale_x_continuous(breaks = c(6:18)) +
-  scale_y_continuous(breaks = c(0, log(11), log(51), log(151), log(301)), labels = c(0, 10, 50, 150, 300)) +
   theme_bw() + 
   theme(axis.text=element_text(size=10),
         text = element_text(size=10),
-        legend.position = c(0.05, 0.1),
+        legend.position = c(0.05, 0.9),
         legend.title = element_blank(),
         legend.background = element_rect(fill='transparent')) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
@@ -853,7 +852,7 @@ Figure.input.age <- ggplot(data = subset(speaker.type, caregiver == "FAMILY" & a
 
 par(cex = 1.2)
 Figure.input.age
-cap <- sprintf("Number of input words produced by caregivers over time (n=43). Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over individual infants’ input at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (dodged horizontally for visual clarity) show individual infants' input at each month. Y-axis utilizes log-transformed vertical spacing for visual clarity.")
+cap <- sprintf("Number of input words produced by caregivers over time (n=43). Colors denote sibling group; line with colored confidence band reflects local estimator (loess) fit over individual infants’ input at each month. Triangles indicate mean with bootstrapped CIs computed over each month's data. Points (dodged horizontally for visual clarity) show individual infants' input at each month.")
 
 ```
 
@@ -912,7 +911,7 @@ figure_sibgroup_numtypes_cdi <- types_tokens_overall_CDI_sibgroup %>%
 
 par(cex = 1.2)
 figure_sibgroup_numtypes_cdi
-cap <- sprintf("Correlation between reported productive vocabulary at 18 months and n word types produced in the audio and video recordings at 6-17 months (n=43), faceted by sibling group. Crosses represent individual participants in each sibling group, blue lines represent the predicted relationship between the two variables with 95%% confident intervals for each group. Due to missing CDIs at 18 months, this includes data from n = 18/21, 11/12, and 7/9 children with 0, 1, and 2+ siblings, respectively.")
+cap <- sprintf("Correlation between reported productive vocabulary at 18 months and n word types produced in the audio and video recordings at 10-17 months (n=43), faceted by sibling group. Crosses represent individual participants in each sibling group, blue lines represent the predicted relationship between the two variables with 95%% confident intervals for each group. Due to missing CDIs at 18 months, this includes data from n = 18/21, 11/12, and 7/9 children with 0, 1, and 2+ siblings, respectively.")
 
 ```
 
@@ -935,7 +934,7 @@ measures.corrs <- types_tokens_overall_CDI_sibgroup %>%
 ```
 
 ```{r production-corrs, echo = FALSE}
-cap = "Pearson correlation coefficients (r) and p values of correlations between reported productive vocabulary (CDI) at 18 months and number of words produced by infants in the audio/video recordings between 6 and 17 months across sibling groups. Due to missing CDIs at 18 months, this includes data from n = 18/21, 11/12, and 7/9 children with 0, 1, and 2+ siblings, respectively."
+cap = "Pearson correlation coefficients (r) and p values of correlations between reported productive vocabulary (CDI) at 18 months and number of words produced by infants in the audio/video recordings between 10 and 17 months across sibling groups."
  kable(measures.corrs, "latex", booktabs=T, longtable=T, 
        escape=FALSE,
        caption=cap, digits=2, align="c") 
