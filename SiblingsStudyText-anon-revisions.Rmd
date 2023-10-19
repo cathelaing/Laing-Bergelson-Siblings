@@ -886,7 +886,7 @@ Descriptively, infants with no siblings experienced on average `r round((((subse
 par(cex = 1.2)
 #Figure.object.presence
 Figure.object.presence_fixed
-cap <- sprintf("Percentage of input words produced with object presence across sibling groups. Error bars and filled diamonds show 95%% CIs and mean proportion of object presence across sibling groups. Open diamonds indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity. See S7 for a month-by-month visualisation of object presence.")
+cap <- sprintf("Percentage of input words produced with object presence across sibling groups. Error bars and filled diamonds show 95%% CIs and mean proportion of object presence across sibling groups. Open shapes indicate mean proportion of object presence per infant, collapsing across age and jittered horizontally for visual clarity. See S7 for a month-by-month visualisation of object presence.")
 
 ```
 
@@ -920,7 +920,7 @@ cap <- sprintf("Difference in number of input words in infants' input according 
 ```{r figure-sibpresence-obj, echo=FALSE, fig.cap=cap, fig.pos='H', message=FALSE, warning=FALSE}
 par(cex = 1.2)
 Figure.object.presence.sibling
-cap <- sprintf("Difference in %% of object presence in infants' input according to whether or not a sibling or siblings were present during the time of recording, for each month of data. Infants with no siblings were not included in the plots for visual ease. White shapes represent individual infants in the data; filled shapes represent means and 95%%CIs, colours represent presence or absence of siblings during the recording session.")
+cap <- sprintf("Difference in %% of object presence in infants' input according to whether or not a sibling or siblings were present during the time of recording, for each month of data. Infants with no siblings were not included in the plots for visual ease. Open shapes represent individual infants in the data; filled shapes represent means and 95%%CIs, colours represent presence or absence of siblings during the recording session.")
 
 ```
 

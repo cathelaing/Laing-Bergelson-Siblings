@@ -62,14 +62,14 @@ r2.corr.mer <- function(m) {
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. All scripts and data for our analysis can be found on the project’s OSF wiki at https://osf.io/rm3ec/. .
+The supplementary materials below present further analyses on our sample. We include this data here for sake of completeness and transparency, but do not include it in the reported results owing to small sample sizes and consistency across findings. All scripts and data for our analysis can be found on the project’s OSF wiki at https://osf.io/rm3ec/.
 
 The analyses below (S1:S8) show:
 
 * S1: re-analysis of caregiver input variables using data from day-long audio recordings
 * S2: re-analysis of caregiver input variables with both dizygotic twins excluded
 * S3: summary of speakers classed as two main caregivers in our input data
-* S4: correlations of input and output measures with maternal factors (age, education) and number of siblings
+* S4: correlations of input and output measures with maternal factors (age, education, work status) and number of siblings
 * S5: re-analysis of caregiver input variables using discrete sibling number as our main variable of interest 
 * S6: re-analysis of caregiver input variables with one outlier infant
 * S7: change to input variables over time
@@ -457,7 +457,7 @@ total.sessionsCG2 <- sum(speakers.sessions$`Caregiver 2`) # 146
 
 ```
 
-The table below provides a summary of which two caregivers produced the most words in each video recording analyzed in the main manuscript. This was usually the mother and/or the father. In the case where the infant had two mothers, their data was aggregated into the 'Mother' category; in all but two sessions from this family, the two mothers were the two main caregivers. There were `r total.sessionsCG1` hour-long video recordings in total across the 43 infants in the data set; two speakers were present in `r total.sessionsCG2` of these.
+The table below provides a summary of which two caregivers produced the most words in each video recording analyzed in the main manuscript. This was usually the mother and/or the father. In the case where the infant had two mothers, their data was aggregated into the 'Mother' category; in four sessions from this family, the two mothers were the two main caregivers. There were `r total.sessionsCG1` hour-long video recordings in total across the 43 infants in the data set; two speakers were present in `r total.sessionsCG2` of these.
 
 ```{r table-speakers-sessions, echo = FALSE}
 cap = "Numer of sessions in which each adult speaker is one of the two main caregivers. There were 344 hour-long video sessions in total, and two caregivers were present in 146 of these."
@@ -495,7 +495,7 @@ cor.res <- cor.test(corr.data.mat$`Input words`, corr.data.mat$`N Siblings`, met
 #mat.corr.matrix <- corrplot(corr.matrix, method = "number")
 ```
 
-We tested the extent to which maternal factors such as age and education level correlate with number of siblings, productive vocabulary measures, and amount of input. Spearman's correlation tests confirmed a significant negative correlation between sibling number and words produced in the infant's input by the mother (rho=`r cor.res$estimate`, *p*=`r printp(cor.res$p.value)`). No other correlations were significant, though weak positive correlations were identified bwteen amount of input and productive vocabulary, and maternal age and sibling number. See Figure \@ref(fig:Figure-correlations).
+We tested the extent to which maternal factors such as age, work status and education level correlate with number of siblings, productive vocabulary measures, and amount of input. Spearman's correlation tests confirmed a significant negative correlation between sibling number and words produced in the infant's input by the mother (rho=`r cor.res$estimate`, *p*=`r printp(cor.res$p.value)`). No other correlations were significant, though weak positive correlations were identified between amount of input and productive vocabulary, and maternal age and sibling number. See Figure \@ref(fig:Figure-correlations).
 
 ```{r Figure-correlations, echo=FALSE, fig.cap=cap, message=FALSE, warning=FALSE}
 #par(cex = 1.2)
@@ -509,7 +509,7 @@ corrplot(cor(corr.data.mat, method = "spearman", use="complete.obs"),  p.mat = t
          diag = FALSE)
 
 #corrplot(corr.matrix, method = "number", conf.level = 0.95)
-cap <- sprintf("Correlation matrix showing Spearman's correlation coefficients between maternal factors (age and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours and circles represent direction and strength of correlation, whereby bolder colours and larger circles indicate a stronger correlation between variables; blue and red indicate positive/negative correlations, respectively. Asterisk indicates a significant *p* value at *p*<.05.")
+cap <- sprintf("Correlation matrix showing Spearman's correlation coefficients between maternal factors (age, work status and education), number of siblings, and number of words reported to be produced by the child at age 18 months. Colours and circles represent direction and strength of correlation, whereby bolder colours and larger circles indicate a stronger correlation between variables; blue and red indicate positive/negative correlations, respectively. Asterisk indicates a significant *p* value at *p*<.05.")
 
 ```
 
@@ -839,7 +839,7 @@ Figure.input.age <- ggplot(data = subset(speaker.type, caregiver == "FAMILY" & a
   theme_bw() + 
   theme(axis.text=element_text(size=10),
         text = element_text(size=10),
-        legend.position = c(0.05, 0.9),
+        legend.position = c(0.07, 0.9),
         legend.title = element_blank(),
         legend.background = element_rect(fill='transparent')) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
