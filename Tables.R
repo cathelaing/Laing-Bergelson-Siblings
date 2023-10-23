@@ -1,6 +1,5 @@
 library(janitor)
 library(kableExtra)
-#library(knitr)
 library(magrittr)
 
 table.sibling.number <- 
@@ -25,9 +24,8 @@ table.data.summary.sibgroup <-
   select(Variable, SibGroup, mean, sd)
 
 table.data.summary.speaker <- 
-  speaker.type %>% 
-  filter(audio_video == "video"  & 
-           caregiver == "FAMILY") %>%
+  speaker.type_video %>% 
+  filter(caregiver == "FAMILY") %>%
   group_by(subj, SibGroup) %>%
   summarise(mean.n = mean(n)) %>%
   ungroup() %>%
@@ -38,8 +36,7 @@ table.data.summary.speaker <-
   select(Variable, SibGroup, mean, sd)
 
 table.data.summary.object <- 
-  object.presence %>% 
-  filter(audio_video == "video") %>%
+  object.presence_video %>% 
   group_by(subj, SibGroup) %>%
   summarise(mean.PC = (mean(PC))) %>%
   ungroup() %>%
@@ -73,7 +70,7 @@ table.data.summary <- table.data.summary.mean %>% left_join(table.data.summary.s
 # sibling presence
 
 sib.presence.summary <- sib.presence %>%
-  filter(audio_video == "video" & SibGroup != "None") %>%
+  filter(SibGroup != "None") %>%
   #mutate(sib.present = ifelse(is.na(SIB), "Sibling not present", "Sibling present")) %>%
   group_by(subj, sib.present) %>%
   tally() %>%
@@ -87,8 +84,8 @@ sib.presence.summary <- sib.presence %>%
             total.present = sum(total.present))
 
 sib.presence.table.input <-
-  speaker.type %>%
-  filter(audio_video == "video" & SibGroup != "None" & (caregiver %in% c("CG1","CG2"))) %>%
+  speaker.type_video %>%
+  filter(SibGroup != "None" & (caregiver %in% c("CG1","CG2"))) %>%
   left_join(sib.presence) %>%
   group_by(subj, SibGroup, sib.present) %>%
   summarise(mean.n.sib = mean(n)) %>%
@@ -102,8 +99,8 @@ sib.presence.table.input <-
   mutate(Variable = "N Input utterances, 10-17 months")
 
 sib.presence.table.OP <-
-  object.presence %>%
-  filter(audio_video == "video" & SibGroup != "None") %>%
+  object.presence_video %>%
+  filter(SibGroup != "None") %>%
   left_join(sib.presence) %>%
   group_by(subj, SibGroup, sib.present) %>%
   summarise(mean.PC.sib = mean(PC)) %>%

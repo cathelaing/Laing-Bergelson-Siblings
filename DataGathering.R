@@ -1,4 +1,3 @@
-## Data gathering: Updated October 2023 ##
 
 # This file extracts the relevant data from the basiclevels feather spreadsheet in the Seedlings folder
 
@@ -16,8 +15,8 @@ library(forcats)
 
 # work from basic levels spreadsheet
 
-sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
-  filter(#audio_video =='video',   # Only use video data
+sibsdata_video <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
+  filter(audio_video =='video',   # Only use video data
     subj != 351 &                  # filter out one twin
          !(speaker %in% c('CHI', #remove infant productions
                           "EFA", "EFB", "EFS", "EFE", # exclude female experimenters
@@ -26,7 +25,6 @@ sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
                           "GRY", # exclude grandfather and toy in unison 
                           "CHY"))) %>%  # exclude child and toy in unison  
   dplyr::select(
-    audio_video,
     utterance_type, 
     speaker, 
     object_present, 
@@ -37,26 +35,24 @@ sibsdata <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
          speaker = factor(speaker),
          speaker = fct_collapse(speaker,
                                 "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2", 
-                                              "BTY", "SCU", "STY", "SIU"),
-                                "AUNT" = c("AUN", "AU2", "AU3", "AU4"),
-                                "UNCLE" = c("UN2", "UNC", "GUN", "UN3", "UN4"),
-                                "BABYSITTER" = c("BSE", "BSJ", "BSK", "BSS", "BSC", "BSB", "BSD", "BSL"),
+                                              "BTY", "SCU", "STY"),
+                                "AUNT" = c("AUN", "AU2"),
+                                "UNCLE" = c("UN2", "UNC"),
+                                "BABYSITTER" = c("BSE", "BSJ", "BSK", "BSS"),
                                 "FAT" = c("FTS", "FTY", "MFT", "MFV"), # 2 instances of MFT and MFV in the data, in both cases MOT is CG1 and MFT/MFV CG2
-                                "GRP" = c("GP2", "GRP", "GGP", "SGP"),
-                                "GRM" = c("GRA", "GTY", "GRM", "GGM"),
-                                "MOT" = c("MBR", "MCU", "MIS", "MTY", "MTT"), 
+                                "GRP" = c("GP2", "GRP"),
+                                "GRM" = c("GRA", "GTY", "GRM"),
+                                "MOT" = c("MBR", "MCU", "MIS", "MTY"), 
                                 #"MOT+FAT" = c("MFT", "MFV"),    
-                                "COUSIN" = c("MC2", "COU", "FCO", "MCO", "FC3", "MC3", "CCU", "FC2"),
-                                "OTHER ADULT" = c("AF2", "AF4", "AF5", "AF6", "AF7", "AF8", "AFA", 
-                                                  "AFB", "AFC", "AFD", "AFH", "AFJ", "AFL", "AFM", 
-                                                  "AFP", "AFR", "AFS", "AFT", "AM1", "AM2", "AM3", "AM6",
-                                                  "AMB","AMC","AMG","AMR", "X12", "AF1", "AF3", "AF9", "AFE",
-                                                  "AFG", "AFK", "AFN", "AFY", "AM4", "AM5", "AMA", "AME",
-                                                  "AMI", "AMJ", "AMK", "AMM", "AMS", "AMT", "ADM"),
-                                "OTHER CHILD" = c("CFC", "CFR", "CFZ", 
-                                                  "CM1", "CM2", "CF1", "CFA", "CFB", "CFD", "CFE", "CFH",
-                                                  "CFK", "CFL", "CFM","CFP", "CFS", "CH1", "CMD", "CME",
-                                                  "CMH", "CMJ", "CML", "CMM", "CMO","CMT")),  # rename speakers
+                                "COUSIN" = c("MC2", "FCO", "MCO", "FC2"),
+                                "OTHER ADULT" = c("AF8", "AFA", 
+                                                  "AFB", "AFC", "AFD","AFL", "AFM", 
+                                                  "AFP", "AFR", "AFS", "AM1", "AM3",
+                                                  "AMC", "AMR", "AF3", "AFN", "AMI"),
+                                "OTHER CHILD" = c("CFC", "CFR",  
+                                                  "CFA", "CFD", "CFE", 
+                                                  "CFS", "CMD", "CME",
+                                                  "CMH", "CML","CMO")),  # rename speakers
   
          subj = factor(subj),
          month = as.numeric(month)) %>%
@@ -76,87 +72,62 @@ n_excluded <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
       (grepl("TV", speaker)))) %>%
   tally()
 
-#levels(sibsdata$speaker)
-
-#"ADM" # not sure
-#    "BBT"    # not sure 
-# "BIS"  # not sure
-# "GR2"     # not sure
-#  "GRF"  # not sure
-# "MMT" # not sure
-# "MOY"     # not sure
-# "MST"    # not sure   
-
-# speakers in unison
-
-# "FBR"   # father and brother in unison
-# "FCU"    # father and child in unison
-# "FGA" # father and grandma in unison
-# "GMS" #grandmother and sister in unison
-# "MFU"   #mother and adult female in unison
-# "MGG"   # grandmother and grandfather in unison (maternal)
-# "MGM"  # mother and grandmother in unison
-# "MGP"   # mother and grandfather in unison
-# "SST"   # sisters in unison
-# "UAU"   # uncle and aunt in unison
-# "UMT"   # mother and uncle in unison
-# "X10"  "X11"  "X13"    # other adults - keep these as 'additional input' rather than coding as 'other adult'
-
 ## Speaker type
 
-speaker.type.all <- sibsdata %>%
-  group_by(subj, month, audio_video, speaker) %>%
+speaker.type.all_video <- sibsdata_video %>%
+  group_by(subj, month, speaker) %>%
   tally() %>%
   spread(speaker, n) %>%
-  dplyr::select(-contains("TV"), -TOY, -UAT) %>% # remove anything with TV and toy (UAT - aunt + uncle + TV)
+  dplyr::select(-contains("TV"), -TOY) %>% # remove anything with TV and toy (UAT - aunt + uncle + TV)
   replace(is.na(.), 0) %>%
   rowwise() %>%
-  mutate(All.speakers = sum(c_across(`OTHER ADULT`:X13))) %>% 
-  dplyr::select(subj, month, audio_video, All.speakers)
+  mutate(All.speakers = sum(c_across(`OTHER ADULT`:`UNCLE`))) %>% 
+  dplyr::select(subj, month, All.speakers)
 
-speaker.type.cg1 <- sibsdata %>%
+speaker.type.cg1_video <- sibsdata_video %>%
   filter((!grepl("TV", speaker)) & !(speaker %in% c("TOY", "SIBLING"
                                                     , "OTHER CHILD", "COUSIN"
                                                     ))) %>%
-  group_by(subj, month, audio_video, speaker) %>%
+  group_by(subj, month, speaker) %>%
   tally() %>%
   slice_max(n) %>%
   mutate(caregiver = "CG1")
 
-speaker.type.cg2 <- sibsdata %>%
+speaker.type.cg2_video <- sibsdata_video %>%
   filter((!grepl("TV", speaker)) & 
            !(speaker %in% c("TOY", "SIBLING", 
                             "OTHER CHILD", "COUSIN", 
                             "GRO"))) %>% # remove speech from other kids and
   # groups ("GRO" - multiple speakers in unison - occured as CG2 for one infant)
-  group_by(subj, month, audio_video, speaker) %>%
+  group_by(subj, month, speaker) %>%
   tally() %>%
-  group_by(subj, month, audio_video) %>%
+  group_by(subj, month) %>%
   arrange(desc(n)) %>% 
   slice(2) %>%
   mutate(caregiver = "CG2")
 
-speaker.type.sib <- sibsdata %>%
-  group_by(subj, month, audio_video, speaker) %>%
+speaker.type.sib_video <- sibsdata_video %>%
+  group_by(subj, month, speaker) %>%
   filter(speaker == "SIBLING") %>%
   tally() %>%
   mutate(caregiver = "SIB")
 
-speaker.type.n <- rbind(speaker.type.cg1, speaker.type.cg2, speaker.type.sib)
+speaker.type.n_video <- rbind(speaker.type.cg1_video,
+                              speaker.type.cg2_video,
+                              speaker.type.sib_video)
 
-speaker.type.household <- speaker.type.n %>%
-  group_by(subj, month, audio_video) %>%
+speaker.type.household_video <- speaker.type.n_video %>%
+  group_by(subj, month) %>%
   summarise(n = sum(n)) %>%
   mutate(caregiver = "FAMILY")
 
-speaker.type <- rbind(speaker.type.n, speaker.type.household) %>%
+speaker.type_video <- rbind(speaker.type.n_video, speaker.type.household_video) %>%
   left_join(SiblingsData) %>%
   mutate(Log.n = log(n+1),
          speaker = as.character(speaker),
          speaker = ifelse(caregiver == "FAMILY", "Total.input", speaker))
 
-all.speaker.data <- speaker.type.household %>% left_join(speaker.type.all) %>%
-  filter(audio_video == "video") %>%
+all.speaker.data_video <- speaker.type.household_video %>% left_join(speaker.type.all_video) %>%
   group_by(subj, month) %>%
   mutate(other.input = All.speakers - n,
          prop.other = other.input/All.speakers) %>%
@@ -164,35 +135,31 @@ all.speaker.data <- speaker.type.household %>% left_join(speaker.type.all) %>%
 
 ## Object presence: How much caregiver input relates to objects that are present in the infant's environment?
 
-object.presence <- sibsdata %>%
-  left_join(speaker.type.n) %>%
+object.presence_video <- sibsdata_video %>%
+  left_join(speaker.type.n_video) %>%
   filter(!is.na(caregiver)) %>%
   filter(object_present %in%
            c("y", "n")) %>%
-  group_by(subj, month, audio_video, object_present) %>%
+  group_by(subj, month, object_present) %>%
   tally() %>%
   spread(object_present, n) %>%
   replace(is.na(.), 0) %>%
   ungroup() %>%
   mutate(Total = n + y,
          PC = y/Total) %>%
-  dplyr::select(subj, month, audio_video, y, PC) %>%
+  dplyr::select(subj, month, y, PC) %>%
   rename(n = y) %>%  
   left_join(demographics) %>%
   mutate(Log.n = log(n+1)) 
 
-#check <- object.presence %>% group_by(subj, audio_video) %>% tally() %>% filter(audio_video == "video" & n<12) 
-# 129 has no video data in month 6 but that's not a problem because we start at month 10
-
 # how many instances of object presence were unclear?
 
-object.presence.unsure <- sibsdata %>%
-  filter(audio_video == "video") %>%
-    left_join(speaker.type.n) %>%
+object.presence.unsure <- sibsdata_video %>%
+    left_join(speaker.type.n_video) %>%
   filter(!is.na(caregiver)) %>%
   filter(object_present %in%
            c("y", "n", "u")) %>%
-  group_by(subj, audio_video, object_present) %>%
+  group_by(subj, object_present) %>%
   tally() %>%
   spread(object_present, n) %>%
   replace(is.na(.), 0) %>%
@@ -208,7 +175,7 @@ sib.ages <- read_csv("Data/SiblingAges.csv") %>%   # Read in data showing age di
 
 # dataframe to show which recordings included speech from a sibling
 
-sib.presence <- speaker.type %>% filter(audio_video == "video") %>% 
+sib.presence <- speaker.type_video %>% 
   dplyr::select(subj, month, caregiver, n, SibGroup) %>% 
   group_by(subj, month) %>%
   pivot_wider(names_from = caregiver, values_from = n) %>%
@@ -255,3 +222,112 @@ types_tokens_overall_CDI_sibgroup<- types_tokens %>%
   left_join(SibGroup_cdi)
 
 #write_csv(types_tokens_overall_CDI_sibgroup, "Data/types_tokens_overall_CDI_sibgroup.csv")
+
+### create dataframes for analysis of audio data for supplementals:
+
+sibsdata_audio <- read_csv("Data/all_basiclevel_randsubj.csv") %>%
+  filter(audio_video =='audio',   # Only use video data
+         subj != 351 &                  # filter out one twin
+           !(speaker %in% c('CHI', #remove infant productions
+                            "EFA", "EFB", "EFS", "EFE", # exclude female experimenters
+                            "EMM", # exclude male experimenters
+                            "MBT", # exclude mother, brother and TV in unison
+                            "GRY", # exclude grandfather and toy in unison 
+                            "CHY"))) %>%  # exclude child and toy in unison  
+  dplyr::select(
+    utterance_type, 
+    speaker, 
+    object_present, 
+    basic_level, 
+    subj, 
+    month) %>%
+  mutate(basic_level = str_to_lower(basic_level),
+         speaker = factor(speaker),
+         speaker = fct_collapse(speaker,
+                                "SIBLING" = c("BRO", "BR1", "BR2", "SIS", "SI1", "SI2", 
+                                              "BTY", "SCU", "STY", "SIU"),
+                                "AUNT" = c("AUN", "AU2", "AU3", "AU4"),
+                                "UNCLE" = c("UN2", "UNC", "GUN", "UN3", "UN4"),
+                                "BABYSITTER" = c("BSE", "BSJ", "BSK", "BSS", "BSC", "BSB", "BSD", "BSL"),
+                                "FAT" = c("FTS", "FTY", "MFT", "MFV"), # 2 instances of MFT and MFV in the data, in both cases MOT is CG1 and MFT/MFV CG2
+                                "GRP" = c("GP2", "GRP", "GGP", "SGP"),
+                                "GRM" = c("GRA", "GTY", "GRM", "GGM"),
+                                "MOT" = c("MBR", "MCU", "MIS", "MTY", "MTT"), 
+                                #"MOT+FAT" = c("MFT", "MFV"),    
+                                "COUSIN" = c("MC2", "COU", "FCO", "MCO", "FC3", "MC3", "CCU", "FC2"),
+                                "OTHER ADULT" = c("AF2", "AF4", "AF5", "AF6", "AF7", "AF8", "AFA", 
+                                                  "AFB", "AFC", "AFD", "AFH", "AFJ", "AFL", "AFM", 
+                                                  "AFP", "AFR", "AFS", "AFT", "AM1", "AM2", "AM3", "AM6",
+                                                  "AMB","AMC","AMG","AMR", "X12", "AF1", "AF3", "AF9", "AFE",
+                                                  "AFG", "AFK", "AFN", "AFY", "AM4", "AM5", "AMA", "AME",
+                                                  "AMI", "AMJ", "AMK", "AMM", "AMS", "AMT", "ADM"),
+                                "OTHER CHILD" = c("CFC", "CFR", "CFZ", 
+                                                  "CM1", "CM2", "CF1", "CFA", "CFB", "CFD", "CFE", "CFH",
+                                                  "CFK", "CFL", "CFM","CFP", "CFS", "CH1", "CMD", "CME",
+                                                  "CMH", "CMJ", "CML", "CMM", "CMO","CMT")),  # rename speakers
+         
+         subj = factor(subj),
+         month = as.numeric(month)) %>%
+  filter(month >9)
+
+## Speaker type
+
+speaker.type.cg1_audio <- sibsdata_audio %>%
+  filter((!grepl("TV", speaker)) & !(speaker %in% c("TOY", "SIBLING"
+                                                    , "OTHER CHILD", "COUSIN"
+  ))) %>%
+  group_by(subj, month, speaker) %>%
+  tally() %>%
+  slice_max(n) %>%
+  mutate(caregiver = "CG1")
+
+speaker.type.cg2_audio <- sibsdata_audio %>%
+  filter((!grepl("TV", speaker)) & 
+           !(speaker %in% c("TOY", "SIBLING", 
+                            "OTHER CHILD", "COUSIN", 
+                            "GRO"))) %>% # remove speech from other kids and
+  # groups ("GRO" - multiple speakers in unison - occured as CG2 for one infant)
+  group_by(subj, month, speaker) %>%
+  tally() %>%
+  group_by(subj, month) %>%
+  arrange(desc(n)) %>% 
+  slice(2) %>%
+  mutate(caregiver = "CG2")
+
+speaker.type.sib_audio <- sibsdata_audio %>%
+  group_by(subj, month, speaker) %>%
+  filter(speaker == "SIBLING") %>%
+  tally() %>%
+  mutate(caregiver = "SIB")
+
+speaker.type.n_audio <- rbind(speaker.type.cg1_audio, 
+                              speaker.type.cg2_audio, 
+                              speaker.type.sib_audio)
+
+speaker.type.household_audio <- speaker.type.n_audio %>%
+  group_by(subj, month) %>%
+  summarise(n = sum(n)) %>%
+  mutate(caregiver = "FAMILY")
+
+speaker.type_audio <- rbind(speaker.type.n_audio, speaker.type.household_audio) %>%
+  left_join(SiblingsData) %>%
+  mutate(Log.n = log(n+1),
+         speaker = as.character(speaker),
+         speaker = ifelse(caregiver == "FAMILY", "Total.input", speaker))
+
+object.presence_audio <- sibsdata_audio %>%
+  left_join(speaker.type.n_audio) %>%
+  filter(!is.na(caregiver)) %>%
+  filter(object_present %in%
+           c("y", "n")) %>%
+  group_by(subj, month, object_present) %>%
+  tally() %>%
+  spread(object_present, n) %>%
+  replace(is.na(.), 0) %>%
+  ungroup() %>%
+  mutate(Total = n + y,
+         PC = y/Total) %>%
+  dplyr::select(subj, month, y, PC) %>%
+  rename(n = y) %>%  
+  left_join(demographics) %>%
+  mutate(Log.n = log(n+1)) 

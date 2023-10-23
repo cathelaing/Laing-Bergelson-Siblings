@@ -16,20 +16,14 @@ Figure.SibGroup <- ggplot(data = SiblingsData, mapping = aes(x=as.numeric(month)
                 aes(fill = SibGroup), color = "black", shape = 21,
                position = position_dodge(.2))
 
-speaker.type2 <- speaker.type %>% 
-  filter(audio_video == "video") %>%
+speaker.type2 <- speaker.type_video %>% 
   mutate(speaker = ifelse(speaker == "MT2", "MOT", speaker)) %>%
   filter(speaker %in% c("MOT", "FAT", "SIBLING")) %>%
-  #group_by(subj, month, speaker, SibGroup) %>% 
-  #eb2cl: above line was the error, by keeping month in the group you're not actually taking the mean 
-  #so then the error bars in the graph below were over all the data from every month not just overall mean
   group_by(subj, speaker, SibGroup) %>%
   summarise(mean.n = mean(n))
-# eb2cl: you could tell it was wrong by looking at the output of speaker.type2 which had basically just as many 
-#rows as speaker.type %>% filter(audio_video==video) instead of only about 3 per kid
 
-speaker.type.fig <- speaker.type %>% 
-  filter(audio_video == "video") %>%
+
+speaker.type.fig <- speaker.type_video %>% 
   mutate(speaker = ifelse(speaker == "MT2", "MOT", speaker)) %>%
   filter(speaker %in% c("MOT", "FAT", "SIBLING")) %>%
   group_by(subj, SibGroup, speaker) %>%
@@ -42,9 +36,8 @@ speaker.type.fig <- speaker.type %>%
   mutate(speaker = "FAMILY") %>%
   rbind(speaker.type2)
 
-Figure.speaker.count_fixed <- ggplot(subset(speaker.type.fig, speaker %in% c("MOT", "FAT", "SIBLING", "FAMILY")), 
+Figure.speaker.count <- ggplot(subset(speaker.type.fig, speaker %in% c("MOT", "FAT", "SIBLING", "FAMILY")), 
                                aes(x=speaker, y=mean.n, color = speaker)) +
-  #geom_point(shape = 1, size = 2, position = position_jitter(.1)) +
   stat_summary(fun= mean, geom = "point", aes(group = subj), shape = 2, size = 2, position = position_jitter(.1)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", 
                aes(fill = speaker), color = "black", shape = 24) +
@@ -56,36 +49,24 @@ Figure.speaker.count_fixed <- ggplot(subset(speaker.type.fig, speaker %in% c("MO
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 45, vjust = 0.5))
 
-# Figure.object.presence <- ggplot(data=subset(object.presence, audio_video == "video"),
-#                                  aes(x=SibGroup, y=(PC*100), color = SibGroup, fill = SibGroup)) +
-#   geom_violin(alpha = .3) +
-#   stat_summary(fun.y=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
-#   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=17, size=.5, colour='black') +
-#   scale_x_discrete(name=element_blank(),limits=c("None", "One", "2+")) +
-#   theme_bw(base_size = 18) +
-#   ylab('% input words with object presence') +
-#   theme(legend.position='none')
-#################
-#eb2cl: i think this what you want instead?
-object.presence_fixed <- subset(object.presence, audio_video=="video") %>% 
+object.presence.fig <- object.presence_video %>% 
   group_by(subj, SibGroup) %>%
   summarise(mean.objpresence = mean(PC))
 
-Figure.object.presence_fixed <- ggplot(data=object.presence_fixed, 
+Figure.object.presence <- ggplot(data=object.presence.fig, 
        aes(x=SibGroup, y=(mean.objpresence*100), color = SibGroup, fill = SibGroup)) +
   geom_violin(alpha = .3) +
   geom_point(shape = 5, size = 2, position = position_jitter(width = .1)) +
-  #stat_summary(fun.y=mean, geom = "point", aes(group = subj), shape=1, size=1.5, stroke = 1, position = position_jitter(.03)) +
   stat_summary(fun.data=mean_cl_boot, geom="pointrange", shape=23, size=.5, colour='black') + 
   scale_x_discrete(name=element_blank(),limits=c("None", "One", "2+")) + 
   theme_bw(base_size = 18) +
   ylab('% input words with object presence') +
   theme(legend.position='none')
 
-#################
+
 sib.presence.OP <-
-  object.presence %>%
-  filter(audio_video == "video" & SibGroup != "None") %>%
+  object.presence_video %>%
+  filter(SibGroup != "None") %>%
   left_join(sib.presence)
 
 Figure.object.presence.sibling <- ggplot(sib.presence.OP, 
@@ -98,7 +79,6 @@ Figure.object.presence.sibling <- ggplot(sib.presence.OP,
   scale_shape_manual(values=c(23,25)) +
   xlab("Sibling Group") +
   ylab('% input words with object presence') +
-  #ggtitle("Object presence") +
   theme_bw(base_size=11) +
   theme(axis.text = element_text(size = 14),
         axis.title = element_text(size=14),
@@ -109,8 +89,8 @@ Figure.object.presence.sibling <- ggplot(sib.presence.OP,
   facet_wrap(vars(month), nrow=2)
 
 sib.presence.input <-
-  speaker.type %>%
-  filter(audio_video == "video" & SibGroup != "None"& caregiver %in% c("CG1","CG2")) %>%
+  speaker.type_video %>%
+  filter(SibGroup != "None"& caregiver %in% c("CG1","CG2")) %>%
   left_join(sib.presence)
 
 Figure.input.sibling <- ggplot(sib.presence.input, 
