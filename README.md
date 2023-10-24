@@ -41,7 +41,7 @@ Note that one child had no siblings at 6 months but had one sibling at age 18 mo
 This file extracts the relevant data from the all_basiclevels dataset (all_basiclevel_randsubj.csv). This is the dataset incorporating all variables extracted from the SEEDLingS corpus (Bergelson, 2016). All video and audio recordings were annotated for each object word (i.e. concrete noun) produced either by or towards the target child, included in the *basic_level* column. For the analysis of caregiver input, this was filtered to include a) only video data, and b) no productions from the target child. Three main variables were then extracted and joined with the Demographics spreadsheet: object presence, utterance type, and speaker type. These are filtered to include only the data relevant to the caregiver input aspect of the analysis. The following dataframes are then generated:
 
 * *object.presence*: raw number and proportion of all basic_level words that were produced while being touched, held or pointed at by the speaker or baby, or were clearly being visually focused on.
-* *speaker.type*:  raw number and proportion of all utterances produced by the mother (MOT), father (FAT) and sibling/s (SIBLING). An additional variable is created called *Family.input* which aggregates all words produced by the three speaker types
+* *speaker.type*:  raw number and proportion of all utterances produced by the two main caregivers (defined as the 2 caregivers in a session who produced the most words) and sibling/s (SIBLING). An additional variable is created called *Family.input* which aggregates all words produced by the three speaker types
 
 ## Data files saved in folder:
 
